@@ -1,5 +1,5 @@
-realestate/bin
-realestate/target
+bin
+target
 HELP.md
 /target/
 !.mvn/wrapper/maven-wrapper.jar
