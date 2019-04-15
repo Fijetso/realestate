@@ -11,8 +11,8 @@ import javax.persistence.OneToMany;
 public class TradeKind {
 	@Id
 	@GeneratedValue
-	private long tradeKindId;
-	private String tradeKindName;
+	private long id;
+	private String name;
 	@OneToMany(mappedBy="tradeKind")
 	private Set<Trade> trades;
 	
@@ -20,33 +20,33 @@ public class TradeKind {
 		super();
 	}
 	
-	public TradeKind(long tradeKindId, String tradeKindName) {
+	public TradeKind(long id, String name) {
 		super();
-		this.tradeKindId = tradeKindId;
-		this.tradeKindName = tradeKindName;
+		this.id = id;
+		this.name = name;
 	}
 
-	public TradeKind(long tradeKindId, String tradeKindName, Set<Trade> trades) {
+	public TradeKind(long id, String name, Set<Trade> trades) {
 		super();
-		this.tradeKindId = tradeKindId;
-		this.tradeKindName = tradeKindName;
+		this.id = id;
+		this.name = name;
 		this.trades = trades;
 	}
 
-	public long getTradeKindId() {
-		return tradeKindId;
+	public long getId() {
+		return id;
 	}
 
-	public void setTradeKindId(long tradeKindId) {
-		this.tradeKindId = tradeKindId;
+	public void setId(long id) {
+		this.id = id;
 	}
 
-	public String getTradeKindName() {
-		return tradeKindName;
+	public String getName() {
+		return name;
 	}
 
-	public void setTradeKindName(String tradeKindName) {
-		this.tradeKindName = tradeKindName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Set<Trade> getTrades() {

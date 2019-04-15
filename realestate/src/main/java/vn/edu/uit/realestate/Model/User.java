@@ -16,7 +16,7 @@ public class User {
 	private String phone;
 	private String password;
 	@ManyToOne
-	@JoinColumn(name="userKindId")
+	@JoinColumn(name="userKindId", referencedColumnName="id")
 	private UserKind userKind;
 
 	public User() {

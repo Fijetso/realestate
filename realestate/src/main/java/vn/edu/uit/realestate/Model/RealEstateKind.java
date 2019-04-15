@@ -11,8 +11,8 @@ import javax.persistence.OneToMany;
 public class RealEstateKind {
 	@Id
 	@GeneratedValue
-	private long realEstateKindId;
-	private String realEstateKindName;
+	private long id;
+	private String name;
 	@OneToMany(mappedBy="userKind")
 	private Set<User> users;
 	
@@ -20,30 +20,30 @@ public class RealEstateKind {
 		super();
 	}
 	
-	public RealEstateKind(long realEstateKindId, String realEstateKindName) {
+	public RealEstateKind(long id, String name) {
 		super();
-		this.realEstateKindId = realEstateKindId;
-		this.realEstateKindName = realEstateKindName;
+		this.id = id;
+		this.name = name;
 	}
 
-	public RealEstateKind(long realEstateKindId, String realEstateKindName, Set<User> users) {
+	public RealEstateKind(long id, String name, Set<User> users) {
 		super();
-		this.realEstateKindId = realEstateKindId;
-		this.realEstateKindName = realEstateKindName;
+		this.id = id;
+		this.name = name;
 		this.users = users;
 	}
 
-	public long getRealEstateKindId() {
-		return realEstateKindId;
+	public long getId() {
+		return id;
 	}
-	public void setRealEstateKindId(long realEstateKindId) {
-		this.realEstateKindId = realEstateKindId;
+	public void setId(long id) {
+		this.id = id;
 	}
-	public String getRealEstateKindName() {
-		return realEstateKindName;
+	public String getName() {
+		return name;
 	}
-	public void setRealEstateKindName(String realEstateKindName) {
-		this.realEstateKindName = realEstateKindName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Set<User> getUsers() {

@@ -11,8 +11,8 @@ import javax.persistence.OneToMany;
 public class UserKind {
 	@Id
 	@GeneratedValue
-	private long userKindId;
-	private String userKindName;
+	private long id;
+	private String name;
 	@OneToMany(mappedBy="userKind")
 	private Set<User> users;
 	
@@ -20,30 +20,30 @@ public class UserKind {
 		super();
 	}
 	
-	public UserKind(long userKindId, String userKindName) {
+	public UserKind(long id, String name) {
 		super();
-		this.userKindId = userKindId;
-		this.userKindName = userKindName;
+		this.id = id;
+		this.name = name;
 	}
 
-	public UserKind(long userKindId, String userKindName, Set<User> users) {
+	public UserKind(long id, String name, Set<User> users) {
 		super();
-		this.userKindId = userKindId;
-		this.userKindName = userKindName;
+		this.id = id;
+		this.name = name;
 		this.users = users;
 	}
 
-	public long getUserKindId() {
-		return userKindId;
+	public long getId() {
+		return id;
 	}
-	public void setUserKindId(long userKindId) {
-		this.userKindId = userKindId;
+	public void setId(long id) {
+		this.id = id;
 	}
-	public String getUserKindName() {
-		return userKindName;
+	public String getName() {
+		return name;
 	}
-	public void setUserKindName(String userKindName) {
-		this.userKindName = userKindName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Set<User> getUsers() {

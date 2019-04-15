@@ -19,10 +19,10 @@ public class Trade {
 	@JoinColumn(name="userId")
 	private User user;
 	@ManyToOne
-	@JoinColumn(name="realEstateKindId")
+	@JoinColumn(name="realEstateKindId", referencedColumnName = "id")
 	private RealEstateKind realEstateKind;
 	@ManyToOne
-	@JoinColumn(name="tradeKindId")
+	@JoinColumn(name="tradeKindId", referencedColumnName = "id")
 	private TradeKind tradeKind; 
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "addressId", referencedColumnName = "id")
