@@ -1,6 +1,7 @@
 package vn.edu.uit.realestate.Model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -15,7 +16,7 @@ public class User {
 	private String email;
 	private String phone;
 	private String password;
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="userKindId", referencedColumnName="id")
 	private UserKind userKind;
 
