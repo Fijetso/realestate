@@ -19,9 +19,9 @@ public class UserKind {
 	@GeneratedValue
 	private long id;
 	private String name;
-	@OneToMany(mappedBy="userKind")
+//	@OneToMany(mappedBy="userKind", fetch= FetchType.LAZY)
 //	@MapsId
-	private Set<User> users;
+//	private Set<User> users;
 	public UserKind() {
 		super();
 	}
@@ -32,12 +32,12 @@ public class UserKind {
 		this.name = name;
 	}
 
-	public UserKind(long id, String name, Set<User> users) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.users = users;
-	}
+//	public UserKind(long id, String name, Set<User> users) {
+//		super();
+//		this.id = id;
+//		this.name = name;
+//		this.users = users;
+//	}
 
 	public long getId() {
 		return id;
@@ -52,12 +52,12 @@ public class UserKind {
 		this.name = name;
 	}
 
-	public Set<User> getUsers() {
-		return users;
-	}
-	@Basic(fetch=FetchType.LAZY)
-	public void setUsers(Set<User> users) {
-		this.users = users;
-	}
+//	public Set<User> getUsers() {
+//		return users;
+//	}
+//	@Basic(fetch=FetchType.LAZY)
+//	public void setUsers(Set<User> users) {
+//		this.users = users;
+//	}
 	
 }
