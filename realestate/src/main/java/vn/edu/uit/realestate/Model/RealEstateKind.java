@@ -13,8 +13,8 @@ public class RealEstateKind {
 	@GeneratedValue
 	private long id;
 	private String name;
-	@OneToMany(mappedBy="userKind")
-	private Set<User> users;
+//	@OneToMany(mappedBy="realEstateKind")
+//	private Set<Trade> trades;
 	
 	public RealEstateKind() {
 		super();
@@ -26,12 +26,12 @@ public class RealEstateKind {
 		this.name = name;
 	}
 
-	public RealEstateKind(long id, String name, Set<User> users) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.users = users;
-	}
+//	public RealEstateKind(long id, String name, Set<Trade> trades) {
+//		super();
+//		this.id = id;
+//		this.name = name;
+//		this.trades = trades;
+//	}
 
 	public long getId() {
 		return id;
@@ -46,11 +46,11 @@ public class RealEstateKind {
 		this.name = name;
 	}
 
-	public Set<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(Set<User> users) {
-		this.users = users;
-	}
+//	public Set<Trade> getTrades() {
+//		return trades;
+//	}
+//
+//	public void setTrades(Set<Trade> trades) {
+//		this.trades = trades;
+//	}
 }
