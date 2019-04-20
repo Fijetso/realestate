@@ -2,6 +2,7 @@ package vn.edu.uit.realestate.Controller;
 
 
 import java.net.URI;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,8 +27,8 @@ public class UserController {
 	private UserRepository userRepository;
 
     @GetMapping("/users")
-    public List<User> getUsers() {
-    	List<User> users = userRepository.findAll();
+    public Iterable<User> getUsers() {
+    	Iterable<User> users = userRepository.findAll();
         return users;
     }
     @GetMapping("/user/{id}")
@@ -40,6 +41,7 @@ public class UserController {
 		}
 		return null;
     }
+    
     @PostMapping("/users")
     public ResponseEntity<User> postUser(@Valid @RequestBody User user) {
     	userRepository.save(user);
