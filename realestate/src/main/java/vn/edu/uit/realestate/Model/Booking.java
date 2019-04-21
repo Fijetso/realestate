@@ -20,13 +20,13 @@ public class Booking {
 	private String email;
 	private Date timeStart;
 	private Date timeEnd;
-	@OneToOne(mappedBy = "booking")
-	private Trade trade;
+//	@ManyToOne
+//	@JoinColumn(name="tradeId", referencedColumnName="id")
+//	private Trade trade;
 	public Booking() {
 		super();
 	}
-	public Booking(Long id, String name, String phone, String email, Date timeStart, Date timeEnd,
-			Trade trade) {
+	public Booking(Long id, String name, String phone, String email, Date timeStart, Date timeEnd) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -34,7 +34,6 @@ public class Booking {
 		this.email = email;
 		this.timeStart = timeStart;
 		this.timeEnd = timeEnd;
-		this.trade = trade;
 	}
 	public Long getId() {
 		return id;
@@ -72,10 +71,10 @@ public class Booking {
 	public void setTimeEnd(Date timeEnd) {
 		this.timeEnd = timeEnd;
 	}
-	public Trade getTrade() {
-		return trade;
-	}
-	public void setTrade(Trade trade) {
-		this.trade = trade;
-	} 
+//	public Trade getTrade() {
+//		return trade;
+//	}
+//	public void setTrade(Trade trade) {
+//		this.trade = trade;
+//	} 
 	}
