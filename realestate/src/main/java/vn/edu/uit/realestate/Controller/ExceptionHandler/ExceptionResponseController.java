@@ -17,9 +17,9 @@ import vn.edu.uit.realestate.Controller.ExceptionHandler.*;
 
 @ControllerAdvice
 @RestController
-public class ExceptionResponseResource extends ResponseEntityExceptionHandler {
+public class ExceptionResponseController extends ResponseEntityExceptionHandler {
 
-	public ExceptionResponseResource() {
+	public ExceptionResponseController() {
 		// TODO Auto-generated constructor stub
 	}
 	@ExceptionHandler(Exception.class)
@@ -27,8 +27,8 @@ public class ExceptionResponseResource extends ResponseEntityExceptionHandler {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),ex.getMessage(), request.getDescription(false));
 		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	@ExceptionHandler(HistoryNotFoundException.class)
-	public final ResponseEntity<Object> handleHistoryNotFoundException(Exception ex, WebRequest request) throws Exception {
+	@ExceptionHandler(NotFoundException.class)
+	public final ResponseEntity<Object> handleNotFoundException(Exception ex, WebRequest request) throws Exception {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),ex.getMessage(), request.getDescription(false));
 		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
 	}

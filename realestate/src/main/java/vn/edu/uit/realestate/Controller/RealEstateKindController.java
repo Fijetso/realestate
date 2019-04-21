@@ -19,7 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import vn.edu.uit.realestate.Controller.ExceptionHandler.HistoryNotFoundException;
+import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
+import vn.edu.uit.realestate.Model.Menu;
 import vn.edu.uit.realestate.Model.RealEstateKind;
 import vn.edu.uit.realestate.Repository.RealEstateKindRepository;
 
@@ -29,22 +30,24 @@ public class RealEstateKindController {
 	private RealEstateKindRepository realEstateKindRepository;
 
     @GetMapping("/realestatekinds")
-    public Iterable<RealEstateKind> getRealEstateKinds() {
-    	Iterable<RealEstateKind> realEstateKinds = realEstateKindRepository.findAll();
-        return realEstateKinds;
+    public ResponseEntity<Object> getRealEstateKinds() {
+        List<RealEstateKind> realEstateKinds = realEstateKindRepository.findAll();
+    	if (realEstateKinds.isEmpty() == true) {
+    		throw new NotFoundException("Cannot find any Real Estate Kind");
+    	}
+        return new ResponseEntity<>(realEstateKinds, HttpStatus.OK);
     }
     @GetMapping("/realestatekinds/{id}")
-    public Optional<RealEstateKind> getRealEstateById(@PathVariable long id) {
-		try {
-		    	Optional<RealEstateKind> foundRealEstate = realEstateKindRepository.findById(id);
-		        return foundRealEstate;
-		}catch(Exception e) {
-			System.out.println("\nPROBLEM: "+e);
+    public ResponseEntity<Object> getRealEstateById(@PathVariable long id) {
+	    Optional<RealEstateKind> foundRealEstate = realEstateKindRepository.findById(id);
+		if (foundRealEstate.isPresent()==false) {
+			throw new NotFoundException("Cannot find any Real Estate Kind with id="+id);
 		}
-		return null;
-    }
+	    return new ResponseEntity<>(foundRealEstate, HttpStatus.OK);
+	}
+
     @PostMapping("/realestatekinds")
-    public ResponseEntity<RealEstateKind> addRealEstateKind(@Valid @RequestBody RealEstateKind realEstateKind) {
+    public ResponseEntity<RealEstateKind> addRealEstateKind(@Valid @RequestBody RealEstateKind realEstateKind) throws Exception {
     	realEstateKindRepository.save(realEstateKind);
     	URI location = ServletUriComponentsBuilder
     			.fromCurrentRequest().path("/{id}")
@@ -52,11 +55,7 @@ public class RealEstateKindController {
     	return ResponseEntity.created(location).build();
     }
     @DeleteMapping("/realestatekinds/{id}")
-    public void deleteHistoryById(@PathVariable long id) {
-		try {
+    public void deleteHistoryById(@PathVariable long id) throws Exception {
 			realEstateKindRepository.deleteById(id);
-		}catch(Exception e) {
-			System.out.println("\nPROBLEM: "+e);
-		}
     }
 }

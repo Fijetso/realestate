@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import vn.edu.uit.realestate.Controller.ExceptionHandler.HistoryNotFoundException;
+import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.Model.Menu;
 import vn.edu.uit.realestate.Repository.MenuRepository;
 
@@ -29,19 +29,21 @@ public class MenuController {
 	private MenuRepository menuRepository;
 
     @GetMapping("/history")
-    public Iterable<Menu> getHistory() {
-    	Iterable<Menu> history = menuRepository.findAll();
-        return history;
+    public ResponseEntity<List<Menu>> getHistory() {
+    	List<Menu> history = menuRepository.findAll();
+    	if (history.isEmpty() == true) {
+    		throw new NotFoundException("Cannot find any history");
+    	}
+        return new ResponseEntity<>(history,HttpStatus.OK);
     }
+    
     @GetMapping("/history/{id}")
-    public Optional<Menu> getHistoryById(@PathVariable long id) {
-		try {
-		    	Optional<Menu> historyById = menuRepository.findById(id);
-		        return historyById;
-		}catch(Exception e) {
-			System.out.println("\nPROBLEM: "+e);
-		}
-		return null;
+    public ResponseEntity<Object> getHistoryById(@PathVariable long id) throws Exception{
+    	Optional<Menu> historyById = menuRepository.findById(id);
+    	if (historyById.isPresent()==false) {
+    		throw new NotFoundException("Cannot find any history with id="+id);
+    	}
+        return new ResponseEntity<>(historyById, HttpStatus.OK);
     }
     
     @PostMapping("/history")
@@ -50,7 +52,7 @@ public class MenuController {
 	    	Optional<Menu> parentMenu = menuRepository.findById(menu.getParentId());
 	    	if (parentMenu.isPresent()==false)
 	    	{
-	    		throw new HistoryNotFoundException("Cannot find ParentId="+menu.getParentId());
+	    		throw new NotFoundException("Cannot find ParentId="+menu.getParentId());
 	    	}
     	}
     	menuRepository.save(menu);
@@ -60,19 +62,14 @@ public class MenuController {
     	return ResponseEntity.created(location).build();
     }
     @DeleteMapping("/history/{id}")
-    public void deleteHistoryById(@PathVariable long id) {
-		try {
-		    	menuRepository.deleteById(id);
-		}catch(Exception e) {
-			System.out.println("\nPROBLEM: "+e);
+    public void deleteHistoryById(@PathVariable long id) throws Exception{
+		if(!menuRepository.existsById(id)) {
+			throw new NotFoundException("Cannot find History with Id="+id);
 		}
+    	menuRepository.deleteById(id);
     }
     @DeleteMapping("/history/all")
-    public void clearHistory() {
-		try {
-		    	menuRepository.deleteAll();;
-		}catch(Exception e) {
-			System.out.println("\nPROBLEM: "+e);
-		}   
+    public void clearHistory() throws Exception {
+		    	menuRepository.deleteAll();
     }
 }

@@ -18,13 +18,12 @@ public class Address {
 	private String ward;
 	private String district;
 	private String cityOrProvince;
-	@OneToOne(mappedBy = "address")
-	private Trade trade;
+//	@OneToOne(mappedBy = "address")
+//	private Trade trade;
 	public Address() {
 		super();
 	}
-	public Address(Long id, String detail, String street, String ward, String district, String cityOrProvince,
-			Trade trade) {
+	public Address(Long id, String detail, String street, String ward, String district, String cityOrProvince) {
 		super();
 		this.id = id;
 		this.detail = detail;
@@ -32,7 +31,6 @@ public class Address {
 		this.ward = ward;
 		this.district = district;
 		this.cityOrProvince = cityOrProvince;
-		this.trade = trade;
 	}
 	public Long getId() {
 		return id;
@@ -70,11 +68,11 @@ public class Address {
 	public void setCityOrProvince(String cityOrProvince) {
 		this.cityOrProvince = cityOrProvince;
 	}
-	public Trade getTrade() {
-		return trade;
-	}
-	public void setTrade(Trade trade) {
-		this.trade = trade;
-	}
+//	public Trade getTrade() {
+//		return trade;
+//	}
+//	public void setTrade(Trade trade) {
+//		this.trade = trade;
+//	}
 
 }
