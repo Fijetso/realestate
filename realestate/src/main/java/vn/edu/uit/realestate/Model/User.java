@@ -10,18 +10,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
+import javax.validation.constraints.Email;
 
 @Entity
 public class User {
 	@Id
 	@GeneratedValue
 	private Long id;
-	@Size(min=2)
+	@Size(min=2, message="Name should have at least 2 characters")
 	private String name;
+	@Email(message="It seems Email cannot recognized")
 	private String email;
 	private String phone;
 	private String password;
-	@Past
+	@Past(message="BirthDate must be in the past")
 	private Date birthdate;
 	private boolean gender;
 	@ManyToOne(fetch=FetchType.EAGER)
