@@ -1,25 +1,29 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-// Add module 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatMenuModule, MatButtonModule} from '@angular/material'
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
+
+import { AppComponent } from './app.component';
+import { LayoutComponent } from './components/layout/layout.component';
+import { MessagesComponent } from './components/messages/messages.component';
+import { RealestateListComponent } from './components/realestate-list/realestate-list.component';
+import { RealestateItemComponent } from './components/realestate-item/realestate-item.component';
+import { RealestateService } from './service/realestate/realestate.service';
+import { MessageService } from './service/message/message.service'
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LayoutComponent,
+    MessagesComponent,
+    RealestateListComponent,
+    RealestateItemComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
-    MatMenuModule, MatButtonModule,
-    FormsModule,
-    ReactiveFormsModule
+    BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [MessageService, RealestateService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

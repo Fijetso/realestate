@@ -8,7 +8,6 @@
       "sourceRoot": "src",
       "projectType": "application",
       "prefix": "app",
-      "schematics": {},
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -23,7 +22,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss"
             ],
             "scripts": [],
             "es5BrowserSupport": true
@@ -101,7 +100,11 @@
             ]
           }
         }
-      }
+      },
+      "schematics": {
+  "@schematics/angular:component": {
+    "styleext": "scss"
+  }}
     },
     "realestate-client-e2e": {
       "root": "e2e/",
