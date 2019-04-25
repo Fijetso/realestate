@@ -9,7 +9,9 @@ import { MessagesComponent } from './components/messages/messages.component';
 import { RealestateListComponent } from './components/realestate-list/realestate-list.component';
 import { RealestateItemComponent } from './components/realestate-item/realestate-item.component';
 import { RealestateService } from './service/realestate/realestate.service';
-import { MessageService } from './service/message/message.service'
+import { MessageService } from './service/message/message.service';
+import { MainNavComponent } from './components/main-nav/main-nav.component';
+import { FooterComponent } from './components/footer/footer.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,6 +19,8 @@ import { MessageService } from './service/message/message.service'
     MessagesComponent,
     RealestateListComponent,
     RealestateItemComponent,
+    MainNavComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
