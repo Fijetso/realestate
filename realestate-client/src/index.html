@@ -9,7 +9,31 @@
   <link href = "https://fonts.googleapis.com/icon?family=Material+Icons" rel = "stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body class="mdb-skin">
+<body>
   <app-root></app-root>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxEsgD2edDcqz5wgKqjYJVjcqmWztNF3A&libraries=places&language=vi"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyAREyV7hH2Y-10jPktq6W_E1tCz7qgO0lk",
+      authDomain: "realestate-238715.firebaseapp.com",
+      databaseURL: "https://realestate-238715.firebaseio.com",
+      projectId: "realestate-238715",
+      storageBucket: "realestate-238715.appspot.com",
+      messagingSenderId: "642195689297"
+    };
+    firebase.initializeApp(config);
+  </script>
+
+<script src="https://js.api.here.com/v3/3.0/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://js.api.here.com/v3/3.0/mapsjs-service.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://js.api.here.com/v3/3.0/mapsjs-pano.js" 
+     type="text/javascript" charset="utf-8"></script>
+     <script src="http://js.api.here.com/v3/3.0/mapsjs-ui.js" 
+     type="text/javascript" charset="utf-8"></script>
+   <link rel="stylesheet" type="text/css" 
+     href="http://js.api.here.com/v3/3.0/mapsjs-ui.css" />
+</body>
 </body>
 </html>

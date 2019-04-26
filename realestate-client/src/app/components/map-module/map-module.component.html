@@ -1,0 +1,9 @@
+<p>
+  map-module works!
+</p>
+<span>{{map.lat}} - {{map.lng}}</span>
+<agm-map [latitude]="map.lat" [longitude]="map.lng" class="ml-auto clear-fix">
+  <agm-marker [latitude]="map.lat" [longitude]="map.lng"></agm-marker>
+  <agm-direction [origin]="origin" [destination]="destination">
+  </agm-direction>
+</agm-map>

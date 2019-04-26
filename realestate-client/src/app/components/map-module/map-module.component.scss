@@ -1,0 +1,9 @@
+agm-map {
+    height: 50vh;
+    width: 30vw;
+}
+@media(max-width:500px){
+    agm-map {
+        visibility: hidden;
+    }
+}

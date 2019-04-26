@@ -5,7 +5,7 @@
 >
   <!-- Navbar brand -->
   <mdb-navbar-brand
-    ><a class="navbar-brand" routerLink="list">Logo</a></mdb-navbar-brand
+    ><a class="navbar-brand" routerLink="list" routerLinkActive="active">Logo</a></mdb-navbar-brand
   >
   <!-- Collapsible content -->
   <links>
@@ -16,12 +16,14 @@
         >
       </li> -->
       <li class="nav-item">
-        <a class="nav-link waves-light" mdbWavesEffect routerLink="list" >List Realstate</a>
+        <a class="nav-link waves-light" mdbWavesEffect routerLink="detail" routerLinkActive="active">Detail</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link waves-light" mdbWavesEffect routerLink="detail">Detail</a>
+        <a class="nav-link waves-light" mdbWavesEffect routerLink="map" routerLinkActive="active">Go to map</a>
       </li>
-
+      <li class="nav-item">
+        <a class="nav-link waves-light" mdbWavesEffect routerLink="login" routerLinkActive="active">Log In</a>
+      </li>
       <!-- Dropdown -->
       <!-- <li class="nav-item dropdown" dropdown>
         <a
@@ -59,11 +61,12 @@
     <!-- Links -->
     <ul class="navbar-nav ml-auto">
       <li class="nav-item active">
-        <button type="button" class="btn btn-rounded orange text-white">Bán BĐS</button>
+        <button type="button" class="btn btn-rounded orange text-white" (click)="openDialog()" ><span routerLink="sale"
+          routerLinkActive="active">Bán BĐS</span></button>
       </li>
       <li class="nav-item">
-        <a class="nav-link waves-light" mdbWavesEffect
-          ><mdb-icon fas icon="cog"></mdb-icon> Settings</a
+        <a class="nav-link waves-light" mdbWavesEffect routerLink="setting"
+        routerLinkActive="active" ><mdb-icon fas icon="cog"></mdb-icon> Settings</a
         >
       </li>
 
@@ -75,6 +78,8 @@
           type="button"
           class="nav-link dropdown-toggle waves-light"
           mdbWavesEffect
+          routerLink="profile"
+          routerLinkActive="active"
         >
           <mdb-icon fas icon="user"></mdb-icon> Profile<span
             class="caret"
@@ -82,13 +87,15 @@
         ></a>
         <div
           *dropdownMenu
-          class="dropdown-menu dropdown-menu-right dropdown dropdown-primary"
+          class="dropdown-menu dropdown-menu-right dropdown dropdown-primary orange-gradient"
           role="menu"
         >
-          <a class="dropdown-item waves-light" mdbWavesEffect href="#"
+          <a class="dropdown-item waves-light" mdbWavesEffect routerLink="account"
+          routerLinkActive="active"
             >My account</a
           >
-          <a class="dropdown-item waves-light" mdbWavesEffect href="#"
+          <a class="dropdown-item waves-light" mdbWavesEffect  routerLink="logout"
+          routerLinkActive="active"
             >Log out</a
           >
         </div>
@@ -98,4 +105,4 @@
   </links>
   <!-- Collapsible content -->
 </mdb-navbar>
-<!--/.Navbar-->
+<!--/.Navbar--> 
