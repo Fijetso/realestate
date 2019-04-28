@@ -32,20 +32,20 @@ public class TradeController {
     public ResponseEntity<List<Trade>> getTrades() {
     	List<Trade> trades = tradeRepository.findAll();
     	if (trades.isEmpty() == true) {
-    		throw new NotFoundException("Cannot find any trade");
+    		throw new NotFoundException("Cannot find any Trade");
     	}
         return new ResponseEntity<>(trades,HttpStatus.OK);
     }
     @GetMapping("/trades/{id}")
-    public ResponseEntity<Optional<Trade>> getTradeById(@PathVariable long id) throws Exception {
+    public ResponseEntity<Trade> getTradeById(@PathVariable long id){
 		Optional<Trade> foundTrade = tradeRepository.findById(id);
 		if (foundTrade.isPresent()==false) {
-    		throw new NotFoundException("Cannot find any trade with id="+id);
+    		throw new NotFoundException("Cannot find any Trade with id="+id);
     	}
-        return new ResponseEntity<>(foundTrade, HttpStatus.OK);
+        return new ResponseEntity<>(foundTrade.get(), HttpStatus.OK);
      }
     @PostMapping("/trades")
-    public ResponseEntity<Trade> addTrade(@Valid @RequestBody Trade trade)throws Exception {
+    public ResponseEntity<Trade> postTrade(@Valid @RequestBody Trade trade)throws Exception {
     	tradeRepository.save(trade);
     	URI location = ServletUriComponentsBuilder
     			.fromCurrentRequest().path("/{id}")
@@ -55,7 +55,7 @@ public class TradeController {
     @DeleteMapping("/trades/{id}")
     public void deleteHistoryById(@PathVariable long id)throws Exception {
     	if(!tradeRepository.existsById(id)) {
-			throw new NotFoundException("Cannot find any trade with Id="+id);
+			throw new NotFoundException("Cannot find any Trade with Id="+id);
 		}
 		tradeRepository.deleteById(id);
     }
