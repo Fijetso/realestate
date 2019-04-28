@@ -48,9 +48,12 @@ public class UserKindController {
     }
     @GetMapping("/userkinds/{userKindId}/users")
     public ResponseEntity<List<User>> getUsersByUserKindId(@PathVariable Long userKindId) {
-    	UserKind foundUserKind = userKindRepository.findById(userKindId).get();
-    	List<User> users = foundUserKind.getUsers();
-    	if(users == null)
+    	Optional<UserKind> foundUserKind = userKindRepository.findById(userKindId);
+    	if (foundUserKind.isPresent()==false) {
+    		throw new NotFoundException("Cannot find any User Kind with id="+userKindId);
+    	}
+    	List<User> users = foundUserKind.get().getUsers();
+    	if(users.isEmpty() == true)
     		throw new NotFoundException("Cannot find any User with User Kind Id="+userKindId);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
@@ -71,7 +74,7 @@ public class UserKindController {
         user.setUserKind(foundUserKind.get());
         userRepository.save(user);
     	URI location = ServletUriComponentsBuilder
-    			.fromCurrentRequest().path("/{id}")
+    			.fromPath("users/{id}")
     			.buildAndExpand(user.getId()).toUri();
     	return ResponseEntity.created(location).build();
     }

@@ -1,5 +1,6 @@
 package vn.edu.uit.realestate.Model;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -44,18 +45,18 @@ public class Trade {
     private Details details;
 	
 	@OneToMany(mappedBy="trade")
-	private Set<Image> images;
+	private List<Image> images;
 	
 	@OneToMany
 	@JoinColumn(name="bookingId", referencedColumnName = "id")
-	private  Set<Booking> bookings;
+	private  List<Booking> bookings;
 	
 	public Trade() {
 		super();
 	}
 
 	public Trade(Long id, User user, RealEstateKind realEstateKind, Address address, Details details, Long cost,
-			Set<Image> images, String description, Set<Booking> bookings) {
+			List<Image> images, String description, List<Booking> bookings) {
 		super();
 		this.id = id;
 		this.user = user;
@@ -109,19 +110,19 @@ public class Trade {
 		this.description = description;
 	}
 	
-	public Set<Image> getImages() {
+	public List<Image> getImages() {
 		return images;
 	}
 
-	public void setImages(Set<Image> images) {
+	public void setImages(List<Image> images) {
 		this.images = images;
 	}
 
-	public Set<Booking> getBooking() {
+	public List<Booking> getBooking() {
 		return bookings;
 	}
 
-	public void setBooking(Set<Booking> bookings) {
+	public void setBooking(List<Booking> bookings) {
 		this.bookings = bookings;
 	}
 
@@ -149,11 +150,11 @@ public class Trade {
 		this.tradeKind = tradeKind;
 	}
 
-	public Set<Booking> getBookings() {
+	public List<Booking> getBookings() {
 		return bookings;
 	}
 
-	public void setBookings(Set<Booking> bookings) {
+	public void setBookings(List<Booking> bookings) {
 		this.bookings = bookings;
 	}
 	
