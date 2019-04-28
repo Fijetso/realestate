@@ -4,13 +4,9 @@ package vn.edu.uit.realestate.Controller;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
-import vn.edu.uit.realestate.Model.Trade;
 import vn.edu.uit.realestate.Model.User;
 import vn.edu.uit.realestate.Model.UserKind;
 import vn.edu.uit.realestate.Repository.UserKindRepository;
@@ -32,6 +27,8 @@ import vn.edu.uit.realestate.Repository.UserRepository;
 public class UserKindController {
 	@Autowired
 	private UserKindRepository userKindRepository;
+	@Autowired
+	private UserRepository userRepository;
 
     @GetMapping("/userkinds")
     public ResponseEntity<List<UserKind>> getUserKinds() {
@@ -63,6 +60,19 @@ public class UserKindController {
     	URI location = ServletUriComponentsBuilder
     			.fromCurrentRequest().path("/{id}")
     			.buildAndExpand(userKind.getId()).toUri();
+    	return ResponseEntity.created(location).build();
+    }
+    @PostMapping("/userkinds/{userKindId}/users")
+    public ResponseEntity<User> postUser(@PathVariable (value = "userKindId") Long userKindId,@Valid @RequestBody User user) {
+    	Optional<UserKind> foundUserKind = userKindRepository.findById(userKindId);
+		if (foundUserKind.isPresent()==false) {
+    		throw new NotFoundException("Cannot find any User Kind with id="+userKindId);
+    	}
+        user.setUserKind(foundUserKind.get());
+        userRepository.save(user);
+    	URI location = ServletUriComponentsBuilder
+    			.fromCurrentRequest().path("/{id}")
+    			.buildAndExpand(user.getId()).toUri();
     	return ResponseEntity.created(location).build();
     }
     @DeleteMapping("/userkinds/{id}")

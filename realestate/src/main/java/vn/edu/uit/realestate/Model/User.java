@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.validation.constraints.Email;
 
 @Entity
-@JsonIgnoreProperties({"userKind", "trades"})
+@JsonIgnoreProperties("trades")
 public class User {
 	@Id
 	@GeneratedValue
