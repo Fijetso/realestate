@@ -6,7 +6,6 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { AgmCoreModule } from '@agm/core';
 import { AgmDirectionModule } from 'agm-direction';   // agm-direction
 import {MatDialogModule} from '@angular/material/dialog';
-
 import { AppComponent } from './app.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { MessagesComponent } from './components/messages/messages.component';
