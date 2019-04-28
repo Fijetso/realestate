@@ -1,18 +1,23 @@
 package vn.edu.uit.realestate.Model;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.validation.constraints.Email;
 
 @Entity
+@JsonIgnoreProperties({"userKind", "trades"})
 public class User {
 	@Id
 	@GeneratedValue
@@ -26,16 +31,20 @@ public class User {
 	@Past(message="BirthDate must be in the past")
 	private Date birthdate;
 	private boolean gender;
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="userKindId", referencedColumnName="id")
+	@ManyToOne
+//	@JoinColumn(name="userKindId", referencedColumnName="id")
 	private UserKind userKind;
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	private Set<Trade> trades;
 
 	public User() {
 		super();
 	}	
 
-	public User(Long id, String name, String email, String phone, String password, Date birthdate, boolean gender,
-			UserKind userKind) {
+	public User(Long id, @Size(min = 2, message = "Name should have at least 2 characters") String name,
+			@Email(message = "It seems Email cannot recognized") String email, String phone, String password,
+			@Past(message = "BirthDate must be in the past") Date birthdate, boolean gender, UserKind userKind,
+			Set<Trade> trades) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -45,6 +54,7 @@ public class User {
 		this.birthdate = birthdate;
 		this.gender = gender;
 		this.userKind = userKind;
+		this.trades = trades;
 	}
 
 	public Long getId() {
@@ -109,6 +119,14 @@ public class User {
 
 	public void setGender(boolean gender) {
 		this.gender = gender;
+	}
+
+	public Set<Trade> getTrades() {
+		return trades;
+	}
+
+	public void setTrades(Set<Trade> trades) {
+		this.trades = trades;
 	}
 	
 }

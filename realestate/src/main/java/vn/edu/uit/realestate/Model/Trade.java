@@ -12,11 +12,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
+@JsonIgnoreProperties("bookings")
 public class Trade {
 	@Id
 	@GeneratedValue
 	private Long id;
+	private String description;
+	private Long cost;
 	
 	@ManyToOne
 	@JoinColumn(name="userId", referencedColumnName = "id")
@@ -26,6 +31,10 @@ public class Trade {
 	@JoinColumn(name="realEstateKindId", referencedColumnName = "id")
 	private RealEstateKind realEstateKind;
 	
+	@ManyToOne
+	@JoinColumn(name="tradeKindId", referencedColumnName = "id")
+	private RealEstateKind tradeKind;
+	
 	@OneToOne
     @JoinColumn(name = "addressId", referencedColumnName = "id")
     private Address address;
@@ -34,23 +43,19 @@ public class Trade {
     @JoinColumn(name = "detailsId", referencedColumnName = "id")
     private Details details;
 	
-	private Long cost;
-	
-	@OneToMany
-	@JoinColumn(name="imageId", referencedColumnName = "id")
+	@OneToMany(mappedBy="trade")
 	private Set<Image> images;
-	
-	private String description;
 	
 	@OneToMany
 	@JoinColumn(name="bookingId", referencedColumnName = "id")
-	private  Set<Booking> booking;
+	private  Set<Booking> bookings;
+	
 	public Trade() {
 		super();
 	}
 
 	public Trade(Long id, User user, RealEstateKind realEstateKind, Address address, Details details, Long cost,
-			Set<Image> images, String description, Set<Booking> booking) {
+			Set<Image> images, String description, Set<Booking> bookings) {
 		super();
 		this.id = id;
 		this.user = user;
@@ -60,7 +65,7 @@ public class Trade {
 		this.cost = cost;
 		this.images = images;
 		this.description = description;
-		this.booking = booking;
+		this.bookings = bookings;
 	}
 
 	public Long getId() {
@@ -113,11 +118,11 @@ public class Trade {
 	}
 
 	public Set<Booking> getBooking() {
-		return booking;
+		return bookings;
 	}
 
-	public void setBooking(Set<Booking> booking) {
-		this.booking = booking;
+	public void setBooking(Set<Booking> bookings) {
+		this.bookings = bookings;
 	}
 
 	public User getUser() {
@@ -134,6 +139,22 @@ public class Trade {
 
 	public void setRealEstateKind(RealEstateKind realEstateKind) {
 		this.realEstateKind = realEstateKind;
+	}
+
+	public RealEstateKind getTradeKind() {
+		return tradeKind;
+	}
+
+	public void setTradeKind(RealEstateKind tradeKind) {
+		this.tradeKind = tradeKind;
+	}
+
+	public Set<Booking> getBookings() {
+		return bookings;
+	}
+
+	public void setBookings(Set<Booking> bookings) {
+		this.bookings = bookings;
 	}
 	
 }

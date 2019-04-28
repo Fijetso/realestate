@@ -8,7 +8,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
+@JsonIgnoreProperties("trade")
 public class Details {
 	@Id
 	@GeneratedValue
@@ -23,13 +26,13 @@ public class Details {
 	private int bedrooms;
 	private String utilities;
 	private String others;
-//	@OneToOne(mappedBy = "details")
-//	private Trade trade;
+	@OneToOne(mappedBy = "details")
+	private Trade trade;
 	public Details() {
 		super();
 	}
 	public Details(Long id, Long length, Long width, Long square, String direction, String floors,
-			String legalDocuments, int bathrooms, int bedrooms, String utilities, String others) {
+			String legalDocuments, int bathrooms, int bedrooms, String utilities, String others, Trade trade) {
 		super();
 		this.id = id;
 		this.length = length;
@@ -42,7 +45,9 @@ public class Details {
 		this.bedrooms = bedrooms;
 		this.utilities = utilities;
 		this.others = others;
+		this.trade = trade;
 	}
+
 	public Long getId() {
 		return id;
 	}
@@ -109,10 +114,10 @@ public class Details {
 	public void setOthers(String others) {
 		this.others = others;
 	}
-//	public Trade getTrade() {
-//		return trade;
-//	}
-//	public void setTrade(Trade trade) {
-//		this.trade = trade;
-//	} 
+	public Trade getTrade() {
+		return trade;
+	}
+	public void setTrade(Trade trade) {
+		this.trade = trade;
+	} 
 	}
