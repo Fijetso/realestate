@@ -1,9 +1,8 @@
-# realestate
+# Real Estate Web Application
 
-Swagger URL: http://localhost:8080/swagger-ui.html
-Swagger API: http://localhost:8080/v2/api-docs
-
-Intergrate Angular and Spring Boot
+**[Swagger URL](http://localhost:8080/swagger-ui.html)**
+**[Swagger API](http://localhost:8080/v2/api-docs)**
+**How to intergrate Angular and Spring Boot:**
 
 - Step 1: Go to Directory realsestate/client. Run cmd: ng build --prod.
 - Step 2: Maven clean Spring Boot project.
