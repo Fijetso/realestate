@@ -1,17 +1,10 @@
 package vn.edu.uit.realestate.Model;
 
 import java.util.List;
-import java.util.Set;
-
-import javax.persistence.Basic;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-
-import org.hibernate.annotations.LazyToOne;
-import org.hibernate.annotations.LazyToOneOption;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

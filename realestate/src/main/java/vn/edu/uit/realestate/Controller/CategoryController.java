@@ -33,7 +33,7 @@ public class CategoryController {
 	private NewsRepository newsRepository;
 
     @GetMapping("/categories")
-    public ResponseEntity<List<Category>> getUserKinds() {
+    public ResponseEntity<List<Category>> getCategories() {
     	List<Category> categories = categoryRepository.findAll();
     	if (categories.isEmpty() == true) {
     		throw new NotFoundException("Cannot find any Category");
@@ -41,7 +41,7 @@ public class CategoryController {
         return new ResponseEntity<>(categories,HttpStatus.OK);
     }
     @GetMapping("/categories/{id}")
-    public ResponseEntity<Category> getCategory(@PathVariable long id) {
+    public ResponseEntity<Category> getCategoryById(@PathVariable long id) {
     	Optional<Category> foundCategory = categoryRepository.findById(id);
 		if (foundCategory.isPresent()==false) {
     		throw new NotFoundException("Cannot find any Category with id="+id);
@@ -68,7 +68,7 @@ public class CategoryController {
     	return ResponseEntity.created(location).build();
     }
     @PostMapping("/categories/{categoryId}/news")
-    public ResponseEntity<News> postNews(@PathVariable (value = "categoryId") Long categoryId, @Valid @RequestBody News news) {
+    public ResponseEntity<News> postNewsByCategoryId(@PathVariable (value = "categoryId") Long categoryId, @Valid @RequestBody News news) {
     	Optional<Category> foundCategory = categoryRepository.findById(categoryId);
 		if (foundCategory.isPresent()==false) {
     		throw new NotFoundException("Cannot find any Category with id="+categoryId);
@@ -81,7 +81,7 @@ public class CategoryController {
     	return ResponseEntity.created(location).build();
     }
     @DeleteMapping("/categories/{id}")
-    public void deleteUserKind(@PathVariable long id) {
+    public void deleteCategoryById(@PathVariable long id) {
     	Optional<Category> foundCategory = categoryRepository.findById(id);
     	if(foundCategory.isPresent()==false) {
 			throw new NotFoundException("Cannot find any Category with Id="+id);

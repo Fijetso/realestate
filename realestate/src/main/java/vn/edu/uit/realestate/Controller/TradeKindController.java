@@ -2,7 +2,6 @@ package vn.edu.uit.realestate.Controller;
 
 
 import java.net.URI;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,11 +20,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import vn.edu.uit.realestate.Controller.ExceptionHandler.ExistContentException;
 import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
-import vn.edu.uit.realestate.Model.Menu;
-import vn.edu.uit.realestate.Model.RealEstateKind;
 import vn.edu.uit.realestate.Model.Trade;
 import vn.edu.uit.realestate.Model.TradeKind;
-import vn.edu.uit.realestate.Repository.RealEstateKindRepository;
 import vn.edu.uit.realestate.Repository.TradeKindRepository;
 
 @RestController

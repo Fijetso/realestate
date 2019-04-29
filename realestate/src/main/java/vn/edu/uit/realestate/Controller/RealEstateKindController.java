@@ -2,7 +2,6 @@ package vn.edu.uit.realestate.Controller;
 
 
 import java.net.URI;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,11 +20,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import vn.edu.uit.realestate.Controller.ExceptionHandler.ExistContentException;
 import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
-import vn.edu.uit.realestate.Model.Menu;
 import vn.edu.uit.realestate.Model.RealEstateKind;
 import vn.edu.uit.realestate.Model.Trade;
-import vn.edu.uit.realestate.Model.User;
-import vn.edu.uit.realestate.Model.UserKind;
 import vn.edu.uit.realestate.Repository.RealEstateKindRepository;
 
 @RestController
@@ -42,7 +38,7 @@ public class RealEstateKindController {
         return new ResponseEntity<>(realEstateKinds, HttpStatus.OK);
     }
     @GetMapping("/realestatekinds/{id}")
-    public ResponseEntity<RealEstateKind> getRealEstateById(@PathVariable long id) {
+    public ResponseEntity<RealEstateKind> getRealEstateKindById(@PathVariable long id) {
 	    Optional<RealEstateKind> foundRealEstate = realEstateKindRepository.findById(id);
 		if (foundRealEstate.isPresent()==false) {
 			throw new NotFoundException("Cannot find any Real Estate Kind with id="+id);
@@ -51,7 +47,7 @@ public class RealEstateKindController {
 	}
 
     @PostMapping("/realestatekinds")
-    public ResponseEntity<RealEstateKind> addRealEstateKind(@Valid @RequestBody RealEstateKind realEstateKind) throws Exception {
+    public ResponseEntity<RealEstateKind> postRealEstateKind(@Valid @RequestBody RealEstateKind realEstateKind) throws Exception {
     	realEstateKindRepository.save(realEstateKind);
     	URI location = ServletUriComponentsBuilder
     			.fromCurrentRequest().path("/{id}")
@@ -70,7 +66,7 @@ public class RealEstateKindController {
         return new ResponseEntity<>(trades, HttpStatus.OK);
     }
     @DeleteMapping("/realestatekinds/{id}")
-    public void deleteHistoryById(@PathVariable long id) throws Exception {
+    public void deleteRealEstateKindById(@PathVariable long id) throws Exception {
     	Optional<RealEstateKind> foundRealEstate = realEstateKindRepository.findById(id);
 		if (foundRealEstate.isPresent()==false) {
 			throw new NotFoundException("Cannot find any Real Estate Kind with id="+id);

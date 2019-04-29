@@ -29,7 +29,7 @@ public class BookingController {
         return new ResponseEntity<>(bookings,HttpStatus.OK);
     }
     @GetMapping("/bookings/{id}")
-    public ResponseEntity<Booking> getBooking(@PathVariable long id) {
+    public ResponseEntity<Booking> getBookingById(@PathVariable long id) {
     	Optional<Booking> foundBooking = bookingRepository.findById(id);
 		if (foundBooking.isPresent()==false) {
     		throw new NotFoundException("Cannot find any Booking with id="+id);
@@ -38,7 +38,7 @@ public class BookingController {
     }
     
     @DeleteMapping("/bookings/{id}")
-    public void deleteBooking(@PathVariable long id) {
+    public void deleteBookingById(@PathVariable long id) {
     	if(!bookingRepository.existsById(id)) {
 			throw new NotFoundException("Cannot find any Booking with Id="+id);
 		}

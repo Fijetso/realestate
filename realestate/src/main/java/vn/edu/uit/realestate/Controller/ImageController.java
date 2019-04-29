@@ -1,30 +1,9 @@
 package vn.edu.uit.realestate.Controller;
 
 
-import java.net.URI;
-import java.util.List;
-import java.util.Optional;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import vn.edu.uit.realestate.Controller.ExceptionHandler.ExistContentException;
-import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
-import vn.edu.uit.realestate.Model.Category;
-import vn.edu.uit.realestate.Model.News;
-import vn.edu.uit.realestate.Repository.CategoryRepository;
 import vn.edu.uit.realestate.Repository.ImageRepository;
-import vn.edu.uit.realestate.Repository.NewsRepository;
 
 @RestController
 public class ImageController {

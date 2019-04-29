@@ -21,7 +21,7 @@ public class NewsController {
 	private NewsRepository newsRepository;
 
     @GetMapping("/news")
-    public ResponseEntity<List<News>> getNewsList() {
+    public ResponseEntity<List<News>> getNews() {
     	List<News> newsList = (List<News>) newsRepository.findAll();
     	if (newsList.isEmpty() == true) {
     		throw new NotFoundException("Cannot find any news");
@@ -29,7 +29,7 @@ public class NewsController {
         return new ResponseEntity<>(newsList,HttpStatus.OK);
     }
     @GetMapping("/news/{id}")
-    public ResponseEntity<News> getNews(@PathVariable long id) {
+    public ResponseEntity<News> getNewsById(@PathVariable long id) {
     	Optional<News> foundNews = newsRepository.findById(id);
 		if (foundNews.isPresent()==false) {
     		throw new NotFoundException("Cannot find any News with id="+id);
@@ -38,7 +38,7 @@ public class NewsController {
     }
     
     @DeleteMapping("/news/{id}")
-    public void deleteNews(@PathVariable long id) {
+    public void deleteNewsById(@PathVariable long id) {
     	if(!newsRepository.existsById(id)) {
 			throw new NotFoundException("Cannot find any News with Id="+id);
 		}

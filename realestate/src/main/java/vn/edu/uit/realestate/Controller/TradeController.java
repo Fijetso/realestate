@@ -20,15 +20,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import vn.edu.uit.realestate.Controller.ExceptionHandler.ExistContentException;
 import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
-import vn.edu.uit.realestate.Model.Address;
 import vn.edu.uit.realestate.Model.Booking;
-import vn.edu.uit.realestate.Model.Details;
 import vn.edu.uit.realestate.Model.Image;
 import vn.edu.uit.realestate.Model.Trade;
-import vn.edu.uit.realestate.Model.UserKind;
-import vn.edu.uit.realestate.Repository.AddressRepository;
 import vn.edu.uit.realestate.Repository.BookingRepository;
-import vn.edu.uit.realestate.Repository.DetailsRepository;
 import vn.edu.uit.realestate.Repository.ImageRepository;
 import vn.edu.uit.realestate.Repository.TradeRepository;
 
@@ -38,10 +33,6 @@ public class TradeController {
 	private TradeRepository tradeRepository;
 	@Autowired
 	private BookingRepository bookingRepository;
-	@Autowired
-	private AddressRepository addressRepository;
-	@Autowired
-	private DetailsRepository detailsRepository;
 	@Autowired
 	private ImageRepository imageRepository;
 
@@ -73,22 +64,8 @@ public class TradeController {
     	}
         return new ResponseEntity<>(bookings,HttpStatus.OK);
     }
-    @PostMapping("/trades")
-    public ResponseEntity<Trade> postTrade(@Valid @RequestBody Trade trade)throws Exception {
-    	if(trade.getAddress()!=null) {
-    		addressRepository.save(trade.getAddress());
-    	}
-    	if(trade.getDetails()!=null) {
-    		detailsRepository.save(trade.getDetails());
-    	}
-    	tradeRepository.save(trade);
-    	URI location = ServletUriComponentsBuilder
-    			.fromCurrentRequest().path("/{id}")
-    			.buildAndExpand(trade.getId()).toUri();
-    	return ResponseEntity.created(location).build();
-    }
     @PostMapping("/trades/{tradeId}/bookings")
-    public ResponseEntity<Trade> postBooking(@PathVariable long tradeId, @Valid @RequestBody Booking booking)throws Exception {
+    public ResponseEntity<Trade> postBookingByTradeId(@PathVariable long tradeId, @Valid @RequestBody Booking booking)throws Exception {
     	Optional<Trade> foundTrade = tradeRepository.findById(tradeId);
 		if (foundTrade.isPresent()==false) {
     		throw new NotFoundException("Cannot find any Trade with id="+tradeId);
@@ -100,7 +77,7 @@ public class TradeController {
     	return ResponseEntity.created(location).build();
     }
     @DeleteMapping("/trades/{id}")
-    public void deleteHistoryById(@PathVariable long id)throws Exception {
+    public void deleteTradeById(@PathVariable long id)throws Exception {
     	Optional<Trade> foundTrade = tradeRepository.findById(id);
 		if (foundTrade.isPresent()==false) {
     		throw new NotFoundException("Cannot find any Trade with id="+id);

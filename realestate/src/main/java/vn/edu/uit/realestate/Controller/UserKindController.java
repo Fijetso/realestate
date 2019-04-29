@@ -40,7 +40,7 @@ public class UserKindController {
         return new ResponseEntity<>(userKinds,HttpStatus.OK);
     }
     @GetMapping("/userkinds/{id}")
-    public ResponseEntity<UserKind> getUserKind(@PathVariable long id) {
+    public ResponseEntity<UserKind> getUserKindById(@PathVariable long id) {
     	Optional<UserKind> foundUserKind = userKindRepository.findById(id);
 		if (foundUserKind.isPresent()==false) {
     		throw new NotFoundException("Cannot find any User Kind with id="+id);
@@ -67,7 +67,7 @@ public class UserKindController {
     	return ResponseEntity.created(location).build();
     }
     @PostMapping("/userkinds/{userKindId}/users")
-    public ResponseEntity<User> postUser(@PathVariable (value = "userKindId") Long userKindId,@Valid @RequestBody User user) {
+    public ResponseEntity<User> postUserByUserKindId(@PathVariable (value = "userKindId") Long userKindId,@Valid @RequestBody User user) {
     	Optional<UserKind> foundUserKind = userKindRepository.findById(userKindId);
 		if (foundUserKind.isPresent()==false) {
     		throw new NotFoundException("Cannot find any User Kind with id="+userKindId);
@@ -80,7 +80,7 @@ public class UserKindController {
     	return ResponseEntity.created(location).build();
     }
     @DeleteMapping("/userkinds/{id}")
-    public void deleteUserKind(@PathVariable long id) {
+    public void deleteUserKindById(@PathVariable long id) {
     	Optional<UserKind> foundUserKind = userKindRepository.findById(id);
 		if (foundUserKind.isPresent()==false) {
     		throw new NotFoundException("Cannot find any User Kind with id="+id);

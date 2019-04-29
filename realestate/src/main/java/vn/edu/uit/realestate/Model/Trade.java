@@ -1,18 +1,13 @@
 package vn.edu.uit.realestate.Model;
 
 import java.util.List;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -34,7 +29,7 @@ public class Trade {
 	
 	@ManyToOne
 	@JoinColumn(name="tradeKindId", referencedColumnName = "id")
-	private RealEstateKind tradeKind;
+	private TradeKind tradeKind;
 	
 	@OneToOne
     @JoinColumn(name = "addressId", referencedColumnName = "id")
@@ -55,17 +50,18 @@ public class Trade {
 		super();
 	}
 
-	public Trade(Long id, User user, RealEstateKind realEstateKind, Address address, Details details, Long cost,
-			List<Image> images, String description, List<Booking> bookings) {
+	public Trade(Long id, String description, Long cost, User user, RealEstateKind realEstateKind, TradeKind tradeKind,
+			Address address, Details details, List<Image> images, List<Booking> bookings) {
 		super();
 		this.id = id;
+		this.description = description;
+		this.cost = cost;
 		this.user = user;
 		this.realEstateKind = realEstateKind;
+		this.tradeKind = tradeKind;
 		this.address = address;
 		this.details = details;
-		this.cost = cost;
 		this.images = images;
-		this.description = description;
 		this.bookings = bookings;
 	}
 
@@ -142,11 +138,11 @@ public class Trade {
 		this.realEstateKind = realEstateKind;
 	}
 
-	public RealEstateKind getTradeKind() {
+	public TradeKind getTradeKind() {
 		return tradeKind;
 	}
 
-	public void setTradeKind(RealEstateKind tradeKind) {
+	public void setTradeKind(TradeKind tradeKind) {
 		this.tradeKind = tradeKind;
 	}
 
