@@ -1,7 +1,10 @@
 # Real Estate Web Application
 
-**[Swagger URL](http://localhost:8080/swagger-ui.html)**
-**[Swagger API](http://localhost:8080/v2/api-docs)**
+### Graduate Thesis
+
+## **[Swagger URL](http://localhost:8080/swagger-ui.html)**
+
+## **[Swagger API](http://localhost:8080/v2/api-docs)**
 
 ## How to intergrate Angular and Spring Boot:
 
