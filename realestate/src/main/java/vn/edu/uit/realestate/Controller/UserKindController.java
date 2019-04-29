@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import vn.edu.uit.realestate.Controller.ExceptionHandler.ExistContentException;
 import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.Model.User;
 import vn.edu.uit.realestate.Model.UserKind;
@@ -80,9 +81,13 @@ public class UserKindController {
     }
     @DeleteMapping("/userkinds/{id}")
     public void deleteUserKind(@PathVariable long id) {
-    	if(!userKindRepository.existsById(id)) {
-			throw new NotFoundException("Cannot find any User Kind with Id="+id);
-		}
+    	Optional<UserKind> foundUserKind = userKindRepository.findById(id);
+		if (foundUserKind.isPresent()==false) {
+    		throw new NotFoundException("Cannot find any User Kind with id="+id);
+    	}
+    	if(foundUserKind.get().getUsers().isEmpty()==false) {
+    		throw new ExistContentException("There still exist 'User' in this User Kind. You should delete all these Users before delete.");
+    	}
     	userKindRepository.deleteById(id);
     }
 }

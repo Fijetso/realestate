@@ -1,5 +1,6 @@
 package vn.edu.uit.realestate.Model;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -18,13 +19,13 @@ public class RealEstateKind {
 	private long id;
 	private String name;
 	@OneToMany(mappedBy="realEstateKind",fetch=FetchType.LAZY)
-	private Set<Trade> trades;
+	private List<Trade> trades;
 	
 	public RealEstateKind() {
 		super();
 	}
 	
-	public RealEstateKind(long id, String name, Set<Trade> trades) {
+	public RealEstateKind(long id, String name, List<Trade> trades) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -44,11 +45,11 @@ public class RealEstateKind {
 		this.name = name;
 	}
 
-	public Set<Trade> getTrades() {
+	public List<Trade> getTrades() {
 		return trades;
 	}
 
-	public void setTrades(Set<Trade> trades) {
+	public void setTrades(List<Trade> trades) {
 		this.trades = trades;
 	}
 }

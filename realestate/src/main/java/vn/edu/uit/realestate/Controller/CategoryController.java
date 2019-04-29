@@ -4,6 +4,9 @@ package vn.edu.uit.realestate.Controller;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +21,16 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import vn.edu.uit.realestate.Controller.ExceptionHandler.ExistContentException;
 import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.Model.Category;
+import vn.edu.uit.realestate.Model.News;
 import vn.edu.uit.realestate.Repository.CategoryRepository;
+import vn.edu.uit.realestate.Repository.NewsRepository;
 
 @RestController
 public class CategoryController {
 	@Autowired
 	private CategoryRepository categoryRepository;
+	@Autowired
+	private NewsRepository newsRepository;
 
     @GetMapping("/categories")
     public ResponseEntity<List<Category>> getUserKinds() {
@@ -41,17 +48,17 @@ public class CategoryController {
     	}
         return new ResponseEntity<>(foundCategory.get(), HttpStatus.OK);
     }
-//    @GetMapping("/categories/{categoryId}/users")
-//    public ResponseEntity<List<User>> getUsersByCategoryId(@PathVariable Long categoryId) {
-//    	Optional<Category> foundCategory = categoryRepository.findById(categoryId);
-//    	if (foundCategory.isPresent()==false) {
-//    		throw new NotFoundException("Cannot find any Category with id="+categoryId);
-//    	}
-//    	List<User> users = foundCategory.get().getUsers();
-//    	if(users.isEmpty() == true)
-//    		throw new NotFoundException("Cannot find any User with Category Id="+categoryId);
-//        return new ResponseEntity<>(users, HttpStatus.OK);
-//    }
+    @GetMapping("/categories/{categoryId}/news")
+    public ResponseEntity<List<News>> getNewsListByCategoryId(@PathVariable Long categoryId) {
+    	Optional<Category> foundCategory = categoryRepository.findById(categoryId);
+    	if (foundCategory.isPresent()==false) {
+    		throw new NotFoundException("Cannot find any Category with id="+categoryId);
+    	}
+    	List<News> newsList = foundCategory.get().getNews();
+    	if(newsList.isEmpty() == true)
+    		throw new NotFoundException("Cannot find any News with Category Id="+categoryId);
+        return new ResponseEntity<>(newsList, HttpStatus.OK);
+    }
     @PostMapping("/categories")
     public ResponseEntity<Category> postCategory(@RequestBody Category category) {
     	categoryRepository.save(category);
@@ -60,26 +67,26 @@ public class CategoryController {
     			.buildAndExpand(category.getId()).toUri();
     	return ResponseEntity.created(location).build();
     }
-//    @PostMapping("/categories/{categoryId}/users")
-//    public ResponseEntity<User> postUser(@PathVariable (value = "categoryId") Long categoryId,@Valid @RequestBody User user) {
-//    	Optional<Category> foundCategory = categoryRepository.findById(categoryId);
-//		if (foundCategory.isPresent()==false) {
-//    		throw new NotFoundException("Cannot find any Category with id="+categoryId);
-//    	}
-//        user.setCategory(foundCategory.get());
-//        userRepository.save(user);
-//    	URI location = ServletUriComponentsBuilder
-//    			.fromPath("users/{id}")
-//    			.buildAndExpand(user.getId()).toUri();
-//    	return ResponseEntity.created(location).build();
-//    }
+    @PostMapping("/categories/{categoryId}/news")
+    public ResponseEntity<News> postNews(@PathVariable (value = "categoryId") Long categoryId, @Valid @RequestBody News news) {
+    	Optional<Category> foundCategory = categoryRepository.findById(categoryId);
+		if (foundCategory.isPresent()==false) {
+    		throw new NotFoundException("Cannot find any Category with id="+categoryId);
+    	}
+        news.setCategory(foundCategory.get());
+        newsRepository.save(news);
+    	URI location = ServletUriComponentsBuilder
+    			.fromPath("news/{id}")
+    			.buildAndExpand(news.getId()).toUri();
+    	return ResponseEntity.created(location).build();
+    }
     @DeleteMapping("/categories/{id}")
     public void deleteUserKind(@PathVariable long id) {
     	Optional<Category> foundCategory = categoryRepository.findById(id);
     	if(foundCategory.isPresent()==false) {
 			throw new NotFoundException("Cannot find any Category with Id="+id);
 		}
-    	if(foundCategory.get().getNews().isEmpty()==true) {
+    	if(foundCategory.get().getNews().isEmpty()==false) {
     		throw new ExistContentException("There still exist 'News' in this Category. You should delete all these News before delete.");
     	}
     	categoryRepository.deleteById(id);

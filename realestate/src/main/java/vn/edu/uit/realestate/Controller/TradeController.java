@@ -18,14 +18,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import vn.edu.uit.realestate.Controller.ExceptionHandler.ExistContentException;
 import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.Model.Address;
 import vn.edu.uit.realestate.Model.Booking;
 import vn.edu.uit.realestate.Model.Details;
+import vn.edu.uit.realestate.Model.Image;
 import vn.edu.uit.realestate.Model.Trade;
+import vn.edu.uit.realestate.Model.UserKind;
 import vn.edu.uit.realestate.Repository.AddressRepository;
 import vn.edu.uit.realestate.Repository.BookingRepository;
 import vn.edu.uit.realestate.Repository.DetailsRepository;
+import vn.edu.uit.realestate.Repository.ImageRepository;
 import vn.edu.uit.realestate.Repository.TradeRepository;
 
 @RestController
@@ -38,6 +42,8 @@ public class TradeController {
 	private AddressRepository addressRepository;
 	@Autowired
 	private DetailsRepository detailsRepository;
+	@Autowired
+	private ImageRepository imageRepository;
 
     @GetMapping("/trades")
     public ResponseEntity<List<Trade>> getTrades() {
@@ -95,9 +101,17 @@ public class TradeController {
     }
     @DeleteMapping("/trades/{id}")
     public void deleteHistoryById(@PathVariable long id)throws Exception {
-    	if(!tradeRepository.existsById(id)) {
-			throw new NotFoundException("Cannot find any Trade with Id="+id);
-		}
+    	Optional<Trade> foundTrade = tradeRepository.findById(id);
+		if (foundTrade.isPresent()==false) {
+    		throw new NotFoundException("Cannot find any Trade with id="+id);
+    	}
+    	if(foundTrade.get().getBookings().isEmpty()==false) {
+    		throw new ExistContentException("Cannot delete this Trade. This Trade have existed Booking(s)");
+    	}
+    	List<Image> tradeImages = foundTrade.get().getImages();
+    	if(tradeImages.isEmpty()==false) {
+    		imageRepository.deleteAll(foundTrade.get().getImages());
+    	}
 		tradeRepository.deleteById(id);
     }
 }

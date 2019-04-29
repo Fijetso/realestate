@@ -1,6 +1,6 @@
 package vn.edu.uit.realestate.Model;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,13 +17,13 @@ public class Category {
 	private Long id;
 	private String name;
 	@OneToMany(mappedBy="category")
-	private Set<News> news;
+	private List<News> news;
 	
 	public Category() {
 		super();
 	}
 	
-	public Category(Long id, String name, Set<News> news) {
+	public Category(Long id, String name, List<News> news) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -46,11 +46,11 @@ public class Category {
 		this.name = name;
 	}
 
-	public Set<News> getNews() {
+	public List<News> getNews() {
 		return news;
 	}
 
-	public void setNews(Set<News> news) {
+	public void setNews(List<News> news) {
 		this.news = news;
 	}
 	 
