@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Past;
@@ -32,7 +33,7 @@ public class User {
 	private Date birthdate;
 	private boolean gender;
 	@ManyToOne
-//	@JoinColumn(name="userKindId", referencedColumnName="id")
+	@JoinColumn(name="userKindId", referencedColumnName="id")
 	private UserKind userKind;
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
 	private Set<Trade> trades;

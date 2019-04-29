@@ -2,6 +2,7 @@ package vn.edu.uit.realestate.Model;
 
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -15,7 +16,7 @@ public class UserKind {
 	@GeneratedValue
 	private long id;
 	private String name;
-	@OneToMany(mappedBy="userKind")
+	@OneToMany(mappedBy="userKind", fetch = FetchType.LAZY)
 	private List<User> users;
 	public UserKind() {
 		super();

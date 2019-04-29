@@ -2,6 +2,7 @@ package vn.edu.uit.realestate.Model;
 
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -42,7 +43,7 @@ public class Trade {
 	@OneToMany(mappedBy="trade")
 	private List<Image> images;
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name="bookingId", referencedColumnName = "id")
 	private  List<Booking> bookings;
 	

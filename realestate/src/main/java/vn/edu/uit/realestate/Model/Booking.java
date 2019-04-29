@@ -3,6 +3,7 @@ package vn.edu.uit.realestate.Model;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -28,7 +29,7 @@ public class Booking {
 	private Date timeStart;
 	@Future
 	private Date timeEnd;
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="tradeId", referencedColumnName="id")
 	private Trade trade;
 	public Booking() {
