@@ -17,7 +17,7 @@ public class News {
 	@GeneratedValue
 	private Long id;
 	private String title;
-	private Date composeDate;
+	private Date composeDate = new Date();
 	private String content;
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Category category;
@@ -34,7 +34,7 @@ public class News {
 		this.content = content;
 		this.category = category;
 	}
-
+	
 	public Long getId() {
 		return id;
 	}

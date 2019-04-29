@@ -19,9 +19,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import vn.edu.uit.realestate.Controller.ExceptionHandler.ExistContentException;
 import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.Model.Menu;
 import vn.edu.uit.realestate.Model.RealEstateKind;
+import vn.edu.uit.realestate.Model.Trade;
+import vn.edu.uit.realestate.Model.User;
+import vn.edu.uit.realestate.Model.UserKind;
 import vn.edu.uit.realestate.Repository.RealEstateKindRepository;
 
 @RestController
@@ -30,7 +34,7 @@ public class RealEstateKindController {
 	private RealEstateKindRepository realEstateKindRepository;
 
     @GetMapping("/realestatekinds")
-    public ResponseEntity<Object> getRealEstateKinds() {
+    public ResponseEntity<List<RealEstateKind>> getRealEstateKinds() {
         List<RealEstateKind> realEstateKinds = realEstateKindRepository.findAll();
     	if (realEstateKinds.isEmpty() == true) {
     		throw new NotFoundException("Cannot find any Real Estate Kind");
@@ -38,12 +42,12 @@ public class RealEstateKindController {
         return new ResponseEntity<>(realEstateKinds, HttpStatus.OK);
     }
     @GetMapping("/realestatekinds/{id}")
-    public ResponseEntity<Object> getRealEstateById(@PathVariable long id) {
+    public ResponseEntity<RealEstateKind> getRealEstateById(@PathVariable long id) {
 	    Optional<RealEstateKind> foundRealEstate = realEstateKindRepository.findById(id);
 		if (foundRealEstate.isPresent()==false) {
 			throw new NotFoundException("Cannot find any Real Estate Kind with id="+id);
 		}
-	    return new ResponseEntity<>(foundRealEstate, HttpStatus.OK);
+	    return new ResponseEntity<>(foundRealEstate.get(), HttpStatus.OK);
 	}
 
     @PostMapping("/realestatekinds")
@@ -54,8 +58,26 @@ public class RealEstateKindController {
     			.buildAndExpand(realEstateKind.getId()).toUri();
     	return ResponseEntity.created(location).build();
     }
+    @GetMapping("/realestatekinds/{realEstateKindId}/trades")
+    public ResponseEntity<List<Trade>> getTradesByRealEstateKindId(@PathVariable Long realEstateKindId) {
+    	Optional<RealEstateKind> foundRealEstateKind = realEstateKindRepository.findById(realEstateKindId);
+    	if (foundRealEstateKind.isPresent()==false) {
+    		throw new NotFoundException("Cannot find any Real Estate Kind with id="+realEstateKindId);
+    	}
+    	List<Trade> trades = foundRealEstateKind.get().getTrades();
+    	if(trades.isEmpty() == true)
+    		throw new NotFoundException("Cannot find any Trade with Real Estate Kind Id="+realEstateKindId);
+        return new ResponseEntity<>(trades, HttpStatus.OK);
+    }
     @DeleteMapping("/realestatekinds/{id}")
     public void deleteHistoryById(@PathVariable long id) throws Exception {
-			realEstateKindRepository.deleteById(id);
+    	Optional<RealEstateKind> foundRealEstate = realEstateKindRepository.findById(id);
+		if (foundRealEstate.isPresent()==false) {
+			throw new NotFoundException("Cannot find any Real Estate Kind with id="+id);
+		}	
+    	if(foundRealEstate.get().getTrades().isEmpty()==false) {
+    		throw new ExistContentException("There still exist 'Trade' in this Real Estate Kind. You should delete all these Trades before delete.");
+    	}
+    	realEstateKindRepository.deleteById(id);
     }
 }
