@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -27,6 +28,7 @@ public class User {
 	private String name;
 	@Email(message="Please provide a valid email address")
 	private String email;
+	@Pattern(regexp = "([0-9]{10}$)", message="Please provide a valid phone number")
 	private String phone;
 	private String password;
 	@Past(message="BirthDate must be in the past")
