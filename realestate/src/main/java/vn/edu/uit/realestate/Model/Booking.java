@@ -3,30 +3,39 @@ package vn.edu.uit.realestate.Model;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
+@JsonIgnoreProperties("trade")
 public class Booking {
 	@Id
 	@GeneratedValue
 	private Long id;
+	@Size(min=2, message="Name of user that want to book should have at least 2 characters")
 	private String name;
 	private String phone;
+	@Email
 	private String email;
+	@Future
 	private Date timeStart;
+	@Future
 	private Date timeEnd;
-//	@ManyToOne
-//	@JoinColumn(name="tradeId", referencedColumnName="id")
-//	private Trade trade;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="tradeId", referencedColumnName="id")
+	private Trade trade;
 	public Booking() {
 		super();
 	}
-	public Booking(Long id, String name, String phone, String email, Date timeStart, Date timeEnd) {
+	public Booking(Long id, String name, String phone, String email, Date timeStart, Date timeEnd, Trade trade) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -34,6 +43,7 @@ public class Booking {
 		this.email = email;
 		this.timeStart = timeStart;
 		this.timeEnd = timeEnd;
+		this.trade = trade;
 	}
 	public Long getId() {
 		return id;
@@ -71,10 +81,10 @@ public class Booking {
 	public void setTimeEnd(Date timeEnd) {
 		this.timeEnd = timeEnd;
 	}
-//	public Trade getTrade() {
-//		return trade;
-//	}
-//	public void setTrade(Trade trade) {
-//		this.trade = trade;
-//	} 
+	public Trade getTrade() {
+		return trade;
+	}
+	public void setTrade(Trade trade) {
+		this.trade = trade;
+	} 
 	}

@@ -4,13 +4,10 @@ package vn.edu.uit.realestate.Controller;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import vn.edu.uit.realestate.Controller.ExceptionHandler.ExistContentException;
+import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.Model.User;
 import vn.edu.uit.realestate.Model.UserKind;
 import vn.edu.uit.realestate.Repository.UserKindRepository;
@@ -29,55 +28,66 @@ import vn.edu.uit.realestate.Repository.UserRepository;
 public class UserKindController {
 	@Autowired
 	private UserKindRepository userKindRepository;
+	@Autowired
 	private UserRepository userRepository;
 
     @GetMapping("/userkinds")
-    public List<UserKind> getUserKinds() {
+    public ResponseEntity<List<UserKind>> getUserKinds() {
     	List<UserKind> userKinds = userKindRepository.findAll();
-        return userKinds;
+    	if (userKinds.isEmpty() == true) {
+    		throw new NotFoundException("Cannot find any User Kind");
+    	}
+        return new ResponseEntity<>(userKinds,HttpStatus.OK);
     }
-    @GetMapping("/userkind/{id}")
-    public Optional<UserKind> getUserKind(@PathVariable long id) {
-		try {
-		    	Optional<UserKind> userKind = userKindRepository.findById(id);
-		        return userKind;
-		}catch(Exception e) {
-			System.out.println("\nPROBLEM: "+e);
-		}
-		return null;
+    @GetMapping("/userkinds/{id}")
+    public ResponseEntity<UserKind> getUserKindById(@PathVariable long id) {
+    	Optional<UserKind> foundUserKind = userKindRepository.findById(id);
+		if (foundUserKind.isPresent()==false) {
+    		throw new NotFoundException("Cannot find any User Kind with id="+id);
+    	}
+        return new ResponseEntity<>(foundUserKind.get(), HttpStatus.OK);
     }
-//    @GetMapping("/userkind/{userKindId}/users")
-//    public Page<User> getUsersByUserKindId(@PathVariable Long userKindId) {
-//    	Page<User> users = userRepository.findByUserKindId(userKindId, PageRequest.of(0, 5));
-//    	if(users == null)
-//    		return null;
-//        return users;
-//    }
-//    @GetMapping("/userkind/{userKindId}/users/{userId}")
-//    public Optional<User> getUsersByIdAndUserKindId(@PathVariable (value = "userKindId") Long userKindId,
-//    		@PathVariable (value = "userId") Long userId,
-//            Pageable pageable) {
-//    	Optional<User> users = userRepository.findByIdAndUserKindId(userId, userKindId);
-//        return users;
-//    }
+    @GetMapping("/userkinds/{userKindId}/users")
+    public ResponseEntity<List<User>> getUsersByUserKindId(@PathVariable Long userKindId) {
+    	Optional<UserKind> foundUserKind = userKindRepository.findById(userKindId);
+    	if (foundUserKind.isPresent()==false) {
+    		throw new NotFoundException("Cannot find any User Kind with id="+userKindId);
+    	}
+    	List<User> users = foundUserKind.get().getUsers();
+    	if(users.isEmpty() == true)
+    		throw new NotFoundException("Cannot find any User with User Kind Id="+userKindId);
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
     @PostMapping("/userkinds")
-    public ResponseEntity<UserKind> postUserKind(@Valid @RequestBody UserKind userKind) {
+    public ResponseEntity<UserKind> postUserKind(@RequestBody UserKind userKind) {
     	userKindRepository.save(userKind);
     	URI location = ServletUriComponentsBuilder
     			.fromCurrentRequest().path("/{id}")
     			.buildAndExpand(userKind.getId()).toUri();
-    	///ResponseEntity return (status + header + body)
-    	///Example: var headers = new HttpHeaders();
-    	///headers.add("Responded", "MyController");
-    	///ResponseEntity.accepted().headers(headers).body(c);
     	return ResponseEntity.created(location).build();
     }
-    @DeleteMapping("/userkind/{id}")
-    public void deleteUserKind(@PathVariable long id) {
-		try {
-		    	userKindRepository.deleteById(id);
-		}catch(Exception e) {
-			System.out.println("\nPROBLEM: "+e);
-		}
+    @PostMapping("/userkinds/{userKindId}/users")
+    public ResponseEntity<User> postUserByUserKindId(@PathVariable (value = "userKindId") Long userKindId,@Valid @RequestBody User user) {
+    	Optional<UserKind> foundUserKind = userKindRepository.findById(userKindId);
+		if (foundUserKind.isPresent()==false) {
+    		throw new NotFoundException("Cannot find any User Kind with id="+userKindId);
+    	}
+        user.setUserKind(foundUserKind.get());
+        userRepository.save(user);
+    	URI location = ServletUriComponentsBuilder
+    			.fromPath("users/{id}")
+    			.buildAndExpand(user.getId()).toUri();
+    	return ResponseEntity.created(location).build();
+    }
+    @DeleteMapping("/userkinds/{id}")
+    public void deleteUserKindById(@PathVariable long id) {
+    	Optional<UserKind> foundUserKind = userKindRepository.findById(id);
+		if (foundUserKind.isPresent()==false) {
+    		throw new NotFoundException("Cannot find any User Kind with id="+id);
+    	}
+    	if(foundUserKind.get().getUsers().isEmpty()==false) {
+    		throw new ExistContentException("There still exist 'User' in this User Kind. You should delete all these Users before delete.");
+    	}
+    	userKindRepository.deleteById(id);
     }
 }

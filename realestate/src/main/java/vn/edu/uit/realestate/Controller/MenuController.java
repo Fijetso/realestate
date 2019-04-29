@@ -2,7 +2,6 @@ package vn.edu.uit.realestate.Controller;
 
 
 import java.net.URI;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,7 +46,7 @@ public class MenuController {
     }
     
     @PostMapping("/history")
-    public ResponseEntity<Menu> addHistory(@Valid @RequestBody Menu menu) {
+    public ResponseEntity<Menu> postHistory(@Valid @RequestBody Menu menu) {
     	if (menu.getParentId()!=null) {
 	    	Optional<Menu> parentMenu = menuRepository.findById(menu.getParentId());
 	    	if (parentMenu.isPresent()==false)
