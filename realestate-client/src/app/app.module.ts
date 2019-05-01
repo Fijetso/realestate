@@ -10,8 +10,6 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { AppComponent } from './app.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { MessagesComponent } from './components/messages/messages.component';
-// import { RealestateListComponent } from './components/realestate-list/realestate-list.component';
-// import { RealestateItemComponent } from './components/realestate-item/realestate-item.component';
 import { RealestateService } from './service/realestate/realestate.service';
 import { MessageService } from './service/message/message.service';
 import { MainNavComponent } from './components/main-nav/main-nav.component';
@@ -23,14 +21,11 @@ import { MapModuleComponent } from './components/map-module/map-module.component
 
 import{ FormsModule} from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
-import { HereMapComponent } from './components/here-map/here-map.component'
 @NgModule({
   declarations: [
     AppComponent,
     LayoutComponent,
     MessagesComponent,
-    // RealestateListComponent,
-    // RealestateItemComponent,
     routingComponents,
     MainNavComponent,
     FooterComponent,
@@ -39,7 +34,6 @@ import { HereMapComponent } from './components/here-map/here-map.component'
     CarouselComponent,
     MapModuleComponent,
     LoginComponent,
-    HereMapComponent,
   ],
   imports: [
     BrowserModule,
