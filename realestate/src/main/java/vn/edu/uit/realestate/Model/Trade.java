@@ -1,8 +1,6 @@
 package vn.edu.uit.realestate.Model;
 
-import java.util.Set;
-
-import javax.persistence.CascadeType;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,12 +9,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
+@JsonIgnoreProperties("bookings")
 public class Trade {
 	@Id
 	@GeneratedValue
 	private Long id;
+	private String description;
+	private Long cost;
 	
 	@ManyToOne
 	@JoinColumn(name="userId", referencedColumnName = "id")
@@ -26,6 +28,10 @@ public class Trade {
 	@JoinColumn(name="realEstateKindId", referencedColumnName = "id")
 	private RealEstateKind realEstateKind;
 	
+	@ManyToOne
+	@JoinColumn(name="tradeKindId", referencedColumnName = "id")
+	private TradeKind tradeKind;
+	
 	@OneToOne
     @JoinColumn(name = "addressId", referencedColumnName = "id")
     private Address address;
@@ -34,33 +40,30 @@ public class Trade {
     @JoinColumn(name = "detailsId", referencedColumnName = "id")
     private Details details;
 	
-	private Long cost;
+	@OneToMany(mappedBy="trade")
+	private List<Image> images;
 	
-	@OneToMany
-	@JoinColumn(name="imageId", referencedColumnName = "id")
-	private Set<Image> images;
-	
-	private String description;
-	
-	@OneToMany
+	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name="bookingId", referencedColumnName = "id")
-	private  Set<Booking> booking;
+	private  List<Booking> bookings;
+	
 	public Trade() {
 		super();
 	}
 
-	public Trade(Long id, User user, RealEstateKind realEstateKind, Address address, Details details, Long cost,
-			Set<Image> images, String description, Set<Booking> booking) {
+	public Trade(Long id, String description, Long cost, User user, RealEstateKind realEstateKind, TradeKind tradeKind,
+			Address address, Details details, List<Image> images, List<Booking> bookings) {
 		super();
 		this.id = id;
+		this.description = description;
+		this.cost = cost;
 		this.user = user;
 		this.realEstateKind = realEstateKind;
+		this.tradeKind = tradeKind;
 		this.address = address;
 		this.details = details;
-		this.cost = cost;
 		this.images = images;
-		this.description = description;
-		this.booking = booking;
+		this.bookings = bookings;
 	}
 
 	public Long getId() {
@@ -104,20 +107,20 @@ public class Trade {
 		this.description = description;
 	}
 	
-	public Set<Image> getImages() {
+	public List<Image> getImages() {
 		return images;
 	}
 
-	public void setImages(Set<Image> images) {
+	public void setImages(List<Image> images) {
 		this.images = images;
 	}
 
-	public Set<Booking> getBooking() {
-		return booking;
+	public List<Booking> getBooking() {
+		return bookings;
 	}
 
-	public void setBooking(Set<Booking> booking) {
-		this.booking = booking;
+	public void setBooking(List<Booking> bookings) {
+		this.bookings = bookings;
 	}
 
 	public User getUser() {
@@ -134,6 +137,22 @@ public class Trade {
 
 	public void setRealEstateKind(RealEstateKind realEstateKind) {
 		this.realEstateKind = realEstateKind;
+	}
+
+	public TradeKind getTradeKind() {
+		return tradeKind;
+	}
+
+	public void setTradeKind(TradeKind tradeKind) {
+		this.tradeKind = tradeKind;
+	}
+
+	public List<Booking> getBookings() {
+		return bookings;
+	}
+
+	public void setBookings(List<Booking> bookings) {
+		this.bookings = bookings;
 	}
 	
 }

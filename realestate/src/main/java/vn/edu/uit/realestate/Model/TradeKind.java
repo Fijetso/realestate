@@ -1,37 +1,34 @@
 package vn.edu.uit.realestate.Model;
 
-import java.util.Set;
-
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
+@JsonIgnoreProperties("trades")
 public class TradeKind {
 	@Id
 	@GeneratedValue
 	private long id;
 	private String name;
-//	@OneToMany(mappedBy="tradeKind")
-//	private Set<Trade> trades;
+	@OneToMany(mappedBy="tradeKind", fetch = FetchType.LAZY)
+	private List<Trade> trades;
 	
 	public TradeKind() {
 		super();
 	}
 	
-	public TradeKind(long id, String name) {
+	public TradeKind(long id, String name, List<Trade> trades) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.trades = trades;
 	}
-
-//	public TradeKind(long id, String name, Set<Trade> trades) {
-//		super();
-//		this.id = id;
-//		this.name = name;
-//		this.trades = trades;
-//	}
 
 	public long getId() {
 		return id;
@@ -49,12 +46,12 @@ public class TradeKind {
 		this.name = name;
 	}
 
-//	public Set<Trade> getTrades() {
-//		return trades;
-//	}
-//
-//	public void setTrades(Set<Trade> trades) {
-//		this.trades = trades;
-//	}
+	public List<Trade> getTrades() {
+		return trades;
+	}
+
+	public void setTrades(List<Trade> trades) {
+		this.trades = trades;
+	}
 	
 }
