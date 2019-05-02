@@ -3,7 +3,7 @@
 @import '../../../../node_modules/roboto-fontface/css/roboto-condensed/roboto-condensed-fontface.css';
 $fa-font-path : "~@fortawesome/fontawesome-free/webfonts";
 @import '~@fortawesome/fontawesome-free/scss/solid';
-
+@import '~@fortawesome/fontawesome-free/scss/brands';
 *{
     font-family: Roboto,sans-serif;
 }
@@ -133,7 +133,7 @@ iframe {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  padding: 15px;
+  // padding: 15px;
   background: #9053c7;
   background: -webkit-linear-gradient(-135deg, #c850c0, #4158d0);
   background: -o-linear-gradient(-135deg, #c850c0, #4158d0);
@@ -154,7 +154,8 @@ iframe {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 177px 130px 33px 95px;
+  // padding: 177px 130px 33px 95px;
+  padding: 80px;
 }
 
 /*------------------------------------------------------------------
@@ -421,5 +422,39 @@ iframe {
   .alert-validate::before {
     visibility: visible;
     opacity: 1;
+  }
+}
+
+.btn-social{
+  font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #fff;
+    width: 100%;
+    height: 50px;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 25px;
+    transition: all 0.4s;
+    margin-top: 1em;
+    text-transform: none;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+.btn-facebook{
+  background-color:#3B5998;
+}
+.btn-google{
+  background-color: #DD4B39;
+}
+@media (max-width: 600px) {
+  .social-group{
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+  .btn-social{
+    margin-top:1em;
   }
 }

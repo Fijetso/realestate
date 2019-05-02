@@ -1,3 +1,11 @@
+$fa-font-path : "~@fortawesome/fontawesome-free/webfonts";
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/brands';
+
+*{
+    font-family: Roboto,sans-serif;
+}
 .btn-rounded{
     border-radius: 20px;
     padding: .7em 2em;
@@ -6,4 +14,8 @@
         color: red;
     }
 
+}
+i{
+    color:white;
+    font-family: 'Roboto',sans-serif;
 }
