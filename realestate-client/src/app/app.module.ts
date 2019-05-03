@@ -11,7 +11,7 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { MessagesComponent } from './components/messages/messages.component';
 import { RealestateService } from './service/realestate/realestate.service';
 import { MessageService } from './service/message/message.service';
-import { MainNavComponent } from './components/main-nav/main-nav.component';
+
 import { FooterComponent } from './components/footer/footer.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { ContentComponent } from './components/content/content.component';
@@ -20,19 +20,25 @@ import { MapModuleComponent } from './components/map-module/map-module.component
 
 import{ FormsModule} from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
+import { NavComponent } from './components/nav/nav.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import {  MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIconModule, MatInputModule, MatDatepickerModule, MatNativeDateModule, MatProgressSpinnerModule,
+  MatTableModule, MatExpansionModule, MatSelectModule, MatSnackBarModule, MatTooltipModule, MatChipsModule, MatListModule, MatSidenavModule, MatTabsModule, MatProgressBarModule } from '@angular/material';
+import { NavigationBarComponent } from './core/components/navigation-bar/navigation-bar.component';
 @NgModule({
   declarations: [
     AppComponent,
     LayoutComponent,
     MessagesComponent,
     routingComponents,
-    MainNavComponent,
     FooterComponent,
     PageNotFoundComponent,
     ContentComponent,
     CarouselComponent,
     MapModuleComponent,
     LoginComponent,
+    NavComponent,
+    NavigationBarComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +50,13 @@ import { LoginComponent } from './components/login/login.component';
     }),
     AgmDirectionModule,
     FormsModule,
-    MatDialogModule
+    MatDialogModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule
   ],
   providers: [MessageService, RealestateService],
   bootstrap: [AppComponent],
