@@ -11,20 +11,25 @@
 }
 
 .mat-toolbar.mat-primary {
-  position: fixed;
+  position: sticky;
   top: 0;
-  z-index: 1;
-  background: linear-gradient(to right, #f17523 0, rgba(241, 117, 35, 0.94) 20%, rgba(0, 103, 221, 0.72) 100%);
+  z-index: 100;
+}
+.orange-gradient{
+  background: linear-gradient(to right,rgba(241,117,35,1) 0,rgba(241,117,35,.94) 20%,rgba(0,103,221,.72) 100%)
 }
 .spacer{
   flex: 1 1 auto;
 }
-mat-icon{
-  color:white;
-}
 .web-title{
   cursor: pointer;
 }
-.web-title:hover, .active,mat-icon:hover{
+a, .icon{
+  cursor: pointer;
+}
+a{
+  color: white;
+}
+.web-title:hover, .active,.icon-user:hover{
   color: red;
 }
