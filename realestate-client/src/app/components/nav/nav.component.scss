@@ -3,7 +3,7 @@
 }
 
 .sidenav {
-  width: 200px;
+  max-width: 55vw;
 }
 
 .sidenav .mat-toolbar {
@@ -24,12 +24,62 @@
 .web-title{
   cursor: pointer;
 }
-a, .icon{
+a, .icon,.mat-toolbar-row{
   cursor: pointer;
 }
 a{
   color: white;
 }
-.web-title:hover, .active,.icon-user:hover{
+.web-title:hover, .active,.icon-user:hover,.call-us:hover,.mat-toolbar-row:hover,a:hover{
   color: red;
+}
+.phone{
+  color:#f17423;
+}
+.icon{
+  padding: 0;
+}
+.search-form{
+  width: 100%;
+} 
+.search-input{
+  font-family: 'Roboto', sans-serif;
+  font-size: 1em;
+  line-height: 1.5;
+  display: block;
+  width: 100%;  
+  height: 2.5em;
+  border-radius: 2em;
+  padding: 1em;
+  outline: none;
+}
+.btn-search{
+  background-color: #f17423;
+  color: white;
+}
+.icon-white{
+  color: white;
+}
+.icon-small{
+  font-size: .8em;
+}
+.icon-medium{
+  font-size:1em;
+}
+.h-3em{
+  height: 3em;
+}
+.bg-orange{
+  background-color: #f17423;
+}
+.curve{
+  border-radius: 3em;
+}
+.btn-sale:hover{
+  color: white;
+}
+@media (max-width: 600px) {
+  .btn-sale,.call-us{
+    display: none;
+  }
 }

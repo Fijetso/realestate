@@ -25,6 +25,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import {  MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIconModule, MatInputModule, MatDatepickerModule, MatNativeDateModule, MatProgressSpinnerModule,
   MatTableModule, MatExpansionModule, MatSelectModule, MatSnackBarModule, MatTooltipModule, MatChipsModule, MatListModule, MatSidenavModule, MatTabsModule, MatProgressBarModule } from '@angular/material';
 import { NavigationBarComponent } from './core/components/navigation-bar/navigation-bar.component';
+import {HttpClientModule} from '@angular/common/http'
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,7 +57,8 @@ import { NavigationBarComponent } from './core/components/navigation-bar/navigat
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    HttpClientModule
   ],
   providers: [MessageService, RealestateService],
   bootstrap: [AppComponent],

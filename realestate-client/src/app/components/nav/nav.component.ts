@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { MatIconRegistry } from '@angular/material';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-nav',
@@ -15,6 +17,19 @@ export class NavComponent {
       map(result => result.matches)
     );
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
-
+  // constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer,
+    private breakpointObserver: BreakpointObserver
+  ){
+    this.matIconRegistry.addSvgIcon(
+      "apple-badge",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/images/apple-badge.svg")
+    );
+    this.matIconRegistry.addSvgIcon(
+      "google-badge",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/images/google-badge.svg")
+    );
+  }
 }
