@@ -11,7 +11,7 @@
 }
 
 .mat-toolbar.mat-primary {
-  position: sticky;
+  position: fixed;
   top: 0;
   z-index: 100;
 }
@@ -82,4 +82,10 @@ a{
   .btn-sale,.call-us{
     display: none;
   }
+  .content{
+    margin-top: 55.9px;
+  }
+}
+.content{
+  margin-top: 64px;
 }
