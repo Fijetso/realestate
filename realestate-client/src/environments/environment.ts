@@ -11,6 +11,9 @@ export const environment = {
     projectId: "realestate-238715",
     storageBucket: "realestate-238715.appspot.com",
     messagingSenderId: "642195689297"
+  },
+  ipapi: {
+    apiKey:"e41bcfed8462dbd69772bdb4f6616a24"
   }
 };
 
