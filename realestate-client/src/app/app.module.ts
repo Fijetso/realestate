@@ -51,7 +51,6 @@ import {
   MatAutocompleteModule,
   MatBottomSheet, MatBottomSheetRef
 } from "@angular/material";
-import { NavigationBarComponent } from "./core/components/navigation-bar/navigation-bar.component";
 import { HttpClientModule } from "@angular/common/http";
 import "hammerjs";
 import { RealEstateWrapperComponent } from "./components/real-estate/real-estate-wrapper/real-estate-wrapper.component";
@@ -69,7 +68,6 @@ import { AlertComponent } from "./components/modal/alert/alert.component";
     MapModuleComponent,
     LoginComponent,
     NavComponent,
-    NavigationBarComponent,
     RealEstateWrapperComponent,
     AlertComponent
   ],
