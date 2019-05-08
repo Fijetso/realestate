@@ -55,6 +55,7 @@ import { HttpClientModule } from "@angular/common/http";
 import "hammerjs";
 import { RealEstateWrapperComponent } from "./components/real-estate/real-estate-wrapper/real-estate-wrapper.component";
 import { AlertComponent } from "./components/modal/alert/alert.component";
+import { FavoriteComponent } from './components/favorite/favorite.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,7 +70,8 @@ import { AlertComponent } from "./components/modal/alert/alert.component";
     LoginComponent,
     NavComponent,
     RealEstateWrapperComponent,
-    AlertComponent
+    AlertComponent,
+    FavoriteComponent
   ],
   imports: [
     BrowserModule,

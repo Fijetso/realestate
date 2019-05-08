@@ -1,5 +1,5 @@
 <mat-sidenav-container class="sidenav-container" autosize>
-  <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [mode]="over" [opened]="false">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [mode]="'over'" [opened]="false">
     <mat-toolbar class="d-flex justify-content-between">Menu<mat-icon class="icon icon-close" (click)="drawer.toggle()">close</mat-icon></mat-toolbar>
     <mat-nav-list>
       <mat-toolbar-row class="h-3em">
@@ -80,13 +80,13 @@
       >
       <div class="right-nav  align-self-center">
         <a routerLink="sale" routerLinkActive="active" mat-flat-button class="btn btn-sale bg-orange curve px-4 align-self-center">Bán BĐS</a>
-        <a routerLink="#" routerLinkActive="active" (click)="openInfoModal()">
+        <span routerLinkActive="active" (click)="openInfoModal()">
           <mat-icon
             class="align-items-center ustify-content-center align-self-center icon icon-lg icon-account"
             matTooltip="Account Infor"
             >account_circle</mat-icon
           >
-        </a>
+        </span>
         <a routerLink="favorite" routerLinkActive="active">
           <mat-icon
             class="align-items-center ustify-content-center align-self-center icon icon-lg icon-favorite"

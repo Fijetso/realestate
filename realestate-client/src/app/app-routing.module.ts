@@ -1,3 +1,4 @@
+import { FavoriteComponent } from './components/favorite/favorite.component';
 import { LoginComponent } from "./components/login/login.component";
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
@@ -20,6 +21,7 @@ const routes: Routes = [
   },
   { path: "map", component: MapModuleComponent, data: { title: "Map page" } },
   { path: "login", component: LoginComponent, data: { title: "Login page" } },
+  { path: "favorite", component: FavoriteComponent, data: { title: "Favorite Page" } },
   {
     path: "**",
     component: PageNotFoundComponent,
