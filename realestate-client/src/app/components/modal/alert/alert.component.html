@@ -1,0 +1,66 @@
+<div class="custom-modal">
+  <div
+    class="custom-modal-header d-flex justify-content-between border-bottom border-3"
+  >
+    <h4 class="custom-modal-header-title">Default title</h4>
+    <div
+      class="custom-modal-header-icon icon icon-close"
+      matTooltip="Close"
+    >
+      <mat-icon>close</mat-icon>
+    </div>
+  </div>
+  <div class="custom-modal-body">
+    <h4>This is body content</h4>
+    <div class="main-content d-flex flex-row">
+      <img src="https://picsum.photos/200" />
+      <div class="desc">
+        Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in
+        laying out print, graphic or web designs. The passage is attributed to an
+        unknown typesetter in the 15th century who is thought to have scrambled
+        parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen
+        book. It usually begins with: “Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua.”
+      </div>
+    </div>
+  </div>
+  <form class="d-flex flex-column flex-wrap w-100" *ngIf="false">
+    <mat-form-field class="w-100">
+      <input matInput placeholder="Favorite food" value="" />
+    </mat-form-field>
+    <mat-form-field class="w-100">
+      <textarea matInput placeholder="Leave a comment"></textarea>
+    </mat-form-field>
+  </form>
+
+  <chose-item class="d-flex flex-column">
+    <label id="example-radio-group-label" color="red"
+      >Pick your favorite season</label
+    >
+    <mat-radio-group
+      aria-labelledby="example-radio-group-label"
+      class="example-radio-group"
+      [(ngModel)]="favoriteSeason"
+    >
+      <mat-radio-button
+        class="example-radio-button"
+        *ngFor="let season of seasons"
+        [value]="season"
+      >
+        {{ season }}
+      </mat-radio-button>
+    </mat-radio-group>
+    <div>Your favorite season is: {{ favoriteSeason }}</div>
+  </chose-item>
+  <mat-slide-toggle>Slide me!</mat-slide-toggle>
+  <div
+    class="custom-modal-footer d-flex justify-content-end border-top border-3"
+  >
+    <div class="btn btn-cancel btn-primary" (click)="handleClick($event)">
+      Cancel
+    </div>
+    <div class="btn btn-ok btn-warning" (click)="handleClick($event)">OK</div>
+  </div>
+  <div *ngIf="isShow" class="text-center">This is test test</div>
+</div>

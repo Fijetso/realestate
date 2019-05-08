@@ -1,31 +1,61 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule,NO_ERRORS_SCHEMA  } from '@angular/core';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { AppRoutingModule,routingComponents } from './app-routing.module';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { AgmCoreModule } from '@agm/core';
-import { AgmDirectionModule } from 'agm-direction';   // agm-direction
-import {MatDialogModule} from '@angular/material/dialog';
-import { AppComponent } from './app.component';
-import { LayoutComponent } from './components/layout/layout.component';
-import { MessagesComponent } from './components/messages/messages.component';
-import { RealestateService } from './service/realestate/realestate.service';
-import { MessageService } from './service/message/message.service';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { AppRoutingModule, routingComponents } from "./app-routing.module";
+import { MDBBootstrapModule } from "angular-bootstrap-md";
+import { AgmCoreModule } from "@agm/core";
+import { AgmDirectionModule } from "agm-direction"; // agm-direction
+import { MatDialogModule } from "@angular/material/dialog";
+import { AppComponent } from "./app.component";
+import { LayoutComponent } from "./components/layout/layout.component";
+import { MessagesComponent } from "./components/messages/messages.component";
 
-import { FooterComponent } from './components/footer/footer.component';
-import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { ContentComponent } from './components/content/content.component';
-import { CarouselComponent } from './components/carousel/carousel.component';
-import { MapModuleComponent } from './components/map-module/map-module.component';
+import { FooterComponent } from "./components/footer/footer.component";
+import { PageNotFoundComponent } from "./components/page-not-found/page-not-found.component";
+import { ContentComponent } from "./components/content/content.component";
+import { CarouselComponent } from "./components/carousel/carousel.component";
+import { MapModuleComponent } from "./components/map-module/map-module.component";
 
-import{ FormsModule} from '@angular/forms';
-import { LoginComponent } from './components/login/login.component';
-import { NavComponent } from './components/nav/nav.component';
-import { LayoutModule } from '@angular/cdk/layout';
-import {  MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIconModule, MatInputModule, MatDatepickerModule, MatNativeDateModule, MatProgressSpinnerModule,
-  MatTableModule, MatExpansionModule, MatSelectModule, MatSnackBarModule, MatTooltipModule, MatChipsModule, MatListModule, MatSidenavModule, MatTabsModule, MatProgressBarModule } from '@angular/material';
-import { NavigationBarComponent } from './core/components/navigation-bar/navigation-bar.component';
-import {HttpClientModule} from '@angular/common/http'
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormsModule,
+  NgForm
+} from "@angular/forms";
+import { LoginComponent } from "./components/login/login.component";
+import { NavComponent } from "./components/nav/nav.component";
+import { LayoutModule } from "@angular/cdk/layout";
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatMenuModule,
+  MatToolbarModule,
+  MatIconModule,
+  MatInputModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatProgressSpinnerModule,
+  MatTableModule,
+  MatExpansionModule,
+  MatSelectModule,
+  MatSnackBarModule,
+  MatTooltipModule,
+  MatChipsModule,
+  MatListModule,
+  MatSidenavModule,
+  MatTabsModule,
+  MatProgressBarModule,
+  MatRadioModule,
+  MatSlideToggleModule,
+  MatAutocompleteModule,
+  MatBottomSheet, MatBottomSheetRef
+} from "@angular/material";
+import { NavigationBarComponent } from "./core/components/navigation-bar/navigation-bar.component";
+import { HttpClientModule } from "@angular/common/http";
+import "hammerjs";
+import { RealEstateWrapperComponent } from "./components/real-estate/real-estate-wrapper/real-estate-wrapper.component";
+import { AlertComponent } from "./components/modal/alert/alert.component";
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +69,9 @@ import {HttpClientModule} from '@angular/common/http'
     MapModuleComponent,
     LoginComponent,
     NavComponent,
-    NavigationBarComponent
+    NavigationBarComponent,
+    RealEstateWrapperComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +79,7 @@ import {HttpClientModule} from '@angular/common/http'
     BrowserAnimationsModule,
     MDBBootstrapModule.forRoot(),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCxEsgD2edDcqz5wgKqjYJVjcqmWztNF3A'
+      apiKey: "AIzaSyCxEsgD2edDcqz5wgKqjYJVjcqmWztNF3A"
     }),
     AgmDirectionModule,
     FormsModule,
@@ -58,10 +90,19 @@ import {HttpClientModule} from '@angular/common/http'
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTooltipModule,
+    MatInputModule,
+    MatRadioModule,
+    MatSlideToggleModule,
+    MatAutocompleteModule,
+    MatProgressSpinnerModule,
+    MatTabsModule,
+    MatCardModule
   ],
-  providers: [MessageService, RealestateService],
+  providers: [],
   bootstrap: [AppComponent],
-  schemas: [ NO_ERRORS_SCHEMA ]
+  schemas: [NO_ERRORS_SCHEMA],
+  entryComponents: [AlertComponent]
 })
-export class AppModule { }
+export class AppModule {}
