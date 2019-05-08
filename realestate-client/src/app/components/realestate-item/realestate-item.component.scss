@@ -1,0 +1,8 @@
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+$fa-font-path : "~@fortawesome/fontawesome-free/webfonts";
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/brands';
+.md-card:hover{
+    box-shadow: -1px 10px 29px 0px rgba(0,0,0,.2);
+}

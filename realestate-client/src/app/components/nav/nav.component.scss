@@ -1,0 +1,83 @@
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  max-width: 55vw;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: fixed;
+  top: 0;
+  z-index: 100;
+}
+.orange-gradient{
+  background: linear-gradient(to right,rgba(241,117,35,1) 0,rgba(241,117,35,.94) 20%,rgba(0,103,221,.72) 100%)
+}
+.spacer{
+  flex: 1 1 auto;
+}
+.web-title{
+  cursor: pointer;
+}
+a, .icon,.mat-toolbar-row{
+  cursor: pointer;
+}
+a{
+  color: white;
+}
+.web-title:hover, .active,.icon-user:hover,.call-us:hover,.mat-toolbar-row:hover,a:hover{
+  color: red;
+}
+.phone{
+  color:#f17423;
+}
+.icon{
+  padding: 0;
+}
+.search-form{
+  width: 100%;
+} 
+.search-input{
+  font-family: 'Roboto', sans-serif;
+}
+.btn-search{
+  background-color: #f17423;
+  color: white;
+}
+.icon-white{
+  color: white;
+}
+.icon-small{
+  font-size: .8em;
+}
+.icon-medium{
+  font-size:1em;
+}
+.h-3em{
+  height: 3em;
+}
+.bg-orange{
+  background-color: #f17423;
+}
+.curve{
+  border-radius: 3em;
+}
+.btn-sale:hover{
+  color: white;
+}
+@media (max-width: 600px) {
+  .btn-sale,.call-us{
+    display: none;
+  }
+  .content{
+    margin-top: 55.9px;
+  }
+}
+.content{
+  margin-top: 64px;
+}
