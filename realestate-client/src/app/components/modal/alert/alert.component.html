@@ -11,51 +11,56 @@
     </div>
   </div>
   <div class="custom-modal-body">
-    <h4>This is body content</h4>
-    <div class="main-content d-flex flex-row">
-      <img src="https://picsum.photos/200" />
-      <div class="desc">
-        Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in
-        laying out print, graphic or web designs. The passage is attributed to an
-        unknown typesetter in the 15th century who is thought to have scrambled
-        parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen
-        book. It usually begins with: “Lorem ipsum dolor sit amet, consectetur
-        adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua.”
-      </div>
+    <div class="body-content-1" *ngIf="false">
+        <h4>This is body content</h4>
+        <div class="main-content d-flex flex-row">
+          <img src="https://picsum.photos/200" />
+          <div class="desc">
+            Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in
+            laying out print, graphic or web designs. The passage is attributed to an
+            unknown typesetter in the 15th century who is thought to have scrambled
+            parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen
+            book. It usually begins with: “Lorem ipsum dolor sit amet, consectetur
+            adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+            magna aliqua.”
+          </div>
+        </div>
+        <form class="d-flex flex-column flex-wrap w-100" *ngIf="false">
+            <mat-form-field class="w-100">
+              <input matInput placeholder="Favorite food" value="" />
+            </mat-form-field>
+            <mat-form-field class="w-100">
+              <textarea matInput placeholder="Leave a comment"></textarea>
+            </mat-form-field>
+          </form>
+        
+          <chose-item class="d-flex flex-column">
+            <label id="example-radio-group-label" color="red"
+              >Pick your favorite season</label
+            >
+            <mat-radio-group
+              aria-labelledby="example-radio-group-label"
+              class="example-radio-group"
+              [(ngModel)]="favoriteSeason"
+            >
+              <mat-radio-button
+                class="example-radio-button"
+                *ngFor="let season of seasons"
+                [value]="season"
+              >
+                {{ season }}
+              </mat-radio-button>
+            </mat-radio-group>
+            <div>Your favorite season is: {{ favoriteSeason }}</div>
+          </chose-item>
+          <mat-slide-toggle>Slide me!</mat-slide-toggle>
+    </div>
+    <div class="body-content-2 p-2">
+      <app-login></app-login>
     </div>
   </div>
-  <form class="d-flex flex-column flex-wrap w-100" *ngIf="false">
-    <mat-form-field class="w-100">
-      <input matInput placeholder="Favorite food" value="" />
-    </mat-form-field>
-    <mat-form-field class="w-100">
-      <textarea matInput placeholder="Leave a comment"></textarea>
-    </mat-form-field>
-  </form>
-
-  <chose-item class="d-flex flex-column">
-    <label id="example-radio-group-label" color="red"
-      >Pick your favorite season</label
-    >
-    <mat-radio-group
-      aria-labelledby="example-radio-group-label"
-      class="example-radio-group"
-      [(ngModel)]="favoriteSeason"
-    >
-      <mat-radio-button
-        class="example-radio-button"
-        *ngFor="let season of seasons"
-        [value]="season"
-      >
-        {{ season }}
-      </mat-radio-button>
-    </mat-radio-group>
-    <div>Your favorite season is: {{ favoriteSeason }}</div>
-  </chose-item>
-  <mat-slide-toggle>Slide me!</mat-slide-toggle>
   <div
-    class="custom-modal-footer d-flex justify-content-end border-top border-3"
+    class="custom-modal-footer d-flex justify-content-end border-top border-3" *ngIf="false"
   >
     <div class="btn btn-cancel btn-primary" (click)="handleClick($event)">
       Cancel

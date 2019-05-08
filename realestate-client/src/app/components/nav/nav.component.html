@@ -6,7 +6,7 @@
           <form class=" d-flex search-form">
               <mat-form-field class="d-flex w-100">
                 <input matInput placeholder="Nhập để tìm" value="" class="w-100 search-input">
-                <a mat-button class="w-5" class="btn-search" routerLink="search"><mat-icon class="icon icon-white">search</mat-icon></a>
+                <a mat-button class="w-5" class="btn-search" routerLink="search" matTooltip="Search"><mat-icon class="icon icon-white">search</mat-icon></a>
               </mat-form-field>
             </form>
       </mat-toolbar-row>
@@ -80,7 +80,7 @@
       >
       <div class="right-nav  align-self-center">
         <a routerLink="sale" routerLinkActive="active" mat-flat-button class="btn btn-sale bg-orange curve px-4 align-self-center">Bán BĐS</a>
-        <a routerLink="login" routerLinkActive="active">
+        <a routerLink="#" routerLinkActive="active" (click)="openInfoModal()">
           <mat-icon
             class="align-items-center ustify-content-center align-self-center icon icon-lg icon-account"
             matTooltip="Account Infor"
