@@ -1,6 +1,6 @@
-import { Component, OnInit,ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import {MatChipInputEvent,MatAutocompleteSelectedEvent, MatAutocomplete} from '@angular/material';
+import {MatChipInputEvent, MatAutocompleteSelectedEvent, MatAutocomplete} from '@angular/material';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import { ModalService } from 'src/app/services/modal.service';
@@ -15,7 +15,7 @@ export interface Fruit {
 })
 export class RealestateListComponent implements OnInit {
 
-  isLoading: boolean = true;
+  isLoading = true;
   constructor(private modalService: ModalService) {
 
   }
@@ -25,8 +25,8 @@ export class RealestateListComponent implements OnInit {
   ngOnInit() {
   }
 
-  toogleSpinner(){
-    this.isLoading= !this.isLoading;
-    console.log(this.isLoading)
+  toogleSpinner() {
+    this.isLoading = !this.isLoading;
+    console.log(this.isLoading);
   }
 }
