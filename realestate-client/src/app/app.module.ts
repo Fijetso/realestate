@@ -55,10 +55,12 @@ import {
 import { HttpClientModule } from '@angular/common/http';
 import 'hammerjs';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
+import { NgxHmCarouselModule } from 'ngx-hm-carousel';
 
 import { RealEstateWrapperComponent } from './components/real-estate/real-estate-wrapper/real-estate-wrapper.component';
 import { AlertComponent } from './components/modal/alert/alert.component';
 import { FavoriteComponent } from './components/favorite/favorite.component';
+import { UploaderComponent } from './components/uploader/uploader.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -74,7 +76,8 @@ import { FavoriteComponent } from './components/favorite/favorite.component';
     NavComponent,
     RealEstateWrapperComponent,
     AlertComponent,
-    FavoriteComponent
+    FavoriteComponent,
+    UploaderComponent
   ],
   imports: [
     BrowserModule,
@@ -86,6 +89,7 @@ import { FavoriteComponent } from './components/favorite/favorite.component';
       apiKey: 'AIzaSyCxEsgD2edDcqz5wgKqjYJVjcqmWztNF3A'
     }),
     AgmDirectionModule,
+    NgxHmCarouselModule,
     FormsModule,
     MatDialogModule,
     LayoutModule,
