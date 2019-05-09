@@ -11,7 +11,6 @@ export class AlertComponent implements OnInit {
   constructor(
   ) { }
   ngOnInit() {
-    
   }
   handleClick(){
     this.isShow = !this.isShow;

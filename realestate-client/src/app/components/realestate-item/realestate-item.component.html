@@ -1,18 +1,20 @@
-<mat-card class="real-estate-card-item md-card">
+<mat-card class="real-estate-card-item md-custom-card">
   <!-- <img src="https://dummyimage.com/255x150/333/fff" alt="dummyimage" class="card-img-top"> -->
   <img [lazyLoad]="main_pic" alt="picsum" class="card-img-top" [defaultImage]="default_pic" [offset]=100>
-  <div class="price-address d-flex flex-row justify-content-between">
-    <div class="text-left">
-      <span>42,5 tỷ</span>
-      <span>  |  </span>
-      <span>116,2 m<sup>2</sup></span>
+  <div class="card-body py-1">
+    <div class="price-address d-flex flex-row justify-content-between">
+      <div class="text-left">
+        <span>42,5 tỷ</span>
+        <span>  |  </span>
+        <span>116,2 m<sup>2</sup></span>
+      </div>
+      <div class="text-right">
+        <p>Q.6</p>
+      </div>
     </div>
-    <div class="text-right">
-      <p>Q.6</p>
+    <div class="desc">
+      <p>Bán nhà sát bên chợ Cây Gõ  Quận 6 - đang cho thuê 6.5 triệu/tháng</p>
     </div>
-  </div>
-  <div class="desc">
-    <p>Bán nhà sát bên chợ Cây Gõ  Quận 6 - đang cho thuê 6.5 triệu/tháng</p>
   </div>
   <div class="card-footer d-flex justify-content-between">
     <span><i class="fas fa-bed"></i> 4</span>
