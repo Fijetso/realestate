@@ -1,8 +1,10 @@
 package vn.edu.uit.realestate.Service;
 
 import com.cloudinary.Cloudinary;
+import com.cloudinary.Transformation;
 import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,10 +18,19 @@ public class CloudinaryService {
 	@Autowired
     private Cloudinary cloudinaryConfig;
 
+	@Value("${cloudinary.folder}")
+	private String folder;
+	
     public String uploadFile(MultipartFile file) {
         try {
             File uploadedFile = convertMultiPartToFile(file);
-            Map uploadResult = cloudinaryConfig.uploader().upload(uploadedFile, ObjectUtils.emptyMap());
+            Transformation parseToPNG = new Transformation().fetchFormat("png");
+            Map params = ObjectUtils.asMap(
+            		"folder", folder,
+//            		"use_filename", false,
+//            		"unique_filename", true,
+            		"transformation", parseToPNG);
+            Map uploadResult = cloudinaryConfig.uploader().upload(uploadedFile, params);
             return  uploadResult.get("url").toString();
         } catch (Exception e) {
             throw new RuntimeException(e);
