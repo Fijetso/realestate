@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import vn.edu.uit.realestate.Model.Image;
-import vn.edu.uit.realestate.Service.CloudiaryService;
+import vn.edu.uit.realestate.Service.CloudinaryService;
 import vn.edu.uit.realestate.Service.ImageRepository;
 
 @RestController
@@ -17,7 +17,7 @@ public class ImageController {
 	@Autowired
 	private ImageRepository imageRepository;
 	@Autowired
-    private CloudiaryService cloudinaryService;
+    private CloudinaryService cloudinaryService;
 
     @PostMapping("image/upload")
     public ResponseEntity<Image> uploadFile(@RequestParam("file") MultipartFile file) {
