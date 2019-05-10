@@ -21,8 +21,8 @@ import vn.edu.uit.realestate.Controller.ExceptionHandler.ExistContentException;
 import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.Model.User;
 import vn.edu.uit.realestate.Model.UserKind;
-import vn.edu.uit.realestate.Repository.UserKindRepository;
-import vn.edu.uit.realestate.Repository.UserRepository;
+import vn.edu.uit.realestate.Service.UserKindRepository;
+import vn.edu.uit.realestate.Service.UserRepository;
 
 @RestController
 public class UserKindController {
