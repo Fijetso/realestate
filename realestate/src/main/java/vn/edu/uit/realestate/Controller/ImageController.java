@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import vn.edu.uit.realestate.Model.Image;
 import vn.edu.uit.realestate.Service.CloudiaryService;
 import vn.edu.uit.realestate.Service.ImageRepository;
 
@@ -19,9 +20,12 @@ public class ImageController {
     private CloudiaryService cloudinaryService;
 
     @PostMapping("image/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<Image> uploadFile(@RequestParam("file") MultipartFile file) {
         String url = cloudinaryService.uploadFile(file);
-        return new ResponseEntity<>(url, HttpStatus.OK);
+        Image newImage = new Image();
+        newImage.setImageLink(url);
+        imageRepository.save(newImage);
+        return new ResponseEntity<>(newImage, HttpStatus.OK);
     }
 //
 //    @GetMapping("/images")
