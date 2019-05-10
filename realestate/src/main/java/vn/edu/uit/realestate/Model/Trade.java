@@ -41,7 +41,10 @@ public class Trade {
     private Details details;
 	
 	@OneToMany(mappedBy="trade")
-	private List<Image> images;
+	private List<Image> realImages;
+	
+	@OneToMany(mappedBy="trade")
+	private List<Image> bluePrints;
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name="bookingId", referencedColumnName = "id")
@@ -52,7 +55,7 @@ public class Trade {
 	}
 
 	public Trade(Long id, String description, Long cost, User user, RealEstateKind realEstateKind, TradeKind tradeKind,
-			Address address, Details details, List<Image> images, List<Booking> bookings) {
+			Address address, Details details, List<Image> realImages, List<Image> bluePrints, List<Booking> bookings) {
 		super();
 		this.id = id;
 		this.description = description;
@@ -62,7 +65,8 @@ public class Trade {
 		this.tradeKind = tradeKind;
 		this.address = address;
 		this.details = details;
-		this.images = images;
+		this.realImages = realImages;
+		this.bluePrints = bluePrints;
 		this.bookings = bookings;
 	}
 
@@ -74,31 +78,6 @@ public class Trade {
 		this.id = id;
 	}
 
-
-	public Long getCost() {
-		return cost;
-	}
-
-	public void setCost(Long cost) {
-		this.cost = cost;
-	}
-
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-
-	public Details getDetails() {
-		return details;
-	}
-
-	public void setDetails(Details details) {
-		this.details = details;
-	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -106,21 +85,13 @@ public class Trade {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	public List<Image> getImages() {
-		return images;
+
+	public Long getCost() {
+		return cost;
 	}
 
-	public void setImages(List<Image> images) {
-		this.images = images;
-	}
-
-	public List<Booking> getBooking() {
-		return bookings;
-	}
-
-	public void setBooking(List<Booking> bookings) {
-		this.bookings = bookings;
+	public void setCost(Long cost) {
+		this.cost = cost;
 	}
 
 	public User getUser() {
@@ -147,6 +118,38 @@ public class Trade {
 		this.tradeKind = tradeKind;
 	}
 
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	public Details getDetails() {
+		return details;
+	}
+
+	public void setDetails(Details details) {
+		this.details = details;
+	}
+
+	public List<Image> getRealImages() {
+		return realImages;
+	}
+
+	public void setRealImages(List<Image> realImages) {
+		this.realImages = realImages;
+	}
+
+	public List<Image> getBluePrints() {
+		return bluePrints;
+	}
+
+	public void setBluePrints(List<Image> bluePrints) {
+		this.bluePrints = bluePrints;
+	}
+
 	public List<Booking> getBookings() {
 		return bookings;
 	}
@@ -154,5 +157,4 @@ public class Trade {
 	public void setBookings(List<Booking> bookings) {
 		this.bookings = bookings;
 	}
-	
 }

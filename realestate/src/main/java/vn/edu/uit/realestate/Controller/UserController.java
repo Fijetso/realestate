@@ -62,7 +62,7 @@ public class UserController {
         return new ResponseEntity<>(foundUser.get(), HttpStatus.OK);
     }
     @PostMapping("users/{userId}/trades")
-    public ResponseEntity<Trade> postTradeByUserId(@PathVariable long userId, @Valid @RequestBody Trade trade) {
+    public ResponseEntity<Trade> postTradeByUserId(@PathVariable long userId, @Valid @RequestBody Trade trade) throws Exception {
     	Optional<User> foundUser = userRepository.findById(userId);
 		if (foundUser.isPresent()==false) {
     		throw new NotFoundException("Cannot find any User with id="+userId);
@@ -78,15 +78,11 @@ public class UserController {
     	TradeKind tradeKind = trade.getTradeKind();
     	if(tradeKind==null || 
     			!tradeKindRepository.findById(tradeKind.getId()).isPresent()) {
-    		throw new NotFoundException("You must enter suitable  Kind");
+    		throw new NotFoundException("You must enter suitable Trade Kind");
     	}
     	
     	if(trade.getAddress()!=null) {
-    		try {
     		addressRepository.save(trade.getAddress());
-    		}catch(Exception e) {
-    			System.out.println(e);
-    		}
     	}
     	
     	if(trade.getDetails()!=null) {
