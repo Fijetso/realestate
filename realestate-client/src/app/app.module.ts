@@ -61,6 +61,9 @@ import { RealEstateWrapperComponent } from './components/real-estate/real-estate
 import { AlertComponent } from './components/modal/alert/alert.component';
 import { FavoriteComponent } from './components/favorite/favorite.component';
 import { UploaderComponent } from './components/uploader/uploader.component';
+import { NewsItemComponent } from './core/ui/news-item/news-item.component';
+import { FloatingMenuWrapperComponent } from './core/ui/menu/floating-menu-wrapper/floating-menu-wrapper.component';
+import { FloatingMenuItemComponent } from './core/ui/menu/floating-menu-item/floating-menu-item.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -77,7 +80,10 @@ import { UploaderComponent } from './components/uploader/uploader.component';
     RealEstateWrapperComponent,
     AlertComponent,
     FavoriteComponent,
-    UploaderComponent
+    UploaderComponent,
+    NewsItemComponent,
+    FloatingMenuWrapperComponent,
+    FloatingMenuItemComponent
   ],
   imports: [
     BrowserModule,
