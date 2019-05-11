@@ -21,14 +21,14 @@ public class CloudinaryService {
 	@Value("${cloudinary.folder}")
 	private String folder;
 	
-    public String uploadFile(MultipartFile file) {
+    public String uploadImage(MultipartFile file) {
         try {
             File uploadedFile = convertMultiPartToFile(file);
-            Transformation parseToPNG = new Transformation().fetchFormat("png");
+            Transformation parseToWebp = new Transformation().fetchFormat("webp").quality("30");
             Map params = ObjectUtils.asMap(
             		"folder", folder,
-//            		"use_filename", false,
-//            		"unique_filename", true,
+            		"transformation", parseToWebp
+            		);
             		"transformation", parseToPNG);
             Map uploadResult = cloudinaryConfig.uploader().upload(uploadedFile, params);
             return  uploadResult.get("url").toString();
