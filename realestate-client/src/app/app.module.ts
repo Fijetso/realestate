@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { AgmCoreModule } from '@agm/core';
 import { AgmDirectionModule } from 'agm-direction'; // agm-direction
 import { MatDialogModule } from '@angular/material/dialog';
@@ -55,7 +54,6 @@ import {
 import { HttpClientModule } from '@angular/common/http';
 import 'hammerjs';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
-import { NgxHmCarouselModule } from 'ngx-hm-carousel';
 
 import { RealEstateWrapperComponent } from './components/real-estate/real-estate-wrapper/real-estate-wrapper.component';
 import { AlertComponent } from './components/modal/alert/alert.component';
@@ -64,6 +62,7 @@ import { UploaderComponent } from './components/uploader/uploader.component';
 import { NewsItemComponent } from './core/ui/news-item/news-item.component';
 import { FloatingMenuWrapperComponent } from './core/ui/menu/floating-menu-wrapper/floating-menu-wrapper.component';
 import { FloatingMenuItemComponent } from './core/ui/menu/floating-menu-item/floating-menu-item.component';
+import { MarkettingComponent } from './components/marketting/marketting.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -83,19 +82,18 @@ import { FloatingMenuItemComponent } from './core/ui/menu/floating-menu-item/flo
     UploaderComponent,
     NewsItemComponent,
     FloatingMenuWrapperComponent,
-    FloatingMenuItemComponent
+    FloatingMenuItemComponent,
+    MarkettingComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     LazyLoadImageModule,
     BrowserAnimationsModule,
-    MDBBootstrapModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCxEsgD2edDcqz5wgKqjYJVjcqmWztNF3A'
     }),
     AgmDirectionModule,
-    NgxHmCarouselModule,
     FormsModule,
     MatDialogModule,
     LayoutModule,

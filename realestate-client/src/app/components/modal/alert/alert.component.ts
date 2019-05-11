@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 @Component({
   selector: 'app-alert',
   templateUrl: './alert.component.html',
@@ -9,6 +10,8 @@ export class AlertComponent implements OnInit {
   seasons: string[] = ['Winter', 'Spring', 'Summer', 'Autumn'];
   isShow = true;
   constructor(
+    public dialogRef: MatDialogRef<AlertComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) { }
   ngOnInit() {
   }
@@ -16,4 +19,11 @@ export class AlertComponent implements OnInit {
     this.isShow = !this.isShow;
     console.log(this.isShow);
   }
+  handleClose($event){
+    this.dialogRef.close();
+  }
+}
+export interface DialogData {
+  animal: string;
+  name: string;
 }

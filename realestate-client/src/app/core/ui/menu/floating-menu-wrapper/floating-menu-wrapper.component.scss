@@ -12,7 +12,7 @@ div{
     transition: width .5s;
 }
 div:hover{
-    width:400px;
+    width:300px;
     position: fixed;
     bottom:30%;
     left:0%;
@@ -20,4 +20,11 @@ div:hover{
     height:300px;
     color:white;
     z-index: 92;
+}
+@media only screen and (max-width:576px){
+    .div{
+        position: relative;
+        visibility: hidden;
+        z-index: 1;
+    }
 }

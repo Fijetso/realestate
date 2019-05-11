@@ -1,10 +1,10 @@
 <mat-card class="real-estate-card-item md-card">
-  <!-- <img src="https://dummyimage.com/255x150/333/fff" alt="dummyimage" class="card-img-top"> -->
   <div class="img-hover-zoom">
       <img class="md-image card-img-top" [lazyLoad]="main_pic" alt="picsum" [defaultImage]="default_pic" [offset]=100>
       <mat-icon class="icon icon-like"  matTooltip="Add to your's favorite list">favorite_border</mat-icon>
+      <button class="btn-sm btn-checked" type="button">Đã thẩm định</button>
   </div>
-  <div class="md-card-body mx-3">
+  <div class="md-card-body">
     <div class="price-address d-flex flex-row justify-content-between">
       <div class="text-left font-weight-bold">
         <span class="rs-price">42,5 tỷ</span>
@@ -22,7 +22,7 @@
       <button mat-raised-button class="btn btn-block bg-faded-blue">Có 999 lượt quan tâm</button>
     </div>
   </div>
-  <div class="card-footer d-flex justify-content-between">
+  <div class="md-card-footer d-flex justify-content-between">
     <span class="rs-bed-room"><i class="fas fa-bed" matTooltip="Bedroom quantity"></i> 4</span>
     <span class="rs-bath-room"><i class="fas fa-bath" matTooltip="Bathroom quantity"></i> 2</span>
     <span class="rs-location-direct"><i class="fas fa-location-arrow" matTooltip="Location direction"></i> Tây Nam</span>

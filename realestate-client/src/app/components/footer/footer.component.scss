@@ -1,0 +1,16 @@
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
+@import "~@fortawesome/fontawesome-free/scss/regular";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~@fortawesome/fontawesome-free/scss/brands";
+$bg-primary : purple;
+*{
+    color:white;
+    text-decoration:none;
+}
+
+*:hover{
+    text-decoration:none;
+}
+.primary{
+    background-color: $bg-primary;
+}  

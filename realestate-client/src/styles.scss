@@ -1,12 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/theming';
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
 $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 @import "~@fortawesome/fontawesome-free/scss/regular";
 @import "~@fortawesome/fontawesome-free/scss/solid";
 @import "~@fortawesome/fontawesome-free/scss/brands";
-* {
+
+*,*:hover,a:hover{
   font-style: normal;
+  outline: 0;
+  text-decoration: none;
 }
 .main-header {
   height: 10vh;

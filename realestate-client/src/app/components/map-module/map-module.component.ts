@@ -6,9 +6,14 @@ import { Map } from 'src/app/model/map';
   styleUrls: ['./map-module.component.scss']
 })
 export class MapModuleComponent implements OnInit {
+  constructor() { }
   public origin: any;
   public destination: any;
-  constructor() { }
+  public map: Map = {
+    lat: 10.8698354,
+    lng : 106.8027391,
+    zoom : 17
+  };
 
   ngOnInit() {
     this.getDirection();
@@ -16,14 +21,9 @@ export class MapModuleComponent implements OnInit {
   getDirection() {
     this.origin = this.map;
     this.destination = {lat: 10.8830067, lng: 106.7795138};
-   
+
     // this.origin = 'Taipei Main Station';
     // this.destination = 'Taiwan Presidential Office';
-    console.log(this.origin,this.destination);
+    console.log(this.origin, this.destination);
   }
-  public map : Map = {
-    lat: 10.8698354,
-    lng : 106.8027391,
-    zoom :17
-  };
 }

@@ -1,39 +1,67 @@
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
-$fa-font-path : "~@fortawesome/fontawesome-free/webfonts";
-@import '~@fortawesome/fontawesome-free/scss/regular';
-@import '~@fortawesome/fontawesome-free/scss/solid';
-@import '~@fortawesome/fontawesome-free/scss/brands';
-.md-card:hover{
-    box-shadow: -1px 10px 29px 0px rgba(0,0,0,.2);
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
+@import "~@fortawesome/fontawesome-free/scss/regular";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~@fortawesome/fontawesome-free/scss/brands";
+@import "~bootstrap/scss/bootstrap.scss";
+.md-card:hover {
+  box-shadow: -1px 10px 29px 0px rgba(0, 0, 0, 0.2);
 }
-.md-card{
-    padding: 0;
-}
-.img-hover-zoom { /* [1.1] Set it as per your need */
-    overflow: hidden; /* [1.2] Hide the overflowing of child elements */
-    position: relative;
+.md-card {
+  padding: 0;
+  .md-card-body{
+    margin-left: 1rem;
+    margin-right: 1rem;
   }
-  
-  /* [2] Transition property for smooth transformation of images */
-  .img-hover-zoom img {
-    transition: transform .5s ease;
+  .md-card-footer{
+    margin-left: 1rem;
+    margin-right: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
-  
-  /* [3] Finally, transforming the image when container gets hovered */
-  .img-hover-zoom:hover img {
-    transform: scale(1.2);
-  }
-.mat-icon{
-    position: absolute;
-    bottom: 5%;
-    right: 5%;
-    color: #fff;
-    border-radius: 50%;
 }
-.mat-icon:hover{
-    color:red;
-    cursor:pointer;
+.img-hover-zoom {
+  /* [1.1] Set it as per your need */
+  overflow: hidden; /* [1.2] Hide the overflowing of child elements */
+  position: relative;
 }
-.fas{
-    color:#333;
+
+/* [2] Transition property for smooth transformation of images */
+.img-hover-zoom img {
+  transition: transform 0.5s ease;
+}
+
+/* [3] Finally, transforming the image when container gets hovered */
+.img-hover-zoom:hover img {
+  transform: scale(1.2);
+}
+.mat-icon {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  color: #fff;
+  border-radius: 50%;
+}
+.mat-icon:hover {
+  color: red;
+  cursor: pointer;
+}
+.fas {
+  color: #333;
+}
+.btn-checked {
+  position: absolute;
+  border: none;
+  top: 5%;
+  left: 5%;
+  color: #fff;
+  border-radius: 1em;
+  padding-left: .5rem;
+  padding-right: .5rem;
+  padding-top: .2rem;
+  padding-bottom: .2rem;
+  background-color: rgba(0, 0, 0, .4);
+}
+.btn-checked:hover {
+  box-shadow: -1px 5px 14px 0px rgba(0, 0, 0, 0.2);
 }
