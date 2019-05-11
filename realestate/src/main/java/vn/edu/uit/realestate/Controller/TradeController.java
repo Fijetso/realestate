@@ -85,9 +85,11 @@ public class TradeController {
     	if(foundTrade.get().getBookings().isEmpty()==false) {
     		throw new ExistContentException("Cannot delete this Trade. This Trade have existed Booking(s)");
     	}
-    	List<Image> tradeImages = foundTrade.get().getImages();
+    	///Get all images from Blueprints and RealImages.
+    	List<Image> tradeImages = foundTrade.get().getRealImages();
+    	tradeImages.addAll(foundTrade.get().getBluePrints());
     	if(tradeImages.isEmpty()==false) {
-    		imageRepository.deleteAll(foundTrade.get().getImages());
+    		imageRepository.deleteAll(tradeImages);
     	}
 		tradeRepository.deleteById(id);
     }

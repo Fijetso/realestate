@@ -9,17 +9,17 @@ public class Menu {
 	@Id
 	@GeneratedValue
 	private Long id;
-	private String name;
-	private String link;
+	private String title;
+	private String icon;
 	private Long parentId;
 	public Menu() {
 		super();
 	}
-	public Menu(Long id, String name, String link, Long parentId) {
+	public Menu(Long id, String title, String icon, Long parentId) {
 		super();
 		this.id = id;
-		this.name = name;
-		this.link = link;
+		this.title = title;
+		this.icon = icon;
 		this.parentId = parentId;
 	}
 	public Long getId() {
@@ -28,17 +28,17 @@ public class Menu {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
-	public String getLink() {
-		return link;
+	public String getIcon() {
+		return icon;
 	}
-	public void setLink(String link) {
-		this.link = link;
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 	public Long getParentId() {
 		return parentId;
@@ -46,5 +46,4 @@ public class Menu {
 	public void setParentId(Long parentId) {
 		this.parentId = parentId;
 	}
-	
 }

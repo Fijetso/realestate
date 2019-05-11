@@ -27,31 +27,31 @@ public class MenuController {
 	@Autowired
 	private MenuRepository menuRepository;
 
-    @GetMapping("/history")
-    public ResponseEntity<List<Menu>> getHistory() {
-    	List<Menu> history = menuRepository.findAll();
-    	if (history.isEmpty() == true) {
-    		throw new NotFoundException("Cannot find any history");
+    @GetMapping("/menu/all")
+    public ResponseEntity<List<Menu>> getAllMenu() {
+    	List<Menu> menu = menuRepository.findAll();
+    	if (menu.isEmpty() == true) {
+    		throw new NotFoundException("Cannot find any Menu");
     	}
-        return new ResponseEntity<>(history,HttpStatus.OK);
+        return new ResponseEntity<>(menu,HttpStatus.OK);
     }
     
-    @GetMapping("/history/{id}")
-    public ResponseEntity<Object> getHistoryById(@PathVariable long id) throws Exception{
-    	Optional<Menu> historyById = menuRepository.findById(id);
-    	if (historyById.isPresent()==false) {
-    		throw new NotFoundException("Cannot find any history with id="+id);
+    @GetMapping("/menu/{id}")
+    public ResponseEntity<Object> getMenuById(@PathVariable long id) throws Exception{
+    	Optional<Menu> menuById = menuRepository.findById(id);
+    	if (menuById.isPresent()==false) {
+    		throw new NotFoundException("Cannot find any Menu with id="+id);
     	}
-        return new ResponseEntity<>(historyById, HttpStatus.OK);
+        return new ResponseEntity<>(menuById, HttpStatus.OK);
     }
     
-    @PostMapping("/history")
-    public ResponseEntity<Menu> postHistory(@Valid @RequestBody Menu menu) {
+    @PostMapping("/menu")
+    public ResponseEntity<Menu> postMenu(@Valid @RequestBody Menu menu) {
     	if (menu.getParentId()!=null) {
 	    	Optional<Menu> parentMenu = menuRepository.findById(menu.getParentId());
 	    	if (parentMenu.isPresent()==false)
 	    	{
-	    		throw new NotFoundException("Cannot find ParentId="+menu.getParentId());
+	    		throw new NotFoundException("Cannot find any Parent Menu with Id="+menu.getParentId());
 	    	}
     	}
     	menuRepository.save(menu);
@@ -60,15 +60,11 @@ public class MenuController {
     			.buildAndExpand(menu.getId()).toUri();
     	return ResponseEntity.created(location).build();
     }
-    @DeleteMapping("/history/{id}")
-    public void deleteHistoryById(@PathVariable long id) throws Exception{
+    @DeleteMapping("/menu/{id}")
+    public void deleteMenuById(@PathVariable long id) throws Exception{
 		if(!menuRepository.existsById(id)) {
-			throw new NotFoundException("Cannot find History with Id="+id);
+			throw new NotFoundException("Cannot find Menu with Id="+id);
 		}
     	menuRepository.deleteById(id);
-    }
-    @DeleteMapping("/history/all")
-    public void clearHistory() throws Exception {
-		    	menuRepository.deleteAll();
     }
 }

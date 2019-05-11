@@ -18,4 +18,18 @@ INSERT INTO TRADE
 VALUES(1,35000,'Đây là phần mô tả',1,2,1,1,2);
 INSERT INTO BOOKING
 VALUES(3,'','','',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,1,1);
-
+-- INSERT DEFAULT MENU
+INSERT INTO MENU
+VALUES(1,'Menu',NULL,'menu');
+INSERT INTO MENU
+VALUES(2,'Person pin',NULL,'person_pin');
+INSERT INTO MENU
+VALUES(3,'Settings',NULL,'settings');
+INSERT INTO MENU
+VALUES(4,'Close',NULL,'close');
+INSERT INTO MENU
+VALUES(5,'Help',NULL,'help_outline');
+INSERT INTO MENU
+VALUES(6,'Person outline',NULL,'person_outline');
+INSERT INTO MENU
+VALUES(7,'Sign out',NULL,'exit_to_app');
