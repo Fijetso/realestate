@@ -29,12 +29,28 @@ public class CloudinaryService {
             		"folder", folder,
             		"transformation", parseToWebp
             		);
-            		"transformation", parseToPNG);
             Map uploadResult = cloudinaryConfig.uploader().upload(uploadedFile, params);
             return  uploadResult.get("url").toString();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+    private String getPublicId(String imageLink) {
+    	String[] stringList = imageLink.split(this.folder+"/");
+    	int startIndex = imageLink.indexOf(this.folder) + this.folder.length() +1;
+    	int endIndex = imageLink.indexOf(".",startIndex);
+    	String public_id = imageLink.substring(startIndex, endIndex);
+    	return public_id;
+    }
+    public boolean deleteImage(String imageLink) {
+    	try {
+    		String public_id = getPublicId(imageLink);
+			cloudinaryConfig.uploader().destroy(public_id, ObjectUtils.asMap("invalidate", true));
+		} catch (IOException e) {
+			e.printStackTrace();
+	    	return false;
+		}
+    	return true;
     }
 
     private File convertMultiPartToFile(MultipartFile file) throws IOException {

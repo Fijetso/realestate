@@ -1,13 +1,19 @@
 package vn.edu.uit.realestate.Controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.Model.Image;
 import vn.edu.uit.realestate.Service.CloudinaryService;
 import vn.edu.uit.realestate.Service.ImageRepository;
@@ -26,6 +32,15 @@ public class ImageController {
         newImage.setImageLink(url);
         imageRepository.save(newImage);
         return new ResponseEntity<>(newImage, HttpStatus.OK);
+    }
+    @DeleteMapping("image/{id}")
+    public void deleteImageWithPublicId(@PathVariable("id") Long id) throws Exception {
+    	Optional<Image> delImage = imageRepository.findById(id);
+    	if(delImage.isPresent()==false) {
+			throw new NotFoundException("Cannot find any Image with Id="+id);
+		}
+    	cloudinaryService.deleteImage(delImage.get().getImageLink());
+        imageRepository.deleteById(id);
     }
 //
 //    @GetMapping("/images")
@@ -79,9 +94,7 @@ public class ImageController {
 //    @DeleteMapping("/categories/{id}")
 //    public void deleteUserKind(@PathVariable long id) {
 //    	Optional<Category> foundCategory = categoryRepository.findById(id);
-//    	if(foundCategory.isPresent()==false) {
-//			throw new NotFoundException("Cannot find any Category with Id="+id);
-//		}
+
 //    	if(foundCategory.get().getNews().isEmpty()==true) {
 //    		throw new ExistContentException("There still exist 'News' in this Category. You should delete all these News before delete.");
 //    	}
