@@ -17,21 +17,21 @@ export class NavComponent {
     .pipe(
       map(result => result.matches)
     );
-    isLoading: boolean = true;
+    isLoading = true;
   // constructor(private breakpointObserver: BreakpointObserver) {}
   constructor(
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private breakpointObserver: BreakpointObserver,
     private modalService: ModalService
-  ){
+  ) {
     this.matIconRegistry.addSvgIcon(
-      "apple-badge",
-      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/images/apple-badge.svg")
+      'apple-badge',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/images/apple-badge.svg')
     );
     this.matIconRegistry.addSvgIcon(
-      "google-badge",
-      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/images/google-badge.svg")
+      'google-badge',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/images/google-badge.svg')
     );
   }
   openInfoModal() {
