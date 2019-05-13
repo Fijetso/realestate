@@ -45,11 +45,14 @@ import {
   MatButtonToggleModule,
   MatFormFieldModule
 } from '@angular/material';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import 'hammerjs';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+// import { TranslateConfigService } from '../app/services/translate/translate-config.service';
 
 import { RealEstateWrapperComponent } from './components/real-estate/real-estate-wrapper/real-estate-wrapper.component';
 import { AlertComponent } from './components/modal/alert/alert.component';
@@ -69,6 +72,12 @@ import { BuyOnDemandSectionComponent } from './core/ui/home-page/buy-on-demand-s
 import { NewsSectionComponent } from './core/ui/home-page/news-section/news-section.component';
 import { DownloadAppSectionComponent } from './core/ui/home-page/download-app-section/download-app-section.component';
 import { SectionHeaderComponent } from './core/ui/section-header/section-header.component';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { RealEstateDetailComponent } from './core/ui/home-page/real-estate-detail/real-estate-detail.component';
+
+export function LanguageLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -98,16 +107,25 @@ import { SectionHeaderComponent } from './core/ui/section-header/section-header.
     BuyOnDemandSectionComponent,
     NewsSectionComponent,
     DownloadAppSectionComponent,
-    SectionHeaderComponent
+    SectionHeaderComponent,
+    RealEstateDetailComponent
   ],
   imports: [
     NgbModule,
     BrowserModule,
     AppRoutingModule,
     LazyLoadImageModule,
+    SlickCarouselModule,
     BrowserAnimationsModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCxEsgD2edDcqz5wgKqjYJVjcqmWztNF3A'
+    }),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: LanguageLoader,
+        deps: [HttpClient]
+      }
     }),
     AgmDirectionModule,
     MatFormFieldModule,

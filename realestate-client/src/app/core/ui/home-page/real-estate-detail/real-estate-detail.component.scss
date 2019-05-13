@@ -1,0 +1,13 @@
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
+@import "~@fortawesome/fontawesome-free/scss/regular";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~@fortawesome/fontawesome-free/scss/brands";
+.re-detail-wrapper{
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    .re-detail-path-header{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
