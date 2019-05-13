@@ -12,16 +12,8 @@ import { MessagesComponent } from './components/messages/messages.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { ContentComponent } from './components/content/content.component';
-import { CarouselComponent } from './components/carousel/carousel.component';
+import { CarouselComponent } from './core/ui/carousel/carousel.component';
 import { MapModuleComponent } from './components/map-module/map-module.component';
-
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormsModule,
-  NgForm
-} from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { NavComponent } from './components/nav/nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -49,8 +41,12 @@ import {
   MatSlideToggleModule,
   MatAutocompleteModule,
   MatBottomSheet,
-  MatBottomSheetRef
+  MatBottomSheetRef,
+  MatButtonToggleModule,
+  MatFormFieldModule
 } from '@angular/material';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 import { HttpClientModule } from '@angular/common/http';
 import 'hammerjs';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
@@ -62,7 +58,17 @@ import { UploaderComponent } from './components/uploader/uploader.component';
 import { NewsItemComponent } from './core/ui/news-item/news-item.component';
 import { FloatingMenuWrapperComponent } from './core/ui/menu/floating-menu-wrapper/floating-menu-wrapper.component';
 import { FloatingMenuItemComponent } from './core/ui/menu/floating-menu-item/floating-menu-item.component';
-import { MarkettingComponent } from './components/marketting/marketting.component';
+import { MarkettingComponent } from './core/ui/home-page/marketting/marketting.component';
+import { TradingAreaItemComponent } from './core/ui/trading-area/trading-area-item/trading-area-item.component';
+import { WhyChooseSectionComponent } from './core/ui/home-page/why-choose-section/why-choose-section.component';
+import { TradingAreaSectionComponent } from './core/ui/home-page/trading-area-section/trading-area-section.component';
+import { HotRealEstateSectionComponent } from './core/ui/home-page/hot-real-estate-section/hot-real-estate-section.component';
+// tslint:disable-next-line: max-line-length
+import { RealEstateAppraisedSectionComponent } from './core/ui/home-page/real-estate-appraised-section/real-estate-appraised-section.component';
+import { BuyOnDemandSectionComponent } from './core/ui/home-page/buy-on-demand-section/buy-on-demand-section.component';
+import { NewsSectionComponent } from './core/ui/home-page/news-section/news-section.component';
+import { DownloadAppSectionComponent } from './core/ui/home-page/download-app-section/download-app-section.component';
+import { SectionHeaderComponent } from './core/ui/section-header/section-header.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -83,9 +89,19 @@ import { MarkettingComponent } from './components/marketting/marketting.componen
     NewsItemComponent,
     FloatingMenuWrapperComponent,
     FloatingMenuItemComponent,
-    MarkettingComponent
+    MarkettingComponent,
+    TradingAreaItemComponent,
+    WhyChooseSectionComponent,
+    TradingAreaSectionComponent,
+    HotRealEstateSectionComponent,
+    RealEstateAppraisedSectionComponent,
+    BuyOnDemandSectionComponent,
+    NewsSectionComponent,
+    DownloadAppSectionComponent,
+    SectionHeaderComponent
   ],
   imports: [
+    NgbModule,
     BrowserModule,
     AppRoutingModule,
     LazyLoadImageModule,
@@ -94,7 +110,7 @@ import { MarkettingComponent } from './components/marketting/marketting.componen
       apiKey: 'AIzaSyCxEsgD2edDcqz5wgKqjYJVjcqmWztNF3A'
     }),
     AgmDirectionModule,
-    FormsModule,
+    MatFormFieldModule,
     MatDialogModule,
     LayoutModule,
     MatToolbarModule,
@@ -110,7 +126,9 @@ import { MarkettingComponent } from './components/marketting/marketting.componen
     MatAutocompleteModule,
     MatProgressSpinnerModule,
     MatTabsModule,
-    MatCardModule
+    MatCardModule,
+    MatButtonToggleModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,0 +1,22 @@
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
+@import "~@fortawesome/fontawesome-free/scss/regular";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~@fortawesome/fontawesome-free/scss/brands";
+    .section-header-wrapper{
+        margin-left: 1rem;
+        margin-right: 1rem;
+        font-weight: bold;
+        .rs-category-name{
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .viewmore-text{
+            padding-left: 1rem;
+            color: orange;
+            text-overflow: ellipsis;
+            // overflow: hidden;
+            white-space: nowrap;
+            font-weight: normal;
+        }
+    }

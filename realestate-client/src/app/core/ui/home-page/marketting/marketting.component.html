@@ -1,0 +1,42 @@
+<div class="marketting-wrapper">
+  <div class="center-div text-center">
+    <div class="title-marketting">
+      <h3>Tìm Kiếm Mua - Thuê Nhà Tại Real Estate</h3>
+    </div>
+    <mat-button-toggle-group
+      #group="matButtonToggleGroup"
+      (change)="onValChange(group.value)"
+      [value]="selectedVal"
+    >
+      <mat-button-toggle value="buy" active>
+        <mat-icon class="text-white">check</mat-icon>
+        Mua
+      </mat-button-toggle>
+      <mat-button-toggle value="rent">
+        <mat-icon class="text-white">check</mat-icon>
+        Thuê
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+    <div class="example-selected-value">Selected value: {{ group.value }}</div>
+    <!-- Form Input auto complete -->
+    <form>
+      <div class="input-group input-small">
+        <input
+          id="typeahead-focus"
+          type="text"
+          class="form-control"
+          [(ngModel)]="model"
+          [ngbTypeahead]="search"
+          (focus)="focus$.next($event.target.value)"
+          (click)="click$.next($event.target.value)"
+          #instance="ngbTypeahead"
+        />
+        <div class="input-group-append">
+          <button class="btn btn-to-search bg-warning">
+            <mat-icon>search</mat-icon>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
