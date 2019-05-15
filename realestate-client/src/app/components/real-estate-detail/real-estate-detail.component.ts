@@ -11,5 +11,4 @@ export class RealEstateDetailComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

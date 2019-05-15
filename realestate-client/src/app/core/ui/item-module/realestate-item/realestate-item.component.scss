@@ -69,3 +69,16 @@ img{
   max-width: 100%;
   height: auto;
 }
+.mat-button{
+  padding: 1rem;
+}
+.btn-bg-faded-blue{
+  background-color: #3B5998;
+  color:white;
+  border-radius: 2rem !important;
+  outline: none !important;
+}
+.btn-bg-faded-blue:hover{
+  box-shadow: -1px 10px 29px 0px rgba(0, 0, 0, 0.2);
+  font-weight:600;
+}

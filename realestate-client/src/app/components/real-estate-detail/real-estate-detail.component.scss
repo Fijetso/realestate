@@ -32,25 +32,6 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
         }
     }
     .content-right {
-    //   .form-group {
-    //     .form-control {
-    //       display: block;
-    //       width: 100%;
-    //       height: calc(1.5em + 0.75rem + 2px);
-    //       padding: 0.375rem 0.75rem;
-    //       font-size: 1rem;
-    //       font-weight: 400;
-    //       line-height: 1.5;
-    //       color: #495057;
-    //       background-color: #fff;
-    //       background-clip: padding-box;
-    //       border: none;
-    //       border-radius: 0px;
-    //       transition: border-color 0.15s ease-in-out,
-    //         box-shadow 0.15s ease-in-out;
-    //       outline: none;
-    //     }
-    //   }
     .request-infor{
         h5{
 
@@ -58,6 +39,10 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
         form{
             mat-form-field{
                 width: 100%;
+            }
+            button{
+                padding: 10px; 
+                // border-radius: 3rem;
             }
         }
     }

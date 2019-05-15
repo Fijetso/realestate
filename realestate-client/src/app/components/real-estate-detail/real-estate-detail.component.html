@@ -12,40 +12,45 @@
   </div>
   <div class="main-content">
     <div class="row">
-      <div class="col-md-8 col-lg-8 content-left" style="height:800px">
-        <mat-card class="p-3 m-3">
+      <div class="col-md-8 col-lg-8 content-left">
+        <mat-card class="main-news mw-100">
           <img src="https://picsum.photos/id/237/1080/500" alt="" />
         </mat-card>
       </div>
       <div class="col-md-4 col-lg-4 content-right">
-        <mat-card class="p-3 m-3 request-infor">
+        <mat-card class="request-infor mw-100">
           <h5 class="text-center">Yêu cầu thông tin</h5>
           <form>
             <mat-form-field appearance="outline">
                 <mat-label>Họ và Tên</mat-label>
                 <mat-icon matPrefix>perm_identity</mat-icon>
-                <input matInput placeholder="Nguyễn Văn A" required>
+                <input matInput placeholder="Nguyễn Văn A" required name="name">
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Số điện thoại</mat-label>
-                <mat-icon matPrefix>sentiment_very_satisfied</mat-icon>
-                <input matInput placeholder="09xxxxxxxx" required/>
+                <mat-icon matPrefix>phone</mat-icon>
+                <input matInput placeholder="09xxxxxxxx" required name="phone"/>
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Email</mat-label>
                 <mat-icon matPrefix>mail_outline</mat-icon>
-                <input matInput placeholder="email@example.com" [formControl]="email"/>
+                <input matInput placeholder="email@example.com" name="emails"/>
             </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Chọn ngày</mat-label>
-                <mat-icon matPrefix>calendar_today</mat-icon>
-                <input matInput placeholder="dd/mm/yyyy" />
+            <mat-form-field>
+                <mat-label>Thời gian</mat-label>
+                <input matInput [matDatepicker]="picker" placeholder="dd/MM/yyyy" name="date">
+                <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Mã chương trình</mat-label>
                 <mat-icon matPrefix>sentiment_very_satisfied</mat-icon>
-                <input matInput placeholder="ABC123456" />
+                <input matInput placeholder="ABC123456" name="programCode"/>
             </mat-form-field>
+            <div class="footer-form d-flex justify-content-around">
+                <button type="submit" mat-raised-button color="accent" class="btn-rounded btn-on-plan">Đặt lịch xem</button>
+                <button type="submit" mat-raised-button class="btn-rounded btn-save text-black">Lưu bản tin</button>
+            </div>
           </form>
         </mat-card>
       </div>

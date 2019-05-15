@@ -52,6 +52,7 @@ import 'hammerjs';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { OwlModule } from 'ngx-owl-carousel';
+import { FormsModule }   from '@angular/forms';
 
 
 import { RealEstateWrapperComponent } from './components/real-estate/real-estate-wrapper/real-estate-wrapper.component';
@@ -146,7 +147,10 @@ export function LanguageLoader(http: HttpClient) {
     MatTabsModule,
     MatCardModule,
     MatButtonToggleModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
