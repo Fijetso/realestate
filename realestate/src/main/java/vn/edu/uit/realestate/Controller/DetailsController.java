@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.Model.Details;
-import vn.edu.uit.realestate.Service.DetailsRepository;
+import vn.edu.uit.realestate.Service.Repository.DetailsRepository;
 
 @RestController
 public class DetailsController {

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.Model.News;
-import vn.edu.uit.realestate.Service.NewsRepository;
+import vn.edu.uit.realestate.Service.Repository.NewsRepository;
 
 @RestController
 public class NewsController {

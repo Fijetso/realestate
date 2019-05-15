@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.Model.Image;
 import vn.edu.uit.realestate.Service.CloudinaryService;
-import vn.edu.uit.realestate.Service.ImageRepository;
+import vn.edu.uit.realestate.Service.Repository.ImageRepository;
 
 @RestController
 public class ImageController {

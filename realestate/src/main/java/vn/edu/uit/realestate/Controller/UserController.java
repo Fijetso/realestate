@@ -23,12 +23,12 @@ import vn.edu.uit.realestate.Model.RealEstateKind;
 import vn.edu.uit.realestate.Model.Trade;
 import vn.edu.uit.realestate.Model.TradeKind;
 import vn.edu.uit.realestate.Model.User;
-import vn.edu.uit.realestate.Service.AddressRepository;
-import vn.edu.uit.realestate.Service.DetailsRepository;
-import vn.edu.uit.realestate.Service.RealEstateKindRepository;
-import vn.edu.uit.realestate.Service.TradeKindRepository;
-import vn.edu.uit.realestate.Service.TradeRepository;
-import vn.edu.uit.realestate.Service.UserRepository;
+import vn.edu.uit.realestate.Service.Repository.AddressRepository;
+import vn.edu.uit.realestate.Service.Repository.DetailsRepository;
+import vn.edu.uit.realestate.Service.Repository.RealEstateKindRepository;
+import vn.edu.uit.realestate.Service.Repository.TradeKindRepository;
+import vn.edu.uit.realestate.Service.Repository.TradeRepository;
+import vn.edu.uit.realestate.Service.Repository.UserRepository;
 
 @RestController
 public class UserController {

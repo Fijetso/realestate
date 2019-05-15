@@ -22,8 +22,8 @@ import vn.edu.uit.realestate.Controller.ExceptionHandler.ExistContentException;
 import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.Model.Category;
 import vn.edu.uit.realestate.Model.News;
-import vn.edu.uit.realestate.Service.CategoryRepository;
-import vn.edu.uit.realestate.Service.NewsRepository;
+import vn.edu.uit.realestate.Service.Repository.CategoryRepository;
+import vn.edu.uit.realestate.Service.Repository.NewsRepository;
 
 @RestController
 public class CategoryController {

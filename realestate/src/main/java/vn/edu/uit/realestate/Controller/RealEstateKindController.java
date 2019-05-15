@@ -22,7 +22,7 @@ import vn.edu.uit.realestate.Controller.ExceptionHandler.ExistContentException;
 import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.Model.RealEstateKind;
 import vn.edu.uit.realestate.Model.Trade;
-import vn.edu.uit.realestate.Service.RealEstateKindRepository;
+import vn.edu.uit.realestate.Service.Repository.RealEstateKindRepository;
 
 @RestController
 public class RealEstateKindController {
