@@ -1,4 +1,4 @@
-import { AlertComponent } from "./../components/modal/alert/alert.component";
+import { AlertComponent } from "../core/modal/alert/alert.component";
 import { Injectable } from "@angular/core";
 import { MatDialog } from "@angular/material";
 

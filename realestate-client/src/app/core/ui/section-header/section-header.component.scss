@@ -7,11 +7,13 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
         margin-right: 1rem;
         font-weight: bold;
         .rs-category-name{
+            cursor: pointer;
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;
         }
         .viewmore-text{
+            cursor: pointer;
             padding-left: 1rem;
             color: orange;
             text-overflow: ellipsis;

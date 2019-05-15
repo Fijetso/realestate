@@ -1,69 +1,15 @@
-<!-- <app-content></app-content> -->
 <app-marketting></app-marketting>
 <div class="mt-10 container">
-  <app-carousel></app-carousel>
-  <!-- <app-floating-menu-wrapper></app-floating-menu-wrapper> -->
-  <!-- <app-uploader></app-uploader> -->
+  <app-real-estate-appraised-section></app-real-estate-appraised-section>
+  <app-hot-real-estate-section></app-hot-real-estate-section>
   <app-favorite></app-favorite>
-  <div class="card-list">
-    <app-section-header catTitle="Thế đéo nào"></app-section-header>
-    <div class="d-flex flex-wrap">
-      <div class="col-md-4 col-lg-3 my-2" *ngFor="let number of [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]">
-         <mat-card class="md-card">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1940s with
-          the release of Letraset sheets containing Lorem Ipsum passages, and
-          more recently with desktop publishing software like Aldus PageMaker
-          including versions of Lorem Ipsum.
-         </mat-card>
+  <div class="hot-place">
+      <app-section-header catTitle="Điểm nóng giao dịch" class="p-0"></app-section-header>
+      <div class="row">
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4 mt-3" *ngFor="let item of hotPlaceList">
+              <app-news-item></app-news-item>
+          </div>
       </div>
     </div>
-  </div>
-
-  <!-- <mat-tab-group class="d-flex justify-content-center h-100 w-100 flex-wrap" *ngIf="false">
-    <mat-tab label="First">
-      <app-favorite></app-favorite>
-    </mat-tab>
-    <mat-tab label="Second" class="p-3">
-      <div
-        class="text-center d-flex  justify-content-around  align-items-center align-self-center flex-wrap p-3"
-      >
-        <button class="mx-2" mat-raised-button (click)="openInfoModal()">
-          Show Info Modal
-        </button>
-        <button class="mx-2" mat-raised-button>Show Warning Modal</button>
-        <button class="mx-2" mat-raised-button>Show Error Modal</button>
-        <button class="mx-2" mat-raised-button>Show Confirm Modal</button>
-        <button class="mx-2" mat-raised-button (click)="toogleSpinner()">
-          Toggle loading spinner
-        </button>
-        <button class="mx-2" mat-raised-button>Open sheet</button>
-      </div>
-      <mat-spinner *ngIf="isLoading"></mat-spinner>
-    </mat-tab>
-    <mat-tab label="Third">
-        <div class="d-flex flex-wrap">
-            <div class="col-md-4 col-lg-3 my-2" *ngFor="let number of [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]">
-               <mat-card class="md-card">
-                  Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy text ever
-                since the 1500s, when an unknown printer took a galley of type and
-                scrambled it to make a type specimen book. It has survived not only
-                five centuries, but also the leap into electronic typesetting,
-                remaining essentially unchanged. It was popularised in the 1940s with
-                the release of Letraset sheets containing Lorem Ipsum passages, and
-                more recently with desktop publishing software like Aldus PageMaker
-                including versions of Lorem Ipsum.
-               </mat-card>
-            </div>
-          </div>
-    </mat-tab>
-    <mat-tab label="Four"> Content 4 </mat-tab>
-    <mat-tab label="Five"> Content 5 </mat-tab>
-  </mat-tab-group> -->
-
+  <app-why-choose-section></app-why-choose-section>
 </div>

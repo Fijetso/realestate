@@ -1,3 +1,24 @@
-<p>
-  why-choose-section works!
-</p>
+<div class="why-choose-wrapper">
+  <div class="center-div text-center">
+    <div class="title-why-choose">
+      <h2>{{whyChooseTitle}}</h2>
+    </div>
+    <mat-button-toggle-group
+      #group="matButtonToggleGroup"
+      (change)="onValChange(group.value)"
+      [value]="selectedVal"
+    >
+      <mat-button-toggle value="buyer" active>
+        Người mua
+      </mat-button-toggle>
+      <mat-button-toggle value="rentor">
+        Người thuê
+      </mat-button-toggle>
+      <mat-button-toggle value="service">
+        Dịch Vụ
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+    <div class="example-selected-value">Selected value: {{ group.value }}</div>
+    
+  </div>
+</div>

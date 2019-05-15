@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./why-choose-section.component.scss']
 })
 export class WhyChooseSectionComponent implements OnInit {
-
   constructor() { }
 
+  selectedVal: string;
+  whyChooseTitle = 'Tại sao bạn chọn RealEstate?';
   ngOnInit() {
+    this.selectedVal = 'buyer';
   }
 
+  public onValChange(val: string) {
+    this.selectedVal = val;
+  }
 }

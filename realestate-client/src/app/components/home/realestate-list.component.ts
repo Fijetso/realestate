@@ -14,11 +14,13 @@ export interface Fruit {
   styleUrls: ['./realestate-list.component.scss']
 })
 export class RealestateListComponent implements OnInit {
-
-  isLoading = true;
   constructor(private modalService: ModalService) {
 
   }
+
+  isLoading = true;
+
+  hotPlaceList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   openInfoModal() {
     this.modalService.openInfoModal();
   }

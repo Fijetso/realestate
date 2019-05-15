@@ -7,15 +7,15 @@ import { AgmDirectionModule } from 'agm-direction'; // agm-direction
 import { MatDialogModule } from '@angular/material/dialog';
 import { AppComponent } from './app.component';
 import { LayoutComponent } from './components/layout/layout.component';
-import { MessagesComponent } from './components/messages/messages.component';
+import { MessagesComponent } from './core/messages/messages.component';
 
-import { FooterComponent } from './components/footer/footer.component';
+import { FooterComponent } from './core/ui/footer/footer.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { ContentComponent } from './components/content/content.component';
 import { CarouselComponent } from './core/ui/carousel/carousel.component';
-import { MapModuleComponent } from './components/map-module/map-module.component';
-import { LoginComponent } from './components/login/login.component';
-import { NavComponent } from './components/nav/nav.component';
+import { MapModuleComponent } from './core/ui/map-module/map-module.component';
+import { LoginComponent } from './core/ui/login/login.component';
+import { NavComponent } from './core/ui/nav/nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import {
   MatButtonModule,
@@ -50,15 +50,15 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import 'hammerjs';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
-import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-// import { TranslateConfigService } from '../app/services/translate/translate-config.service';
+import { OwlModule } from 'ngx-owl-carousel';
+
 
 import { RealEstateWrapperComponent } from './components/real-estate/real-estate-wrapper/real-estate-wrapper.component';
-import { AlertComponent } from './components/modal/alert/alert.component';
+import { AlertComponent } from './core/modal/alert/alert.component';
 import { FavoriteComponent } from './components/favorite/favorite.component';
-import { UploaderComponent } from './components/uploader/uploader.component';
-import { NewsItemComponent } from './core/ui/news-item/news-item.component';
+import { UploaderComponent } from './core/ui/uploader/uploader.component';
+import { NewsItemComponent } from './core/ui/item-module/news-item/news-item.component';
 import { FloatingMenuWrapperComponent } from './core/ui/menu/floating-menu-wrapper/floating-menu-wrapper.component';
 import { FloatingMenuItemComponent } from './core/ui/menu/floating-menu-item/floating-menu-item.component';
 import { MarkettingComponent } from './core/ui/home-page/marketting/marketting.component';
@@ -73,7 +73,7 @@ import { NewsSectionComponent } from './core/ui/home-page/news-section/news-sect
 import { DownloadAppSectionComponent } from './core/ui/home-page/download-app-section/download-app-section.component';
 import { SectionHeaderComponent } from './core/ui/section-header/section-header.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { RealEstateDetailComponent } from './core/ui/home-page/real-estate-detail/real-estate-detail.component';
+import { RealEstateDetailComponent } from './components/real-estate-detail/real-estate-detail.component';
 
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -111,11 +111,11 @@ export function LanguageLoader(http: HttpClient) {
     RealEstateDetailComponent
   ],
   imports: [
+    OwlModule,
     NgbModule,
     BrowserModule,
     AppRoutingModule,
     LazyLoadImageModule,
-    SlickCarouselModule,
     BrowserAnimationsModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCxEsgD2edDcqz5wgKqjYJVjcqmWztNF3A'

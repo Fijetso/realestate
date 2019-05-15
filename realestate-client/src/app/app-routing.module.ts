@@ -1,12 +1,12 @@
 import { FavoriteComponent } from './components/favorite/favorite.component';
-import { LoginComponent } from './components/login/login.component';
+import { LoginComponent } from './core/ui/login/login.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { RealestateListComponent } from './components/home/realestate-list.component';
-import { RealestateItemComponent } from './components/realestate-item/realestate-item.component';
+import { RealestateItemComponent } from './core/ui/item-module/realestate-item/realestate-item.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { MapModuleComponent } from './components/map-module/map-module.component';
-import { RealEstateDetailComponent } from './core/ui/home-page/real-estate-detail/real-estate-detail.component';
+import { MapModuleComponent } from './core/ui/map-module/map-module.component';
+import { RealEstateDetailComponent } from './components/real-estate-detail/real-estate-detail.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'list', pathMatch: 'full' },
