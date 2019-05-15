@@ -12,43 +12,42 @@
   </div>
   <div class="main-content">
     <div class="row">
-      <div
-        class="col-md-8 col-lg-8 content-left"
-        style="height:800px"
-      ></div>
-      <div
-        class="col-md-4 col-lg-4 content-right"
-        style="background: whitesmoke"
-        >
-        <form>
-          <div class="form-group">
-            <label for="exampleFormControlInput1">Họ tên</label>
-            <input
-              type="text"
-              class="form-control"
-              id="exampleFormControlInput1"
-              placeholder="Nguyễn Văn A"
-            />
-          </div>
-          <div class="form-group">
-            <label for="exampleFormControlInput1">Số điện thoại</label>
-            <input
-              type="text"
-              class="form-control"
-              id="exampleFormControlInput1"
-              placeholder="090xxxxxxx"
-            />
-          </div>
-          <div class="form-group">
-            <label for="exampleFormControlInput1">Email</label>
-            <input
-              type="email"
-              class="form-control"
-              id="exampleFormControlInput1"
-              placeholder="tendangnhap@gmail.com"
-            />
-          </div>
-        </form>
+      <div class="col-md-8 col-lg-8 content-left" style="height:800px">
+        <mat-card class="p-3 m-3">
+          <img src="https://picsum.photos/id/237/1080/500" alt="" />
+        </mat-card>
+      </div>
+      <div class="col-md-4 col-lg-4 content-right">
+        <mat-card class="p-3 m-3 request-infor">
+          <h5 class="text-center">Yêu cầu thông tin</h5>
+          <form>
+            <mat-form-field appearance="outline">
+                <mat-label>Họ và Tên</mat-label>
+                <mat-icon matPrefix>perm_identity</mat-icon>
+                <input matInput placeholder="Nguyễn Văn A" required>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Số điện thoại</mat-label>
+                <mat-icon matPrefix>sentiment_very_satisfied</mat-icon>
+                <input matInput placeholder="09xxxxxxxx" required/>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <mat-icon matPrefix>mail_outline</mat-icon>
+                <input matInput placeholder="email@example.com" [formControl]="email"/>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Chọn ngày</mat-label>
+                <mat-icon matPrefix>calendar_today</mat-icon>
+                <input matInput placeholder="dd/mm/yyyy" />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Mã chương trình</mat-label>
+                <mat-icon matPrefix>sentiment_very_satisfied</mat-icon>
+                <input matInput placeholder="ABC123456" />
+            </mat-form-field>
+          </form>
+        </mat-card>
       </div>
     </div>
   </div>
