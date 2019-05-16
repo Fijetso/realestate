@@ -1,3 +1,14 @@
-<p>
-  trading-area-section works!
-</p>
+<div class="hot-trade-place">
+    <app-section-header
+      catTitle="Điểm nóng giao dịch"
+      class="p-0"
+    ></app-section-header>
+    <div class="row">
+      <div
+        class="col-12 col-sm-6 col-md-4 col-lg-4 mt-3"
+        *ngFor="let place of hotPlaceList"
+      >
+        <app-hot-place-item [place]="place"></app-hot-place-item>
+      </div>
+    </div>
+  </div>

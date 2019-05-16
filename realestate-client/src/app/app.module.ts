@@ -80,6 +80,7 @@ export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
 import {WeatherService} from './services/weather.service';
+import { HotPlaceItemComponent } from './core/ui/item-module/hot-place-item/hot-place-item.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -110,7 +111,8 @@ import {WeatherService} from './services/weather.service';
     NewsSectionComponent,
     DownloadAppSectionComponent,
     SectionHeaderComponent,
-    RealEstateDetailComponent
+    RealEstateDetailComponent,
+    HotPlaceItemComponent
   ],
   imports: [
     OwlModule,

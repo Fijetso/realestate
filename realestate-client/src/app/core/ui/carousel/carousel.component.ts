@@ -5,6 +5,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./carousel.component.scss']
 })
 export class CarouselComponent implements OnInit {
+  @Input()
   myCarouselImages = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map(
     i => `https://picsum.photos/id/${i}/800/400`
   );
