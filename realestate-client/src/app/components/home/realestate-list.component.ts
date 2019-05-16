@@ -7,6 +7,8 @@ import { ModalService } from 'src/app/services/modal.service';
 export interface Fruit {
   name: string;
 }
+import { Chart } from 'chart.js';
+import { WeatherService } from 'src/app/services/weather.service';
 
 @Component({
   selector: 'app-realestate-list',
@@ -14,7 +16,7 @@ export interface Fruit {
   styleUrls: ['./realestate-list.component.scss']
 })
 export class RealestateListComponent implements OnInit {
-  constructor(private modalService: ModalService) {
+  constructor(private modalService: ModalService, private weatherService: WeatherService) {
 
   }
 

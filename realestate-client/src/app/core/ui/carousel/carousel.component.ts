@@ -17,6 +17,10 @@ export class CarouselComponent implements OnInit {
     pullDrag: true,
     dots: false,
     navSpeed: 700,
+    autoplay: false,
+    autoplayTimeout: 1000,
+    autoplayHoverPause: true,
+    loop: true,
     responsive: {
         0: {
             items: 1,
@@ -25,12 +29,10 @@ export class CarouselComponent implements OnInit {
           items: 2,
         },
         720: {
-            items: 2,
-            loop: false
+            items: 2
         },
         1140: {
-            items: 4,
-            loop: false
+            items: 4
         }
     }
   };

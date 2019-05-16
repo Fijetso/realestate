@@ -30,6 +30,13 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
             max-width: 100%;
             height: auto;
         }
+        .re-detail{
+            .re-elements{
+                display: table;
+                .elements{
+                }
+            }
+        }
     }
     .content-right {
     .request-infor{
@@ -41,11 +48,33 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
                 width: 100%;
             }
             button{
-                padding: 10px; 
-                // border-radius: 3rem;
+                padding: 1rem; 
             }
         }
     }
     }
   }
+}
+.nav-button{
+  top: 40%;
+    position: fixed;
+  .btn-previous{
+    margin-left:-10px;
+    position: absolute;
+  }
+  .btn-next{
+    right: -10px;
+    position: absolute;
+    margin-right:-10px;
+  }
+}
+.carousel-wrapper{
+  position: relative;
+}
+.icon{
+  font-size: 30px;
+  color:rgba(1,1,1,.2);
+}
+.icon:hover{
+  color:red;
 }

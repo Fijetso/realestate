@@ -79,6 +79,7 @@ import { RealEstateDetailComponent } from './components/real-estate-detail/real-
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
+import {WeatherService} from './services/weather.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -152,7 +153,7 @@ export function LanguageLoader(http: HttpClient) {
     MatNativeDateModule,
     FormsModule
   ],
-  providers: [],
+  providers: [WeatherService],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],
   entryComponents: [AlertComponent]

@@ -1,4 +1,4 @@
-<div class="container re-detail-wrapper">
+<div class="container-fluid re-detail-wrapper">
   <div class="re-detail-path-header">
     <span class="area-left">Trang chủ / Tp.HCM / Nhà riêng quận Gò Vấp</span>
     <div class="area-right">
@@ -12,44 +12,115 @@
   </div>
   <div class="main-content">
     <div class="row">
-      <div class="col-md-8 col-lg-8 content-left">
+      <!-- Left of page -->
+      <div class="col-md-9 col-lg-9 content-left">
         <mat-card class="main-news mw-100">
-          <img src="https://picsum.photos/id/237/1080/500" alt="" />
+          <!-- <img src="https://picsum.photos/id/237/1080/500" alt="" /> -->
+          <owl-carousel
+            #owlElement
+            [options]="myCarouselOptions"
+            [items]="images"
+            [carouselClasses]="['owl-theme', 'sliding']"
+            class="carousel-container"
+          >
+            <div
+              class="carousel-wrapper"
+              *ngFor="let image of myCarouselImages; let i = index"
+            >
+              <div>
+                <img src="{{ image }}" />
+              </div>
+              <div class="nav-button">
+                <span class="btn-previous p-3 m-3" (click)="onPrevious()"
+                  ><i class="fas fa-chevron-left icon"></i
+                ></span>
+                <span class="btn-next p-3 m-3" (click)="onNext()"
+                  ><i class="fas fa-chevron-right icon"></i
+                ></span>
+              </div>
+            </div>
+          </owl-carousel>
+
+          <div class="re-desc">
+            <h3>Bán nhà phố liền kề Bình Tân- Khu dân trí cao</h3>
+            <span>4,5 tỷ | </span>
+            <span>56,2 m<sup>2</sup></span>
+            <span>Q.Bình Tân</span>
+            <span>P. Bình Hưng Hòa B</span>
+          </div>
+          <div class="re-detail">
+            <h4>Thông tin bất động sản:</h4>
+            <div class="re-elements">
+              <span class="elements length">Chiều dài: 14.01m</span>
+              <span class="elements width">Chiều rộng: 4.0m</span>
+              <span class="elements direction"> Hướng: Nam</span>
+              <span class="elements alley">Hẻm: 6.0m</span>
+              <span class="elements floors">
+                Tầng: 1 trệt, 1 tầng thượng + 2 lầu</span
+              >
+              <span class="elements ledger"> Giấy tờ: Sổ hồng riêng</span>
+              <span class="elements bedroom"> Phòng ngủ: 4</span>
+              <span class="elements bathroom"> Phòng tắm: 5</span>
+            </div>
+          </div>
         </mat-card>
       </div>
-      <div class="col-md-4 col-lg-4 content-right">
-        <mat-card class="request-infor mw-100">
+      <!--Right of page -->
+      <div class="col-md-3 col-lg-3 content-right pl-3">
+        <mat-card class="request-infor">
           <h5 class="text-center">Yêu cầu thông tin</h5>
           <form>
             <mat-form-field appearance="outline">
-                <mat-label>Họ và Tên</mat-label>
-                <mat-icon matPrefix>perm_identity</mat-icon>
-                <input matInput placeholder="Nguyễn Văn A" required name="name">
+              <mat-label>Họ và Tên</mat-label>
+              <mat-icon matPrefix>perm_identity</mat-icon>
+              <input matInput placeholder="Nguyễn Văn A" required name="name" />
             </mat-form-field>
             <mat-form-field appearance="outline">
-                <mat-label>Số điện thoại</mat-label>
-                <mat-icon matPrefix>phone</mat-icon>
-                <input matInput placeholder="09xxxxxxxx" required name="phone"/>
+              <mat-label>Số điện thoại</mat-label>
+              <mat-icon matPrefix>phone</mat-icon>
+              <input matInput placeholder="09xxxxxxxx" required name="phone" />
             </mat-form-field>
             <mat-form-field appearance="outline">
-                <mat-label>Email</mat-label>
-                <mat-icon matPrefix>mail_outline</mat-icon>
-                <input matInput placeholder="email@example.com" name="emails"/>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Thời gian</mat-label>
-                <input matInput [matDatepicker]="picker" placeholder="dd/MM/yyyy" name="date">
-                <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
+              <mat-label>Email</mat-label>
+              <mat-icon matPrefix>mail_outline</mat-icon>
+              <input matInput placeholder="email@example.com" name="emails" />
             </mat-form-field>
             <mat-form-field appearance="outline">
-                <mat-label>Mã chương trình</mat-label>
-                <mat-icon matPrefix>sentiment_very_satisfied</mat-icon>
-                <input matInput placeholder="ABC123456" name="programCode"/>
+              <mat-label>Thời gian</mat-label>
+              <input
+                matInput
+                [matDatepicker]="picker"
+                placeholder="dd/MM/yyyy"
+                name="date"
+              />
+              <mat-datepicker-toggle
+                matPrefix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Mã chương trình</mat-label>
+              <mat-icon matPrefix>sentiment_very_satisfied</mat-icon>
+              <input matInput placeholder="ABC123456" name="programCode" />
             </mat-form-field>
             <div class="footer-form d-flex justify-content-around">
-                <button type="submit" mat-raised-button color="accent" class="btn-rounded btn-on-plan">Đặt lịch xem</button>
-                <button type="submit" mat-raised-button class="btn-rounded btn-save text-black">Lưu bản tin</button>
+              <button
+                type="submit"
+                mat-raised-button
+                color="accent"
+                class="btn-rounded btn-on-plan"
+              >
+                Đặt lịch xem
+              </button>
+              <button
+                type="submit"
+                mat-raised-button
+                class="btn-rounded btn-save text-black"
+              >
+                <span><i class="far fa-heart"></i></span>
+                Lưu bản tin
+              </button>
             </div>
           </form>
         </mat-card>
