@@ -17,26 +17,17 @@
         Thuê
       </mat-button-toggle>
     </mat-button-toggle-group>
-    <div class="example-selected-value">Selected value: {{ group.value }}</div>
-    <!-- Form Input auto complete -->
-    <form>
-      <div class="input-group input-small">
-        <input
-          id="typeahead-focus"
-          type="text"
-          class="form-control"
-          [(ngModel)]="model"
-          [ngbTypeahead]="search"
-          (focus)="focus$.next($event.target.value)"
-          (click)="click$.next($event.target.value)"
-          #instance="ngbTypeahead"
-        />
-        <div class="input-group-append">
-          <button class="btn btn-search">
-            <mat-icon>search</mat-icon>
-          </button>
-        </div>
-      </div>
-    </form>
+    <div class="example-selected-value">Đã chọn: {{ group.value }}</div>
+    <form class="searchForm">
+        <mat-form-field class="example-full-width">
+          <input type="text" placeholder="Type to search" aria-label="Assignee" matInput [formControl]="myControl" [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{option.name}}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-icon matSuffix role="button" class="icon">search</mat-icon>
+        </mat-form-field>
+      </form>
   </div>
 </div>

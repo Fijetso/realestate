@@ -52,7 +52,7 @@ import 'hammerjs';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { OwlModule } from 'ngx-owl-carousel';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 import { RealEstateWrapperComponent } from './components/real-estate/real-estate-wrapper/real-estate-wrapper.component';
@@ -153,9 +153,10 @@ import { HotPlaceItemComponent } from './core/ui/item-module/hot-place-item/hot-
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [WeatherService],
+  providers: [],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],
   entryComponents: [AlertComponent]

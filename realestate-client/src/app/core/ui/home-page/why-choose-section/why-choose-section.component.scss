@@ -15,6 +15,7 @@
     background-position: center;
     padding-bottom: 3rem;
     mat-button-toggle-broup{
+
     }
     mat-button-toggle {
       justify-content: center;
@@ -25,6 +26,10 @@
     .mat-button-toggle-checked {
       background-color: white;
       color: #1da7e1;
+    }
+    .mat-tab-label{
+      color: white;
+      font-weight: 500;
     }
   }
   
