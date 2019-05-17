@@ -1,8 +1,9 @@
 @import '~roboto-fontface/css/roboto/roboto-fontface.css';
 @import '~roboto-fontface/css/roboto-condensed/roboto-condensed-fontface.css';
-$fa-font-path : "~@fortawesome/fontawesome-free/webfonts";
-@import '~@fortawesome/fontawesome-free/scss/solid';
-@import '~@fortawesome/fontawesome-free/scss/brands';
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
+@import "~@fortawesome/fontawesome-free/scss/regular";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~@fortawesome/fontawesome-free/scss/brands";
 *{
     font-family: Roboto,sans-serif;
 }
@@ -121,8 +122,8 @@ iframe {
   margin: 0 auto;
 }
 
-.container-login100 { 
-  width:100%;
+.container-login100 {
+  width: 100%;  
   min-height: 70vh;
   display: -webkit-box;
   display: -webkit-flex;
@@ -147,14 +148,13 @@ iframe {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  // padding: 177px 130px 33px 95px;
-  padding: 50px;
+  padding: 30px 50px;
 }
 
 /*------------------------------------------------------------------
 [  ]*/
 .login100-pic {
-  width: 250px;
+  max-width: 250px;
 }
 
 .login100-pic img {
@@ -280,7 +280,7 @@ iframe {
   padding-top: 20px;
 }
 
-.login100-form-btn {
+.btn-register {
   font-family: 'Roboto', sans-serif;
   font-size: 15px;
   line-height: 1.5;
@@ -290,7 +290,7 @@ iframe {
   width: 100%;
   height: 50px;
   border-radius: 25px;
-  background: #57b846;
+  background: #db3038;
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -318,14 +318,16 @@ iframe {
 
 
 @media (max-width: 992px) {
+  .wrap-login100 {
+    // padding: 100px 70px 22px 65px;
+  }
 
   .login100-pic {
-    width: 20%;
-    padding-bottom: 2rem;
+    width: 30%;
   }
 
   .login100-form {
-    width: 70%;
+    width: 50%;
   }
 }
 

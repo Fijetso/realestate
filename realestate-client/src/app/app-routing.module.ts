@@ -7,6 +7,7 @@ import { RealestateItemComponent } from './core/ui/item-module/realestate-item/r
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { MapModuleComponent } from './core/ui/map-module/map-module.component';
 import { RealEstateDetailComponent } from './components/real-estate-detail/real-estate-detail.component';
+import { RegisterComponent } from './core/ui/register/register.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'list', pathMatch: 'full' },
@@ -26,6 +27,11 @@ const routes: Routes = [
     path: 'favorite',
     component: FavoriteComponent,
     data: { title: 'Favorite Page' }
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    data: { title: 'Register Page' }
   },
   {
     path: '**',

@@ -54,7 +54,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { OwlModule } from 'ngx-owl-carousel';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-
 import { RealEstateWrapperComponent } from './components/real-estate/real-estate-wrapper/real-estate-wrapper.component';
 import { AlertComponent } from './core/modal/alert/alert.component';
 import { FavoriteComponent } from './components/favorite/favorite.component';
@@ -81,6 +80,7 @@ export function LanguageLoader(http: HttpClient) {
 }
 import {WeatherService} from './services/weather.service';
 import { HotPlaceItemComponent } from './core/ui/item-module/hot-place-item/hot-place-item.component';
+import { RegisterComponent } from './core/ui/register/register.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -112,7 +112,8 @@ import { HotPlaceItemComponent } from './core/ui/item-module/hot-place-item/hot-
     DownloadAppSectionComponent,
     SectionHeaderComponent,
     RealEstateDetailComponent,
-    HotPlaceItemComponent
+    HotPlaceItemComponent,
+    RegisterComponent
   ],
   imports: [
     OwlModule,
