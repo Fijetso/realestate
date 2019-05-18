@@ -53,6 +53,8 @@ import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { OwlModule } from 'ngx-owl-carousel';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SocialLoginModule, AuthServiceConfig, LinkedInLoginProvider } from 'angularx-social-login';
+import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 
 import { RealEstateWrapperComponent } from './components/real-estate/real-estate-wrapper/real-estate-wrapper.component';
 import { AlertComponent } from './core/modal/alert/alert.component';
@@ -81,6 +83,27 @@ export function LanguageLoader(http: HttpClient) {
 import {WeatherService} from './services/weather.service';
 import { HotPlaceItemComponent } from './core/ui/item-module/hot-place-item/hot-place-item.component';
 import { RegisterComponent } from './core/ui/register/register.component';
+
+// const config = new AuthServiceConfig([
+//   {
+//     id: GoogleLoginProvider.PROVIDER_ID,
+//     provider: new GoogleLoginProvider('642195689297-1oj777qkh4nhfjp3dadb82fj120snrhr.apps.googleusercontent.com')
+//   },
+//   // {
+//   //   id: FacebookLoginProvider.PROVIDER_ID,
+//   //   provider: new FacebookLoginProvider('561602290896109')
+//   // },
+//   // {
+//   //   id: LinkedInLoginProvider.PROVIDER_ID,
+//   //   provider: new LinkedInLoginProvider('78iqy5cu2e1fgr')
+//   // }
+// ]);
+
+// export function provideConfig() {
+//   return config;
+// }
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -155,9 +178,15 @@ import { RegisterComponent } from './core/ui/register/register.component';
     MatDatepickerModule,
     MatNativeDateModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SocialLoginModule
   ],
-  providers: [],
+  providers: [
+    // {
+    //   provide: AuthServiceConfig,
+    //   useFactory: provideConfig
+    // }
+  ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],
   entryComponents: [AlertComponent]

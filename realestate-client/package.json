@@ -31,6 +31,7 @@
     "@types/googlemaps": "^3.30.19",
     "agm-direction": "^0.7.6",
     "angular-in-memory-web-api": "^0.8.0",
+    "angularx-social-login": "^1.2.7",
     "animate.css": "^3.7.0",
     "bootstrap": "^4.3.1",
     "chart.js": "^2.5.0",

@@ -13,6 +13,8 @@
             placeholder="nguyenvana123"
             required
             name="username"
+            [formControl]="username"
+            (change)="onUsernameChange()"
           />
         </mat-form-field>
         <mat-form-field appearance="outline">
@@ -24,19 +26,24 @@
             required
             name="password"
             type="password"
+            [formControl]="password"
+            (change)="onPasswordChange()"
           />
         </mat-form-field>
-        <button mat-raised-button class="btn-social btn-login-facebook py-2 mx-3" type="button"><span><i class="fab fa-facebook-f"></i></span> Đăng nhập với Facebook</button>
+        <div class="result-login" *ngIf="loginResult">{{username.value}} - {{password.value}}</div>
         <button mat-raised-button class="btn-social btn-login-google py-2 mx-3" type="button"><span><i class="fab fa-google"></i></span> Đăng nhập với Google</button>
+        <button mat-raised-button class="btn-social btn-login-facebook py-2 mx-3" type="button"><span><i class="fab fa-facebook-f"></i></span> Đăng nhập với Facebook</button>
       </div>
       <div class="footer-form d-flex justify-content-center flex-row">
         <button
           type="submit"
           mat-raised-button
           class="btn btn-primary"
+          (click)="onLogIn()"
         >
           Đăng Nhập
         </button>
+       
       </div>
     </form>
   </div>
