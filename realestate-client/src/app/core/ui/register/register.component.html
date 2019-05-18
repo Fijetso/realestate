@@ -1,50 +1,67 @@
-<div class="container-login100">
-  <div class="wrap-login100">
-    <div class="login100-pic js-tilt" data-tilt>
-      <img src="../../../assets/images/login.png" alt="IMG" />
-    </div>
-    <form class="login100-form validate-form">
-      <div class="wrap-input100 validate-input">
-        <input class="input100" type="text" name="fullName" placeholder="Họ và Tên" />
-        <span class="focus-input100"></span>
-        <span class="symbol-input100">
-            <i class="fas fa-lock"></i>
-        </span>
+<div class="container">
+  <div
+    class="register-wrapper d-flex justify-content-center align-items-center flex-column"
+  >
+    <h4 class="title-name">Đăng ký thành viên</h4>
+    <form>
+      <div class="form-content">
+        <mat-form-field appearance="outline">
+          <mat-label>Họ và Tên</mat-label>
+          <mat-icon matPrefix>people_outline</mat-icon>
+          <input matInput placeholder="Nguyễn Văn A" required name="name" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Tên đăng nhập</mat-label>
+          <mat-icon matPrefix>person_outline</mat-icon>
+          <input
+            matInput
+            placeholder="nguyenvana123"
+            required
+            name="username"
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Mật khẩu</mat-label>
+            <mat-icon matPrefix>lock</mat-icon>
+            <input
+              matInput
+              placeholder="Mật khẩu"
+              required
+              name="password"
+              type="password"
+            />
+          </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Số điện thoại</mat-label>
+          <mat-icon matPrefix>phone</mat-icon>
+          <input matInput placeholder="09xxxxxxxx" required name="phone" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <mat-icon matPrefix>mail_outline</mat-icon>
+          <input matInput placeholder="email@example.com" name="email"type="email" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Ngày sinh</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            placeholder="dd/MM/yyyy"
+            name="date"
+          />
+          <mat-datepicker-toggle
+            matPrefix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
       </div>
-      <div class="wrap-input100 validate-input">
-        <input class="input100" type="text" name="username" placeholder="Tên đăng nhập" />
-        <span class="focus-input100"></span>
-        <span class="symbol-input100">
-            <i class="fas fa-lock"></i>
-        </span>
-      </div>
-      <div class="wrap-input100 validate-input">
-        <input class="input100" type="password" name="password" placeholder="Mật khẩu" />
-        <span class="focus-input100"></span>
-        <span class="symbol-input100">
-         <i class="fas fa-lock"></i>
-        </span>
-      </div>
-      <div class="wrap-input100 validate-input">
-        <input class="input100" type="email" name="email" placeholder="Email" />
-        <span class="focus-input100"></span>
-        <span class="symbol-input100">
-            <i class="fas fa-lock"></i>
-        </span>
-      </div>
-      <div class="wrap-input100 validate-input">
-        <input class="input100" type="text" name="address" placeholder="Địa chỉ" />
-        <span class="focus-input100"></span>
-        <span class="symbol-input100">
-            <i class="fas fa-lock"></i>
-        </span>
-      </div>
-      
-      <div class="container-login100-form-btn">
+      <div class="footer-form d-flex justify-content-center flex-row">
         <button
-          class="btn-register"
-          (click)="handleLogin($event)"
           type="submit"
+          mat-raised-button
+          color="accent"
+          class="btn-rounded btn-register"
         >
           Đăng Ký
         </button>
