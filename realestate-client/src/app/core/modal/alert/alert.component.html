@@ -11,14 +11,16 @@
       <mat-icon>close</mat-icon>
     </div>
   </div>
-  <div class="custom-modal-body">
-    <div class="body-content">
-      <mat-tab-group mat-align-tabs="center">
-        <mat-tab label="Đăng Nhập"> <app-login></app-login></mat-tab>
-        <mat-tab label="Đăng Ký"><app-register></app-register></mat-tab>
-      </mat-tab-group>
+  <mat-dialog-content>
+    <div class="custom-modal-body">
+      <div class="body-content">
+        <mat-tab-group mat-align-tabs="center">
+          <mat-tab label="Đăng Nhập"> <app-login></app-login></mat-tab>
+          <mat-tab label="Đăng Ký"><app-register></app-register></mat-tab>
+        </mat-tab-group>
+      </div>
     </div>
-  </div>
+  </mat-dialog-content>
   <div
     class="custom-modal-footer d-flex justify-content-end border-top border-3"
     *ngIf="false"
