@@ -10,33 +10,33 @@ import { RealEstateDetailComponent } from './components/real-estate-detail/real-
 import { RegisterComponent } from './core/ui/register/register.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'list', pathMatch: 'full' },
+  { path: '', redirectTo: 'trang-chu', pathMatch: 'full' },
   {
-    path: 'list',
+    path: 'trang-chu',
     component: RealestateListComponent,
-    data: { title: 'List data page' }
+    data: { title: 'Tiêu đề trang chủ' }
   },
   {
-    path: 'detail',
+    path: 'chi-tiet',
     component: RealEstateDetailComponent,
-    data: { title: 'Real Estate Detail' }
+    data: { title: 'Chi tiết bất động sản' }
   },
-  { path: 'map', component: MapModuleComponent, data: { title: 'Map page' } },
-  { path: 'login', component: LoginComponent, data: { title: 'Login page' } },
+  { path: 'ban-do', component: MapModuleComponent, data: { title: 'Trang bản đồ' } },
+  { path: 'dang-nhap', component: LoginComponent, data: { title: 'Trang đăng nhập' } },
   {
-    path: 'favorite',
+    path: 'yeu-thich',
     component: FavoriteComponent,
-    data: { title: 'Favorite Page' }
+    data: { title: 'Trang bất động sản yêu thích' }
   },
   {
-    path: 'register',
+    path: 'dang-ky',
     component: RegisterComponent,
-    data: { title: 'Register Page' }
+    data: { title: 'Trang đăng ký' }
   },
   {
     path: '**',
     component: PageNotFoundComponent,
-    data: { title: 'Page not found' }
+    data: { title: 'Trang không tìm thấy' }
   }
 ];
 

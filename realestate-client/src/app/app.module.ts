@@ -1,3 +1,4 @@
+import { environment } from './../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -53,8 +54,11 @@ import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { OwlModule } from 'ngx-owl-carousel';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SocialLoginModule, AuthServiceConfig, LinkedInLoginProvider } from 'angularx-social-login';
-import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
+// import { AngularFireModule } from '@angular/fire';
+// import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { RealEstateWrapperComponent } from './components/real-estate/real-estate-wrapper/real-estate-wrapper.component';
 import { AlertComponent } from './core/modal/alert/alert.component';
@@ -83,25 +87,9 @@ export function LanguageLoader(http: HttpClient) {
 import {WeatherService} from './services/weather.service';
 import { HotPlaceItemComponent } from './core/ui/item-module/hot-place-item/hot-place-item.component';
 import { RegisterComponent } from './core/ui/register/register.component';
+import { AuthenticationService } from './services/authentication/authentication.service';
 
-// const config = new AuthServiceConfig([
-//   {
-//     id: GoogleLoginProvider.PROVIDER_ID,
-//     provider: new GoogleLoginProvider('642195689297-1oj777qkh4nhfjp3dadb82fj120snrhr.apps.googleusercontent.com')
-//   },
-//   // {
-//   //   id: FacebookLoginProvider.PROVIDER_ID,
-//   //   provider: new FacebookLoginProvider('561602290896109')
-//   // },
-//   // {
-//   //   id: LinkedInLoginProvider.PROVIDER_ID,
-//   //   provider: new LinkedInLoginProvider('78iqy5cu2e1fgr')
-//   // }
-// ]);
 
-// export function provideConfig() {
-//   return config;
-// }
 
 
 @NgModule({
@@ -146,7 +134,7 @@ import { RegisterComponent } from './core/ui/register/register.component';
     LazyLoadImageModule,
     BrowserAnimationsModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCxEsgD2edDcqz5wgKqjYJVjcqmWztNF3A'
+      apiKey: 'AIzaSyCTD49hV20zPTBjT7k643sBxjoXx6W7oEo'
     }),
     TranslateModule.forRoot({
       loader: {
@@ -179,13 +167,12 @@ import { RegisterComponent } from './core/ui/register/register.component';
     MatNativeDateModule,
     FormsModule,
     ReactiveFormsModule,
-    SocialLoginModule
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule
   ],
   providers: [
-    // {
-    //   provide: AuthServiceConfig,
-    //   useFactory: provideConfig
-    // }
+    AuthenticationService
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],
