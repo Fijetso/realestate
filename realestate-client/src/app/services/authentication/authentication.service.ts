@@ -13,9 +13,9 @@ export class AuthenticationService {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.user = afAuth.authState;
-        localStorage.setItem('user', JSON.stringify(this.user));
+        localStorage.setItem('isLogged', JSON.stringify(this.user));
       } else {
-        localStorage.setItem('user', null);
+        localStorage.setItem('isLogged', null);
       }
     });
   }
@@ -24,12 +24,12 @@ export class AuthenticationService {
       email,
       password
     );
-    this.router.navigate(['admin/list']);
+    // this.router.navigate(['trang-chu']);
     return result;
   }
   async sendEmailVerification() {
     await this.afAuth.auth.currentUser.sendEmailVerification();
-    this.router.navigate(['admin/verify-email']);
+    // this.router.navigate(['admin/verify-email']);
   }
   async register(email: string, password: string) {
     const result = await this.afAuth.auth.createUserWithEmailAndPassword(
@@ -41,13 +41,11 @@ export class AuthenticationService {
   async sendPasswordResetEmail(passwordResetEmail: string) {
     return await this.afAuth.auth.sendPasswordResetEmail(passwordResetEmail);
   }
-  async logout() {
-    await this.afAuth.auth.signOut();
-    localStorage.removeItem('user');
-    this.router.navigate(['login']);
+  async logOut() {
+    return await this.afAuth.auth.signOut();
   }
   get isLoggedIn(): boolean {
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem('userInfor'));
     return user !== null;
   }
   async loginWithGoogle() {
@@ -58,6 +56,6 @@ export class AuthenticationService {
   async loginWithFacebook() {
     return await this.afAuth.auth.signInWithPopup(
       new auth.FacebookAuthProvider()
-    )
+    );
   }
 }

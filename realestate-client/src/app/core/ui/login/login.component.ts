@@ -10,16 +10,13 @@ export class LoginComponent implements OnInit {
   username = new FormControl();
   password = new FormControl();
   loginResult = false;
-  constructor(private  authService: AuthenticationService) { }
-  ngOnInit(): void {
-  }
+  userInfo: any;
+  constructor(private authService: AuthenticationService) {}
+  ngOnInit(): void {}
 
-  onLogIn(){
-    if (this.username.value === 'danhthanh418' && this.password.value === 'lovemy4ever') {
-     this.loginResult = true;
-     console.log(this.loginResult);
-    }
-    this.loginResult = false;
+  onLogIn() {
+    console.log(this.authService
+      .loginWithEmailPassWord(this.username.value, this.password.value));
   }
   onUsernameChange() {
     console.log(this.username.value);
@@ -28,11 +25,18 @@ export class LoginComponent implements OnInit {
     console.log(this.password.value);
   }
   loginWithGoogle() {
-    const result = this.authService.loginWithGoogle();
-    console.log(result);
+    this.authService.loginWithGoogle().then(data => {
+      // console.log(data.additionalUserInfo.profile);
+      this.userInfo = data.additionalUserInfo.profile;
+      console.log(this.userInfo, typeof this.userInfo);
+      localStorage.setItem('userInfor', JSON.stringify(this.userInfo));
+      console.log(JSON.parse(localStorage.getItem('userInfor')));
+    });
   }
   loginWithFacebook() {
-    const result = this.authService.loginWithFacebook();
-    console.log(result);
+    this.authService.loginWithFacebook();
+  }
+  onLogOut() {
+    this.authService.logOut();
   }
 }
