@@ -23,10 +23,19 @@ $bg-primary : #fff;
     .re-footer-top{
         .ul-listing{
             list-style-type: none;
+            text-align:left;
+            padding: 0;
         }
     }
     .re-footer-middle{
-
+        .ul-listing{
+            list-style-type: none;
+            text-align:left;
+            padding: 0;
+        }
+        .ul-footer{
+            padding:0;
+        }
     }
     h4{
         font-size: 16px;
