@@ -1,4 +1,3 @@
-
 @import "~bootstrap/scss/bootstrap.scss";
 $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 @import "~@fortawesome/fontawesome-free/scss/regular";
@@ -25,56 +24,85 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
   }
   .main-content {
     background-color: white;
-    .content-left{
-        img{
-            max-width: 100%;
-            height: auto;
+    .content-left {
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+      .re-desc{
+        .re-desc-line-2{
+          display: flex;
+          justify-content: space-between;
+          align-items:center;
+          align-content: center;
+          .price-left > *, .p-district>*{
+            margin-right: .5rem;
+          }
         }
-        .re-detail{
-            .re-elements{
-                display: table;
-                .elements{
-                }
-            }
+        .re-inline{
+          display: inline-block;
         }
+      }
+      .re-detail {
+        .re-elements {
+          list-style-type: disc;
+        }
+        .elements {
+          width: 33.33%;
+          position: relative;
+          display: inline-block;
+          padding: 6px 0 6px 15px;
+        }
+      }
     }
     .content-right {
-    .request-infor{
-        h5{
-
+      .request-infor {
+        h5 {
         }
-        form{
-            mat-form-field{
-                width: 100%;
-            }
-            button{
-                padding: 1rem; 
-            }
+        form {
+          mat-form-field {
+            width: 100%;
+          }
+          button {
+            padding: 1rem .5rem;
+            margin:.5rem;
+          }
         }
-    }
+      }
     }
   }
 }
-.nav-button{
+.nav-button {
   top: 40%;
-    position: fixed;
-  .btn-previous{
-    margin-left:-10px;
+  position: fixed;
+  .btn-previous {
+    margin-left: -10px;
     position: absolute;
   }
-  .btn-next{
+  .btn-next {
     right: -10px;
     position: absolute;
-    margin-right:-10px;
+    margin-right: -10px;
   }
 }
-.carousel-wrapper{
+.carousel-wrapper {
   position: relative;
 }
-.icon{
+.icon {
   font-size: 30px;
-  color:rgba(1,1,1,.2);
+  color: rgba(1, 1, 1, 0.2);
 }
-.icon:hover{
-  color:red;
+.icon:hover {
+  color: red;
+}
+@media screen and (max-width: 768px){
+  .re-detail {
+    .re-elements {
+      display:flex;
+      flex-wrap: wrap;
+    }
+    .elements {
+      width: 100% !important;
+    }
+  }
 }
