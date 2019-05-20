@@ -1,9 +1,18 @@
-<p>
-  map-module works!
-</p>
-<span>{{map.lat}} - {{map.lng}}</span>
-<agm-map [latitude]="map.lat" [longitude]="map.lng" class="ml-auto clear-fix">
-  <agm-marker [latitude]="map.lat" [longitude]="map.lng"></agm-marker>
-  <agm-direction [origin]="origin" [destination]="destination">
-  </agm-direction>
-</agm-map>
+<div class="row">
+  <div class="col-sm-8 col-12 left-side">
+  <div class="left-content m-3 p-3"style="height:400px; background-color:cyan">
+
+  </div>
+  </div>
+  <div class="col-sm-4 right-side map-module">
+    <p>
+      map-module works!
+    </p>
+    <span>{{map.lat}} - {{map.lng}}</span>
+    <agm-map [latitude]="map.lat" [longitude]="map.lng" class="ml-auto clear-fix">
+      <agm-marker [latitude]="map.lat" [longitude]="map.lng"></agm-marker>
+      <agm-direction [origin]="origin" [destination]="destination">
+      </agm-direction>
+    </agm-map>
+  </div>
+</div>

@@ -16,7 +16,7 @@ export class RealestateItemComponent implements OnInit {
   ngOnInit() {
 
   }
-  goToPage(url: string){
+  goToPage(url: string) {
     this.router.navigate(['/' + url]);
   }
 }
