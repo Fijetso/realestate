@@ -1,5 +1,6 @@
 package vn.edu.uit.realestate.Model;
 
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,8 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @JsonIgnoreProperties({"trades","password"})
@@ -30,14 +33,14 @@ public class User {
 	private String imageUrl;
 	@Column(nullable = false)
     private Boolean emailVerified = false;
-//	@Pattern(regexp = "([0-9]{10}$)", message="Please provide a valid phone number")
-//	private String phone;
+	@Pattern(regexp = "([0-9]{10}$)", message="Please provide a valid phone number")
+	private String phone;
 	@Enumerated(EnumType.STRING)
     private AuthSupport support;
 	private String password;
-//	@Past(message="BirthDate must be in the past")
-//	private Date birthdate;
-//	private boolean gender;
+	@Past(message="BirthDate must be in the past")
+	private Date birthdate;
+	private boolean gender;
 	@ManyToOne
 	@JoinColumn(name="userKindId", referencedColumnName="id")
 	private UserKind userKind;
@@ -50,15 +53,21 @@ public class User {
 
 	public User(String id, @Size(min = 2, message = "Name should have at least 2 characters") String name,
 			@Email(message = "Please provide a valid email address") String email, String imageUrl,
-			Boolean emailVerified, AuthSupport support, String password, UserKind userKind, List<Trade> trades) {
+			Boolean emailVerified,
+			@Pattern(regexp = "([0-9]{10}$)", message = "Please provide a valid phone number") String phone,
+			AuthSupport support, String password, @Past(message = "BirthDate must be in the past") Date birthdate,
+			boolean gender, UserKind userKind, List<Trade> trades) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.imageUrl = imageUrl;
 		this.emailVerified = emailVerified;
+		this.phone = phone;
 		this.support = support;
 		this.password = password;
+		this.birthdate = birthdate;
+		this.gender = gender;
 		this.userKind = userKind;
 		this.trades = trades;
 	}
@@ -133,5 +142,29 @@ public class User {
 
 	public void setTrades(List<Trade> trades) {
 		this.trades = trades;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public Date getBirthdate() {
+		return birthdate;
+	}
+
+	public void setBirthdate(Date birthdate) {
+		this.birthdate = birthdate;
+	}
+
+	public boolean isGender() {
+		return gender;
+	}
+
+	public void setGender(boolean gender) {
+		this.gender = gender;
 	}
 }
