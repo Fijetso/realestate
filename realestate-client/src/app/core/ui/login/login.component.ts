@@ -9,6 +9,7 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 export class LoginComponent implements OnInit {
   username = new FormControl();
   password = new FormControl();
+  email = new FormControl();
   loginResult = false;
   userInfo: any;
   constructor(private authService: AuthenticationService) {}
@@ -16,10 +17,13 @@ export class LoginComponent implements OnInit {
 
   onLogIn() {
     console.log(this.authService
-      .loginWithEmailPassWord(this.username.value, this.password.value));
+      .loginWithEmailPassWord(this.email.value, this.password.value));
   }
   onUsernameChange() {
     console.log(this.username.value);
+  }
+  onEmailChange() {
+    console.log(this.email.value);
   }
   onPasswordChange() {
     console.log(this.password.value);
@@ -38,5 +42,6 @@ export class LoginComponent implements OnInit {
   }
   onLogOut() {
     this.authService.logOut();
+    localStorage.removeItem('userInfor');
   }
 }

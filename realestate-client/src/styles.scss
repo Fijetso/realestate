@@ -6,7 +6,7 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 @import "~@fortawesome/fontawesome-free/scss/regular";
 @import "~@fortawesome/fontawesome-free/scss/solid";
 @import "~@fortawesome/fontawesome-free/scss/brands";
-
+@import "../node_modules/material-design-icons/iconfont/material-icons.css";
 *,*:hover,a:hover{
   font-style: normal;
   outline: 0;

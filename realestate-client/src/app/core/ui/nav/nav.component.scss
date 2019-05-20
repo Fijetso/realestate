@@ -53,7 +53,7 @@ a{
   width: 100%;
 } 
 .search-input{
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto', Fallback, sans-serif;
 }
 .btn-search{
   background-color: #f17423;
