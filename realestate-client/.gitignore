@@ -50,3 +50,4 @@ Thumbs.db
 firebase.json
 .firebaserc
 .firebase
+firebase-debug.log

@@ -3,7 +3,7 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 @import "~@fortawesome/fontawesome-free/scss/solid";
 @import "~@fortawesome/fontawesome-free/scss/brands";
 
-#top-bar a {
+#top-bar-left a {
   position: fixed;
   left: 0;
   padding: 1rem 0;
@@ -19,7 +19,6 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
   overflow: hidden;
   text-overflow: ellipsis;
   .re-text {
-    // display: none;
     font-size: .8rem;
     font-family: Roboto, sans-serif;
     text-align: center;
@@ -37,7 +36,7 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
       }
   }
 }
-#top-bar a:hover {
+#top-bar-left a:hover {
     width:20rem;
     transition-timing-function: ease;
     -webkit-transition-timing-function: ease;
@@ -84,4 +83,30 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 #download-app {
   top: 500px;
   background-color: purple;
+}
+#top-bar-right a{
+    font-family: Roboto, sans-serif;
+    padding:0 1rem;
+    font-size: .8rem;
+    position: fixed;
+    padding: 1rem 0;
+    width: 80px;
+    text-decoration: none;
+    color: white;
+    z-index: 88;
+    white-space: nowrap;
+    overflow: hidden;
+    justify-content:center;
+    align-items:center;
+    display:flex;
+}
+#request{
+    right: 0;
+    top:50vh;
+    background-color: #f17423;
+    border-radius: 5px 0 0 5px;
+}
+#advisory {
+    bottom:10px;
+    right:5px;
 }
