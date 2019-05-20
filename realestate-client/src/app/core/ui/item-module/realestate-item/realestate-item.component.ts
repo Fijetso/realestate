@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class RealestateItemComponent implements OnInit {
   constructor(private router: Router) {}
-
+  @Input() dataItem: any;
   mainPic = 'https://picsum.photos/255/150';
   defaultPic = 'https://dummyimage.com/255x150/333/fff';
   // defaultPic = '../../../../../assets/images/rolling.svg';
