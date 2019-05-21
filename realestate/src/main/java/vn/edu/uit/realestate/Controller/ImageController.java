@@ -26,10 +26,11 @@ public class ImageController {
     private CloudinaryService cloudinaryService;
 
     @PostMapping("image/upload")
-    public ResponseEntity<Image> uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<Image> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("desc") String desc) {
         String url = cloudinaryService.uploadImage(file);
         Image newImage = new Image();
         newImage.setImageLink(url);
+        newImage.setDescription(desc);
         imageRepository.save(newImage);
         return new ResponseEntity<>(newImage, HttpStatus.OK);
     }
