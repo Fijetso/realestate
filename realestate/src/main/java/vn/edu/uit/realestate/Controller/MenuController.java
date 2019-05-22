@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
+import vn.edu.uit.realestate.DataAccess.MenuRepository;
 import vn.edu.uit.realestate.Model.Menu;
-import vn.edu.uit.realestate.Service.MenuRepository;
 
 @RestController
 public class MenuController {

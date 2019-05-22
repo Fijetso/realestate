@@ -20,9 +20,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import vn.edu.uit.realestate.Controller.ExceptionHandler.ExistContentException;
 import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
+import vn.edu.uit.realestate.DataAccess.TradeKindRepository;
 import vn.edu.uit.realestate.Model.Trade;
 import vn.edu.uit.realestate.Model.TradeKind;
-import vn.edu.uit.realestate.Service.TradeKindRepository;
 
 @RestController
 public class TradeKindController {

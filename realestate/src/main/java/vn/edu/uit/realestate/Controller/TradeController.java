@@ -20,12 +20,12 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import vn.edu.uit.realestate.Controller.ExceptionHandler.ExistContentException;
 import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
+import vn.edu.uit.realestate.DataAccess.BookingRepository;
+import vn.edu.uit.realestate.DataAccess.ImageRepository;
+import vn.edu.uit.realestate.DataAccess.TradeRepository;
 import vn.edu.uit.realestate.Model.Booking;
 import vn.edu.uit.realestate.Model.Image;
 import vn.edu.uit.realestate.Model.Trade;
-import vn.edu.uit.realestate.Service.BookingRepository;
-import vn.edu.uit.realestate.Service.ImageRepository;
-import vn.edu.uit.realestate.Service.TradeRepository;
 
 @RestController
 public class TradeController {
