@@ -13,7 +13,6 @@ export class UserComponent implements OnInit {
 
   private users: User[] = [];
   private user: User ;
-
   userKinds = [
     {
       id: 1,
@@ -24,10 +23,24 @@ export class UserComponent implements OnInit {
       name: 'Môi giới'
     }
   ];
+  newUser: User = {
+    id: 3,
+    name: 'Danh Thanh',
+    email: 'danhthanh418@gmail.com',
+    phone: '0975922740',
+    password: 'ThanhUIT@UIT',
+    birthdate: new Date(11 / 19 / 1995),
+    render: false,
+    UserKind: {
+      id: 1,
+      name: 'Chủ nhà'
+    }
+  };
   constructor(private api: ApiService) { }
   ngOnInit() {
     this.getAllUser();
     this.getUserById(1);
+    this.createUser(this.newUser);
   }
   getAllUser() {
     this.api.getAllUser().subscribe(listUser => {

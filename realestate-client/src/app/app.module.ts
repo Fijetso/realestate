@@ -173,7 +173,7 @@ import { ApiService } from './services/api/api.service';
   ],
   providers: [
     AuthenticationService,
-    // ApiService
+    ApiService
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],
