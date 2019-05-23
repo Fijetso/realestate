@@ -1,0 +1,103 @@
+<div class="mt-10 container user-container">
+  <h5>Danh sách người dùng</h5>
+  <div class="user-list row">
+    <div *ngFor="let user of users" class="col-md-4 col-lg-4 col-sm-4">
+      <mat-card class="user-card ">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>{{ user.name }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{ user.id }}</p>
+          <p>{{ user.name }}</p>
+          <p>{{ user.email }}</p>
+          <p>{{ user.phone }}</p>
+          <p>{{ user.render }}</p>
+          <p>{{ user.userKind.id }}</p>
+          <p>{{ user.userKind.name }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button  class="btn btn-success">Cập nhật</button>
+          <button  class="btn btn-danger">Xóa</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+  <h5>User : 1</h5>
+  <div class="user-item row">
+      <mat-card class="user-card col-md-4 col-lg-4 col-sm-4">
+          <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title>{{ user.name }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ user.id }}</p>
+            <p>{{ user.name }}</p>
+            <p>{{ user.email }}</p>
+            <p>{{ user.phone }}</p>
+            <p>{{ user.render }}</p>
+            <p>{{ user.userKind.id }}</p>
+            <p>{{ user.userKind.name }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+          <button  class="btn btn-success">Cập nhật</button>
+          <button  class="btn btn-danger">Xóa</button>
+          </mat-card-actions>
+        </mat-card>
+  </div>
+
+  <div class="user-form my-2">
+    <h5>Thêm mới người dùng</h5>
+    <form #userForm="ngForm" (ngSubmit)="(onSubmitUser)" class="formUser">
+      <div class="form-container">
+        <mat-form-field>
+          <input matInput placeholder="Id" required />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Họ tên" required />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Email" required type="email" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Mật khẩu" required type="password" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Số điện" required />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            placeholder="Ngày sinh"
+            required
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Giới tính</mat-label>
+          <mat-select matNativeControl>
+            <mat-option value="true">Nam</mat-option>
+            <mat-option value="false">Nữ</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Loại người dùng</mat-label>
+          <mat-select>
+            <mat-option
+              *ngFor="let userKind of userKinds"
+              [value]="userKind.id"
+            >
+              {{ userKind.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <button type="submit" class="btn btn-success text-center">Submit</button>
+    </form>
+  </div>
+</div>

@@ -54,8 +54,6 @@ import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { OwlModule } from 'ngx-owl-carousel';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-// import { AngularFireModule } from '@angular/fire';
-// import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -84,10 +82,11 @@ import { RealEstateDetailComponent } from './components/real-estate-detail/real-
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
-import {WeatherService} from './services/weather.service';
 import { HotPlaceItemComponent } from './core/ui/item-module/hot-place-item/hot-place-item.component';
 import { RegisterComponent } from './core/ui/register/register.component';
 import { AuthenticationService } from './services/authentication/authentication.service';
+import { UserComponent } from './components/user/user.component';
+import { ApiService } from './services/api/api.service';
 
 
 
@@ -124,7 +123,8 @@ import { AuthenticationService } from './services/authentication/authentication.
     SectionHeaderComponent,
     RealEstateDetailComponent,
     HotPlaceItemComponent,
-    RegisterComponent
+    RegisterComponent,
+    UserComponent
   ],
   imports: [
     OwlModule,
@@ -172,7 +172,8 @@ import { AuthenticationService } from './services/authentication/authentication.
     AngularFireAuthModule
   ],
   providers: [
-    AuthenticationService
+    AuthenticationService,
+    // ApiService
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],

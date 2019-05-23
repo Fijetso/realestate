@@ -1,3 +1,4 @@
+import { UserComponent } from './components/user/user.component';
 import { FavoriteComponent } from './components/favorite/favorite.component';
 import { LoginComponent } from './core/ui/login/login.component';
 import { NgModule } from '@angular/core';
@@ -21,8 +22,16 @@ const routes: Routes = [
     component: RealEstateDetailComponent,
     data: { title: 'Chi tiết bất động sản' }
   },
-  { path: 'ban-do', component: MapModuleComponent, data: { title: 'Trang bản đồ' } },
-  { path: 'dang-nhap', component: LoginComponent, data: { title: 'Trang đăng nhập' } },
+  {
+    path: 'ban-do',
+    component: MapModuleComponent,
+    data: { title: 'Trang bản đồ' }
+  },
+  {
+    path: 'dang-nhap',
+    component: LoginComponent,
+    data: { title: 'Trang đăng nhập' }
+  },
   {
     path: 'yeu-thich',
     component: FavoriteComponent,
@@ -32,6 +41,11 @@ const routes: Routes = [
     path: 'dang-ky',
     component: RegisterComponent,
     data: { title: 'Trang đăng ký' }
+  },
+  {
+    path: 'user',
+    component: UserComponent,
+    data: { title: 'Trang người dùng' }
   },
   {
     path: '**',

@@ -12,4 +12,7 @@ export const environment = {
   ipapi: {
     apiKey: 'e41bcfed8462dbd69772bdb4f6616a24'
   },
+  api: {
+    rootURL: 'http://localhost:4200'
+  }
 };

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Map } from 'src/app/model/map';
+import { Map } from 'src/app/model/map/map';
 @Component({
   selector: 'app-map-module',
   templateUrl: './map-module.component.html',
