@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
+import vn.edu.uit.realestate.DataAccess.AddressRepository;
 import vn.edu.uit.realestate.Model.Address;
-import vn.edu.uit.realestate.Service.AddressRepository;
 
 @RestController
 public class AddressController {

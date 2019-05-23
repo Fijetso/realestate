@@ -1,4 +1,4 @@
-package vn.edu.uit.realestate;
+package vn.edu.uit.realestate.Service;
 
 import java.util.ArrayList;
 

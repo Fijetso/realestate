@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
+import vn.edu.uit.realestate.DataAccess.BookingRepository;
 import vn.edu.uit.realestate.Model.Booking;
-import vn.edu.uit.realestate.Service.BookingRepository;
 
 @RestController
 public class BookingController {

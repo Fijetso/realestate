@@ -20,10 +20,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import vn.edu.uit.realestate.Controller.ExceptionHandler.ExistContentException;
 import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
+import vn.edu.uit.realestate.DataAccess.CategoryRepository;
+import vn.edu.uit.realestate.DataAccess.NewsRepository;
 import vn.edu.uit.realestate.Model.Category;
 import vn.edu.uit.realestate.Model.News;
-import vn.edu.uit.realestate.Service.CategoryRepository;
-import vn.edu.uit.realestate.Service.NewsRepository;
 
 @RestController
 public class CategoryController {
