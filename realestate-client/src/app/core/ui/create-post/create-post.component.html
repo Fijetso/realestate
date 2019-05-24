@@ -63,7 +63,7 @@
               class="form-control"
               type="url"
               id="example-url-fb"
-              [(ngModel)]="contact.fb"
+              [(ngModel)]="contact.social.fb"
               name="fb"
             />
           </div>
@@ -77,7 +77,7 @@
               class="form-control"
               type="url"
               id="example-url-twt"
-              [(ngModel)]="contact.twt"
+              [(ngModel)]="contact.social.twt"
               name="twt"
             />
           </div>
@@ -91,7 +91,7 @@
               class="form-control"
               type="url"
               id="example-url-web"
-              [(ngModel)]="contact.web"
+              [(ngModel)]="contact.social.web"
               name="web"
             />
           </div>
@@ -159,7 +159,7 @@
       <fieldset class="dia-chi row" ngModelGroup="diaChi">
       <mat-form-field>
           <mat-label>Tỉnh/Tp</mat-label>
-          <mat-select [(ngModel)]="contact.tinh" name="tinh">
+          <mat-select [(ngModel)]="contact.diaChi.tinh" name="tinh">
             <mat-option value="Hồ Chí Minh"
             name="tinhItem">
                 Hồ Chí Minh
@@ -168,7 +168,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>Quận/Huyện</mat-label>
-          <mat-select [(ngModel)]="contact.huyen" name="huyen">
+          <mat-select [(ngModel)]="contact.diaChi.huyen" name="huyen">
             <mat-option *ngFor="let huyen of states" [value]="huyen.name">
               {{huyen.name}}
             </mat-option>
@@ -176,7 +176,7 @@
         </mat-form-field>
         <mat-form-field>
             <mat-label>Phường xã</mat-label>
-            <mat-select [(ngModel)] = "contact.xa" name="xa">
+            <mat-select [(ngModel)] = "contact.diaChi.xa" name="xa">
               <mat-option *ngFor="let xa of xaList" [value]="xa">
                   {{xa}}
               </mat-option>

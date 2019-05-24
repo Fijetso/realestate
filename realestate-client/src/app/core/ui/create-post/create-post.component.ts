@@ -13,15 +13,18 @@ export class CreatePostComponent implements OnInit {
   contact = {
     name: '',
     email: '',
-    reKind: '',
+    social: {
+      fb: '',
+      twt: '',
+      email: ''
+    },
+    reKind: 'Căn hộ/ Chung cư',
     dob: '',
-    fb: '',
-    twt: '',
-    web: '',
-    tel: '',
-    tinh: '',
-    huyen: '',
-    xa: ''
+    diaChi: {
+      tinh: 'Hồ Chí Minh',
+      huyen: 'Quận 1',
+      xa: 'Xã 1'
+    }
   };
   reKinds: string[] = ['Căn hộ/ Chung cư', 'Nhà riêng', 'Đất nền'];
   states: State[] = [

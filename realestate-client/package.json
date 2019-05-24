@@ -4,8 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
-    "build::prod":"ng build --prod",
-    "start:o":"ng serve --proxy-config proxy.conf.json -o",
+    "build::prod": "ng build --prod",
+    "start:o": "ng serve --proxy-config proxy.conf.json -o",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -45,6 +45,7 @@
     "jquery": "^3.4.0",
     "material-design-icons": "^3.0.1",
     "ng-lazyload-image": "^5.1.2",
+    "ng2-file-upload": "^1.3.0",
     "ngx-owl-carousel": "^2.0.7",
     "owl.carousel": "^2.3.4",
     "popper.js": "^1.15.0",
