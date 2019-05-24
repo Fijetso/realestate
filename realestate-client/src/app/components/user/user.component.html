@@ -57,6 +57,20 @@
       class="row justify-content-md-center"
     >
       <div class="col-md-8">
+          <div class="form-group row">
+              <label for="example-text-input" class="col-md-2 col-form-label"
+                >Id: </label
+              >
+              <div class="col-md-10">
+                <input
+                  class="form-control"
+                  type="number"
+                  id="example-text-input"
+                  [(ngModel)]="newUser.id"
+                  name="id"
+                />
+              </div>
+            </div>
         <div class="form-group row">
           <label for="example-text-input" class="col-md-2 col-form-label"
             >Họ Tên:</label
@@ -155,10 +169,10 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>Loại User</mat-label>
-          <mat-select [(ngModel)]="newUser.userKind.id" name="userKind">
+          <mat-select [(ngModel)]="newUser.userKind" name="userKind">
             <mat-option
               *ngFor="let userKind of userKinds"
-              [value]="userKind.id"
+              [value]="userKind"
             >
               {{ userKind.name }}
             </mat-option>

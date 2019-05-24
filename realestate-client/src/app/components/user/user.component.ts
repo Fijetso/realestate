@@ -57,6 +57,7 @@ export class UserComponent implements OnInit {
     });
   }
   createUser(user: User) {
+    console.log(user)
     this.api
       .createUser(user)
       .subscribe(
