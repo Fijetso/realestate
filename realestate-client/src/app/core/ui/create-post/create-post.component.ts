@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { State } from '../home-page/marketting/marketting.component';
 
@@ -7,23 +8,33 @@ import { State } from '../home-page/marketting/marketting.component';
   styleUrls: ['./create-post.component.scss']
 })
 export class CreatePostComponent implements OnInit {
-  contact: any;
-  constructor() {
-    this.contact = {
+  post: any;
+  selectedFile: File = null;
+
+  constructor(private http: HttpClient) {
+    this.post = {
       name: '',
       email: '',
-      social: {
-        fb: '',
-        twt: '',
-        web: ''
-      },
+      // social: {
+      //   fb: '',
+      //   twt: '',
+      //   web: ''
+      // },
       reKind: 'Căn hộ/ Chung cư',
       dob: '',
       diaChi: {
         tinh: 'Hồ Chí Minh',
         huyen: 'Quận 1',
         xa: 'Xã 1'
-      }
+      },
+      price: null,
+      currency: 'VNĐ',
+      reTradeKind: 'Bán',
+      phone: '',
+      houseAddress: '',
+      housePhone: '',
+      houseImages: '',
+      bluePrints: ''
     };
    }
   reKinds: string[] = ['Căn hộ/ Chung cư', 'Nhà riêng', 'Đất nền'];
@@ -68,8 +79,18 @@ export class CreatePostComponent implements OnInit {
   onSubmit(formValue) {
     // Do something awesome
     console.log(formValue);
-    this.contact = formValue;
-    console.log( this.contact);
+    this.post = formValue;
+    console.log( this.post);
     // throw Error('something go wrong');
+  }
+  onFileSelected(event) {
+    this.selectedFile = event.target.file[0] as File;
+  }
+  onUpLoadFile() {
+    const fd = new FormData();
+    fd.append('image', this.selectedFile, this.selectedFile.name);
+    this.http.post('http://localhost:4200/api/image/upload', {fd, ' desc ': 'test'}).subscribe(
+      res => console.log(res)
+    )
   }
 }
