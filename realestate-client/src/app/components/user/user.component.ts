@@ -57,13 +57,17 @@ export class UserComponent implements OnInit {
     });
   }
   createUser(user: User) {
-    console.log(user)
+    console.log(user);
     this.api
       .createUser(user)
       .subscribe(
         success => alert('Create successfully'),
         error => alert('Create user failed')
       );
+    // this.api.getAllUser().subscribe(listUser => {
+    //   this.users = listUser;
+    //   console.log('go to last');
+    // });
   }
   deleteUser(id: number) {
     this.api
