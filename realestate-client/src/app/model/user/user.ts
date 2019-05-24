@@ -6,6 +6,6 @@ export class User {
     phone: string;
     password: string;
     birthdate: Date;
-    render: boolean;
+    gender: boolean;
     userKind: UserKind;
 }

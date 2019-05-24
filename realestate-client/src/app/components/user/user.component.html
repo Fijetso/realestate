@@ -17,77 +17,145 @@
           <p>{{ userItem.userKind.name }}</p>
         </mat-card-content>
         <mat-card-actions [pro1]="sadsads">
-          <button  class="btn btn-success">Cập nhật</button>
-          <button  class="btn btn-danger">Xóa</button>
+          <button class="btn btn-success">Cập nhật</button>
+          <button class="btn btn-danger" (click)="deleteUser(userItem.id)">
+            Xóa
+          </button>
         </mat-card-actions>
       </mat-card>
     </div>
   </div>
   <h5>Lấy thông tin người dùng theo mã</h5>
   <div class="user-item row">
-      <mat-card class="user-card col-md-4 col-lg-4 col-sm-4">
-          <mat-card-header>
-            <div mat-card-avatar class="example-header-image"></div>
-            <mat-card-title>{{ user?.name }}</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <p>{{ user?.id }}</p>
-            <p>{{ user?.name }}</p>
-            <p>{{ user?.email }}</p>
-            <p>{{ user?.phone }}</p>
-            <p>{{ user?.render }}</p>
-            <p>{{ user?.userKind.id }}</p>
-            <p>{{ user?.userKind.name }}</p>
-          </mat-card-content>
-          <mat-card-actions>
-          <button  class="btn btn-success">Cập nhật</button>
-          <button  class="btn btn-danger">Xóa</button>
-          </mat-card-actions>
-        </mat-card>
+    <mat-card class="user-card col-md-4 col-lg-4 col-sm-4">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>{{ user?.name }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ user?.id }}</p>
+        <p>{{ user?.name }}</p>
+        <p>{{ user?.email }}</p>
+        <p>{{ user?.phone }}</p>
+        <p>{{ user?.render }}</p>
+        <p>{{ user?.userKind.id }}</p>
+        <p>{{ user?.userKind.name }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button class="btn btn-success">Cập nhật</button>
+        <button class="btn btn-danger">Xóa</button>
+      </mat-card-actions>
+    </mat-card>
   </div>
 
   <div class="user-form my-2">
     <h5>Thêm mới người dùng</h5>
-    <form #userForm="ngForm" (ngSubmit)="createUser(userForm.value)" class="formUser">
-      <div class="form-container">
-        <mat-form-field>
-          <input matInput placeholder="Id" required />
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Họ tên" required />
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Email" required type="email" />
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Mật khẩu" required type="password" />
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Số điện" required />
-        </mat-form-field>
-        <mat-form-field>
-          <input
-            matInput
-            [matDatepicker]="picker"
-            placeholder="Ngày sinh"
-            required
-          />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
+    <form
+      #formUser="ngForm"
+      novalidate
+      (ngSubmit)="createUser(formUser.value)"
+      class="row justify-content-md-center"
+    >
+      <div class="col-md-8">
+        <div class="form-group row">
+          <label for="example-text-input" class="col-md-2 col-form-label"
+            >Họ Tên:</label
+          >
+          <div class="col-md-10">
+            <input
+              class="form-control"
+              type="text"
+              id="example-text-input"
+              [(ngModel)]="newUser.name"
+              name="name"
+              required
+              autofocus
+            />
+          </div>
+        </div>
+        <div
+          class="col alert alert-danger"
+          role="alert"
+          *ngIf="formUser.controls.name?.errors?.required"
+        >
+          Tên là bắt buộc
+        </div>
+        <div class="form-group row">
+          <label for="example-email-input" class="col-md-2 col-form-label"
+            >Thư điện tử:</label
+          >
+          <div class="col-md-10">
+            <input
+              class="form-control"
+              type="email"
+              id="example-email-input"
+              [(ngModel)]="newUser.email"
+              name="email"
+              required
+            />
+          </div>
+        </div>
+        <div
+          class="col alert alert-danger"
+          role="alert"
+          *ngIf="formUser.controls.email?.errors?.required"
+        >
+          Thư điện tử là bắt buộc
+        </div>
+        <div class="form-group row">
+          <label for="example-password-input" class="col-md-2 col-form-label"
+            >Mật khẩu:</label
+          >
+          <div class="col-md-10">
+            <input
+              class="form-control"
+              type="password"
+              id="example-password-input"
+              [(ngModel)]="newUser.password"
+              name="password"
+              required
+            />
+          </div>
+        </div>
+        <div
+          class="col alert alert-danger"
+          role="alert"
+          *ngIf="formUser.controls.password?.errors?.required"
+        >
+          Mật khẩu là bắt buộc
+        </div>
+        <div class="form-group row">
+          <label for="example-tel-input" class="col-md-2 col-form-label"
+            >Di động:</label
+          >
+          <div class="col-md-10">
+            <input
+              class="form-control"
+              type="tel"
+              id="example-tel-input"
+              [(ngModel)]="newUser.phone"
+              name="phone"
+            />
+          </div>
+        </div>
         <mat-form-field>
           <mat-label>Giới tính</mat-label>
-          <mat-select matNativeControl>
-            <mat-option value="true">Nam</mat-option>
-            <mat-option value="false">Nữ</mat-option>
+          <mat-select [(ngModel)]="newUser.gender" name="gender">
+            <mat-option
+              value="true"
+            >
+              Nam
+            </mat-option>
+            <mat-option
+              value="false"
+            >
+              Nữ
+            </mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field>
-          <mat-label>Loại người dùng</mat-label>
-          <mat-select>
+          <mat-label>Loại User</mat-label>
+          <mat-select [(ngModel)]="newUser.userKind.id" name="userKind">
             <mat-option
               *ngFor="let userKind of userKinds"
               [value]="userKind.id"
@@ -96,8 +164,19 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
+        <div class="form-group row">
+          <div class="col-md-10 offset-md-2">
+            <button
+              class="btn btn-primary"
+              type="submit"
+              [disabled]="!formUser.valid"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
       </div>
-      <button type="submit" class="btn btn-success text-center">Submit</button>
     </form>
+    <pre>{{ formUser.value | json }}</pre>
   </div>
 </div>
