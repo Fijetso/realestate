@@ -1,0 +1,204 @@
+<app-marketting></app-marketting>
+<div class="create-post-wrapper container">
+  <h3>Chủ nhà đăng tin</h3>
+  <form
+    #formPost="ngForm"
+    novalidate
+    (ngSubmit)="onSubmit(formPost.value)"
+    class="row justify-content-md-center"
+  >
+    <div class="col-md-8">
+      <div class="form-group row">
+        <label for="example-text-input" class="col-md-2 col-form-label"
+          >Họ Tên:</label
+        >
+        <div class="col-md-10">
+          <input
+            class="form-control"
+            type="text"
+            id="example-text-input"
+            [(ngModel)]="contact.name"
+            name="name"
+            required
+            autofocus
+          />
+        </div>
+      </div>
+      <div
+        class="col alert alert-danger"
+        role="alert"
+        *ngIf="formPost.controls.name?.errors?.required"
+      >
+        Tên là bắt buộc
+      </div>
+      <div class="form-group row">
+        <label for="example-email-input" class="col-md-2 col-form-label"
+          >Thư điện tử:</label
+        >
+        <div class="col-md-10">
+          <input
+            class="form-control"
+            type="email"
+            id="example-email-input"
+            [(ngModel)]="contact.email"
+            name="email"
+            required
+          />
+        </div>
+      </div>
+      <div
+        class="col alert alert-danger"
+        role="alert"
+        *ngIf="formPost.controls.email?.errors?.required"
+      >
+        Thư điện tử là bắt buộc
+      </div>
+      <fieldset ngModelGroup="social">
+        <div class="form-group row">
+          <label for="example-url-fb" class="col-md-2 col-form-label"
+            >Facebook:</label
+          >
+          <div class="col-md-10">
+            <input
+              class="form-control"
+              type="url"
+              id="example-url-fb"
+              [(ngModel)]="contact.fb"
+              name="fb"
+            />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="example-url-twt" class="col-md-2 col-form-label"
+            >Twitter:</label
+          >
+          <div class="col-md-10">
+            <input
+              class="form-control"
+              type="url"
+              id="example-url-twt"
+              [(ngModel)]="contact.twt"
+              name="twt"
+            />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="example-url-web" class="col-md-2 col-form-label"
+            >Website:</label
+          >
+          <div class="col-md-10">
+            <input
+              class="form-control"
+              type="url"
+              id="example-url-web"
+              [(ngModel)]="contact.web"
+              name="web"
+            />
+          </div>
+        </div>
+      </fieldset>
+      <div class="form-group row">
+        <label for="example-tel-input" class="col-md-2 col-form-label"
+          >Tel:</label
+        >
+        <div class="col-md-10">
+          <input
+            class="form-control"
+            type="tel"
+            id="example-tel-input"
+            [(ngModel)]="contact.tel"
+            name="tel"
+          />
+        </div>
+      </div>
+      <!-- <div class="form-group row">
+        <label for="example-tel-input" class="col-md-2 col-form-label"
+          >Loại BĐS:</label
+        >
+        <div class="d-inline-flex">
+          <input
+            type="radio"
+            id="example-tel-input"
+            [(ngModel)]="contact.reKind"
+            name="reKind"
+            value="Chung cư/Căn hộ"
+          />Chung cư / Căn hộ
+          <input
+            type="radio"
+            id="example-tel-input"
+            [(ngModel)]="contact.reKind"
+            name="reKind"
+            value="Nhà riêng"
+          />Nhà riêng
+          <input
+            type="radio"
+            id="example-tel-input"
+            [(ngModel)]="contact.reKind"
+            name="reKind"
+            value="Đất nền"
+          />Đất nền
+        </div>
+      </div> -->
+      <label id="example-radio-group-label">Chọn loại BĐS</label>
+      <mat-radio-group
+        aria-labelledby="example-radio-group-label"
+        class="example-radio-group"
+        [(ngModel)]="contact.reKind"
+        name="reKind"
+      >
+        <mat-radio-button
+          class="example-radio-button"
+          *ngFor="let reKind of reKinds"
+          [value]="reKind"
+          name="reKindItem"
+        >
+          {{ reKind }}
+        </mat-radio-button>
+      </mat-radio-group>
+      <h5>Địa chỉ đăng tin</h5>
+      <fieldset class="dia-chi row" ngModelGroup="diaChi">
+      <mat-form-field>
+          <mat-label>Tỉnh/Tp</mat-label>
+          <mat-select [(ngModel)]="contact.tinh" name="tinh">
+            <mat-option value="Hồ Chí Minh"
+            name="tinhItem">
+                Hồ Chí Minh
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Quận/Huyện</mat-label>
+          <mat-select [(ngModel)]="contact.huyen" name="huyen">
+            <mat-option *ngFor="let huyen of states" [value]="huyen.name">
+              {{huyen.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Phường xã</mat-label>
+            <mat-select [(ngModel)] = "contact.xa" name="xa">
+              <mat-option *ngFor="let xa of xaList" [value]="xa">
+                  {{xa}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+      </fieldset>
+      <div class="form-group row">
+        <div class="col-md-10 offset-md-2">
+          <button
+            class="btn btn-primary"
+            type="submit"
+            [disabled]="!formPost.valid"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <pre>{{ formPost.value | json }}</pre>
+  <p>Control Name errors:</p>
+  <pre>{{ formPost.controls.name?.errors | json }}</pre>
+  <p>Control Email errors:</p>
+  <pre>{{ formPost.controls.email?.errors | json }}</pre>
+</div>

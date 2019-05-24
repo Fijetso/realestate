@@ -87,6 +87,7 @@ import { RegisterComponent } from './core/ui/register/register.component';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { UserComponent } from './components/user/user.component';
 import { ApiService } from './services/api/api.service';
+import { CreatePostComponent } from './core/ui/create-post/create-post.component';
 
 
 
@@ -124,7 +125,8 @@ import { ApiService } from './services/api/api.service';
     RealEstateDetailComponent,
     HotPlaceItemComponent,
     RegisterComponent,
-    UserComponent
+    UserComponent,
+    CreatePostComponent
   ],
   imports: [
     OwlModule,
