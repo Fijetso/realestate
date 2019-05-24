@@ -30,6 +30,7 @@ import vn.edu.uit.realestate.Model.RealEstateKind;
 import vn.edu.uit.realestate.Model.Trade;
 import vn.edu.uit.realestate.Model.TradeKind;
 import vn.edu.uit.realestate.Model.User;
+import vn.edu.uit.realestate.Model.UserKind;
 import vn.edu.uit.realestate.Service.User.UserService;
 
 @RestController
@@ -48,6 +49,14 @@ public class UserController {
     public ResponseEntity<MappingJacksonValue> getUserById(@PathVariable long id) {
     	MappingJacksonValue foundUser = userService.findById(id);
         return new ResponseEntity<>(foundUser, HttpStatus.OK);
+    }
+    @PostMapping("/users")
+    public ResponseEntity<User> postUser(@RequestBody User user) {
+    	userRepository.save(user);
+    	URI location = ServletUriComponentsBuilder
+    			.fromCurrentRequest().path("/{id}")
+    			.buildAndExpand(user.getId()).toUri();
+    	return ResponseEntity.created(location).build();
     }
     @PostMapping("users/{userId}/trades")
     public ResponseEntity postTradeByUserId(@PathVariable long userId, @Valid @RequestBody Trade trade) throws Exception {
