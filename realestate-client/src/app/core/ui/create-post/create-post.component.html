@@ -7,7 +7,7 @@
     (ngSubmit)="onSubmit(formPost.value)"
     class="row justify-content-md-center"
   >
-    <div class="col-md-8">
+    <div class="col-md-10">
       <div class="form-group row">
         <label for="example-text-input" class="col-md-2 col-form-label"
           >Họ Tên:</label
@@ -17,7 +17,7 @@
             class="form-control"
             type="text"
             id="example-text-input"
-            [(ngModel)]="contact.name"
+            [(ngModel)]="post.name"
             name="name"
             required
             autofocus
@@ -40,7 +40,7 @@
             class="form-control"
             type="email"
             id="example-email-input"
-            [(ngModel)]="contact.email"
+            [(ngModel)]="post.email"
             name="email"
             required
           />
@@ -53,7 +53,7 @@
       >
         Thư điện tử là bắt buộc
       </div>
-      <fieldset ngModelGroup="social">
+      <!-- <fieldset ngModelGroup="social">
         <div class="form-group row">
           <label for="example-url-fb" class="col-md-2 col-form-label"
             >Facebook:</label
@@ -63,7 +63,7 @@
               class="form-control"
               type="url"
               id="example-url-fb"
-              [(ngModel)]="contact.social.fb"
+              [(ngModel)]="post.social.fb"
               name="fb"
             />
           </div>
@@ -77,7 +77,7 @@
               class="form-control"
               type="url"
               id="example-url-twt"
-              [(ngModel)]="contact.social.twt"
+              [(ngModel)]="post.social.twt"
               name="twt"
             />
           </div>
@@ -91,23 +91,24 @@
               class="form-control"
               type="url"
               id="example-url-web"
-              [(ngModel)]="contact.social.web"
+              [(ngModel)]="post.social.web"
               name="web"
             />
           </div>
         </div>
-      </fieldset>
+      </fieldset> -->
+
       <div class="form-group row">
         <label for="example-tel-input" class="col-md-2 col-form-label"
-          >Tel:</label
+          >Số điện thoại:</label
         >
         <div class="col-md-10">
           <input
             class="form-control"
             type="tel"
             id="example-tel-input"
-            [(ngModel)]="contact.tel"
-            name="tel"
+            [(ngModel)]="post.phone"
+            name="phone"
           />
         </div>
       </div>
@@ -115,11 +116,11 @@
       <mat-radio-group
         aria-labelledby="example-radio-group-label"
         class="example-radio-group"
-        [(ngModel)]="contact.reKind"
+        [(ngModel)]="post.reKind"
         name="reKind"
       >
         <mat-radio-button
-          class="example-radio-button"
+          class="example-radio-button-reKind"
           *ngFor="let reKind of reKinds"
           [value]="reKind"
           name="reKindItem"
@@ -127,42 +128,132 @@
           {{ reKind }}
         </mat-radio-button>
       </mat-radio-group>
+      <h5>Loại hình giao dịch</h5>
+      <mat-radio-group
+        aria-labelledby="example-radio-group-label"
+        class="example-radio-group"
+        [(ngModel)]="post.reTradeKind"
+        name="reTradeKind"
+      >
+        <mat-radio-button
+          class="example-radio-button-sale"
+          value="Bán"
+          name="reTradeKindItem"
+        >
+          Bán
+        </mat-radio-button>
+      </mat-radio-group>
       <h5>Địa chỉ đăng tin</h5>
       <fieldset class="dia-chi row" ngModelGroup="diaChi">
-      <mat-form-field>
+        <mat-form-field>
           <mat-label>Tỉnh/Tp</mat-label>
-          <mat-select [(ngModel)]="contact.diaChi.tinh" name="tinh">
-            <mat-option value="Hồ Chí Minh"
-            name="tinhItem">
-                Hồ Chí Minh
+          <mat-select [(ngModel)]="post.diaChi.tinh" name="tinh">
+            <mat-option value="Hồ Chí Minh" name="tinhItem">
+              Hồ Chí Minh
             </mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Quận/Huyện</mat-label>
-          <mat-select [(ngModel)]="contact.diaChi.huyen" name="huyen">
+          <mat-select [(ngModel)]="post.diaChi.huyen" name="huyen">
             <mat-option *ngFor="let huyen of states" [value]="huyen.name">
-              {{huyen.name}}
+              {{ huyen.name }}
             </mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field>
-            <mat-label>Phường xã</mat-label>
-            <mat-select [(ngModel)] = "contact.diaChi.xa" name="xa">
-              <mat-option *ngFor="let xa of xaList" [value]="xa">
-                  {{xa}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          <mat-label>Phường xã</mat-label>
+          <mat-select [(ngModel)]="post.diaChi.xa" name="xa">
+            <mat-option *ngFor="let xa of xaList" [value]="xa">
+              {{ xa }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </fieldset>
       <div class="form-group row">
-        <div class="col-md-10 offset-md-2">
+        <label for="example-price-input" class="col-md-2 col-form-label"
+          >Gía đề xuất:</label
+        >
+        <div class="col-md-10">
+          <div class="row">
+            <input
+              class="form-control col-md-9"
+              type="number"
+              id="example-price-input"
+              [(ngModel)]="post.price"
+              name="price"
+              required
+            />
+            <mat-form-field class="col-md-3">
+              <mat-label>Đơn vị</mat-label>
+              <mat-select [(ngModel)]="post.currency" name="currency">
+                <mat-option value="VNĐ">
+                  VNĐ
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col alert alert-danger"
+        role="alert"
+        *ngIf="formPost.controls.price?.errors?.required"
+      >
+        Gía là bắt buộc
+      </div>
+      <div class="form-group row">
+          <div class="col-md-12">
+            <div class="row address">
+              <input
+                class="form-control col-md-8"
+                type="text"
+                id="example-house-address-input"
+                [(ngModel)]="post.houseAddress"
+                name="houseAddress"
+                placeholder="Số nhà"
+              />
+              <input
+                class="form-control col-md-4"
+                type="tel"
+                id="example-house-phone-input"
+                [(ngModel)]="post.housePhone"
+                name="housePhone"
+                placeholder="Số điện thoại"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-12">
+              <div class="row address">
+                <input
+                  class="col-md-3"
+                  type="file"
+                  id="example-house-images-input"
+                  [(ngModel)]="post.houseImages"
+                  name="houseImages"
+                />
+                <button class="col-md-3">Upload Images</button>
+                <input
+                  class="col-md-3"
+                  type="file"
+                  id="example-house-blue-print-input"
+                  [(ngModel)]="post.bluePrints"
+                  name="bluePrints"
+                />
+                <button class="col-md-3" (click)="onUpLoadFile()">Upload Blue prints</button>
+              </div>
+            </div>
+          </div>
+      <div class="form-group row">
+        <div class="col-md-10 offset-md-5">
           <button
             class="btn btn-primary"
             type="submit"
             [disabled]="!formPost.valid"
           >
-            Submit
+            Gửi thông tin
           </button>
         </div>
       </div>

@@ -12,18 +12,22 @@ export class CreatePostComponent implements OnInit {
     this.contact = {
       name: '',
       email: '',
-      social: {
-        fb: '',
-        twt: '',
-        web: ''
-      },
+      // social: {
+      //   fb: '',
+      //   twt: '',
+      //   web: ''
+      // },
       reKind: 'Căn hộ/ Chung cư',
       dob: '',
       diaChi: {
         tinh: 'Hồ Chí Minh',
         huyen: 'Quận 1',
         xa: 'Xã 1'
-      }
+      },
+      price: null,
+      currentcy:'VNĐ',
+      reTradeKind: 'Bán',
+      phone: ''
     };
    }
   reKinds: string[] = ['Căn hộ/ Chung cư', 'Nhà riêng', 'Đất nền'];
