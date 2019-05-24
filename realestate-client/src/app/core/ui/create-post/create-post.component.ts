@@ -7,25 +7,25 @@ import { State } from '../home-page/marketting/marketting.component';
   styleUrls: ['./create-post.component.scss']
 })
 export class CreatePostComponent implements OnInit {
-
-  constructor() { }
-
-  contact = {
-    name: '',
-    email: '',
-    social: {
-      fb: '',
-      twt: '',
-      email: ''
-    },
-    reKind: 'Căn hộ/ Chung cư',
-    dob: '',
-    diaChi: {
-      tinh: 'Hồ Chí Minh',
-      huyen: 'Quận 1',
-      xa: 'Xã 1'
-    }
-  };
+  contact: any;
+  constructor() {
+    this.contact = {
+      name: '',
+      email: '',
+      social: {
+        fb: '',
+        twt: '',
+        web: ''
+      },
+      reKind: 'Căn hộ/ Chung cư',
+      dob: '',
+      diaChi: {
+        tinh: 'Hồ Chí Minh',
+        huyen: 'Quận 1',
+        xa: 'Xã 1'
+      }
+    };
+   }
   reKinds: string[] = ['Căn hộ/ Chung cư', 'Nhà riêng', 'Đất nền'];
   states: State[] = [
     {name: 'Quận 1'},

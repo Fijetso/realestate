@@ -48,7 +48,7 @@
 
   <div class="user-form my-2">
     <h5>Thêm mới người dùng</h5>
-    <form #userForm="ngForm" (ngSubmit)="(onSubmitUser)" class="formUser">
+    <form #userForm="ngForm" (ngSubmit)="createUser(userForm.value)" class="formUser">
       <div class="form-container">
         <mat-form-field>
           <input matInput placeholder="Id" required />

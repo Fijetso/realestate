@@ -11,8 +11,8 @@ import { Observable } from 'rxjs';
 })
 export class UserComponent implements OnInit {
 
-  private users: User[] = [];
-  private user: User ;
+  users: User[] = [];
+  user: User ;
   userKinds = [
     {
       id: 1,
@@ -31,7 +31,7 @@ export class UserComponent implements OnInit {
     password: 'ThanhUIT@UIT',
     birthdate: new Date(11 / 19 / 1995),
     render: false,
-    UserKind: {
+    userKind: {
       id: 1,
       name: 'Chủ nhà'
     }
@@ -40,7 +40,7 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     this.getAllUser();
     this.getUserById(1);
-    this.createUser(this.newUser);
+    // this.createUser(this.newUser);
   }
   getAllUser() {
     this.api.getAllUser().subscribe(listUser => {

@@ -7,5 +7,5 @@ export class User {
     password: string;
     birthdate: Date;
     render: boolean;
-    UserKind: UserKind;
+    userKind: UserKind;
 }
