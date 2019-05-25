@@ -11,9 +11,9 @@ export class ApiService {
   constructor(private http: HttpClient) {
   }
   rootURL = environment.api.rootURL;
-  baseURL = this.rootURL + '/api';
+  baseURL = this.rootURL + '/api/';
   userList: Observable<User[]>;
-  userURL = this.baseURL + '/users';
+  userURL = this.baseURL + 'users';
   // User service
   createUser(user: User) {
     return this.http.post<User>(this.userURL, user);
@@ -38,4 +38,14 @@ export class ApiService {
   // News service
 
   // Request service
+
+  // Upload Image
+  postFile(caption: string, fileToUpload: File) {
+    const endpoint = this.baseURL + 'image/upload';
+    const formData: FormData = new FormData();
+    formData.append('file', fileToUpload, fileToUpload.name);
+    formData.append('desc', caption);
+    return this.http
+      .post(endpoint, formData);
+  }
 }
