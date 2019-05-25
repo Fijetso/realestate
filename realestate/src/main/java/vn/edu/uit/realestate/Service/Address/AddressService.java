@@ -8,42 +8,36 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import vn.edu.uit.realestate.DataAccess.AddressTree.DistrictRepository;
+import vn.edu.uit.realestate.DataAccess.AddressTree.ProvinceRepository;
+import vn.edu.uit.realestate.DataAccess.AddressTree.WardRepository;
 import vn.edu.uit.realestate.Model.AddressTree.District;
 import vn.edu.uit.realestate.Model.AddressTree.Province;
 import vn.edu.uit.realestate.Model.AddressTree.Ward;
 
 @Service
 public class AddressService {
+	@Autowired
+	ProvinceRepository provinceRepository;
+	@Autowired
+	DistrictRepository districtRepository;
+	@Autowired
+	WardRepository wardRepository;
 	
-	@SuppressWarnings("unchecked")
 	public Province parseJSON(String filename) {
 		JSONParser jsonParser = new JSONParser();
-        
         try (FileReader reader = new FileReader(filename))
         {
-            //Read JSON file
             Object obj = jsonParser.parse(reader);
- 
-//            JSONArray provinceList = (JSONArray) obj;
-//            System.out.println(provinceList);
-//            Province parsedProvince = new Province();
-//            
-//            provinceList.forEach(( province) ->
-//            {
-//            	parsedProvince = this.parseProvinceObject( (JSONObject) province );
-//            });
-            
             JSONObject province = (JSONObject) obj;
-//            System.out.println(province);
             Province parsedProvince = this.parseProvinceObject(province);
             return parsedProvince;
- 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -53,12 +47,13 @@ public class AddressService {
         }
         return null;
 	}
-	 @SuppressWarnings({ "unchecked", "null" })
+	 @SuppressWarnings({ "unchecked" })
 	 private Province parseProvinceObject(JSONObject province)
 	    {
 		 	Province newProvince = new Province();
 		 	String id = (String) province.get("code");
-	        newProvince.setId(Integer.parseInt(id));
+		 	int parsedId = Integer.parseInt(id);
+	        newProvince.setId(Long.valueOf(parsedId));
 	        String name = (String) province.get("name"); 
 	        newProvince.setName(name);
 	        String slug = (String) province.get("slug");
@@ -69,16 +64,24 @@ public class AddressService {
 	        List<District> parsedDistrictList = new ArrayList<District>();
 	      	Collection<JSONObject> districtList = getDistrictList.values();
 	      	for (JSONObject element: districtList) {
+	      		District tempt = this.parseDistrictObject(element);
+	      		tempt.setProvince(newProvince);
+	      		parsedDistrictList.add(tempt);
+		        ///Add Ward before mapping to District
+	            districtRepository.save(tempt);
 	      		parsedDistrictList.add(this.parseDistrictObject(element));
 	      	}
 	      	newProvince.setDistrict(parsedDistrictList);
+            provinceRepository.save(newProvince);
 	        return newProvince;
 	    }
-	 private District parseDistrictObject(JSONObject district)
+	 @SuppressWarnings("unchecked")
+	private District parseDistrictObject(JSONObject district)
 	    {
 		 	District newDistrict = new District();
 		 	String id = (String) district.get("code");
-	        newDistrict.setId(Integer.parseInt(id));
+		 	int parsedId = Integer.parseInt(id);
+	        newDistrict.setId(Long.valueOf(parsedId));
 	        String name = (String) district.get("name"); 
 	        newDistrict.setName(name);
 	        String slug = (String) district.get("slug");
@@ -87,12 +90,15 @@ public class AddressService {
 	        newDistrict.setNameWithType(nameWithType);
 	        String pathWithType = (String) district.get("path_with_type");
 	        newDistrict.setPathWithType(pathWithType);
-
 	        HashMap<String,JSONObject> getWardList = (HashMap<String,JSONObject>) district.get("xa-phuong");
 	        List<Ward> parsedWardList = new ArrayList<Ward>();
 	      	Collection<JSONObject> wardList = getWardList.values();
 	      	for (JSONObject element: wardList) {
-	      		parsedWardList.add(this.parseWardObject(element));
+	      		Ward tempt = this.parseWardObject(element);
+	      		tempt.setDistrict(newDistrict);
+	      		parsedWardList.add(tempt);
+		        ///Add Ward before mapping to District
+	            wardRepository.save(tempt);
 	      	}
 	      	newDistrict.setWard(parsedWardList);
 	        return newDistrict;
@@ -101,7 +107,8 @@ public class AddressService {
 	    {
 		 	Ward newWard = new Ward();
 		 	String id = (String) ward.get("code");
-		 	newWard.setId(Integer.parseInt(id));
+		 	int parsedId = Integer.parseInt(id);
+		 	newWard.setId(Long.valueOf(parsedId));
 	        String name = (String) ward.get("name"); 
 	        newWard.setName(name);
 	        String slug = (String) ward.get("slug");

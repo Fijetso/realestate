@@ -11,8 +11,7 @@ import javax.persistence.OneToMany;
 @Entity
 public class Province {
 	@Id
-	@GeneratedValue
-	private int Id;
+	private Long Id;
 	private String name;
 	private String slug;
 	private String nameWithType;
@@ -21,7 +20,7 @@ public class Province {
 	public Province() {
 		super();
 	}
-	public Province(int id, String name, String slug, String nameWithType, List<District> district) {
+	public Province(Long id, String name, String slug, String nameWithType, List<District> district) {
 		super();
 		Id = id;
 		this.name = name;
@@ -29,10 +28,10 @@ public class Province {
 		this.nameWithType = nameWithType;
 		this.district = district;
 	}
-	public int getId() {
+	public Long getId() {
 		return Id;
 	}
-	public void setId(int i) {
+	public void setId(Long i) {
 		Id = i;
 	}
 	public String getName() {

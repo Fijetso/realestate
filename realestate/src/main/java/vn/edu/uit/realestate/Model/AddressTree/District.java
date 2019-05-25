@@ -17,8 +17,7 @@ import vn.edu.uit.realestate.Model.UserKind;
 @Entity
 public class District {
 	@Id
-	@GeneratedValue
-	private int Id;
+	private Long Id;
 	private String name;
 	private String slug;
 	private String nameWithType;
@@ -32,7 +31,7 @@ public class District {
 	public District() {
 		super();
 	}
-	public District(int id, String name, String slug, String nameWithType, String pathWithType, Province province,
+	public District(Long id, String name, String slug, String nameWithType, String pathWithType, Province province,
 			List<Ward> ward) {
 		super();
 		Id = id;
@@ -43,10 +42,10 @@ public class District {
 		this.province = province;
 		this.ward = ward;
 	}
-	public int getId() {
+	public Long getId() {
 		return Id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		Id = id;
 	}
 	public String getName() {
