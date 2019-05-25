@@ -4,15 +4,12 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import vn.edu.uit.realestate.Model.UserKind;
 
 @Entity
 public class District {
@@ -27,6 +24,7 @@ public class District {
 	@JsonIgnore
 	private Province province;
 	@OneToMany(mappedBy="district", fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<Ward> ward;
 	public District() {
 		super();

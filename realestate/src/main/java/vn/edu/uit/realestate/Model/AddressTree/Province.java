@@ -4,9 +4,10 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Province {
@@ -16,6 +17,7 @@ public class Province {
 	private String slug;
 	private String nameWithType;
 	@OneToMany(mappedBy="province", fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<District> district;
 	public Province() {
 		super();

@@ -29,7 +29,17 @@ public class AddressService {
 	DistrictRepository districtRepository;
 	@Autowired
 	WardRepository wardRepository;
-	
+	public List<Province> getAllProvince() {
+		return provinceRepository.findAll();
+	}
+	public List<District> getAllDistrict(Long provinceId){
+		Province province = provinceRepository.findById(provinceId).get();
+		return province.getDistrict();
+	}
+	public List<Ward> getAllWard(Long districtId){
+		District district = districtRepository.findById(districtId).get();
+		return district.getWard();
+	}
 	public Province parseJSON(String filename) {
 		JSONParser jsonParser = new JSONParser();
         try (FileReader reader = new FileReader(filename))
@@ -48,7 +58,7 @@ public class AddressService {
         return null;
 	}
 	 @SuppressWarnings({ "unchecked" })
-	 private Province parseProvinceObject(JSONObject province)
+	private Province parseProvinceObject(JSONObject province)
 	    {
 		 	Province newProvince = new Province();
 		 	String id = (String) province.get("code");
@@ -103,7 +113,7 @@ public class AddressService {
 	      	newDistrict.setWard(parsedWardList);
 	        return newDistrict;
 	    }
-	 private Ward parseWardObject(JSONObject ward)
+	private Ward parseWardObject(JSONObject ward)
 	    {
 		 	Ward newWard = new Ward();
 		 	String id = (String) ward.get("code");
