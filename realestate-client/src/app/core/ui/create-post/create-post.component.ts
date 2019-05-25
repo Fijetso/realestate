@@ -1,3 +1,4 @@
+import { ApiService } from './../../../services/api/api.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { State } from '../home-page/marketting/marketting.component';
@@ -10,8 +11,10 @@ import { State } from '../home-page/marketting/marketting.component';
 export class CreatePostComponent implements OnInit {
   post: any;
   selectedFile: File = null;
-
-  constructor(private http: HttpClient) {
+  formPost: any;
+  imageUrl = '../../../../assets/images/default.png';
+  fileToUpload: File = null;
+  constructor(private http: HttpClient, private api:ApiService) {
     this.post = {
       name: '',
       email: '',
@@ -76,6 +79,21 @@ export class CreatePostComponent implements OnInit {
   ];
   ngOnInit() {
   }
+  onFileChange(event) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.formPost.get('bluePrints').setValue(file);
+    }
+  }
+  private prepareSave(): any {
+    const input = new FormData();
+    input.append('avatar', this.formPost.get('bluePrints').value);
+    return input;
+  }
+  onUploadFile() {
+     const formModel = this.prepareSave();
+     console.log(formModel);
+  }
   onSubmit(formValue) {
     // Do something awesome
     console.log(formValue);
@@ -83,14 +101,26 @@ export class CreatePostComponent implements OnInit {
     console.log( this.post);
     // throw Error('something go wrong');
   }
-  onFileSelected(event) {
-    this.selectedFile = event.target.file[0] as File;
+
+  handleFileInput(file: FileList) {
+    this.fileToUpload = file.item(0);
+
+    // Show image preview
+    const reader = new FileReader();
+    reader.onload = (event: any) => {
+      this.imageUrl = event.target.result;
+    };
+    reader.readAsDataURL(this.fileToUpload);
   }
-  onUpLoadFile() {
-    const fd = new FormData();
-    fd.append('image', this.selectedFile, this.selectedFile.name);
-    this.http.post('http://localhost:4200/api/image/upload', {fd, ' desc ': 'test'}).subscribe(
-      res => console.log(res)
-    )
+
+  OnSubmit(Caption, Image) {
+   this.api.postFile(Caption.value, this.fileToUpload).subscribe(
+     data => {
+       console.log(data);
+       Caption.value = null;
+       Image.value = null;
+       this.imageUrl = this.imageUrl;
+     }
+   );
   }
 }

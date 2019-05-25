@@ -9,14 +9,12 @@
   >
     <div class="col-md-10">
       <div class="form-group row">
-        <label for="example-text-input" class="col-md-2 col-form-label"
-          >Họ Tên:</label
-        >
+        <label for="text-input" class="col-md-2 col-form-label">Họ Tên:</label>
         <div class="col-md-10">
           <input
             class="form-control"
             type="text"
-            id="example-text-input"
+            id="text-input"
             [(ngModel)]="post.name"
             name="name"
             required
@@ -32,14 +30,14 @@
         Tên là bắt buộc
       </div>
       <div class="form-group row">
-        <label for="example-email-input" class="col-md-2 col-form-label"
+        <label for="email-input" class="col-md-2 col-form-label"
           >Thư điện tử:</label
         >
         <div class="col-md-10">
           <input
             class="form-control"
             type="email"
-            id="example-email-input"
+            id="email-input"
             [(ngModel)]="post.email"
             name="email"
             required
@@ -53,74 +51,29 @@
       >
         Thư điện tử là bắt buộc
       </div>
-      <!-- <fieldset ngModelGroup="social">
-        <div class="form-group row">
-          <label for="example-url-fb" class="col-md-2 col-form-label"
-            >Facebook:</label
-          >
-          <div class="col-md-10">
-            <input
-              class="form-control"
-              type="url"
-              id="example-url-fb"
-              [(ngModel)]="post.social.fb"
-              name="fb"
-            />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="example-url-twt" class="col-md-2 col-form-label"
-            >Twitter:</label
-          >
-          <div class="col-md-10">
-            <input
-              class="form-control"
-              type="url"
-              id="example-url-twt"
-              [(ngModel)]="post.social.twt"
-              name="twt"
-            />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="example-url-web" class="col-md-2 col-form-label"
-            >Website:</label
-          >
-          <div class="col-md-10">
-            <input
-              class="form-control"
-              type="url"
-              id="example-url-web"
-              [(ngModel)]="post.social.web"
-              name="web"
-            />
-          </div>
-        </div>
-      </fieldset> -->
-
       <div class="form-group row">
-        <label for="example-tel-input" class="col-md-2 col-form-label"
+        <label for="tel-input" class="col-md-2 col-form-label"
           >Số điện thoại:</label
         >
         <div class="col-md-10">
           <input
             class="form-control"
             type="tel"
-            id="example-tel-input"
+            id="tel-input"
             [(ngModel)]="post.phone"
             name="phone"
           />
         </div>
       </div>
-      <label id="example-radio-group-label">Chọn loại BĐS</label>
+      <label id="radio-group-label">Chọn loại BĐS</label>
       <mat-radio-group
-        aria-labelledby="example-radio-group-label"
-        class="example-radio-group"
+        aria-labelledby="radio-group-label"
+        class="radio-group"
         [(ngModel)]="post.reKind"
         name="reKind"
       >
         <mat-radio-button
-          class="example-radio-button-reKind"
+          class="radio-button-reKind"
           *ngFor="let reKind of reKinds"
           [value]="reKind"
           name="reKindItem"
@@ -130,13 +83,13 @@
       </mat-radio-group>
       <h5>Loại hình giao dịch</h5>
       <mat-radio-group
-        aria-labelledby="example-radio-group-label"
-        class="example-radio-group"
+        aria-labelledby="radio-group-label"
+        class="radio-group"
         [(ngModel)]="post.reTradeKind"
         name="reTradeKind"
       >
         <mat-radio-button
-          class="example-radio-button-sale"
+          class="radio-button-sale"
           value="Bán"
           name="reTradeKindItem"
         >
@@ -171,7 +124,7 @@
         </mat-form-field>
       </fieldset>
       <div class="form-group row">
-        <label for="example-price-input" class="col-md-2 col-form-label"
+        <label for="price-input" class="col-md-2 col-form-label"
           >Gía đề xuất:</label
         >
         <div class="col-md-10">
@@ -179,7 +132,7 @@
             <input
               class="form-control col-md-9"
               type="number"
-              id="example-price-input"
+              id="price-input"
               [(ngModel)]="post.price"
               name="price"
               required
@@ -203,49 +156,54 @@
         Gía là bắt buộc
       </div>
       <div class="form-group row">
-          <div class="col-md-12">
-            <div class="row address">
-              <input
-                class="form-control col-md-8"
-                type="text"
-                id="example-house-address-input"
-                [(ngModel)]="post.houseAddress"
-                name="houseAddress"
-                placeholder="Số nhà"
-              />
-              <input
-                class="form-control col-md-4"
-                type="tel"
-                id="example-house-phone-input"
-                [(ngModel)]="post.housePhone"
-                name="housePhone"
-                placeholder="Số điện thoại"
-              />
-            </div>
+        <div class="col-md-12">
+          <div class="row address">
+            <input
+              class="form-control col-md-8"
+              type="text"
+              id="house-address-input"
+              [(ngModel)]="post.houseAddress"
+              name="houseAddress"
+              placeholder="Số nhà"
+            />
+            <input
+              class="form-control col-md-4"
+              type="tel"
+              id="house-phone-input"
+              [(ngModel)]="post.housePhone"
+              name="housePhone"
+              placeholder="Số điện thoại"
+            />
           </div>
         </div>
-        <div class="form-group row">
-            <div class="col-md-12">
-              <div class="row address">
-                <input
-                  class="col-md-3"
-                  type="file"
-                  id="example-house-images-input"
-                  [(ngModel)]="post.houseImages"
-                  name="houseImages"
-                />
-                <button class="col-md-3">Upload Images</button>
-                <input
-                  class="col-md-3"
-                  type="file"
-                  id="example-house-blue-print-input"
-                  [(ngModel)]="post.bluePrints"
-                  name="bluePrints"
-                />
-                <button class="col-md-3" (click)="onUpLoadFile()">Upload Blue prints</button>
-              </div>
-            </div>
+      </div>
+      <!-- <div class="form-group row">
+        <div class="col-md-12">
+          <div class="row address">
+            <input
+              class="col-md-3"
+              type="file"
+              id="fileImages"
+              [(ngModel)]="post.houseImages"
+              name="houseImages"
+              #fileImages
+            />
+            <button class="col-md-3">Upload Images</button>
+            <input
+              class="col-md-3"
+              type="file"
+              id="bluePrints"
+              [(ngModel)]="post.bluePrints"
+              name="bluePrints"
+              #fileBluePrints
+              (change)="onFileChange($event)"
+            />
+            <button class="col-md-3" (click)="onUploadFile()">
+              Upload Blue prints
+            </button>
           </div>
+        </div>
+      </div> -->
       <div class="form-group row">
         <div class="col-md-10 offset-md-5">
           <button
@@ -259,6 +217,17 @@
       </div>
     </div>
   </form>
+  <form #imageForm=ngForm (ngSubmit)="OnSubmit(Caption,Image)">
+      <div class="row">
+        <div class="input-field col s12">
+          <input type="text" #Caption ngModel name="Caption" id="Caption" required>
+          <label for="Caption">Caption</label>
+        </div>
+      </div>
+      <img [src]="imageUrl"  style="width:250px;height:200px">
+      <input type="file" #Image accept="image/*" (change)="handleFileInput($event.target.files)">
+      <button type="submit" class="btn-large btn-submit" [disabled]="Image.value=='' || !imageForm.valid">Submit</button>
+    </form>
   <pre>{{ formPost.value | json }}</pre>
   <p>Control Name errors:</p>
   <pre>{{ formPost.controls.name?.errors | json }}</pre>
