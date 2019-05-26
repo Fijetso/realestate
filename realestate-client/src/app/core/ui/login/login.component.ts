@@ -1,32 +1,53 @@
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+// import translate from 'google-translate-api';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  username = new FormControl();
-  password = new FormControl();
-  email = new FormControl();
-  loginResult = false;
+  // username = new FormControl();
+  // password = new FormControl();
+  // email = new FormControl();
+  isLogedIn = false;
   userInfo: any;
-  constructor(private authService: AuthenticationService) {}
-  ngOnInit(): void {}
+  loginInfo: any;
+  loginForm: FormGroup;
+  data:any;
+  loginError:any;
+  constructor(private authService: AuthenticationService) {
+    this.userInfo = {
+      email: '',
+      password: ''
+    };
+    this.loginForm = new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.maxLength(60)]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6)])
+    });
+  }
+  ngOnInit(): void {
+    this.getUserLogin();
+  }
+  getUserLogin() {
+    this.data = this.authService.getUserLogin();
+    console.log(this.data);
+  }
 
-  onLogIn() {
-    console.log(this.authService
-      .loginWithEmailPassWord(this.email.value, this.password.value));
-  }
-  onUsernameChange() {
-    console.log(this.username.value);
-  }
-  onEmailChange() {
-    console.log(this.email.value);
-  }
-  onPasswordChange() {
-    console.log(this.password.value);
+  onLogIn(email: string, password: string) {
+   this.authService
+      .loginWithEmailPassWord(email, password).then(user => {console.log(user.providerData[0]),
+        localStorage.setItem('userInfor', JSON.stringify(user.providerData[0]));
+                                                            //  alert('Đăng nhập thành công');
+                                                             this.authService.writeUserInfor();
+                                                             this.isLogedIn = true;
+                                                             this.loginError = false;
+        }
+      ).catch(error => {
+        this.isLogedIn = false;
+        this.loginError = true;
+      });
   }
   loginWithGoogle() {
     this.authService.loginWithGoogle().then(data => {
@@ -43,5 +64,12 @@ export class LoginComponent implements OnInit {
   onLogOut() {
     this.authService.logOut();
     localStorage.removeItem('userInfor');
+    this.isLogedIn = false;
+  }
+  onSubmitLogin(formValue) {
+    // console.log(formValue);
+    // this.loginInfo = formValue;
+    // console.log( this.loginInfo);
+    this.onLogIn(formValue.email, formValue.password);
   }
 }

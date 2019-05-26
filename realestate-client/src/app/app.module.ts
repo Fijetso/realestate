@@ -70,7 +70,6 @@ import { TradingAreaItemComponent } from './core/ui/trading-area/trading-area-it
 import { WhyChooseSectionComponent } from './core/ui/home-page/why-choose-section/why-choose-section.component';
 import { TradingAreaSectionComponent } from './core/ui/home-page/trading-area-section/trading-area-section.component';
 import { HotRealEstateSectionComponent } from './core/ui/home-page/hot-real-estate-section/hot-real-estate-section.component';
-// tslint:disable-next-line: max-line-length
 import { RealEstateAppraisedSectionComponent } from './core/ui/home-page/real-estate-appraised-section/real-estate-appraised-section.component';
 import { BuyOnDemandSectionComponent } from './core/ui/home-page/buy-on-demand-section/buy-on-demand-section.component';
 import { NewsSectionComponent } from './core/ui/home-page/news-section/news-section.component';
