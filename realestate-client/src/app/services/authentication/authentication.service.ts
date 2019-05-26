@@ -10,14 +10,9 @@ import * as firebase from 'firebase';
 })
 export class AuthenticationService {
   constructor(public afAuth: AngularFireAuth, public router: Router) {
-    // this.afAuth.authState.subscribe(user => {
-    //   if (user) {
-    //     this.user = afAuth.authState;
-    //     localStorage.setItem('isLogged', JSON.stringify(this.user));
-    //   } else {
-    //     localStorage.setItem('isLogged', null);
-    //   }
-    // });
+    this.afAuth.authState.subscribe(user => {
+        this.writeUserInfor();
+    });
   }
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('userInfor'));

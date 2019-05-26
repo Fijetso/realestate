@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
   }
   getUserLogin() {
     this.data = this.authService.getUserLogin();
-    console.log(this.data);
+    // console.log(this.data);
   }
 
   onLogIn(email: string, password: string) {
@@ -63,9 +63,6 @@ export class LoginComponent implements OnInit {
     this.isLogedIn = false;
   }
   onSubmitLogin(formValue) {
-    // console.log(formValue);
-    // this.loginInfo = formValue;
-    // console.log( this.loginInfo);
     this.onLogIn(formValue.email, formValue.password);
   }
 }
