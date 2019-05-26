@@ -13,6 +13,7 @@ export class AuthenticationService {
     this.afAuth.authState.subscribe(user => {
         this.writeUserInfor();
     });
+    this.getUserLogin();
   }
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('userInfor'));

@@ -1,6 +1,7 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import * as firebase from 'firebase';
 // import translate from 'google-translate-api';
 @Component({
   selector: 'app-login',
@@ -31,8 +32,14 @@ export class LoginComponent implements OnInit {
     this.getUserLogin();
   }
   getUserLogin() {
-    this.data = this.authService.getUserLogin();
-    // console.log(this.data);
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          this.data = user.providerData[0];
+          console.log(this.data);
+        } else {
+          this.data = null;
+        }
+    });
   }
 
   onLogIn(email: string, password: string) {
@@ -41,6 +48,7 @@ export class LoginComponent implements OnInit {
                                                              this.authService.writeUserInfor();
                                                              this.isLogedIn = true;
                                                              this.loginError = false;
+                                                             this.getUserLogin();
         }
       ).catch(error => {
         this.isLogedIn = false;
@@ -51,6 +59,7 @@ export class LoginComponent implements OnInit {
     this.authService.loginWithGoogle().then(data => {
       this.isLogedIn = true;
       this.authService.writeUserInfor();
+      this.getUserLogin();
       console.log(JSON.parse(localStorage.getItem('userInfor')));
     });
   }
@@ -60,6 +69,7 @@ export class LoginComponent implements OnInit {
   onLogOut() {
     this.authService.logOut();
     localStorage.setItem('userInfor', null);
+    this.data = null;
     this.isLogedIn = false;
   }
   onSubmitLogin(formValue) {
