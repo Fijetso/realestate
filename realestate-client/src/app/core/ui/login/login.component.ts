@@ -15,8 +15,8 @@ export class LoginComponent implements OnInit {
   userInfo: any;
   loginInfo: any;
   loginForm: FormGroup;
-  data:any;
-  loginError:any;
+  data: any;
+  loginError: any;
   constructor(private authService: AuthenticationService) {
     this.userInfo = {
       email: '',
@@ -38,8 +38,6 @@ export class LoginComponent implements OnInit {
   onLogIn(email: string, password: string) {
    this.authService
       .loginWithEmailPassWord(email, password).then(user => {console.log(user.providerData[0]),
-        localStorage.setItem('userInfor', JSON.stringify(user.providerData[0]));
-                                                            //  alert('Đăng nhập thành công');
                                                              this.authService.writeUserInfor();
                                                              this.isLogedIn = true;
                                                              this.loginError = false;
@@ -51,10 +49,8 @@ export class LoginComponent implements OnInit {
   }
   loginWithGoogle() {
     this.authService.loginWithGoogle().then(data => {
-      // console.log(data.additionalUserInfo.profile);
-      this.userInfo = data.additionalUserInfo.profile;
-      console.log(this.userInfo, typeof this.userInfo);
-      localStorage.setItem('userInfor', JSON.stringify(this.userInfo));
+      this.isLogedIn = true;
+      this.authService.writeUserInfor();
       console.log(JSON.parse(localStorage.getItem('userInfor')));
     });
   }
@@ -63,7 +59,7 @@ export class LoginComponent implements OnInit {
   }
   onLogOut() {
     this.authService.logOut();
-    localStorage.removeItem('userInfor');
+    localStorage.setItem('userInfor', null);
     this.isLogedIn = false;
   }
   onSubmitLogin(formValue) {
