@@ -1,3 +1,4 @@
+import { CommonService } from './../../services/common/common.service';
 import { ApiService } from './../../services/api/api.service';
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/model/user/user';
@@ -24,7 +25,7 @@ export class UserComponent implements OnInit {
       name: 'Môi giới'
     }
   ];
-  constructor(private api: ApiService) {
+  constructor(private api: ApiService, private common: CommonService) {
     this.newUser = {
       id: null,
       name: 'Danh Thanh',
@@ -41,8 +42,10 @@ export class UserComponent implements OnInit {
   }
   ngOnInit() {
     this.getAllUser();
-    this.getUserById(1);
-    // this.createUser(this.newUser);
+    this.common.userObservable.subscribe(res => {
+      this.getAllUser();
+      }
+    );
   }
   getAllUser() {
     this.api.getAllUser().subscribe(listUser => {
@@ -69,7 +72,9 @@ export class UserComponent implements OnInit {
     this.api
       .deleteUser(id)
       .subscribe(
-        success => alert('Delete user successfully'),
+        success => {alert('Delete user successfully');
+                    this.common.notifyUserDataChanged();
+      },
         error => alert('Delete user failed')
       );
   }
