@@ -1,4 +1,4 @@
-package vn.edu.uit.realestate.Service.Address;
+package vn.edu.uit.realestate.Service.EntityService;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;

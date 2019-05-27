@@ -1,4 +1,4 @@
-package vn.edu.uit.realestate.Service.User;
+package vn.edu.uit.realestate.Service.EntityService;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,9 +22,10 @@ import vn.edu.uit.realestate.Model.RealEstateKind;
 import vn.edu.uit.realestate.Model.Trade;
 import vn.edu.uit.realestate.Model.TradeKind;
 import vn.edu.uit.realestate.Model.User;
+import vn.edu.uit.realestate.Service.IEntityService;
 
 @Service
-public class UserService implements IUserService{
+public class UserService implements IEntityService{
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired

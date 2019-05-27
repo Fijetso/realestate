@@ -31,7 +31,7 @@ import vn.edu.uit.realestate.Model.Trade;
 import vn.edu.uit.realestate.Model.TradeKind;
 import vn.edu.uit.realestate.Model.User;
 import vn.edu.uit.realestate.Model.UserKind;
-import vn.edu.uit.realestate.Service.User.UserService;
+import vn.edu.uit.realestate.Service.EntityService.UserService;
 
 @RestController
 public class UserController {

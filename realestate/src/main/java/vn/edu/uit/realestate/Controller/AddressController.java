@@ -23,7 +23,7 @@ import vn.edu.uit.realestate.Model.Address;
 import vn.edu.uit.realestate.Model.AddressTree.District;
 import vn.edu.uit.realestate.Model.AddressTree.Province;
 import vn.edu.uit.realestate.Model.AddressTree.Ward;
-import vn.edu.uit.realestate.Service.Address.AddressService;
+import vn.edu.uit.realestate.Service.EntityService.AddressService;
 
 @RestController
 public class AddressController {
