@@ -43,10 +43,10 @@ public class Trade {
     private Details details;
 	
 	@OneToMany(mappedBy="trade")
-	private List<Image> realImages;
+	private List<RealImage> realImages;
 	
 	@OneToMany(mappedBy="trade")
-	private List<Image> bluePrints;
+	private List<BluePrint> bluePrints;
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name="bookingId", referencedColumnName = "id")
@@ -54,22 +54,6 @@ public class Trade {
 	
 	public Trade() {
 		super();
-	}
-
-	public Trade(Long id, String description, Long cost, User user, RealEstateKind realEstateKind, TradeKind tradeKind,
-			Address address, Details details, List<Image> realImages, List<Image> bluePrints, List<Booking> bookings) {
-		super();
-		this.id = id;
-		this.description = description;
-		this.cost = cost;
-		this.user = user;
-		this.realEstateKind = realEstateKind;
-		this.tradeKind = tradeKind;
-		this.address = address;
-		this.details = details;
-		this.realImages = realImages;
-		this.bluePrints = bluePrints;
-		this.bookings = bookings;
 	}
 
 	public Long getId() {
@@ -136,19 +120,19 @@ public class Trade {
 		this.details = details;
 	}
 
-	public List<Image> getRealImages() {
+	public List<RealImage> getRealImages() {
 		return realImages;
 	}
 
-	public void setRealImages(List<Image> realImages) {
+	public void setRealImages(List<RealImage> realImages) {
 		this.realImages = realImages;
 	}
 
-	public List<Image> getBluePrints() {
+	public List<BluePrint> getBluePrints() {
 		return bluePrints;
 	}
 
-	public void setBluePrints(List<Image> bluePrints) {
+	public void setBluePrints(List<BluePrint> bluePrints) {
 		this.bluePrints = bluePrints;
 	}
 
