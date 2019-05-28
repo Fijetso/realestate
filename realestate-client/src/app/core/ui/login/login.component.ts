@@ -9,9 +9,6 @@ import * as firebase from 'firebase';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  // username = new FormControl();
-  // password = new FormControl();
-  // email = new FormControl();
   isLogedIn = false;
   userInfo: any;
   loginInfo: any;
@@ -24,7 +21,7 @@ export class LoginComponent implements OnInit {
       password: ''
     };
     this.loginForm = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.maxLength(60)]),
+      email: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)])
     });
   }
@@ -35,9 +32,10 @@ export class LoginComponent implements OnInit {
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
           this.data = user.providerData[0];
-          console.log(this.data);
+          this.isLogedIn = true;
         } else {
           this.data = null;
+          this.isLogedIn = false;
         }
     });
   }
