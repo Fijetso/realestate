@@ -1,3 +1,4 @@
+import { FilterPipe } from './../../services/pipe/filter.pipe';
 import { CommonService } from './../../services/common/common.service';
 import { ApiService } from './../../services/api/api.service';
 import { Component, OnInit } from '@angular/core';
@@ -25,6 +26,7 @@ export class UserComponent implements OnInit {
       name: 'Môi giới'
     }
   ];
+  searchTerm: string;
   constructor(private api: ApiService, private common: CommonService) {
     this.newUser = {
       id: null,
@@ -39,6 +41,7 @@ export class UserComponent implements OnInit {
         name: 'Chủ nhà'
       }
     };
+    this.searchTerm = '';
   }
   ngOnInit() {
     this.getAllUser();

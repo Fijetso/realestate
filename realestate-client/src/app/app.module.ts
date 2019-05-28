@@ -57,6 +57,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 import { RealEstateWrapperComponent } from './components/real-estate/real-estate-wrapper/real-estate-wrapper.component';
 import { AlertComponent } from './core/modal/alert/alert.component';
@@ -87,6 +88,7 @@ import { AuthenticationService } from './services/authentication/authentication.
 import { UserComponent } from './components/user/user.component';
 import { ApiService } from './services/api/api.service';
 import { CreatePostComponent } from './core/ui/create-post/create-post.component';
+import { FilterPipe } from './services/pipe/filter.pipe';
 
 
 
@@ -125,7 +127,8 @@ import { CreatePostComponent } from './core/ui/create-post/create-post.component
     HotPlaceItemComponent,
     RegisterComponent,
     UserComponent,
-    CreatePostComponent
+    CreatePostComponent,
+    FilterPipe
   ],
   imports: [
     OwlModule,
@@ -170,7 +173,8 @@ import { CreatePostComponent } from './core/ui/create-post/create-post.component
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    Ng2SearchPipeModule
   ],
   providers: [
     AuthenticationService,
