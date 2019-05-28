@@ -11,7 +11,7 @@ import { User } from 'src/app/model/user/user';
 export class UserDetailComponent implements OnInit {
   userId: string;
   user: User;
-  constructor(private route: ActivatedRoute, private api: ApiService,private router: Router) { 
+  constructor(private route: ActivatedRoute, private api: ApiService, private router: Router) {
   }
 
   ngOnInit() {
@@ -26,17 +26,17 @@ export class UserDetailComponent implements OnInit {
       this.user = userItem;
     });
   }
-  goPrevious(){
+  goPrevious() {
     const previousId = parseInt(this.userId, 10) - 1;
     this.router.navigate(['nguoi-dung', previousId]);
     this.getUserById(previousId);
   }
-  goNext(){
+  goNext() {
     const nextId = parseInt(this.userId, 10) + 1;
     this.router.navigate(['nguoi-dung' , nextId]);
     this.getUserById(nextId);
   }
-  goBack(){
+  goBack() {
     const selectedId = this.userId ? this.userId : null;
     this.router.navigate(['nguoi-dung', {id: selectedId}]);
   }
