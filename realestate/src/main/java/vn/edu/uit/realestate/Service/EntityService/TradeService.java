@@ -13,11 +13,17 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import vn.edu.uit.realestate.Controller.ExceptionHandler.ExistContentException;
 import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
+import vn.edu.uit.realestate.DataAccess.AddressRepository;
+import vn.edu.uit.realestate.DataAccess.BluePrintRepository;
 import vn.edu.uit.realestate.DataAccess.BookingRepository;
+import vn.edu.uit.realestate.DataAccess.DetailsRepository;
 import vn.edu.uit.realestate.DataAccess.ImageRepository;
+import vn.edu.uit.realestate.DataAccess.RealImageRepository;
 import vn.edu.uit.realestate.DataAccess.TradeRepository;
+import vn.edu.uit.realestate.Model.BluePrint;
 import vn.edu.uit.realestate.Model.Booking;
 import vn.edu.uit.realestate.Model.Image;
+import vn.edu.uit.realestate.Model.RealImage;
 import vn.edu.uit.realestate.Model.Trade;
 import vn.edu.uit.realestate.Service.IEntityService;
 
@@ -26,9 +32,15 @@ public class TradeService implements IEntityService {
 	@Autowired
 	private TradeRepository tradeRepository;
 	@Autowired
-	private ImageRepository imageRepository;
+	private RealImageRepository realImageRepository;
+	@Autowired
+	private BluePrintRepository bluePrintRepository;
 	@Autowired
 	private BookingRepository bookingRepository;
+	@Autowired
+	private AddressRepository addressRepository;
+	@Autowired
+	private DetailsRepository detailsRepository;
 
 	@Override
 	public MappingJacksonValue findAll() {
@@ -73,11 +85,22 @@ public class TradeService implements IEntityService {
 		if (foundTrade.get().getBookings().isEmpty() == false) {
 			throw new ExistContentException("Cannot delete this Trade. This Trade have existed Booking(s)");
 		}
+		Long tradeAddressId = foundTrade.get().getAddress().getId();
+		if(addressRepository.existsById(tradeAddressId)) {
+			addressRepository.deleteById(tradeAddressId);
+		}
+		Long tradeDetailsId = foundTrade.get().getDetails().getId();
+		if(detailsRepository.existsById(tradeDetailsId)) {
+			detailsRepository.deleteById(tradeDetailsId);
+		}
 		/// Get all images from Blueprints and RealImages.
-		List<Image> tradeImages = foundTrade.get().getRealImages();
-		tradeImages.addAll(foundTrade.get().getBluePrints());
-		if (tradeImages.isEmpty() == false) {
-			imageRepository.deleteAll(tradeImages);
+		List<RealImage> tradeRealImages = foundTrade.get().getRealImages();
+		if (tradeRealImages.isEmpty() == false) {
+			realImageRepository.deleteAll(tradeRealImages);
+		}
+		List<BluePrint> tradeBluePrints = foundTrade.get().getBluePrints();
+		if (tradeBluePrints.isEmpty() == false) {
+			bluePrintRepository.deleteAll(tradeBluePrints);
 		}
 		tradeRepository.deleteById(id);
 	}
