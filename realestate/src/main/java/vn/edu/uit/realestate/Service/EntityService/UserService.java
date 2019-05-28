@@ -15,14 +15,18 @@ import vn.edu.uit.realestate.Controller.ExceptionHandler.ExistContentException;
 import vn.edu.uit.realestate.Controller.ExceptionHandler.IllegalArgumentException;
 import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.DataAccess.AddressRepository;
+import vn.edu.uit.realestate.DataAccess.BluePrintRepository;
 import vn.edu.uit.realestate.DataAccess.DetailsRepository;
 import vn.edu.uit.realestate.DataAccess.RealEstateKindRepository;
+import vn.edu.uit.realestate.DataAccess.RealImageRepository;
 import vn.edu.uit.realestate.DataAccess.TradeKindRepository;
 import vn.edu.uit.realestate.DataAccess.TradeRepository;
 import vn.edu.uit.realestate.DataAccess.UserRepository;
 import vn.edu.uit.realestate.Model.Address;
+import vn.edu.uit.realestate.Model.BluePrint;
 import vn.edu.uit.realestate.Model.Details;
 import vn.edu.uit.realestate.Model.RealEstateKind;
+import vn.edu.uit.realestate.Model.RealImage;
 import vn.edu.uit.realestate.Model.Trade;
 import vn.edu.uit.realestate.Model.TradeKind;
 import vn.edu.uit.realestate.Model.User;
@@ -42,6 +46,10 @@ public class UserService implements IEntityService {
 	private AddressRepository addressRepository;
 	@Autowired
 	private DetailsRepository detailsRepository;
+	@Autowired
+	private RealImageRepository realImageRepository;
+	@Autowired
+	private BluePrintRepository bluePrintRepository;
 
 	@Override
 	public MappingJacksonValue findAll() {
@@ -125,9 +133,15 @@ public class UserService implements IEntityService {
 //			tradeDetails.setTrade(trade);
 			detailsRepository.save(trade.getDetails());
 //		}
-//    	List<Image> images = trade.getBluePrints();
-//    	images.addAll(trade.getRealImages());
+//    	List<BluePrint> bluePrints = trade.getBluePrints();
+//    	bluePrints.addAll(trade.getRealImages());
 //    	imageRepository.save()
 		tradeRepository.save(trade);
+    	List<BluePrint> bluePrints = trade.getBluePrints();
+    	bluePrints.forEach(each->each.setTrade(trade));
+		bluePrintRepository.saveAll(bluePrints);
+    	List<RealImage> realImages = trade.getRealImages();
+    	realImages.forEach(each->each.setTrade(trade));
+		realImageRepository.saveAll(realImages);
 	}
 }

@@ -1,26 +1,36 @@
 package vn.edu.uit.realestate.Model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-//@JsonIgnoreProperties("trade")
-public class Image {
+@JsonIgnoreProperties("trade")
+public class RealImage {
 	@Id
 	@GeneratedValue
 	private Long id;
 	private String imageLink;
-	///True: realImage False: blueprints
-//	private boolean tradeImageKind;
 	private String description;
-//	@ManyToOne(fetch=FetchType.LAZY)
-//	private Trade trade;
+	@ManyToOne(fetch=FetchType.LAZY)
+	private Trade trade;
 
-	public Image() {
+	public RealImage() {
 		super();
 	}
-
+	
+	public RealImage(Long id, String imageLink, String description, Trade trade) {
+		super();
+		this.id = id;
+		this.imageLink = imageLink;
+		this.description = description;
+		this.trade = trade;
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -44,5 +54,12 @@ public class Image {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
+	public Trade getTrade() {
+		return trade;
+	}
+
+	public void setTrade(Trade trade) {
+		this.trade = trade;
+	}
 }

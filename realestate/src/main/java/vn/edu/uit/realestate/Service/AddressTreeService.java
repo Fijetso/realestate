@@ -70,25 +70,27 @@ public class AddressTreeService {
 	        newProvince.setSlug(slug);
 	        String nameWithType = (String) province.get("name_with_type");
 	        newProvince.setNameWithType(nameWithType);
+            provinceRepository.save(newProvince);
 	        HashMap<String,JSONObject> getDistrictList = (HashMap<String,JSONObject>) province.get("quan-huyen");
 	        List<District> parsedDistrictList = new ArrayList<District>();
 	      	Collection<JSONObject> districtList = getDistrictList.values();
 	      	for (JSONObject element: districtList) {
-	      		District tempt = this.parseDistrictObject(element);
+	      		District tempt = this.parseDistrictObject(element, newProvince);
 	      		tempt.setProvince(newProvince);
 	      		parsedDistrictList.add(tempt);
 		        ///Add Ward before mapping to District
-	            districtRepository.save(tempt);
-	      		parsedDistrictList.add(this.parseDistrictObject(element));
+//	      		parsedDistrictList.add(this.parseDistrictObject(element));
 	      	}
+            districtRepository.saveAll(parsedDistrictList);
 	      	newProvince.setDistrict(parsedDistrictList);
-            provinceRepository.save(newProvince);
+//            provinceRepository.save(newProvince);
 	        return newProvince;
 	    }
 	 @SuppressWarnings("unchecked")
-	private District parseDistrictObject(JSONObject district)
+	private District parseDistrictObject(JSONObject district,Province province)
 	    {
 		 	District newDistrict = new District();
+		 	newDistrict.setProvince(province);
 		 	String id = (String) district.get("code");
 		 	int parsedId = Integer.parseInt(id);
 	        newDistrict.setId(Long.valueOf(parsedId));
@@ -100,6 +102,7 @@ public class AddressTreeService {
 	        newDistrict.setNameWithType(nameWithType);
 	        String pathWithType = (String) district.get("path_with_type");
 	        newDistrict.setPathWithType(pathWithType);
+            districtRepository.save(newDistrict);
 	        HashMap<String,JSONObject> getWardList = (HashMap<String,JSONObject>) district.get("xa-phuong");
 	        List<Ward> parsedWardList = new ArrayList<Ward>();
 	      	Collection<JSONObject> wardList = getWardList.values();
@@ -108,8 +111,9 @@ public class AddressTreeService {
 	      		tempt.setDistrict(newDistrict);
 	      		parsedWardList.add(tempt);
 		        ///Add Ward before mapping to District
-	            wardRepository.save(tempt);
+//	            wardRepository.save(tempt);
 	      	}
+	      	wardRepository.saveAll(parsedWardList);
 	      	newDistrict.setWard(parsedWardList);
 	        return newDistrict;
 	    }
