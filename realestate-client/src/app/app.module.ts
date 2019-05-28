@@ -89,6 +89,7 @@ import { UserComponent } from './components/user/user.component';
 import { ApiService } from './services/api/api.service';
 import { CreatePostComponent } from './core/ui/create-post/create-post.component';
 import { FilterPipe } from './services/pipe/filter.pipe';
+import { UserDetailComponent } from './core/ui/user-detail/user-detail.component';
 
 
 
@@ -128,7 +129,8 @@ import { FilterPipe } from './services/pipe/filter.pipe';
     RegisterComponent,
     UserComponent,
     CreatePostComponent,
-    FilterPipe
+    FilterPipe,
+    UserDetailComponent
   ],
   imports: [
     OwlModule,

@@ -10,6 +10,7 @@ import { MapModuleComponent } from './core/ui/map-module/map-module.component';
 import { RealEstateDetailComponent } from './components/real-estate-detail/real-estate-detail.component';
 import { RegisterComponent } from './core/ui/register/register.component';
 import { CreatePostComponent } from './core/ui/create-post/create-post.component';
+import { UserDetailComponent } from './core/ui/user-detail/user-detail.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'trang-chu', pathMatch: 'full' },
@@ -52,6 +53,11 @@ const routes: Routes = [
     path: 'dang-tin',
     component: CreatePostComponent,
     data: { title: 'Trang bài đăng' }
+  },
+  {
+    path: 'nguoi-dung/:id',
+    component: UserDetailComponent,
+    data: { title: 'Chi tiết người dùng' }
   },
   {
     path: '**',

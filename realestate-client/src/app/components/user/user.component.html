@@ -2,7 +2,7 @@
   <h5>Danh sách người dùng</h5>
   <input type="text"[(ngModel)]="searchTerm" id="search" class="form-control my-2" >
   <div class="user-list row">
-    <div *ngFor="let userItem of users | filter: searchTerm" class="col-md-4 col-lg-4 col-sm-4">
+    <div *ngFor="let userItem of users | filter: searchTerm" class="col-md-4 col-lg-4 col-sm-4" (click)="goToUserDetail(userItem.id)">
       <mat-card class="user-card ">
         <mat-card-header>
           <div mat-card-avatar class="example-header-image"></div>

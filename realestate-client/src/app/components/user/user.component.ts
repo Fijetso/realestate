@@ -6,6 +6,7 @@ import { User } from 'src/app/model/user/user';
 import { UserKind } from 'src/app/model/user-kind/user-kind';
 import { Observable } from 'rxjs';
 import { State } from 'src/app/core/ui/home-page/marketting/marketting.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -27,7 +28,7 @@ export class UserComponent implements OnInit {
     }
   ];
   searchTerm: string;
-  constructor(private api: ApiService, private common: CommonService) {
+  constructor(private api: ApiService, private common: CommonService,private router: Router, private route: ActivatedRoute) {
     this.newUser = {
       id: null,
       name: 'Danh Thanh',
@@ -80,5 +81,8 @@ export class UserComponent implements OnInit {
       },
         error => alert('Delete user failed')
       );
+  }
+  goToUserDetail(userId: string){
+    this.router.navigate(['nguoi-dung', userId] )
   }
 }
