@@ -7,10 +7,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonFilter;
 
 @Entity
-@JsonIgnoreProperties("trade")
+//@JsonIgnoreProperties("trade")
+@JsonFilter("AddressFilter")
 public class Address {
 	@Id
 	@GeneratedValue

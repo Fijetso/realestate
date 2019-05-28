@@ -23,14 +23,14 @@ import vn.edu.uit.realestate.Model.Address;
 import vn.edu.uit.realestate.Model.AddressTree.District;
 import vn.edu.uit.realestate.Model.AddressTree.Province;
 import vn.edu.uit.realestate.Model.AddressTree.Ward;
-import vn.edu.uit.realestate.Service.Address.AddressService;
+import vn.edu.uit.realestate.Service.AddressTreeService;
 
 @RestController
 public class AddressController {
 	@Autowired
 	private AddressRepository addressRepository;
 	@Autowired
-	private AddressService addressService;
+	private AddressTreeService addressTreeService;
 
     @GetMapping("/addresses")
     public ResponseEntity<List<Address>> getAddresses() {
@@ -53,7 +53,7 @@ public class AddressController {
     	final Resource addressTreeResource = resourceLoader.getResource("classpath:static/addresstree.json");
     	File addressTreeFile = addressTreeResource.getFile();
     	if(addressTreeFile.exists()) {
-    		return addressService.parseJSON(addressTreeFile.getPath());
+    		return addressTreeService.parseJSON(addressTreeFile.getPath());
     	}
     	else {
     		throw new NotFoundException("Cannot find "+addressTreeFile.getPath());
@@ -61,7 +61,7 @@ public class AddressController {
     }
     @GetMapping("/addresstree/provinces")
     public ResponseEntity<List<Province>> getProvince(){
-    	List<Province> province = (List<Province>) addressService.getAllProvince();
+    	List<Province> province = (List<Province>) addressTreeService.getAllProvince();
     	if(province.isEmpty() == true) {
     		throw new NotFoundException("Cannot find any Province in Database. run initAddressTree controller for initing Address tree");
     	}
@@ -69,7 +69,7 @@ public class AddressController {
     }
     @GetMapping("/addresstree/provinces/{provinceId}/district")
     public ResponseEntity<List<District>> getDistrictByProvinceId(@PathVariable Long provinceId){
-    	List<District> district = (List<District>) addressService.getAllDistrict(provinceId);
+    	List<District> district = (List<District>) addressTreeService.getAllDistrict(provinceId);
     	if(district.isEmpty() == true) {
     		throw new NotFoundException("Cannot find any District in Database. run initAddressTree controller for initing Address tree");
     	}
@@ -77,7 +77,7 @@ public class AddressController {
     }
     @GetMapping("/addresstree/provinces/{provinceId}/district/{districtId}/ward")
     public ResponseEntity<List<Ward>> getWardByDistrictId(@PathVariable(name="provinceId") Long provinceId,@PathVariable(name="districtId") Long districtId){
-    	List<Ward> ward = (List<Ward>) addressService.getAllWard(districtId);
+    	List<Ward> ward = (List<Ward>) addressTreeService.getAllWard(districtId);
     	if(ward.isEmpty() == true) {
     		throw new NotFoundException("Cannot find any Ward in Database. run initAddressTree controller for initing Address tree");
     	}

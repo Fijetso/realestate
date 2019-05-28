@@ -61,5 +61,5 @@ public class Image {
 
 	public void setTrade(Trade trade) {
 		this.trade = trade;
-	}	
+	}
 }
