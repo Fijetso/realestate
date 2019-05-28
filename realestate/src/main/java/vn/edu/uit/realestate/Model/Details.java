@@ -5,10 +5,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import com.fasterxml.jackson.annotation.JsonFilter;
 
 @Entity
-@JsonIgnoreProperties("trade")
+//@JsonIgnoreProperties("trade")
+@JsonFilter("DetailsFilter")
 public class Details {
 	@Id
 	@GeneratedValue

@@ -9,10 +9,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import com.fasterxml.jackson.annotation.JsonFilter;
 
 @Entity
-@JsonIgnoreProperties("bookings")
+//@JsonIgnoreProperties("bookings")
+@JsonFilter("TradeFilter")
 public class Trade {
 	@Id
 	@GeneratedValue
