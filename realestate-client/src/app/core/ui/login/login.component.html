@@ -25,7 +25,7 @@
             [ngModel]="userInfo.password"/>
         </mat-form-field>
         <button  [hidden] ='isLogedIn' (click)="loginWithGoogle()" mat-raised-button class="btn-social btn-login-google py-2 mx-3" type="button"><span><i class="fab fa-google"></i></span> Đăng nhập với Google</button>
-        <button *ngIf="false" (click)="loginWithFacebook()" mat-raised-button class="btn-social btn-login-facebook py-2 mx-3" type="button"><span><i class="fab fa-facebook-f"></i></span> Đăng nhập với Facebook</button>
+        <button  [hidden] ='isLogedIn' (click)="loginWithFacebook()" mat-raised-button class="btn-social btn-login-facebook py-2 mx-3" type="button"><span><i class="fab fa-facebook-f"></i></span> Đăng nhập với Facebook</button>
       </div>
       <div class="footer-form d-flex justify-content-center flex-row">
         <button

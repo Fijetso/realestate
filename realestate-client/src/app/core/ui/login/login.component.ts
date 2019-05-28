@@ -62,7 +62,12 @@ export class LoginComponent implements OnInit {
     });
   }
   loginWithFacebook() {
-    this.authService.loginWithFacebook();
+    this.authService.loginWithFacebook().then(data => {
+      this.isLogedIn = true;
+      this.authService.writeUserInfor();
+      this.getUserLogin();
+      console.log(JSON.parse(localStorage.getItem('userInfor')));
+    });
   }
   onLogOut() {
     this.authService.logOut();
