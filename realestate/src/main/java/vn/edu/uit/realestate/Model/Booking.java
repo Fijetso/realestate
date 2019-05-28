@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Future;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -22,8 +23,9 @@ public class Booking {
 	private Long id;
 	@Size(min=2, message="Name of user that want to book should have at least 2 characters")
 	private String name;
+	@Pattern(regexp = "([0-9]{10}$)", message="Please provide a valid phone number")
 	private String phone;
-	@Email
+	@Email(message="Please provide a valid email address")
 	private String email;
 	@Future
 	private Date timeStart;

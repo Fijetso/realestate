@@ -80,15 +80,30 @@ public class UserService implements IEntityService {
 		userRepository.deleteById(id);
 	}
 
-	public User save(User user) {
+	public void save(User user) {
 		if (user == null) {
 			throw new ExistContentException("User must not be null");
 		}
-		return userRepository.save(user);
+		userRepository.save(user);
+	}
+	public MappingJacksonValue findAllTradeByUserId(Long userId) {
+		Optional<User> foundUser = userRepository.findById(userId);
+		if (foundUser.isPresent() == false) {
+			throw new NotFoundException("Cannot find any User with id=" + userId);
+		}
+		List<Trade> foundTradeList = foundUser.get().getTrades();
+		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.serializeAllExcept("user");
+		FilterProvider filters = new SimpleFilterProvider().addFilter("TradeFilter", filter);
+		MappingJacksonValue mapping = new MappingJacksonValue(foundTradeList);
+		mapping.setFilters(filters);
+		return mapping;
 	}
 
-	public Trade addTradeToUser(Long userId, Trade trade) {
+	public void postTradeToUser(Long userId, Trade trade) {
 		Optional<User> foundUser = userRepository.findById(userId);
+		if(foundUser.isPresent() == false) {
+			throw new NotFoundException("Cannot find any user with Id="+userId);
+		}
 		trade.setUser(foundUser.get());
 
 		RealEstateKind realEstateKind = trade.getRealEstateKind();
@@ -100,20 +115,19 @@ public class UserService implements IEntityService {
 		if (tradeKind == null || !tradeKindRepository.findById(tradeKind.getId()).isPresent()) {
 			throw new NotFoundException("You must enter suitable Trade Kind");
 		}
-		Address tradeAddress = trade.getAddress();
-		if (tradeAddress != null) {
-			tradeAddress.setTrade(trade);
+//		Address tradeAddress = trade.getAddress();
+//		if (tradeAddress != null) {
+//			tradeAddress.setTrade(trade);
 			addressRepository.save(trade.getAddress());
-		}
-		Details tradeDetails = trade.getDetails();
-		if (tradeDetails != null) {
-			tradeDetails.setTrade(trade);
+//		}
+//		Details tradeDetails = trade.getDetails();
+//		if (tradeDetails != null) {
+//			tradeDetails.setTrade(trade);
 			detailsRepository.save(trade.getDetails());
-		}
+//		}
 //    	List<Image> images = trade.getBluePrints();
 //    	images.addAll(trade.getRealImages());
 //    	imageRepository.save()
-
-		return tradeRepository.save(trade);
+		tradeRepository.save(trade);
 	}
 }

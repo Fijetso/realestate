@@ -1,8 +1,7 @@
 package vn.edu.uit.realestate.Model;
 
 import java.util.Date;
-import java.util.Set;
-
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,8 +14,6 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.validation.constraints.Email;
 
 @Entity
@@ -40,7 +37,7 @@ public class User {
 	@JoinColumn(name="userKindId", referencedColumnName="id")
 	private UserKind userKind;
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
-	private Set<Trade> trades;
+	private List<Trade> trades;
 
 	public User() {
 		super();
@@ -49,7 +46,7 @@ public class User {
 	public User(Long id, @Size(min = 2, message = "Name should have at least 2 characters") String name,
 			@Email(message = "It seems Email cannot recognized") String email, String phone, String password,
 			@Past(message = "BirthDate must be in the past") Date birthdate, boolean gender, UserKind userKind,
-			Set<Trade> trades) {
+			List<Trade> trades) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -126,11 +123,11 @@ public class User {
 		this.gender = gender;
 	}
 
-	public Set<Trade> getTrades() {
+	public List<Trade> getTrades() {
 		return trades;
 	}
 
-	public void setTrades(Set<Trade> trades) {
+	public void setTrades(List<Trade> trades) {
 		this.trades = trades;
 	}
 	

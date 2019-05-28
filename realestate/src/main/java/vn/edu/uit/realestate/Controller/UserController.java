@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,33 +23,40 @@ public class UserController {
 	private UserService userService;
 
 	@GetMapping("/users")
-	public ResponseEntity<MappingJacksonValue> getUsers() {
+	public ResponseEntity<MappingJacksonValue> getAll() {
 		MappingJacksonValue users = userService.findAll();
 		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
 
 	@GetMapping("/users/{id}")
-	public ResponseEntity<MappingJacksonValue> getUserById(@PathVariable long id) {
+	public ResponseEntity<MappingJacksonValue> getById(@PathVariable long id) {
 		MappingJacksonValue foundUser = userService.findById(id);
 		return new ResponseEntity<>(foundUser, HttpStatus.OK);
 	}
 
+	@SuppressWarnings("rawtypes")
 	@PostMapping("/users")
-	public ResponseEntity<User> postUser(@RequestBody User user) {
-		User savedUser = userService.save(user);
-		return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+	public ResponseEntity post(@Valid @RequestBody User user){
+		userService.save(user);
+		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
+
+	@GetMapping("/users/{userId}/trades")
+	public ResponseEntity<MappingJacksonValue> getAllTradesByUserId(@PathVariable long userId){
+		MappingJacksonValue tradeList = userService.findAllTradeByUserId(userId);
+		return new ResponseEntity<>(tradeList, HttpStatus.OK);
 	}
 
 	@PostMapping("users/{userId}/trades")
-	public ResponseEntity<Trade> postTradeByUserId(@PathVariable long userId, @Valid @RequestBody Trade trade)
+	public ResponseEntity postTradeByUserId(@PathVariable long userId, @Valid @RequestBody Trade trade)
 			throws Exception {
-		Trade savedTrade = userService.addTradeToUser(userId, trade);
-		return new ResponseEntity<>(savedTrade, HttpStatus.OK);
+		userService.postTradeToUser(userId, trade);
+		return new ResponseEntity<>( HttpStatus.CREATED);
 	}
 
 	@SuppressWarnings("rawtypes")
 	@DeleteMapping("/users/{id}")
-	public ResponseEntity deleteUserById(@PathVariable long id) {
+	public ResponseEntity deleteById(@PathVariable long id) {
 		userService.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

@@ -1,4 +1,4 @@
-package vn.edu.uit.realestate.Service.EntityService;
+package vn.edu.uit.realestate.Service;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -22,7 +22,7 @@ import vn.edu.uit.realestate.Model.AddressTree.Province;
 import vn.edu.uit.realestate.Model.AddressTree.Ward;
 
 @Service
-public class AddressService {
+public class AddressTreeService {
 	@Autowired
 	ProvinceRepository provinceRepository;
 	@Autowired
