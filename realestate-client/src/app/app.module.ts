@@ -90,9 +90,8 @@ import { ApiService } from './services/api/api.service';
 import { CreatePostComponent } from './core/ui/create-post/create-post.component';
 import { FilterPipe } from './services/pipe/filter.pipe';
 import { UserDetailComponent } from './core/ui/user-detail/user-detail.component';
-
-
-
+import { GetCityPipe } from './ultility/pipe/get-city.pipe';
+import { GetDistrictNameFromIdPipe } from './ultility/pipe/get-district-name-from-id.pipe';
 
 @NgModule({
   declarations: [
@@ -130,7 +129,9 @@ import { UserDetailComponent } from './core/ui/user-detail/user-detail.component
     UserComponent,
     CreatePostComponent,
     FilterPipe,
-    UserDetailComponent
+    UserDetailComponent,
+    GetCityPipe,
+    GetDistrictNameFromIdPipe
   ],
   imports: [
     OwlModule,

@@ -1,3 +1,4 @@
+import { Address } from './../../model/address/address';
 import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -15,6 +16,7 @@ export class ApiService {
   baseURL = this.rootURL + '/api/';
   userList: Observable<User[]>;
   userURL = this.baseURL + 'users';
+  addressURL = this.baseURL + 'addresstree/provinces/';
   // User service
   createUser(user: User) {
     return this.http.post<User>(this.userURL, user);
@@ -38,8 +40,18 @@ export class ApiService {
   getAllRealEstate() {
     return this.http.get<RealEstate[]>(this.baseURL + 'trades');
   }
-  // News service
+  // Address service
+  getProvinces() {
+    return this.http.get<Address>(this.addressURL);
+  }
 
+  getDistrictFromProvinceId(provinceId: number) {
+    return this.http.get<Address>(this.addressURL + provinceId + '/district' );
+  }
+
+  getWardFromDistrictId(provinceId: number, districtId: number) {
+    return this.http.get<Address>(this.addressURL + provinceId + '/district' + districtId + '/ward');
+  }
   // Request service
 
   // Upload Image

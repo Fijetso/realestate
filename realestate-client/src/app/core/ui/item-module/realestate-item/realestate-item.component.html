@@ -1,4 +1,4 @@
-<mat-card class="real-estate-card-item md-card" (click)="goToPage('chi-tiet')">
+<mat-card class="real-estate-card-item md-card align-content-around" (click)="goToPage('chi-tiet')">
   <div class="img-hover-zoom">
       <img class="md-image card-img-top" [lazyLoad]="mainPic" alt="picsum" [defaultImage]="defaultPic" [offset]=100>
       <mat-icon class="icon icon-like"  matTooltip="Add to your's favorite list">favorite_border</mat-icon>
@@ -12,7 +12,7 @@
         <span class="span-acreage">{{dataItem.details.square}}m <sup>2</sup></span>
       </div>
       <div class="text-right">
-        <p class="rs-location text-orange">{{dataItem.address.district}}</p>
+        <p class="rs-location text-orange">{{ districtList | getDistrictNameFromId : dataItem.address.district}}</p>
       </div>
     </div>
     <div class="rs-desc">
