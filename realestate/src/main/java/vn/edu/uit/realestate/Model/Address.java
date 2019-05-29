@@ -23,7 +23,7 @@ public class Address {
 	@NotNull(message="You must enter the district")
 	private Long district;
 	@NotNull(message="You must enter the city or province")
-	private Long cityOrProvince;
+	private Long province;
 	@OneToOne(mappedBy = "address", fetch=FetchType.LAZY)
 	private Trade trade;
 	public Address() {
@@ -39,7 +39,7 @@ public class Address {
 		this.detail = detail;
 		this.ward = ward;
 		this.district = district;
-		this.cityOrProvince = cityOrProvince;
+		this.province = cityOrProvince;
 		this.trade = trade;
 	}
 
@@ -73,11 +73,11 @@ public class Address {
 	}
 
 	public Long getCityOrProvince() {
-		return cityOrProvince;
+		return province;
 	}
 
 	public void setCityOrProvince(Long cityOrProvince) {
-		this.cityOrProvince = cityOrProvince;
+		this.province = cityOrProvince;
 	}
 
 	public Trade getTrade() {
