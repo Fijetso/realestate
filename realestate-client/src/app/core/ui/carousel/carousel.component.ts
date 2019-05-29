@@ -6,10 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class CarouselComponent implements OnInit {
   @Input() dataSource: any;
-  myCarouselImages = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map(
-    i => `https://picsum.photos/id/${i}/800/400`
-  );
-  myCarouselOptions = {
+  carouselOptions = {
     margin: 14,
     responsiveClass: true,
     nav: false,
@@ -37,5 +34,7 @@ export class CarouselComponent implements OnInit {
         }
     }
   };
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.dataSource);
+  }
 }

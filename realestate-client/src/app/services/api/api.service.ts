@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/model/user/user';
 import { HttpClient } from '@angular/common/http';
+import { RealEstate } from 'src/app/model/real-estate/real-estate';
 
 @Injectable({
   providedIn: 'root'
@@ -33,8 +34,10 @@ export class ApiService {
   updateUser(user: User, id: number) {
     return this.http.put<User>(this.userURL + '/' + id, user);
   }
-  // Post service
-
+  // RealEstate service
+  getAllRealEstate() {
+    return this.http.get<RealEstate[]>(this.baseURL + 'trades');
+  }
   // News service
 
   // Request service

@@ -1,10 +1,10 @@
 <owl-carousel
-  [options]="myCarouselOptions"
-  [items]="myCarouselImages"
+  [options]="carouselOptions"
+  [items]="dataSource"
   [carouselClasses]="['owl-theme', 'sliding']"
 >
-  <div class="carousel-wrapper" *ngFor="let image of myCarouselImages; let i = index">
-        <app-realestate-item></app-realestate-item>
+  <div class="carousel-wrapper" *ngFor="let dataItem of dataSource; let i = index">
+        <app-realestate-item [dataItem] ="dataItem"></app-realestate-item>
   </div>
 </owl-carousel>
 
