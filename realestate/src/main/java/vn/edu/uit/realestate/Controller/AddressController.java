@@ -11,6 +11,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,10 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.DataAccess.AddressRepository;
 import vn.edu.uit.realestate.Model.Address;
+import vn.edu.uit.realestate.Model.Trade;
 import vn.edu.uit.realestate.Model.AddressTree.District;
 import vn.edu.uit.realestate.Model.AddressTree.Province;
 import vn.edu.uit.realestate.Model.AddressTree.Ward;
 import vn.edu.uit.realestate.Service.AddressTreeService;
+import vn.edu.uit.realestate.Service.EntityService.AddressService;
 
 @RestController
 public class AddressController {
@@ -31,14 +34,23 @@ public class AddressController {
 	private AddressRepository addressRepository;
 	@Autowired
 	private AddressTreeService addressTreeService;
+	@Autowired
+	private AddressService addressService;
 
-    @GetMapping("/addresses")
-    public ResponseEntity<List<Address>> getAddresses() {
-    	List<Address> addresses = (List<Address>) addressRepository.findAll();
-    	if (addresses.isEmpty() == true) {
-    		throw new NotFoundException("Cannot find any Address");
-    	}
-        return new ResponseEntity<>(addresses,HttpStatus.OK);
+	@GetMapping("/provinces/{provinceId}/trades")
+    public ResponseEntity<MappingJacksonValue> findTradeByProvince(@PathVariable Long provinceId) {
+    	MappingJacksonValue foundTrade = addressService.findTradeByProvince(provinceId);
+        return new ResponseEntity<>(foundTrade,HttpStatus.OK);
+    }
+	@GetMapping("/districts/{districtId}/trades")
+    public ResponseEntity<MappingJacksonValue> findTradeByDistrict(@PathVariable Long districtId) {
+    	MappingJacksonValue foundTrade = addressService.findTradeByDistrict(districtId);
+        return new ResponseEntity<>(foundTrade,HttpStatus.OK);
+    }
+	@GetMapping("/wards/{wardId}/trades")
+    public ResponseEntity<MappingJacksonValue> findTradeByWard(@PathVariable Long wardId) {
+    	MappingJacksonValue foundTrade = addressService.findTradeByWard(wardId);
+        return new ResponseEntity<>(foundTrade,HttpStatus.OK);
     }
     @PostMapping("/addresses")
     public Address postAddress(@Valid @RequestBody Address address) {
