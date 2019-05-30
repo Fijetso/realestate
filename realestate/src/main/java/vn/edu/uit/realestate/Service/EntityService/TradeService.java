@@ -113,6 +113,14 @@ public class TradeService implements IEntityService {
 		booking.setTrade(foundTrade.get());
 		bookingRepository.save(booking);
 	}
+	public void addViewToTrade(Long tradeId) {
+		Optional<Trade> foundTrade = tradeRepository.findById(tradeId);
+		if (foundTrade.isPresent() == false) {
+			throw new NotFoundException("Cannot find any Trade with id=" + tradeId);
+		}
+		tradeRepository.increaseViewCountById(tradeId);
+//		return tradeRepository.getViewCountById(tradeId);
+	}
 //	public MappingJacksonValue findAllTradeByUserId(Long userId) {
 //		Optional<User> foundUser = userRepository.findById(userId);
 //		if (foundUser.isPresent() == false) {

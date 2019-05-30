@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.DataAccess.AddressRepository;
 import vn.edu.uit.realestate.Model.Address;
-import vn.edu.uit.realestate.Model.Trade;
 import vn.edu.uit.realestate.Model.AddressTree.District;
 import vn.edu.uit.realestate.Model.AddressTree.Province;
 import vn.edu.uit.realestate.Model.AddressTree.Ward;
