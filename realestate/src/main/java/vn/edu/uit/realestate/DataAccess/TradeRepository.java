@@ -12,5 +12,5 @@ public interface TradeRepository extends JpaRepository<Trade, Long>{
 	@Transactional
 	@Modifying
 	@Query(value = "UPDATE Trade SET Trade.view_count=Trade.view_count + 1 WHERE Trade.id=:id", nativeQuery = true)
-	Integer increaseViewCountById( @Param("id") Long id);
+	void increaseViewCountById( @Param("id") Long id);
 }
