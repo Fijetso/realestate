@@ -61,7 +61,6 @@ public class AddressController {
     private ResourceLoader resourceLoader;
     @GetMapping("/addresstree/init")
     public Province initAddressTree() throws IOException{
-//    	ObjectMapper objectMapper = new ObjectMapper();
     	final Resource addressTreeResource = resourceLoader.getResource("classpath:static/addresstree.json");
     	File addressTreeFile = addressTreeResource.getFile();
     	if(addressTreeFile.exists()) {
@@ -73,26 +72,34 @@ public class AddressController {
     }
     @GetMapping("/addresstree/provinces")
     public ResponseEntity<List<Province>> getProvince(){
-    	List<Province> province = (List<Province>) addressTreeService.getAllProvince();
-    	if(province.isEmpty() == true) {
-    		throw new NotFoundException("Cannot find any Province in Database. run initAddressTree controller for initing Address tree");
-    	}
+    	List<Province> province = addressTreeService.getAllProvince();
         return new ResponseEntity<>(province,HttpStatus.OK);
     }
-    @GetMapping("/addresstree/provinces/{provinceId}/district")
+    @GetMapping("/addresstree/provinces/{provinceId}")
+    public ResponseEntity<Province> getProvinceById(@PathVariable Long provinceId){
+    	Province province = addressTreeService.getProvinceById(provinceId);
+        return new ResponseEntity<>(province,HttpStatus.OK);
+    }
+    @GetMapping("/addresstree/provinces/{provinceId}/districts")
     public ResponseEntity<List<District>> getDistrictByProvinceId(@PathVariable Long provinceId){
     	List<District> district = (List<District>) addressTreeService.getAllDistrict(provinceId);
-    	if(district.isEmpty() == true) {
-    		throw new NotFoundException("Cannot find any District in Database. run initAddressTree controller for initing Address tree");
-    	}
         return new ResponseEntity<>(district,HttpStatus.OK);
     }
-    @GetMapping("/addresstree/provinces/{provinceId}/district/{districtId}/ward")
+    @GetMapping("/addresstree/provinces/{provinceId}/districts/{districtId}")
+    public ResponseEntity<District> getDistrictById(@PathVariable(name="provinceId") Long provinceId,@PathVariable(name="districtId") Long districtId){
+    	District district = addressTreeService.getDistrictById(provinceId, districtId);
+        return new ResponseEntity<>(district,HttpStatus.OK);
+    }
+    @GetMapping("/addresstree/provinces/{provinceId}/districts/{districtId}/wards")
     public ResponseEntity<List<Ward>> getWardByDistrictId(@PathVariable(name="provinceId") Long provinceId,@PathVariable(name="districtId") Long districtId){
-    	List<Ward> ward = (List<Ward>) addressTreeService.getAllWard(districtId);
-    	if(ward.isEmpty() == true) {
-    		throw new NotFoundException("Cannot find any Ward in Database. run initAddressTree controller for initing Address tree");
-    	}
+    	List<Ward> ward = (List<Ward>) addressTreeService.getAllWard(provinceId, districtId);
+        return new ResponseEntity<>(ward,HttpStatus.OK);
+    }
+    @GetMapping("/addresstree/provinces/{provinceId}/districts/{districtId}/wards/{wardId}")
+    public ResponseEntity<Ward> getWardById(@PathVariable(name="provinceId") Long provinceId,
+    		@PathVariable(name="districtId") Long districtId,
+    		@PathVariable(name="wardId") Long wardId){
+    	Ward ward = addressTreeService.getWardById(provinceId, districtId, wardId);
         return new ResponseEntity<>(ward,HttpStatus.OK);
     }
 }
