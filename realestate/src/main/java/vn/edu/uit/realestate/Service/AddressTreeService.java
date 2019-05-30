@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -14,6 +15,7 @@ import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.DataAccess.AddressTree.DistrictRepository;
 import vn.edu.uit.realestate.DataAccess.AddressTree.ProvinceRepository;
 import vn.edu.uit.realestate.DataAccess.AddressTree.WardRepository;
@@ -30,15 +32,62 @@ public class AddressTreeService {
 	@Autowired
 	WardRepository wardRepository;
 	public List<Province> getAllProvince() {
-		return provinceRepository.findAll();
+		List<Province> provinceList = provinceRepository.findAll();
+    	if(provinceList.isEmpty() == true) {
+    		throw new NotFoundException("Cannot find any Province in Database. run initAddressTree controller for initing Address tree");
+    	}
+		return provinceList;
 	}
 	public List<District> getAllDistrict(Long provinceId){
 		Province province = provinceRepository.findById(provinceId).get();
-		return province.getDistrict();
+		List<District> districtList = province.getDistrict();
+    	if(districtList.isEmpty() == true) {
+    		throw new NotFoundException("Cannot find any District in Database. run initAddressTree controller for initing Address tree");
+    	}
+		return districtList;
 	}
-	public List<Ward> getAllWard(Long districtId){
+	public List<Ward> getAllWard(Long provinceId, Long districtId){
 		District district = districtRepository.findById(districtId).get();
-		return district.getWard();
+		if(district.getProvince().getId().longValue() != provinceId) {
+			throw new NotFoundException("Cannot find suitable Ward with provinceId="+provinceId);
+		}
+		List<Ward> wardList = district.getWard();  
+    	if(wardList.isEmpty() == true) {
+    		throw new NotFoundException("Cannot find any Ward in Database. run initAddressTree controller for initing Address tree");
+    	}
+		return wardList;
+	}
+	public Province getProvinceById(Long provinceId) {
+		Optional<Province> foundProvince = provinceRepository.findById(provinceId);
+		if (foundProvince.isPresent() == false) {
+			throw new NotFoundException("Cannot find any Province with id="+provinceId);
+		}
+		return foundProvince.get();
+	}
+	public District getDistrictById(Long provinceId, Long districtId) {
+		Optional<District> foundDistrict = districtRepository.findById(districtId);
+		if (foundDistrict.isPresent() == false) {
+			throw new NotFoundException("Cannot find any District with id="+districtId);
+		}
+		if(foundDistrict.get().getProvince().getId().longValue() != provinceId) {
+			throw new NotFoundException("Cannot find suitable District with provinceId="+provinceId);
+		}
+				return foundDistrict.get();
+	}
+	public Ward getWardById(Long provinceId, Long districtId, Long wardId) {
+		Optional<Ward> foundWard = wardRepository.findById(wardId);
+		if (foundWard.isPresent() == false) {
+			throw new NotFoundException("Cannot find any Ward with id="+wardId);
+		}
+		District foundDistrict = foundWard.get().getDistrict();
+		if(foundDistrict.getId().longValue() != districtId) {
+			throw new NotFoundException("Cannot find suitable Ward with districtId="+districtId);
+		}
+		Province foundProvince = foundDistrict.getProvince();
+		if(foundProvince.getId().longValue() != provinceId) {
+			throw new NotFoundException("Cannot find suitable Ward with provinceId="+provinceId);
+		}
+		return foundWard.get();
 	}
 	public Province parseJSON(String filename) {
 		JSONParser jsonParser = new JSONParser();
