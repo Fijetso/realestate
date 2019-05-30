@@ -53,4 +53,9 @@ public class TradeController {
     	tradeService.postBookingByTradeId(tradeId, booking);
     	return new ResponseEntity<>(HttpStatus.OK);
     }
+    @GetMapping("/trades/{id}/addviewcount")
+    public ResponseEntity<?> addViewCountById(@PathVariable long id){
+    	tradeService.addViewToTrade(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+     }
 }

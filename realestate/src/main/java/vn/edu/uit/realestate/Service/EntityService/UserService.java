@@ -112,6 +112,7 @@ public class UserService implements IEntityService {
 		if(foundUser.isPresent() == false) {
 			throw new NotFoundException("Cannot find any user with Id="+userId);
 		}
+		trade.setViewCount((long) 0);
 		trade.setUser(foundUser.get());
 
 		RealEstateKind realEstateKind = trade.getRealEstateKind();

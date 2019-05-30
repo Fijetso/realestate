@@ -1,11 +1,16 @@
 package vn.edu.uit.realestate.Model;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -21,7 +26,7 @@ public class Trade {
 	private Long id;
 	private String description;
 	private Long cost;
-	
+	private Long viewCount =  (long) 0;
 	@ManyToOne
 	@JoinColumn(name="userId", referencedColumnName = "id")
 	private User user;
@@ -43,15 +48,25 @@ public class Trade {
     private Details details;
 	
 	@OneToMany(mappedBy="trade")
-	private List<RealImage> realImages;
+	private List<RealImage> realImages = new ArrayList<RealImage>();
 	
 	@OneToMany(mappedBy="trade")
-	private List<BluePrint> bluePrints;
+	private List<BluePrint> bluePrints = new ArrayList<BluePrint>();
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name="bookingId", referencedColumnName = "id")
-	private  List<Booking> bookings;
+	private  List<Booking> bookings = new ArrayList<Booking>();
 	
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                CascadeType.PERSIST,
+                CascadeType.MERGE
+            })
+	@JoinTable(name = "FavoriteTrade",
+            joinColumns = { @JoinColumn(name = "tradeId") },
+            inverseJoinColumns = { @JoinColumn(name = "userId") })
+	private List<User> favoriteUsers = new ArrayList<User>();
+    
 	public Trade() {
 		super();
 	}
@@ -142,5 +157,21 @@ public class Trade {
 
 	public void setBookings(List<Booking> bookings) {
 		this.bookings = bookings;
+	}
+
+	public Long getViewCount() {
+		return viewCount;
+	}
+
+	public void setViewCount(Long viewCount) {
+		this.viewCount = viewCount;
+	}
+
+	public List<User> getFavoriteUsers() {
+		return favoriteUsers;
+	}
+
+	public void setFavoriteUsers(List<User> favoriteUsers) {
+		this.favoriteUsers = favoriteUsers;
 	}
 }
