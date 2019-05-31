@@ -1,8 +1,8 @@
-<mat-card class="real-estate-card-item md-card align-content-around" (click)="goToPage('chi-tiet')">
+<mat-card class="real-estate-card-item md-card align-content-around" (click)="goToPage('mua')">
   <div class="img-hover-zoom">
       <img class="md-image card-img-top" [lazyLoad]="mainPic" alt="picsum" [defaultImage]="defaultPic" [offset]=100>
       <mat-icon class="icon icon-like"  matTooltip="Add to your's favorite list">favorite_border</mat-icon>
-      <button class="btn-sm btn-checked" type="button">Đã thẩm định</button>
+      <button class="btn-sm btn-checked" type="button" *ngIf="isAppraised">Đã thẩm định</button>
   </div>
   <div class="md-card-body">
     <div class="price-address d-flex flex-row justify-content-between">
