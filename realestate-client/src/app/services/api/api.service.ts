@@ -52,19 +52,6 @@ export class ApiService {
   getWardFromDistrictId(provinceId: number, districtId: number) {
     return this.http.get<Address>(this.addressURL + provinceId + '/district' + districtId + '/ward');
   }
-  // get Favorite trade order by fav count
-  getFavRealEstate() {
-    return this.http.get<RealEstate>(this.baseURL + 'trades');
-  }
-  // get hot real estate : order by view count;
-  getHotRealEstate() {
-    return this.http.get<RealEstate>(this.baseURL + 'trades');
-  }
-  // get Trade by District
-  findTradeByDistrict(districtId: number) {
-    return this.http.get<RealEstate>(this.baseURL + 'district/' + districtId + '/trades');
-  }
-
   // Request service
 
   // Upload Image

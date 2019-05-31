@@ -1,4 +1,4 @@
-import { FilterPipe } from '../../ultility/pipe/filter.pipe';
+import { FilterPipe } from './../../services/pipe/filter.pipe';
 import { CommonService } from './../../services/common/common.service';
 import { ApiService } from './../../services/api/api.service';
 import { Component, OnInit } from '@angular/core';

@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./hot-place-item.component.scss']
 })
 export class HotPlaceItemComponent implements OnInit {
-  @Input() place: any;
+  @Input() place : any;
   constructor() { }
 
   ngOnInit() {

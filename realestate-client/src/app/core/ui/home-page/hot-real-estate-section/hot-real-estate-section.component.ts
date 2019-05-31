@@ -1,4 +1,3 @@
-import { ApiService } from './../../../../services/api/api.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,17 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./hot-real-estate-section.component.scss']
 })
 export class HotRealEstateSectionComponent implements OnInit {
-  dataHotRE: any = null;
-  isHotRE = true;
-  constructor(private api: ApiService) { }
+
+  constructor() { }
 
   ngOnInit() {
-    this.getHotRE();
   }
 
-  getHotRE() {
-    this.api.getHotRealEstate().subscribe(hotREList => {
-      this.dataHotRE = hotREList;
-    });
-  }
 }
