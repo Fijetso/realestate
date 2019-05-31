@@ -1,7 +1,7 @@
 <mat-card class="real-estate-card-item md-card align-content-around" (click)="onSelect(dataItem.id)">
   <div class="img-hover-zoom">
       <img class="md-image card-img-top" [lazyLoad]="mainPic" alt="picsum" [defaultImage]="defaultPic" [offset]=100>
-      <mat-icon class="icon icon-like"  matTooltip="Add to your's favorite list">favorite_border</mat-icon>
+      <mat-icon class="icon icon-like"  matTooltip="Thêm vào danh sách yêu thích">favorite_border</mat-icon>
       <button class="btn-sm btn-checked" type="button" *ngIf="isAppraised">Đã thẩm định</button>
   </div>
   <div class="md-card-body">
@@ -19,12 +19,12 @@
       <p>{{dataItem.description}}</p>
     </div>
     <div class="rs-follow-count my-1">
-      <button mat-raised-button class="mat-button btn-block btn-bg-faded-blue">Có 1866 lượt quan tâm</button>
+      <button mat-raised-button class="mat-button btn-block btn-bg-faded-blue">Có X lượt quan tâm</button>
     </div>
   </div>
   <div class="md-card-footer d-flex justify-content-between">
-    <span class="rs-bed-room"><i class="fas fa-bed" matTooltip="Bedroom quantity"></i>{{dataItem.details.bedrooms}}</span>
-    <span class="rs-bath-room"><i class="fas fa-bath" matTooltip="Bathroom quantity"></i>{{dataItem.details.bathrooms}}</span>
-    <span class="rs-location-direct"><i class="fas fa-location-arrow" matTooltip="Location direction"></i>{{dataItem.details.direction}}</span>
+    <span class="rs-bed-room"><i class="fas fa-bed" matTooltip="Số lượng phòng ngủ"></i>{{dataItem.details.bedrooms}}</span>
+    <span class="rs-bath-room"><i class="fas fa-bath" matTooltip="Số lượng phòng tắm"></i>{{dataItem.details.bathrooms}}</span>
+    <span class="rs-location-direct"><i class="fas fa-location-arrow" matTooltip="Hướng"></i>{{dataItem.details.direction}}</span>
   </div>
 </mat-card>

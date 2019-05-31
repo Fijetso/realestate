@@ -29,7 +29,7 @@ export class RealestateItemComponent implements OnInit {
   goToPage(url: string) {
     this.router.navigate(['/' + url]);
   }
-  onSelected(item: any) {
-    this.router.navigate([':/reType/:reTitle',])
+  onSelect(slug: any) {
+    this.router.navigate(['mua', slug]);
   }
 }

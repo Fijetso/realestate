@@ -56,8 +56,6 @@ export class RealEstateDetailComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
-      // this.slug = this.common.changeToSlug(params.get('slug'));
-      // this.reId = params.get('id');
       this.slug = params.get('slug');
       if (this.slug) {
         this.getTradeById(this.slug);
