@@ -46,7 +46,7 @@ export class ApiService {
   }
 
   getDistrictFromProvinceId(provinceId: number) {
-    return this.http.get<Address>(this.addressURL + provinceId + '/district' );
+    return this.http.get<Address>(this.addressURL + provinceId + '/districts' );
   }
 
   getWardFromDistrictId(provinceId: number, districtId: number) {
