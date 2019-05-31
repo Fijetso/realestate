@@ -4,9 +4,9 @@
       <h2>Tìm Kiếm Mua - Thuê Nhà Tại Real Estate</h2>
     </div>
     <mat-button-toggle-group
-      #group="matButtonToggleGroup"
-      (change)="onValChange(group.value)"
-      [value]="selectedVal"
+      #reKindGroup="matButtonToggleGroup"
+      (change)="onValChange(reKindGroup.value)"
+      [value]="reKindValue"
     >
       <mat-button-toggle value="mua" active>
         <mat-icon class="text-white">check</mat-icon>
@@ -17,7 +17,7 @@
         Thuê
       </mat-button-toggle>
     </mat-button-toggle-group>
-    <div class="example-selected-value">Đã chọn: {{ group.value }}</div>
+    <div class="example-selected-value">Đã chọn: {{ reKindGroup.value }}</div>
     <form class="searchForm">
         <mat-form-field class="example-full-width">
           <input type="text" placeholder="Nhập để tìm kiếm" aria-label="Assignee" matInput [formControl]="myControl" [matAutocomplete]="auto" [(ngModel)]="stateNameKey" >

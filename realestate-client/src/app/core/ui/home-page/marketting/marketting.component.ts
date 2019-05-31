@@ -1,5 +1,5 @@
 import { ApiService } from './../../../../services/api/api.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output,EventEmitter  } from '@angular/core';
 import { FormControl  } from '@angular/forms';
 import { Observable, Subject, merge } from 'rxjs';
 import {
@@ -19,8 +19,10 @@ export interface State {
   styleUrls: ['./marketting.component.scss']
 })
 export class MarkettingComponent implements OnInit {
-  selectedVal: string;
+  reKindValue: string;
   stateNameKey: string;
+  @Output()
+  receiveREKind: EventEmitter <string> = new EventEmitter <string>();
   constructor(private api: ApiService) {
 
   }
@@ -29,12 +31,14 @@ export class MarkettingComponent implements OnInit {
   states: any;
 
   ngOnInit() {
-    this.selectedVal = 'mua';
+    this.reKindValue = 'mua';
     this.getDistrictList();
+    this.receiveREKind.emit(this.reKindValue);
   }
 
   public onValChange(val: string) {
-    this.selectedVal = val;
+    this.reKindValue = val;
+    this.receiveREKind.emit(this.reKindValue);
   }
   getDistrictList() {
     this.api.getDistrictFromProvinceId(79).subscribe(districtList => {
