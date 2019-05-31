@@ -92,6 +92,7 @@ import { FilterPipe } from './ultility/pipe/filter.pipe';
 import { UserDetailComponent } from './core/ui/user-detail/user-detail.component';
 import { GetCityPipe } from './ultility/pipe/get-city.pipe';
 import { GetDistrictNameFromIdPipe } from './ultility/pipe/get-district-name-from-id.pipe';
+import { ThousandSuffixPipe } from './ultility/pipe/thousand-suffix.pipe';
 
 @NgModule({
   declarations: [
@@ -131,7 +132,8 @@ import { GetDistrictNameFromIdPipe } from './ultility/pipe/get-district-name-fro
     FilterPipe,
     UserDetailComponent,
     GetCityPipe,
-    GetDistrictNameFromIdPipe
+    GetDistrictNameFromIdPipe,
+    ThousandSuffixPipe
   ],
   imports: [
     OwlModule,

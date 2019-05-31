@@ -82,7 +82,7 @@ export class UserComponent implements OnInit {
         error => alert('Delete user failed')
       );
   }
-  goToUserDetail(userId: string){
-    this.router.navigate(['nguoi-dung', userId] )
+  goToUserDetail(userId: string) {
+    this.router.navigate(['nguoi-dung', userId])
   }
 }

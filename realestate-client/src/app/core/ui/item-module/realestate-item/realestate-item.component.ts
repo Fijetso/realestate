@@ -2,6 +2,7 @@ import { GetDistrictNameFromIdPipe } from './../../../../ultility/pipe/get-distr
 import { ApiService } from './../../../../services/api/api.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { CommonService } from 'src/app/services/common/common.service';
 
 @Component({
   selector: 'app-realestate-item',
@@ -9,7 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./realestate-item.component.scss']
 })
 export class RealestateItemComponent implements OnInit {
-  constructor(private router: Router, private api: ApiService, private route: ActivatedRoute) {
+  constructor(private router: Router, private api: ApiService, private route: ActivatedRoute, private common: CommonService) {
     this.getDistrictFromProvinceId();
   }
   @Input() dataItem: any;
@@ -29,7 +30,7 @@ export class RealestateItemComponent implements OnInit {
   goToPage(url: string) {
     this.router.navigate(['/' + url]);
   }
-  onSelected(item: any) {
-    this.router.navigate([':/reType/:reTitle',])
+  onSelect(slug: any) {
+    this.router.navigate(['mua', slug]);
   }
 }

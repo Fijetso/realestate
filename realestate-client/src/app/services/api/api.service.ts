@@ -10,13 +10,14 @@ import { RealEstate } from 'src/app/model/real-estate/real-estate';
   providedIn: 'root'
 })
 export class ApiService {
-  constructor(private http: HttpClient) {
-  }
   rootURL = environment.api.rootURL;
   baseURL = this.rootURL + '/api/';
   userList: Observable<User[]>;
   userURL = this.baseURL + 'users';
   addressURL = this.baseURL + 'addresstree/provinces/';
+  constructor(private http: HttpClient) {
+  }
+
   // User service
   createUser(user: User) {
     return this.http.post<User>(this.userURL, user);
@@ -50,7 +51,7 @@ export class ApiService {
   }
 
   getWardFromDistrictId(provinceId: number, districtId: number) {
-    return this.http.get<Address>(this.addressURL + provinceId + '/district' + districtId + '/ward');
+    return this.http.get<Address>(this.addressURL + provinceId + '/districts/' + districtId + '/ward');
   }
   // get Favorite trade order by fav count
   getFavRealEstate() {
@@ -65,8 +66,10 @@ export class ApiService {
     return this.http.get<RealEstate>(this.baseURL + 'district/' + districtId + '/trades');
   }
 
-  // Request service
-
+  // GetTradeById service
+  getTradeById(tradeId: number) {
+    return this.http.get<RealEstate>(this.baseURL + 'trades/' + tradeId );
+  }
   // Upload Image
   postFile(caption: string, fileToUpload: File) {
     const endpoint = this.baseURL + 'image/upload';
@@ -75,5 +78,14 @@ export class ApiService {
     formData.append('desc', caption);
     return this.http
       .post(endpoint, formData);
+  }
+  getDistrictNameById(provinceId: number, disctrictId: number) {
+    return this.http.get<any>(this.addressURL + provinceId + '/districts/' + disctrictId);
+  }
+  getProvincesById(provinceId: number) {
+    return this.http.get<any>(this.addressURL  + provinceId);
+  }
+  getWardById(provinceId: number, disctrictId: number, wardId: number) {
+    return this.http.get<any>(this.addressURL  + provinceId + '/districts/' + disctrictId + '/wards/' + wardId);
   }
 }

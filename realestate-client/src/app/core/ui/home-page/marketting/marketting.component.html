@@ -4,26 +4,26 @@
       <h2>Tìm Kiếm Mua - Thuê Nhà Tại Real Estate</h2>
     </div>
     <mat-button-toggle-group
-      #group="matButtonToggleGroup"
-      (change)="onValChange(group.value)"
-      [value]="selectedVal"
+      #reKindGroup="matButtonToggleGroup"
+      (change)="onValChange(reKindGroup.value)"
+      [value]="reKindValue"
     >
-      <mat-button-toggle value="buy" active>
+      <mat-button-toggle value="mua" active>
         <mat-icon class="text-white">check</mat-icon>
         Mua
       </mat-button-toggle>
-      <mat-button-toggle value="rent">
+      <mat-button-toggle value="thue">
         <mat-icon class="text-white">check</mat-icon>
         Thuê
       </mat-button-toggle>
     </mat-button-toggle-group>
-    <div class="example-selected-value">Đã chọn: {{ group.value }}</div>
+    <div class="example-selected-value">Đã chọn: {{ reKindGroup.value }}</div>
     <form class="searchForm">
         <mat-form-field class="example-full-width">
-          <input type="text" placeholder="Nhập để tìm kiếm" aria-label="Assignee" matInput [formControl]="myControl" [matAutocomplete]="auto">
-          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-              {{option.name}}
+          <input type="text" placeholder="Nhập để tìm kiếm" aria-label="Assignee" matInput [formControl]="myControl" [matAutocomplete]="auto" [(ngModel)]="stateNameKey" >
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let state of states | filter: stateNameKey" [value]="state.nameWithType">
+              {{state.nameWithType}}
             </mat-option>
           </mat-autocomplete>
           <mat-icon matSuffix role="button" class="icon">search</mat-icon>

@@ -1,5 +1,8 @@
-import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { RealEstate } from 'src/app/model/real-estate/real-estate';
+import { ApiService } from './../../services/api/api.service';
+import { CommonService } from './../../services/common/common.service';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { OwlCarousel } from 'ngx-owl-carousel';
 
 @Component({
@@ -8,31 +11,20 @@ import { OwlCarousel } from 'ngx-owl-carousel';
   styleUrls: ['./real-estate-detail.component.scss']
 })
 export class RealEstateDetailComponent implements OnInit {
-  constructor( private route: ActivatedRoute, private router: Router) {}
+  slug: any;
+  reId: any;
+  tradeData: any;
+  provinceName: string;
+  disctrictName: string;
+  wardName: string;
+  constructor(private route: ActivatedRoute, private api: ApiService, private common: CommonService) {}
   @ViewChild('owlElement') owlElement: OwlCarousel;
-  @Input() dataItem: any;
-  myCarouselImages = [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15,
-    16,
-    17,
-    18,
-    19,
-    20
-  ].map(i => `https://picsum.photos/id/${i}/800/400`);
+  // myCarouselImages = [
+  //   1,
+  //   2,
+  //   3,
+  //   4,
+  // ].map(i => `https://picsum.photos/id/${i}/800/400`);
   carouselOptions = {
     margin: 14,
     responsiveClass: true,
@@ -46,9 +38,6 @@ export class RealEstateDetailComponent implements OnInit {
     autoplayTimeout: 1500,
     autoplayHoverPause: true,
     loop: true,
-    // animateOut: 'slideOutDown',
-    // animateIn: 'flipInX',
-    // stagePadding:30,
     responsive: {
       0: {
         items: 1
@@ -65,12 +54,48 @@ export class RealEstateDetailComponent implements OnInit {
     }
   };
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      // this.slug = this.common.changeToSlug(params.get('slug'));
+      // this.reId = params.get('id');
+      this.slug = params.get('slug');
+      if (this.slug) {
+        this.getTradeById(this.slug);
+      }
+    });
+  }
 
   onPrevious() {
     this.owlElement.previous();
   }
   onNext() {
     this.owlElement.next();
+  }
+
+  getTradeById(tradeId: number) {
+    this.api.getTradeById(tradeId).subscribe(trade => {
+      this.tradeData = trade;
+      this.getProvinceName(this.tradeData.address.cityOrProvince);
+      this.getDistrictName(this.tradeData.address.cityOrProvince, this.tradeData.address.district);
+      this.getWardName(this.tradeData.address.cityOrProvince, this.tradeData.address.district, this.tradeData.address.ward);
+    });
+  }
+  getDistrictName(provinceId: number, districtId: number) {
+    this.api.getDistrictNameById(provinceId, districtId).subscribe(district => {
+      this.disctrictName = district.nameWithType;
+      // console.log( this.disctrictName);
+    });
+  }
+  getProvinceName(provinceId: number) {
+    this.api.getProvincesById(provinceId).subscribe(province => {
+      this.provinceName = province.nameWithType;
+      // console.log( this.provinceName);
+    });
+  }
+  getWardName(provinceId: number, districtId: number, wardId: number) {
+    this.api.getWardById(provinceId, districtId, wardId).subscribe(ward => {
+      this.wardName = ward.nameWithType;
+      // console.log( this.wardName);
+    });
   }
 }

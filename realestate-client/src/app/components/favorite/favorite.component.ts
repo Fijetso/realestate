@@ -16,7 +16,7 @@ export class FavoriteComponent implements OnInit {
   ngOnInit() {
     this.getFavTrade();
   }
-  getFavTrade(){
+  getFavTrade() {
     this.api.getFavRealEstate().subscribe(favList => {
         this.dataFavorite = favList;
     });
