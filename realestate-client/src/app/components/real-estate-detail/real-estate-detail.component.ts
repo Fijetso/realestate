@@ -14,15 +14,18 @@ export class RealEstateDetailComponent implements OnInit {
   slug: any;
   reId: any;
   tradeData: any;
+  provinceName: string;
+  disctrictName: string;
+  wardName: string;
   constructor(private route: ActivatedRoute, private api: ApiService, private common: CommonService) {}
   @ViewChild('owlElement') owlElement: OwlCarousel;
-  myCarouselImages = [
-    1,
-    2,
-    3,
-    4,
-  ].map(i => `https://picsum.photos/id/${i}/800/400`);
-  myCarouselOptions = {
+  // myCarouselImages = [
+  //   1,
+  //   2,
+  //   3,
+  //   4,
+  // ].map(i => `https://picsum.photos/id/${i}/800/400`);
+  carouselOptions = {
     margin: 14,
     responsiveClass: true,
     nav: false,
@@ -55,7 +58,7 @@ export class RealEstateDetailComponent implements OnInit {
     this.route.paramMap.subscribe((params: ParamMap) => {
       // this.slug = this.common.changeToSlug(params.get('slug'));
       // this.reId = params.get('id');
-      this.slug= params.get('slug');
+      this.slug = params.get('slug');
       if (this.slug) {
         this.getTradeById(this.slug);
       }
@@ -72,7 +75,27 @@ export class RealEstateDetailComponent implements OnInit {
   getTradeById(tradeId: number) {
     this.api.getTradeById(tradeId).subscribe(trade => {
       this.tradeData = trade;
-      console.log(this.tradeData);
+      this.getProvinceName(this.tradeData.address.cityOrProvince);
+      this.getDistrictName(this.tradeData.address.cityOrProvince, this.tradeData.address.district);
+      this.getWardName(this.tradeData.address.cityOrProvince, this.tradeData.address.district, this.tradeData.address.ward);
+    });
+  }
+  getDistrictName(provinceId: number, districtId: number) {
+    this.api.getDistrictNameById(provinceId, districtId).subscribe(district => {
+      this.disctrictName = district.nameWithType;
+      // console.log( this.disctrictName);
+    });
+  }
+  getProvinceName(provinceId: number) {
+    this.api.getProvincesById(provinceId).subscribe(province => {
+      this.provinceName = province.nameWithType;
+      // console.log( this.provinceName);
+    });
+  }
+  getWardName(provinceId: number, districtId: number, wardId: number) {
+    this.api.getWardById(provinceId, districtId, wardId).subscribe(ward => {
+      this.wardName = ward.nameWithType;
+      // console.log( this.wardName);
     });
   }
 }

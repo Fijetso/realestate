@@ -51,7 +51,7 @@ export class ApiService {
   }
 
   getWardFromDistrictId(provinceId: number, districtId: number) {
-    return this.http.get<Address>(this.addressURL + provinceId + '/district' + districtId + '/ward');
+    return this.http.get<Address>(this.addressURL + provinceId + '/districts/' + districtId + '/ward');
   }
   // get Favorite trade order by fav count
   getFavRealEstate() {
@@ -67,7 +67,7 @@ export class ApiService {
   }
 
   // GetTradeById service
-  getTradeById(tradeId: number){
+  getTradeById(tradeId: number) {
     return this.http.get<RealEstate>(this.baseURL + 'trades/' + tradeId );
   }
   // Upload Image
@@ -78,5 +78,14 @@ export class ApiService {
     formData.append('desc', caption);
     return this.http
       .post(endpoint, formData);
+  }
+  getDistrictNameById(provinceId: number, disctrictId: number) {
+    return this.http.get<any>(this.addressURL + provinceId + '/districts/' + disctrictId);
+  }
+  getProvincesById(provinceId: number) {
+    return this.http.get<any>(this.addressURL  + provinceId);
+  }
+  getWardById(provinceId: number, disctrictId: number, wardId: number) {
+    return this.http.get<any>(this.addressURL  + provinceId + '/districts/' + disctrictId + '/wards/' + wardId);
   }
 }

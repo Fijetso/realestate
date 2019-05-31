@@ -1,7 +1,7 @@
 <div class="container-fluid re-detail-wrapper">
     <!-- <pre>{{ tradeData | json}}</pre> -->
   <div class="re-detail-path-header">
-    <span class="area-left">Trang chủ / Tp.HCM / Nhà Quận 12</span>
+    <span class="area-left">Trang chủ / {{provinceName}} / {{disctrictName}}</span>
     <div class="area-right">
       <span class="mr-2">Mã tin đăng : {{tradeData.id}}</span>
       <span class="mx-2"><i class="fas fa-eye icon"></i> 1866</span>
@@ -19,10 +19,11 @@
           <!-- <img src="https://picsum.photos/id/237/1080/500" alt="" /> -->
           <owl-carousel
             #owlElement
-            [options]="myCarouselOptions"
+            [options]="carouselOptions"
             [items]="tradeData.realImages"
             [carouselClasses]="['owl-theme', 'sliding']"
             class="carousel-container"
+            *ngIf="tradeData.realImages"
           >
             <div
               class="carousel-wrapper"
@@ -56,11 +57,11 @@
                   <p class="re-inline p-district">
                     <a
                       href="/mua/ban-nha-rieng-quan-12?src=detail_district_list"
-                      ><span>Q.12</span></a
+                      ><span>{{disctrictName}}</span></a
                     >
                     <a
                       href="/mua/ban-nha-rieng-quan-12-phuong-tan-chanh-hiep?src=detail_ward_list"
-                      ><span>P.Tân Chánh Hiệp</span></a
+                      ><span>{{wardName}}</span></a
                     >
                   </p>
                 </div>
