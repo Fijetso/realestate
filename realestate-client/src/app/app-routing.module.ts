@@ -13,14 +13,14 @@ import { CreatePostComponent } from './core/ui/create-post/create-post.component
 import { UserDetailComponent } from './core/ui/user-detail/user-detail.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'trang-chu', pathMatch: 'full' },
+  // { path: '', redirectTo: 'trang-chu', pathMatch: 'full' },
   {
-    path: 'trang-chu',
+    path: '',
     component: RealestateListComponent,
     data: { title: 'Tiêu đề trang chủ' }
   },
   {
-    path: 'chi-tiet',
+    path: 'mua',
     component: RealEstateDetailComponent,
     data: { title: 'Chi tiết bất động sản' }
   },

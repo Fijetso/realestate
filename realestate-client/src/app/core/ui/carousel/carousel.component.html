@@ -1,10 +1,45 @@
+<!-- Appraised -->
 <owl-carousel
   [options]="carouselOptions"
-  [items]="dataSource"
+  [items]="dataAppraised"
   [carouselClasses]="['owl-theme', 'sliding']"
+  *ngIf="isAppraised"
 >
-  <div class="carousel-wrapper" *ngFor="let dataItem of dataSource; let i = index">
-        <app-realestate-item [dataItem] ="dataItem"></app-realestate-item>
+  <div class="carousel-wrapper" *ngFor="let dataItem of dataAppraised; let i = index">
+        <app-realestate-item [dataItem] ="dataItem" [isAppraised]="isAppraised"></app-realestate-item>
+  </div>
+</owl-carousel>
+<!-- Hot RE -->
+<owl-carousel
+  [options]="carouselOptions"
+  [items]="dataHotRE"
+  [carouselClasses]="['owl-theme', 'sliding']"
+  *ngIf="isHotRE"
+>
+  <div class="carousel-wrapper" *ngFor="let dataItem of dataHotRE; let i = index">
+        <app-realestate-item [dataItem] ="dataItem" [isHotRE]="isHotRE"></app-realestate-item>
+  </div>
+</owl-carousel>
+<!-- FavRealEstate -->
+<owl-carousel
+  [options]="carouselOptions"
+  [items]="dataFavorite"
+  [carouselClasses]="['owl-theme', 'sliding']"
+  *ngIf="isFavRE"
+>
+  <div class="carousel-wrapper" *ngFor="let dataItem of dataFavorite; let i = index">
+        <app-realestate-item [dataItem] ="dataItem" [isFavRE]="isFavRE"></app-realestate-item>
+  </div>
+</owl-carousel>
+<!-- Trading area -->
+<owl-carousel
+  [options]="carouselOptions"
+  [items]="dataTradingArea"
+  [carouselClasses]="['owl-theme', 'sliding']"
+  *ngIf="isTradingArea"
+>
+  <div class="carousel-wrapper" *ngFor="let place of dataTradingArea; let i = index">
+        <app-hot-place-item  [place] ="place"></app-hot-place-item>
   </div>
 </owl-carousel>
 

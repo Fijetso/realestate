@@ -5,7 +5,14 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./carousel.component.scss']
 })
 export class CarouselComponent implements OnInit {
-  @Input() dataSource: any;
+  @Input() dataAppraised: any;
+  @Input() isAppraised;
+  @Input() dataTradingArea: any;
+  @Input() isTradingArea;
+  @Input() dataFavorite: any;
+  @Input() isFavRE;
+  @Input() dataHotRE: any;
+  @Input() isHotRE;
   carouselOptions = {
     margin: 14,
     responsiveClass: true,

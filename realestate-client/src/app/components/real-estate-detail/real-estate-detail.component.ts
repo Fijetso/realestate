@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { OwlCarousel } from 'ngx-owl-carousel';
 
 @Component({
@@ -7,8 +8,9 @@ import { OwlCarousel } from 'ngx-owl-carousel';
   styleUrls: ['./real-estate-detail.component.scss']
 })
 export class RealEstateDetailComponent implements OnInit {
-  constructor() {}
+  constructor( private route: ActivatedRoute, private router: Router) {}
   @ViewChild('owlElement') owlElement: OwlCarousel;
+  @Input() dataItem: any;
   myCarouselImages = [
     1,
     2,
@@ -31,7 +33,7 @@ export class RealEstateDetailComponent implements OnInit {
     19,
     20
   ].map(i => `https://picsum.photos/id/${i}/800/400`);
-  myCarouselOptions = {
+  carouselOptions = {
     margin: 14,
     responsiveClass: true,
     nav: false,
