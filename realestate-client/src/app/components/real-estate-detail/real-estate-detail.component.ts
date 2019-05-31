@@ -1,3 +1,7 @@
+import { RealEstate } from 'src/app/model/real-estate/real-estate';
+import { ApiService } from './../../services/api/api.service';
+import { CommonService } from './../../services/common/common.service';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { OwlCarousel } from 'ngx-owl-carousel';
 
@@ -7,29 +11,16 @@ import { OwlCarousel } from 'ngx-owl-carousel';
   styleUrls: ['./real-estate-detail.component.scss']
 })
 export class RealEstateDetailComponent implements OnInit {
-  constructor() {}
+  slug: any;
+  reId: any;
+  tradeData: any;
+  constructor(private route: ActivatedRoute, private api: ApiService, private common: CommonService) {}
   @ViewChild('owlElement') owlElement: OwlCarousel;
   myCarouselImages = [
     1,
     2,
     3,
     4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15,
-    16,
-    17,
-    18,
-    19,
-    20
   ].map(i => `https://picsum.photos/id/${i}/800/400`);
   myCarouselOptions = {
     margin: 14,
@@ -44,9 +35,6 @@ export class RealEstateDetailComponent implements OnInit {
     autoplayTimeout: 1500,
     autoplayHoverPause: true,
     loop: true,
-    // animateOut: 'slideOutDown',
-    // animateIn: 'flipInX',
-    // stagePadding:30,
     responsive: {
       0: {
         items: 1
@@ -63,12 +51,28 @@ export class RealEstateDetailComponent implements OnInit {
     }
   };
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      // this.slug = this.common.changeToSlug(params.get('slug'));
+      // this.reId = params.get('id');
+      this.slug= params.get('slug');
+      if (this.slug) {
+        this.getTradeById(this.slug);
+      }
+    });
+  }
 
   onPrevious() {
     this.owlElement.previous();
   }
   onNext() {
     this.owlElement.next();
+  }
+
+  getTradeById(tradeId: number) {
+    this.api.getTradeById(tradeId).subscribe(trade => {
+      this.tradeData = trade;
+      console.log(this.tradeData);
+    });
   }
 }

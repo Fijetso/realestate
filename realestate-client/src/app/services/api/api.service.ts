@@ -10,13 +10,14 @@ import { RealEstate } from 'src/app/model/real-estate/real-estate';
   providedIn: 'root'
 })
 export class ApiService {
-  constructor(private http: HttpClient) {
-  }
   rootURL = environment.api.rootURL;
   baseURL = this.rootURL + '/api/';
   userList: Observable<User[]>;
   userURL = this.baseURL + 'users';
   addressURL = this.baseURL + 'addresstree/provinces/';
+  constructor(private http: HttpClient) {
+  }
+
   // User service
   createUser(user: User) {
     return this.http.post<User>(this.userURL, user);
@@ -65,8 +66,10 @@ export class ApiService {
     return this.http.get<RealEstate>(this.baseURL + 'district/' + districtId + '/trades');
   }
 
-  // Request service
-
+  // GetTradeById service
+  getTradeById(tradeId: number){
+    return this.http.get<RealEstate>(this.baseURL + 'trades/' + tradeId );
+  }
   // Upload Image
   postFile(caption: string, fileToUpload: File) {
     const endpoint = this.baseURL + 'image/upload';
