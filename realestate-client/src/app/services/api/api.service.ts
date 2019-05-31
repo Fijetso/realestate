@@ -1,8 +1,10 @@
+import { Address } from './../../model/address/address';
 import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/model/user/user';
 import { HttpClient } from '@angular/common/http';
+import { RealEstate } from 'src/app/model/real-estate/real-estate';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +16,7 @@ export class ApiService {
   baseURL = this.rootURL + '/api/';
   userList: Observable<User[]>;
   userURL = this.baseURL + 'users';
+  addressURL = this.baseURL + 'addresstree/provinces/';
   // User service
   createUser(user: User) {
     return this.http.post<User>(this.userURL, user);
@@ -33,9 +36,34 @@ export class ApiService {
   updateUser(user: User, id: number) {
     return this.http.put<User>(this.userURL + '/' + id, user);
   }
-  // Post service
+  // RealEstate service
+  getAllRealEstate() {
+    return this.http.get<RealEstate[]>(this.baseURL + 'trades');
+  }
+  // Address service
+  getProvinces() {
+    return this.http.get<Address>(this.addressURL);
+  }
 
-  // News service
+  getDistrictFromProvinceId(provinceId: number) {
+    return this.http.get<Address>(this.addressURL + provinceId + '/district' );
+  }
+
+  getWardFromDistrictId(provinceId: number, districtId: number) {
+    return this.http.get<Address>(this.addressURL + provinceId + '/district' + districtId + '/ward');
+  }
+  // get Favorite trade order by fav count
+  getFavRealEstate() {
+    return this.http.get<RealEstate>(this.baseURL + 'trades');
+  }
+  // get hot real estate : order by view count;
+  getHotRealEstate() {
+    return this.http.get<RealEstate>(this.baseURL + 'trades');
+  }
+  // get Trade by District
+  findTradeByDistrict(districtId: number) {
+    return this.http.get<RealEstate>(this.baseURL + 'district/' + districtId + '/trades');
+  }
 
   // Request service
 

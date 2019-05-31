@@ -4,28 +4,31 @@ import { auth } from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { User } from 'firebase';
 import { Observable } from 'rxjs';
+import * as firebase from 'firebase';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  user: Observable<User>;
   constructor(public afAuth: AngularFireAuth, public router: Router) {
     this.afAuth.authState.subscribe(user => {
-      if (user) {
-        this.user = afAuth.authState;
-        localStorage.setItem('isLogged', JSON.stringify(this.user));
-      } else {
-        localStorage.setItem('isLogged', null);
-      }
+        this.writeUserInfor();
     });
+    this.getUserLogin();
+  }
+  get isLoggedIn(): boolean {
+    const user = JSON.parse(localStorage.getItem('userInfor'));
+    return user !== null;
+  }
+  user: Observable<User>;
+  async getUserLogin() {
+    return await JSON.parse(localStorage.getItem('userInfor'));
   }
   async loginWithEmailPassWord(email: string, password: string) {
     const result = await this.afAuth.auth.signInWithEmailAndPassword(
       email,
       password
     );
-    // this.router.navigate(['trang-chu']);
-    return result;
+    return result.user;
   }
   async sendEmailVerification() {
     await this.afAuth.auth.currentUser.sendEmailVerification();
@@ -44,18 +47,26 @@ export class AuthenticationService {
   async logOut() {
     return await this.afAuth.auth.signOut();
   }
-  get isLoggedIn(): boolean {
-    const user = JSON.parse(localStorage.getItem('userInfor'));
-    return user !== null;
-  }
   async loginWithGoogle() {
     return await this.afAuth.auth.signInWithPopup(
       new auth.GoogleAuthProvider()
-    )
+    );
   }
   async loginWithFacebook() {
     return await this.afAuth.auth.signInWithPopup(
       new auth.FacebookAuthProvider()
+    );
+  }
+
+  async writeUserInfor() {
+    firebase.auth().onAuthStateChanged(
+      user => {
+        if (user) {
+          localStorage.setItem('userInfor', JSON.stringify(user.providerData[0]));
+        } else {
+          localStorage.setItem('userInfor', null);
+        }
+      }
     );
   }
 }

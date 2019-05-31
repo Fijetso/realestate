@@ -14,7 +14,7 @@ export class CreatePostComponent implements OnInit {
   formPost: any;
   imageUrl = '../../../../assets/images/default.png';
   fileToUpload: File = null;
-  constructor(private http: HttpClient, private api:ApiService) {
+  constructor(private http: HttpClient, private api: ApiService) {
     this.post = {
       name: '',
       email: '',
