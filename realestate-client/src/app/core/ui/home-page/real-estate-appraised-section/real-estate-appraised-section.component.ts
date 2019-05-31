@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class RealEstateAppraisedSectionComponent implements OnInit {
 
   dataAppraised: any = null;
-  appraised= true;
+  appraised = true;
   constructor(private api: ApiService) { }
   ngOnInit() {
     this.getAllRealEstate();

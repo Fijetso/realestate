@@ -13,7 +13,7 @@ export class RealestateItemComponent implements OnInit {
     this.getDistrictFromProvinceId();
   }
   @Input() dataItem: any;
-  @Input() isAppraied: boolean;
+  @Input() isAppraised: boolean;
   districtList: any;
   mainPic = 'https://picsum.photos/255/150';
   defaultPic = 'https://dummyimage.com/255x150/333/fff';
