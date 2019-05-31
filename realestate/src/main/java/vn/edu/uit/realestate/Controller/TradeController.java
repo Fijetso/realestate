@@ -54,8 +54,8 @@ public class TradeController {
     	return new ResponseEntity<>(HttpStatus.OK);
     }
     @GetMapping("/trades/{id}/addviewcount")
-    public ResponseEntity<?> addViewCountById(@PathVariable long id){
-    	tradeService.addViewToTrade(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Long> addViewCountById(@PathVariable long id){
+    	Long viewCount = tradeService.addViewToTrade(id);
+        return new ResponseEntity<>(viewCount, HttpStatus.OK);
      }
 }

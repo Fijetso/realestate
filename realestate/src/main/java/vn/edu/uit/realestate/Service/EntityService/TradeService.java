@@ -17,12 +17,10 @@ import vn.edu.uit.realestate.DataAccess.AddressRepository;
 import vn.edu.uit.realestate.DataAccess.BluePrintRepository;
 import vn.edu.uit.realestate.DataAccess.BookingRepository;
 import vn.edu.uit.realestate.DataAccess.DetailsRepository;
-import vn.edu.uit.realestate.DataAccess.ImageRepository;
 import vn.edu.uit.realestate.DataAccess.RealImageRepository;
 import vn.edu.uit.realestate.DataAccess.TradeRepository;
 import vn.edu.uit.realestate.Model.BluePrint;
 import vn.edu.uit.realestate.Model.Booking;
-import vn.edu.uit.realestate.Model.Image;
 import vn.edu.uit.realestate.Model.RealImage;
 import vn.edu.uit.realestate.Model.Trade;
 import vn.edu.uit.realestate.Service.IEntityService;
@@ -113,13 +111,13 @@ public class TradeService implements IEntityService {
 		booking.setTrade(foundTrade.get());
 		bookingRepository.save(booking);
 	}
-	public void addViewToTrade(Long tradeId) {
+	public Long addViewToTrade(Long tradeId) {
 		Optional<Trade> foundTrade = tradeRepository.findById(tradeId);
 		if (foundTrade.isPresent() == false) {
 			throw new NotFoundException("Cannot find any Trade with id=" + tradeId);
 		}
 		tradeRepository.increaseViewCountById(tradeId);
-//		return tradeRepository.getViewCountById(tradeId);
+		return foundTrade.get().getViewCount()+1;
 	}
 //	public MappingJacksonValue findAllTradeByUserId(Long userId) {
 //		Optional<User> foundUser = userRepository.findById(userId);
