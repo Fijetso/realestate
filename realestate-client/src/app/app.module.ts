@@ -60,6 +60,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ToastrModule } from 'ngx-toastr';
+import { CKEditorModule } from 'ng2-ckeditor';
 
 import { RealEstateWrapperComponent } from './components/real-estate/real-estate-wrapper/real-estate-wrapper.component';
 import { AlertComponent } from './core/modal/alert/alert.component';
@@ -186,7 +187,8 @@ import { AccountManagementComponent } from './ui/core/account-management/account
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     Ng2SearchPipeModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    CKEditorModule
   ],
   providers: [
     AuthenticationService,
