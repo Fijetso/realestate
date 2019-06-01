@@ -15,6 +15,7 @@ export class ApiService {
   userList: Observable<User[]>;
   userURL = this.baseURL + 'users';
   addressURL = this.baseURL + 'addresstree/provinces/';
+  data = null;
   constructor(private http: HttpClient) {
   }
 
@@ -85,7 +86,17 @@ export class ApiService {
   getProvincesById(provinceId: number) {
     return this.http.get<any>(this.addressURL  + provinceId);
   }
+  // getWardById
   getWardById(provinceId: number, disctrictId: number, wardId: number) {
     return this.http.get<any>(this.addressURL  + provinceId + '/districts/' + disctrictId + '/wards/' + wardId);
+  }
+  getTradeFromDistrict(districtId: any) {
+    return this.http.get<any>(this.baseURL + 'districts/' + districtId + '/trades');
+  }
+  setData(data: any){
+    this.data = data;
+  }
+  getData() {
+    return this.data;
   }
 }

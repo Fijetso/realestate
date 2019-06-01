@@ -11,6 +11,7 @@ import { RealEstateDetailComponent } from './components/real-estate-detail/real-
 import { RegisterComponent } from './core/ui/register/register.component';
 import { CreatePostComponent } from './core/ui/create-post/create-post.component';
 import { UserDetailComponent } from './core/ui/user-detail/user-detail.component';
+import { SearchPageComponent } from './core/ui/search-page/search-page.component';
 
 const routes: Routes = [
   {
@@ -57,6 +58,11 @@ const routes: Routes = [
     path: 'nguoi-dung/:id',
     component: UserDetailComponent,
     data: { title: 'Chi tiết người dùng' }
+  },
+  {
+    path: 'tim-kiem/:id',
+    component: SearchPageComponent,
+    data: { title: 'Tìm kiếm BĐS' }
   },
   {
     path: '**',

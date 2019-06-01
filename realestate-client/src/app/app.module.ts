@@ -1,3 +1,4 @@
+import { HttpErrorInterceptor } from './services/common/http-error.interceptor';
 import { environment } from './../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
@@ -48,7 +49,7 @@ import {
 } from '@angular/material';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient,HTTP_INTERCEPTORS } from '@angular/common/http';
 import 'hammerjs';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -58,6 +59,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { ToastrModule } from 'ngx-toastr';
 
 import { RealEstateWrapperComponent } from './components/real-estate/real-estate-wrapper/real-estate-wrapper.component';
 import { AlertComponent } from './core/modal/alert/alert.component';
@@ -93,6 +95,8 @@ import { UserDetailComponent } from './core/ui/user-detail/user-detail.component
 import { GetCityPipe } from './ultility/pipe/get-city.pipe';
 import { GetDistrictNameFromIdPipe } from './ultility/pipe/get-district-name-from-id.pipe';
 import { ThousandSuffixPipe } from './ultility/pipe/thousand-suffix.pipe';
+import { SearchPageComponent } from './core/ui/search-page/search-page.component';
+import { AccountManagementComponent } from './ui/core/account-management/account-management.component';
 
 @NgModule({
   declarations: [
@@ -133,7 +137,9 @@ import { ThousandSuffixPipe } from './ultility/pipe/thousand-suffix.pipe';
     UserDetailComponent,
     GetCityPipe,
     GetDistrictNameFromIdPipe,
-    ThousandSuffixPipe
+    ThousandSuffixPipe,
+    SearchPageComponent,
+    AccountManagementComponent
   ],
   imports: [
     OwlModule,
@@ -179,11 +185,17 @@ import { ThousandSuffixPipe } from './ultility/pipe/thousand-suffix.pipe';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     AuthenticationService,
-    ApiService
+    ApiService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],
