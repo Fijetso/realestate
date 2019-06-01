@@ -101,24 +101,24 @@
         <mat-form-field>
           <mat-label>Tỉnh/Tp</mat-label>
           <mat-select [(ngModel)]="post.diaChi.tinh" name="tinh">
-            <mat-option value="Hồ Chí Minh" name="tinhItem">
-              Hồ Chí Minh
+            <mat-option [value]="province.id" name="tinhItem">
+              {{province.name}}
             </mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Quận/Huyện</mat-label>
           <mat-select [(ngModel)]="post.diaChi.huyen" name="huyen">
-            <mat-option *ngFor="let huyen of states" [value]="huyen.name">
-              {{ huyen.name }}
+            <mat-option *ngFor="let huyen of districtList" [value]="huyen.id">
+              {{ huyen.nameWithType }}
             </mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Phường xã</mat-label>
           <mat-select [(ngModel)]="post.diaChi.xa" name="xa">
-            <mat-option *ngFor="let xa of xaList" [value]="xa">
-              {{ xa }}
+            <mat-option *ngFor="let xa of wardList" [value]="xa.id">
+              {{ xa.nameWithType }}
             </mat-option>
           </mat-select>
         </mat-form-field>
