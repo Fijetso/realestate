@@ -25,7 +25,7 @@ export class CarouselComponent implements OnInit {
     autoplay: false,
     autoplayTimeout: 1000,
     autoplayHoverPause: true,
-    loop: true,
+    loop: false,
     responsive: {
         0: {
             items: 1,
