@@ -111,6 +111,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>Quận/Huyện</mat-label>
+          <!-- districtId not receive -->
           <mat-select [(ngModel)]="post.address.district" name="district" (ngModelChange)="getWardFromDisctrictId(province.id,762)">
             <mat-option [value]="0">
                   Chọn quận/ huyện
