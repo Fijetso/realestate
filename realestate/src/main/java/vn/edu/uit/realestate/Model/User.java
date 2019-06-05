@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Past;
@@ -42,32 +40,18 @@ public class User {
 	private UserKind userKind;
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
 	private List<Trade> trades = new ArrayList<Trade>();
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                CascadeType.PERSIST,
-                CascadeType.MERGE
-            },
-            mappedBy = "favoriteUsers")
-    private List<Trade> favoriteTrades = new ArrayList<Trade>();
+//    @ManyToMany(fetch = FetchType.LAZY,
+//            cascade = {
+//                CascadeType.PERSIST,
+//                CascadeType.MERGE
+//            },
+//            mappedBy = "favoriteUsers")
+//    private List<Trade> favoriteTrades = new ArrayList<Trade>();
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	private List<FavoriteTrade> favoriteTrades;
 	public User() {
 		super();
 	}	
-
-	public User(Long id, @Size(min = 2, message = "Name should have at least 2 characters") String name,
-			@Email(message = "It seems Email cannot recognized") String email, String phone, String password,
-			@Past(message = "BirthDate must be in the past") Date birthdate, boolean gender, UserKind userKind,
-			List<Trade> trades) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.phone = phone;
-		this.password = password;
-		this.birthdate = birthdate;
-		this.gender = gender;
-		this.userKind = userKind;
-		this.trades = trades;
-	}
 
 	public Long getId() {
 		return id;
@@ -140,5 +124,12 @@ public class User {
 	public void setTrades(List<Trade> trades) {
 		this.trades = trades;
 	}
-	
+
+	public List<FavoriteTrade> getFavoriteTrades() {
+		return favoriteTrades;
+	}
+
+	public void setFavoriteTrades(List<FavoriteTrade> favoriteTrades) {
+		this.favoriteTrades = favoriteTrades;
+	}
 }

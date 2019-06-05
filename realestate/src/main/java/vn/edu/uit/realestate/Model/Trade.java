@@ -3,14 +3,11 @@ package vn.edu.uit.realestate.Model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -57,15 +54,17 @@ public class Trade {
 	@JoinColumn(name="bookingId", referencedColumnName = "id")
 	private  List<Booking> bookings = new ArrayList<Booking>();
 	
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                CascadeType.PERSIST,
-                CascadeType.MERGE
-            })
-	@JoinTable(name = "FavoriteTrade",
-            joinColumns = { @JoinColumn(name = "tradeId") },
-            inverseJoinColumns = { @JoinColumn(name = "userId") })
-	private List<User> favoriteUsers = new ArrayList<User>();
+//    @ManyToMany(fetch = FetchType.LAZY,
+//            cascade = {
+//                CascadeType.PERSIST,
+//                CascadeType.MERGE
+//            })
+//	@JoinTable(name = "FavoriteTrade",
+//            joinColumns = { @JoinColumn(name = "tradeId") },
+//            inverseJoinColumns = { @JoinColumn(name = "userId") })
+//	private List<User> favoriteUsers = new ArrayList<User>();
+	@OneToMany(mappedBy="trade", fetch=FetchType.LAZY)
+	private List<FavoriteTrade> favoriteTrades;
     
 	public Trade() {
 		super();
@@ -167,11 +166,11 @@ public class Trade {
 		this.viewCount = viewCount;
 	}
 
-	public List<User> getFavoriteUsers() {
-		return favoriteUsers;
+	public List<FavoriteTrade> getFavoriteTrades() {
+		return favoriteTrades;
 	}
 
-	public void setFavoriteUsers(List<User> favoriteUsers) {
-		this.favoriteUsers = favoriteUsers;
+	public void setFavoriteTrades(List<FavoriteTrade> favoriteTrades) {
+		this.favoriteTrades = favoriteTrades;
 	}
 }
