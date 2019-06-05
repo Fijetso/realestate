@@ -24,10 +24,10 @@ export class CreatePostComponent implements OnInit {
       email: '',
       reKind: 'Căn hộ/ Chung cư',
       dob: '',
-      diaChi: {
-        tinh: 79,
-        huyen: 762,
-        xa: 26800
+      address: {
+        province: 0,
+        district: 0,
+        ward: 0
       },
       price: null,
       currency: 'VNĐ',
@@ -46,7 +46,6 @@ export class CreatePostComponent implements OnInit {
   getProvince(provinceId: number) {
     this.api.getProvincesById(provinceId).subscribe(province => {
       this.province = province;
-      this.getDistrictFromProvince(provinceId);
     });
   }
 
@@ -55,7 +54,7 @@ export class CreatePostComponent implements OnInit {
       this.districtList = districtList;
     });
   }
-  getWardFromDisctrictid(provinceId: number, districtId: number) {
+  getWardFromDisctrictId(provinceId: number, districtId: number) {
     this.api.getWardFromDistrictId(provinceId, districtId).subscribe(wardList => {
       this.wardList = wardList;
     });

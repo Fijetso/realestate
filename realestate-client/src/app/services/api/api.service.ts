@@ -52,7 +52,7 @@ export class ApiService {
   }
 
   getWardFromDistrictId(provinceId: number, districtId: number) {
-    return this.http.get<Address>(this.addressURL + provinceId + '/districts/' + districtId + '/ward');
+    return this.http.get<Address>(this.addressURL + provinceId + '/districts/' + districtId + '/wards');
   }
   // get Favorite trade order by fav count
   getFavRealEstate() {

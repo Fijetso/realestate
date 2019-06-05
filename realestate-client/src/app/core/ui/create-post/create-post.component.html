@@ -97,28 +97,37 @@
         </mat-radio-button>
       </mat-radio-group>
       <h5>Địa chỉ đăng tin</h5>
-      <fieldset class="dia-chi row" ngModelGroup="diaChi">
+      <fieldset class="dia-chi row" ngModelGroup="address">
         <mat-form-field>
           <mat-label>Tỉnh/Tp</mat-label>
-          <mat-select [(ngModel)]="post.diaChi.tinh" name="tinh">
-            <mat-option [value]="province.id" name="tinhItem">
+          <mat-select [(ngModel)]="post.address.province" name="province" (ngModelChange)="getDistrictFromProvince(province.id)">
+            <mat-option [value]="0">
+                  Chọn Tỉnh
+            </mat-option>
+            <mat-option [value]="province.id" name="provinceItem">
               {{province.name}}
             </mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Quận/Huyện</mat-label>
-          <mat-select [(ngModel)]="post.diaChi.huyen" name="huyen">
-            <mat-option *ngFor="let huyen of districtList" [value]="huyen.id">
-              {{ huyen.nameWithType }}
+          <mat-select [(ngModel)]="post.address.district" name="district" (ngModelChange)="getWardFromDisctrictId(province.id,762)">
+            <mat-option [value]="0">
+                  Chọn quận/ huyện
+            </mat-option>
+            <mat-option *ngFor="let district of districtList" [value]="district.id" name="districtItem">
+              {{ district.nameWithType }} -  {{district.id}}
             </mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Phường xã</mat-label>
-          <mat-select [(ngModel)]="post.diaChi.xa" name="xa">
-            <mat-option *ngFor="let xa of wardList" [value]="xa.id">
-              {{ xa.nameWithType }}
+          <mat-select [(ngModel)]="post.address.ward" name="ward">
+              <mat-option [value]="0">
+                  Chọn phường xã
+            </mat-option>
+            <mat-option *ngFor="let ward of wardList" [value]="ward.id">
+              {{ ward.nameWithType }}
             </mat-option>
           </mat-select>
         </mat-form-field>
