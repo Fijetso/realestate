@@ -12,6 +12,7 @@ export class RealestateItemComponent implements OnInit {
   constructor(private router: Router, private api: ApiService, private route: ActivatedRoute) {
     this.getDistrictFromProvinceId();
   }
+  dataLoaded = false;
   @Input() dataItem: any;
   @Input() isAppraised: boolean;
   districtList: any;
@@ -24,6 +25,7 @@ export class RealestateItemComponent implements OnInit {
   getDistrictFromProvinceId() {
    this.api.getDistrictFromProvinceId(79).subscribe(res => {
      this.districtList = res;
+     this.dataLoaded = true;
    });
   }
   goToPage(url: string) {
