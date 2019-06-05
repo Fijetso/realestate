@@ -73,7 +73,7 @@ img{
   padding: 1rem;
 }
 .btn-bg-faded-blue{
-  background-color: #3B5998;
+  background-color: #ff9800;
   color:white;
   border-radius: 2rem !important;
   outline: none !important;
@@ -81,6 +81,10 @@ img{
 .btn-bg-faded-blue:hover{
   box-shadow: -1px 10px 29px 0px rgba(0, 0, 0, 0.2);
   font-weight:600;
+}
+.rs-desc{
+  color: #ff9800;
+  font-weight: 500;
 }
 // Skeleton 
 h2:empty, h3:empty, h4:empty, h5:empty, p:empty, a:empty, img:empty,span:empty {

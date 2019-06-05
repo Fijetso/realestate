@@ -97,7 +97,7 @@ import { GetCityPipe } from './ultility/pipe/get-city.pipe';
 import { GetDistrictNameFromIdPipe } from './ultility/pipe/get-district-name-from-id.pipe';
 import { ThousandSuffixPipe } from './ultility/pipe/thousand-suffix.pipe';
 import { SearchPageComponent } from './core/ui/search-page/search-page.component';
-import { AccountManagementComponent } from './ui/core/account-management/account-management.component';
+import { AccountManagementComponent } from './core/ui/account-management/account-management.component';
 
 @NgModule({
   declarations: [
