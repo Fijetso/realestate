@@ -6,6 +6,7 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 @import "~@fortawesome/fontawesome-free/scss/brands";
 @import "~material-design-icons/iconfont/material-icons.css";
 @import '~ngx-toastr/toastr';
+@import './my-theme.scss';
 *,*:hover,a:hover{
   font-style: normal;
   outline: 0;
@@ -14,24 +15,16 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 .main-header {
   height: 10vh;
 }
-.orange-gradient {
-  background: linear-gradient(
-    to right,
-    rgba(241, 117, 35, 1) 0,
-    rgba(241, 117, 35, 0.94) 20%,
-    rgba(0, 103, 221, 0.72) 100%
-  );
-}
 .nav-link,
 .navbar-brand,
 .navbar-toggler-icon {
   text-decoration: none;
-  color: white;
+  // color: white;
 }
 .nav-link:hover,
 .navlink:active,
 .active {
-  color: #ff1744;
+  color: $accent;
   font-weight: 500;
 }
 .logo-center {
@@ -42,7 +35,7 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
   margin-top: -20px;
 }
 i:hover {
-  color: #ff1744 !important;
+  color: $accent;
   cursor: pointer;
 }
 //For car
@@ -54,13 +47,13 @@ i:hover {
   padding: 0;
 }
 .text-orange {
-  color: orange;
+  color: $primary;
 }
 .bg-faded-blue {
   background-color: #ecf1f7;
 }
 .btn-search{
-  background-color: #f17423;
+  background-color: $primary;
   color: white;
 }
 img{

@@ -2,7 +2,7 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 @import "~@fortawesome/fontawesome-free/scss/regular";
 @import "~@fortawesome/fontawesome-free/scss/solid";
 @import "~@fortawesome/fontawesome-free/scss/brands";
-
+@import "../../../../my-theme.scss";
 .icon {
   font-size: 1.4rem;
   margin-left: .2rem;
@@ -41,7 +41,7 @@ a{
   color: white;
 }
 .web-title:hover, .active,.icon-user:hover,.call-us:hover,.mat-toolbar-row:hover,a:hover{
-  color: red;
+  color: $accent;
 }
 .phone{
   color:#f17423;
@@ -56,8 +56,8 @@ a{
   font-family: 'Roboto', Fallback, sans-serif;
 }
 .btn-search{
-  background-color: #f17423;
-  color: white;
+  background-color: $primary;
+  // color: white;
 }
 .icon-white{
   color: white;

@@ -4,6 +4,7 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 @import "~@fortawesome/fontawesome-free/scss/solid";
 @import "~@fortawesome/fontawesome-free/scss/brands";
 @import "~bootstrap/scss/bootstrap.scss";
+@import "../../../../../my-theme.scss";
 .md-card:hover {
   box-shadow: -1px 10px 29px 0px rgba(0, 0, 0, 0.2);
 }
@@ -43,11 +44,11 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
   border-radius: 50%;
 }
 .mat-icon:hover {
-  color: red;
+  color: $accent;
   cursor: pointer;
 }
 .fas {
-  color: #333;
+  color:  $accent;
 }
 .btn-checked {
   position: absolute;
@@ -73,8 +74,7 @@ img {
   padding: 1rem;
 }
 .btn-bg-faded-blue {
-  background-color: #ff9800;
-  color: white;
+  background-color: $accent;
   border-radius: 2rem !important;
   outline: none !important;
 }
@@ -83,7 +83,7 @@ img {
   font-weight: 600;
 }
 .rs-desc {
-  color: #ff9800;
+  color: $warn;
   font-weight: 500;
 }
 // Skeleton

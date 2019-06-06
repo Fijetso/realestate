@@ -1,9 +1,12 @@
+// agm-map {
+//     height: 50vh;
+//     width: 30vw;
+// }
+// @media(max-width:500px){
+//     .map-module {
+//         display: none;
+//     }
+// }
 agm-map {
-    height: 50vh;
-    width: 30vw;
-}
-@media(max-width:500px){
-    .map-module {
-        display: none;
-    }
+    height: 300px;
 }

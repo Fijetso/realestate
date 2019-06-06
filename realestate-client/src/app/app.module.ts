@@ -61,6 +61,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ToastrModule } from 'ngx-toastr';
 import { CKEditorModule } from 'ng2-ckeditor';
+import {} from 'googlemaps';
 
 import { RealEstateWrapperComponent } from './components/real-estate/real-estate-wrapper/real-estate-wrapper.component';
 import { AlertComponent } from './core/modal/alert/alert.component';
@@ -150,7 +151,8 @@ import { AccountManagementComponent } from './core/ui/account-management/account
     LazyLoadImageModule,
     BrowserAnimationsModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCTD49hV20zPTBjT7k643sBxjoXx6W7oEo'
+      apiKey: 'AIzaSyCTD49hV20zPTBjT7k643sBxjoXx6W7oEo',
+      libraries: ['places']
     }),
     TranslateModule.forRoot({
       loader: {

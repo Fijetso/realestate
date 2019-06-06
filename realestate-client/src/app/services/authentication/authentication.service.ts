@@ -4,7 +4,8 @@ import { auth } from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { User } from 'firebase';
 import { Observable } from 'rxjs';
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
 @Injectable({
   providedIn: 'root'
 })

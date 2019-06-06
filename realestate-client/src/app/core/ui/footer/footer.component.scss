@@ -2,24 +2,29 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 @import "~@fortawesome/fontawesome-free/scss/regular";
 @import "~@fortawesome/fontawesome-free/scss/solid";
 @import "~@fortawesome/fontawesome-free/scss/brands";
+@import '../../../../my-theme.scss';
 $bg-primary : #fff;
 
 *{
-    background-color: #fff;
-    color: #676767 !important;
+    // background-color: $primary;
     font-size: 14px;
     text-decoration:none;
     font-family: 'Roboto',Fallback, sans-serif;
+    color:$text-light;
 }
 
 *:hover{
     text-decoration:none;
-    color: #676767 !important;
+    color:$text-light;
 }
-.primary{
-    background-color: $bg-primary;
-}  
 .page-footer{
+    background-color:rgba(0, 0, 0, 0.8);
+    background-image: url('../../../../assets/images/bg_footer.png');
+    background-size:     cover;                      /* <------ */
+    background-repeat:   no-repeat;
+    background-position: center center;  
+    background-blend-mode: overlay;
+    padding-top:3rem;
     .re-footer-top{
         .ul-listing{
             list-style-type: none;
