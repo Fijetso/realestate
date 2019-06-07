@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { Component, OnInit, Input, OnDestroy, Injectable } from '@angular/core';
 import { ApiService } from 'src/app/services/api/api.service';
-import { ToastrService } from 'ngx-toastr';  
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-hot-place-item',
@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class HotPlaceItemComponent implements OnInit, OnDestroy {
   @Input() place: any;
+  src = null;
   tradeFromDistrict: any;
   ngOnDestroy(): void {
     this.api.setData(this.tradeFromDistrict);
@@ -31,5 +32,8 @@ export class HotPlaceItemComponent implements OnInit, OnDestroy {
     this.getTradeByDistrict(districtId);
     this.api.setData(this.tradeFromDistrict);
     this.router.navigate(['tim-kiem'], districtId);
+  }
+  updateUrl() {
+    this.src = '../../../../../assets/images/default.png';
   }
 }

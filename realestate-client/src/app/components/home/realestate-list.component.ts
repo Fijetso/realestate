@@ -7,7 +7,7 @@ import { MarkettingComponent } from 'src/app/core/ui/home-page/marketting/market
   templateUrl: './realestate-list.component.html',
   styleUrls: ['./realestate-list.component.scss']
 })
-export class RealestateListComponent implements OnInit,AfterViewInit {
+export class RealestateListComponent implements OnInit, AfterViewInit {
 
   outPutSlug: string;
   inputSlug: any;

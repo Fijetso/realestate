@@ -1,5 +1,5 @@
 <mat-card class="re-hot-place-item md-card" (click)="getTradeByDistrict(place.id)">
-  <img class="md-image card-img-top" alt="picsum" src="https://picsum.photos/id/18/600">
+  <img class="md-image card-img-top" alt="place.nameWithType" src="../../../../../../../assets/images/places/{{place.slug}}.jpg" onError="this.src='../../../../../assets/images/bg_footer.png'">
 <div class="md-card-body card-img-overlay">
  <div class="square-place" [place]="place">
   <span>{{place.nameWithType}}</span>
