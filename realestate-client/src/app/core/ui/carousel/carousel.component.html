@@ -42,3 +42,13 @@
         <app-hot-place-item  [place] ="place"></app-hot-place-item>
   </div>
 </owl-carousel>
+<owl-carousel
+  [options]="carouselOptions"
+  [items]="dataRecentRE"
+  [carouselClasses]="['owl-theme', 'sliding']"
+  *ngIf="isRecentRE"
+>
+  <div class="carousel-wrapper" *ngFor="let dataItem of dataRecentRE; let i = index">
+        <app-realestate-item  [dataItem] ="dataItem"></app-realestate-item>
+  </div>
+</owl-carousel>

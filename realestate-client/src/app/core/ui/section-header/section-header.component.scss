@@ -2,6 +2,7 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 @import "~@fortawesome/fontawesome-free/scss/regular";
 @import "~@fortawesome/fontawesome-free/scss/solid";
 @import "~@fortawesome/fontawesome-free/scss/brands";
+@import '../../../../my-theme.scss';
     .section-header-wrapper{
         margin-left: 1rem;
         margin-right: 1rem;
@@ -15,7 +16,8 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
         .viewmore-text{
             cursor: pointer;
             padding-left: 1rem;
-            color: orange;
+            // color: orange;
+            color: $accent;
             text-overflow: ellipsis;
             // overflow: hidden;
             white-space: nowrap;

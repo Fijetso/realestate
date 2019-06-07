@@ -31,7 +31,8 @@
         <button
           type="submit"
           mat-raised-button
-          class="btn btn-primary"
+          class="btn"
+          color="primary"
           [disabled]="!loginForm.valid || isLogedIn"
         >
           Đăng Nhập
@@ -42,6 +43,7 @@
         class="btn btn-danger"
         (click)="onLogOut()"
         [hidden]="!isLogedIn"
+        color="warn"
       >
         Đăng Xuất
       </button>

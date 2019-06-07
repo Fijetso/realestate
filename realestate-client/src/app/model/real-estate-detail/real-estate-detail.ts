@@ -2,7 +2,7 @@ export class RealEstateDetail {
     id: number;
     length: number;
     width: number;
-    sqaure: number;
+    square: number;
     direction: string;
     floors: string;
     legalDocuments: string;

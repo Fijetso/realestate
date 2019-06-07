@@ -1,7 +1,8 @@
 <section *ngIf="dataLoaded; else skeleton">
-  <mat-card class="real-estate-card-item md-card align-content-around" (click)="onSelect(dataItem.id)">
+  <mat-card class="real-estate-card-item md-card align-content-around" (click)="onSelect(dataItem.id)" [style.background]="'#edeff4'">
     <div class="img-hover-zoom">
-        <img class="md-image card-img-top" [lazyLoad]="mainPic" alt="picsum" [defaultImage]="defaultPic" [offset]=100>
+        <!-- <img class="md-image card-img-top" [lazyLoad]="{{dataItem.realImages[0].imageLink}}" alt="picsum" [defaultImage]="defaultPic" [offset]=100> -->
+        <img *ngIf ="dataItem.realImages"class="card-img-top" src="{{dataItem.realImages[0].imageLink}}" alt="{{dataItem.realImages[0].description}}">
         <mat-icon class="icon icon-like"  matTooltip="Thêm vào danh sách yêu thích">favorite_border</mat-icon>
         <button class="btn-sm btn-checked" type="button" *ngIf="isAppraised">Đã thẩm định</button>
     </div>
@@ -13,7 +14,7 @@
           <span class="span-acreage">{{dataItem.details.square}}m<sup>2</sup></span>
         </div>
         <div class="text-right">
-          <p class="rs-location text-orange">{{ districtList | getDistrictNameFromId : dataItem.address.district}}</p>
+          <p class="rs-location">{{ districtList | getDistrictNameFromId : dataItem.address.district}}</p>
         </div>
       </div>
       <div class="rs-desc">
@@ -24,9 +25,9 @@
       </div>
     </div>
     <div class="md-card-footer d-flex justify-content-between">
-      <span class="rs-bed-room"><i class="fas fa-bed" matTooltip="Số lượng phòng ngủ"></i>{{dataItem.details.bedrooms}}</span>
-      <span class="rs-bath-room"><i class="fas fa-bath" matTooltip="Số lượng phòng tắm"></i>{{dataItem.details.bathrooms}}</span>
-      <span class="rs-location-direct"><i class="fas fa-location-arrow" matTooltip="Hướng"></i>{{dataItem.details.direction}}</span>
+      <span class="rs-bed-room"><i class="fas fa-bed primary" matTooltip="Số lượng phòng ngủ"></i>{{dataItem.details.bedrooms}}</span>
+      <span class="rs-bath-room"><i class="fas fa-bath primary" matTooltip="Số lượng phòng tắm"></i>{{dataItem.details.bathrooms}}</span>
+      <span class="rs-location-direct"><i class="fas fa-location-arrow primary" matTooltip="Hướng"></i>{{dataItem.details.direction}}</span>
     </div>
   </mat-card>
 </section>

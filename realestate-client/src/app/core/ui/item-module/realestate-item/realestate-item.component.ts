@@ -16,9 +16,7 @@ export class RealestateItemComponent implements OnInit {
   @Input() dataItem: any;
   @Input() isAppraised: boolean;
   districtList: any;
-  mainPic = 'https://picsum.photos/255/150';
-  defaultPic = 'https://dummyimage.com/255x150/333/fff';
-  // defaultPic = '../../../../../assets/images/rolling.svg';
+  selectedItem: null;
   offset = 100;
   ngOnInit() {
   }

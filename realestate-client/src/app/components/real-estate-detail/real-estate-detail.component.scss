@@ -3,6 +3,7 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 @import "~@fortawesome/fontawesome-free/scss/regular";
 @import "~@fortawesome/fontawesome-free/scss/solid";
 @import "~@fortawesome/fontawesome-free/scss/brands";
+@import '../../../my-theme.scss';
 .re-detail-wrapper {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
@@ -20,6 +21,9 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
     .icon {
       color: grey;
       line-height: 1.5;
+    }
+    .icon:hover{
+      color:$accent;
     }
   }
   .main-content {
@@ -88,9 +92,18 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 }
 .carousel-wrapper {
   position: relative;
+  .slide-item{
+    .slide-caption {
+      position: absolute;
+      bottom: 0;
+      text-align:center;
+      background: rgba(0,0,0,.75);
+      width:100%;
+      padding: 1rem 0;
+    }
+  }
 }
 .icon {
-  font-size: 30px;
   color: rgba(1, 1, 1, 0.2);
 }
 .icon:hover {

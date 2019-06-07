@@ -14,7 +14,7 @@
   <div class="main-content">
     <div class="row">
       <!-- Left of page -->
-      <div class="col-md-9 col-lg-9 content-left">
+      <div class="col-md-8 col-lg-8 content-left mb-3">
         <mat-card class="main-news mw-100">
           <!-- <img src="https://picsum.photos/id/237/1080/500" alt="" /> -->
           <owl-carousel
@@ -29,15 +29,18 @@
               class="carousel-wrapper"
               *ngFor="let image of tradeData.realImages; let i = index"
             >
-              <div>
-                <img src="{{image.imageLink}}" alt="{{image.description}}"/>
+              <div class="slide-item">
+                <img class="w-100 h-100" src="{{image.imageLink}}" alt="{{image.description}}"/>
+                <div class="slide-caption">
+                  <span>{{image.description}}</span>
+                </div>
               </div>
               <div class="nav-button">
                 <span class="btn-previous p-3 m-3" (click)="onPrevious()">
-                  <i class="fas fa-chevron-left icon"></i>
+                  <i class="fas fa-chevron-left icon fa-fw fa-2x"></i>
                 </span>
                 <span class="btn-next p-3 m-3" (click)="onNext()">
-                  <i class="fas fa-chevron-right icon"></i>
+                  <i class="fas fa-chevron-right icon fa-fw fa-2x"></i>
                 </span>
               </div>
             </div>
@@ -95,32 +98,6 @@
           </div>
           <div class="re-read-more lock-info block-info-6">
             <h4 class="h2-title">Chi tiết tin đăng:</h4>
-            <!-- <div class="bl-info readmore-block" style="max-height: none;">
-              <p>
-                -<a routerLink="/mua/ban-nha-rieng-quan-12"
-                  >&nbsp;Bán căn góc hai mặt hẻm xe hơi Quận 12</a
-                >- <strong>Gần Đại học Giao Thông Vận Tải.</strong>
-              </p>
-
-              <p>
-                - Diện tích <strong>5x15.5m</strong>, công nhận đủ
-                <strong>77.5m2</strong>. Nhà cấp 4 có gác lửng, 1PN 2WC. Đang
-                <strong>cho thuê 4.5 triệu/ tháng</strong>.
-              </p>
-
-              <p>
-                - <strong>Hai mặt hẻm 5m,</strong> xe hơi vào thoải mái. Hẻm
-                thông thoáng, thuận tiện di chuyển.
-              </p>
-
-              <p>
-                - Khu đông dân cư, gần Đh Giao Thông Vận Tải, Đh Lao Động Xã Hội
-              </p>
-
-              <p>- <strong>Sổ hồng riêng. Sổ 1 đời chủ.</strong></p>
-
-              <p>&nbsp;</p>
-            </div> -->
             <ul class="re-elements">
                 <li class="elements length">Chiều dài: {{ tradeData.details.length}}m</li>
                 <li class="elements width">Chiều rộng: {{ tradeData.details.width}}m</li>
@@ -138,7 +115,7 @@
         </mat-card>
       </div>
       <!--Right of page -->
-      <div class="col-md-3 col-lg-3 content-right pl-3">
+      <div class="col-md-4 col-lg-4 content-right pl-3">
         <mat-card class="request-infor">
           <h5 class="text-center">Yêu cầu thông tin</h5>
           <form>
@@ -200,4 +177,16 @@
     </div>
   </div>
   <app-favorite></app-favorite>
+  <div class="viewed-section" *ngIf="recentData">
+    <app-section-header [catTitle]="'Đã xem gần đây'" class="p-0"></app-section-header>
+    <app-carousel   [dataRecentRE] = "recentData" isRecentRE="isRecentRE"></app-carousel>
+  </div>
+  <div class="viewed-section" *ngIf="reSamePlace">
+    <app-section-header [catTitle]="'Cùng địa điểm'" class="p-0"></app-section-header>
+    <app-carousel   [dataRecentRE] = "reSamePlace" isRecentRE="isRecentRE"></app-carousel>
+  </div>
+  <div class="viewed-section" *ngIf="reSameClass">
+    <app-section-header [catTitle]="'Cùng loại'" class="p-0"></app-section-header>
+    <app-carousel   [dataRecentRE] = "reSameClass" isRecentRE="isRecentRE"></app-carousel>
+  </div>
 </div>

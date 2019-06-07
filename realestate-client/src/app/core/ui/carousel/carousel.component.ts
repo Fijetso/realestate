@@ -13,6 +13,8 @@ export class CarouselComponent implements OnInit {
   @Input() isFavRE;
   @Input() dataHotRE: any;
   @Input() isHotRE;
+  @Input() dataRecentRE: any;
+  @Input() isRecentRE;
   carouselOptions = {
     margin: 14,
     responsiveClass: true,
