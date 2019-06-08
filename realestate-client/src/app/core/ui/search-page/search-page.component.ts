@@ -15,7 +15,7 @@ export class SearchPageComponent implements OnInit {
   // mycontent: string;
   // log = '';
   @ViewChild('myckeditor') ckeditor: any;
-  constructor(private api: ApiService, private route: ActivatedRoute,private router: Router) {
+  constructor(private api: ApiService, private route: ActivatedRoute, private router: Router) {
     // this.mycontent = `<p>My html content</p>`;
   }
   ngOnInit() {

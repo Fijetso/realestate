@@ -41,7 +41,7 @@ export class RealEstateDetailComponent implements OnInit {
     dots: true,
     navSpeed: 700,
     autoplay: true,
-    autoplayTimeout: 1500,
+    autoplayTimeout: 2000,
     autoplayHoverPause: true,
     loop: true,
     responsive: {
