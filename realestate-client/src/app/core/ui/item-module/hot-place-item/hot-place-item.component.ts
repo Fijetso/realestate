@@ -44,7 +44,7 @@ export class HotPlaceItemComponent implements OnInit, OnDestroy {
           gia: this.common.changeToSlug('Giá thấp nhất'),
           loai: this.common.changeToSlug('Nhà ở chung cư')
         },
-        state: { data:  tradeList}
+        state: { data:  tradeList, title: place.nameWithType}
       };
       this.router.navigate(['tim-kiem'], navExtras);
     });

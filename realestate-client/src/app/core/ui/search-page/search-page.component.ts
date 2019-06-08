@@ -10,6 +10,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 export class SearchPageComponent implements OnInit {
   districtId: any = null;
   data = null;
+  title = null;
   // ckeConfig: any;
   // mycontent: string;
   // log = '';
@@ -21,7 +22,9 @@ export class SearchPageComponent implements OnInit {
   //  this.route.paramMap.subscribe( (params: ParamMap) => {
   //     this.districtId = params.get('id');
   //   });
-    console.log((history.state))
+    this.data = history.state.data;
+    this.title= history.state.title;
+    console.log(history.state);
   }
   onChange($event: any): void {
     console.log('onChange');
