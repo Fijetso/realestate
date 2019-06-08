@@ -22,9 +22,16 @@ export class SearchPageComponent implements OnInit {
   //  this.route.paramMap.subscribe( (params: ParamMap) => {
   //     this.districtId = params.get('id');
   //   });
+   if (history.state.data) {
     this.data = history.state.data;
-    this.title= history.state.title;
+    localStorage.setItem('history', JSON.stringify(history.state));
     console.log(history.state);
+    this.title = history.state.title;
+   } else {
+    console.log(JSON.parse(localStorage.getItem('history')));
+    this.data = JSON.parse(localStorage.getItem('history')).data;
+    this.title = JSON.parse(localStorage.getItem('history')).title;
+   }
   }
   onChange($event: any): void {
     console.log('onChange');
