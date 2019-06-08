@@ -15,7 +15,7 @@ import { SearchPageComponent } from './core/ui/search-page/search-page.component
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'trang-chu',
     component: RealestateListComponent,
     data: { title: 'Tiêu đề trang chủ' }
   },
@@ -60,9 +60,13 @@ const routes: Routes = [
     data: { title: 'Chi tiết người dùng' }
   },
   {
-    path: 'tim-kiem/:id',
+    path: 'tim-kiem',
     component: SearchPageComponent,
     data: { title: 'Tìm kiếm BĐS' }
+  },
+  { path: '',
+    redirectTo: '/trang-chu',
+    pathMatch: 'full'
   },
   {
     path: '**',

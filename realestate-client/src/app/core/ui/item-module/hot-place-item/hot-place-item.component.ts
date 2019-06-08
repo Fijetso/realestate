@@ -1,4 +1,5 @@
-import { Router } from '@angular/router';
+import { CommonService } from './../../../../services/common/common.service';
+import { Router, NavigationExtras } from '@angular/router';
 import { Component, OnInit, Input, OnDestroy, Injectable } from '@angular/core';
 import { ApiService } from 'src/app/services/api/api.service';
 import { ToastrService } from 'ngx-toastr';
@@ -16,22 +17,39 @@ export class HotPlaceItemComponent implements OnInit, OnDestroy {
     this.api.setData(this.tradeFromDistrict);
   }
 
-  constructor(private api: ApiService, private router: Router, private toastr: ToastrService) { }
+  constructor(
+    private api: ApiService,
+    private router: Router,
+    private toastr: ToastrService,
+    private common: CommonService
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   getTradeByDistrict(districtId: any) {
     this.api.getTradeFromDistrict(districtId).subscribe(tradeList => {
-        this.tradeFromDistrict = tradeList;
-        this.toastr.success('Lấy dữ liệu thành công');
-        console.log(this.tradeFromDistrict);
+      this.tradeFromDistrict = tradeList;
+      // this.toastr.success('Lấy dữ liệu thành công');
+      // console.log(this.tradeFromDistrict);
     });
   }
-  onSelect(districtId: any) {
-    this.getTradeByDistrict(districtId);
-    this.api.setData(this.tradeFromDistrict);
-    this.router.navigate(['tim-kiem'], districtId);
+  onSelect(place: any) {
+    this.api.getTradeFromDistrict(place.id).subscribe(tradeList => {
+      this.tradeFromDistrict = tradeList;
+      this.api.setData(this.tradeFromDistrict);
+      // this.toastr.warning('Chức năng chưa hoàn thiện');
+      const navExtras: NavigationExtras = {
+        queryParams: {
+          quan: this.common.changeToSlug(place.nameWithType),
+          gia: this.common.changeToSlug('Giá thấp nhất'),
+          loai: this.common.changeToSlug('Nhà ở chung cư')
+        },
+        state: { data:  tradeList}
+      };
+      this.router.navigate(['tim-kiem'], navExtras);
+    });
+
+    // this.router.navigate(['tim-kiem'], {state: { data:  JSON.stringify(this.tradeFromDistrict)}});
   }
   updateUrl() {
     this.src = '../../../../../assets/images/default.png';

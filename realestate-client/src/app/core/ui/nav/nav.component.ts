@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ModalService } from 'src/app/services/modal.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-nav',
@@ -23,7 +24,8 @@ export class NavComponent {
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private breakpointObserver: BreakpointObserver,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private location: Location
   ) {
     this.matIconRegistry.addSvgIcon(
       'apple-badge',

@@ -1,21 +1,19 @@
 import { Address } from './../../model/address/address';
 import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { User } from 'src/app/model/user/user';
 import { HttpClient } from '@angular/common/http';
 import { RealEstate } from 'src/app/model/real-estate/real-estate';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ApiService {
   rootURL = environment.api.rootURL;
   baseURL = this.rootURL + '/api/';
   userList: Observable<User[]>;
   userURL = this.baseURL + 'users';
   addressURL = this.baseURL + 'addresstree/provinces/';
-  data = null;
+  dataStorage = null;
   constructor(private http: HttpClient) {
   }
 
@@ -93,10 +91,10 @@ export class ApiService {
   getTradeFromDistrict(districtId: any) {
     return this.http.get<any>(this.baseURL + 'districts/' + districtId + '/trades');
   }
-  setData(data: any){
-    this.data = data;
+  setData(data: any) {
+    this.dataStorage = data;
   }
   getData() {
-    return this.data;
+    return this.dataStorage;
   }
 }

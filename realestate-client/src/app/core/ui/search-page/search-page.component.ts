@@ -1,4 +1,4 @@
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ApiService } from './../../../services/api/api.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
@@ -14,18 +14,14 @@ export class SearchPageComponent implements OnInit {
   // mycontent: string;
   // log = '';
   @ViewChild('myckeditor') ckeditor: any;
-  constructor(private api: ApiService, private route: ActivatedRoute) {
+  constructor(private api: ApiService, private route: ActivatedRoute,private router: Router) {
     // this.mycontent = `<p>My html content</p>`;
   }
   ngOnInit() {
-   this.route.paramMap.subscribe( (params: ParamMap) => {
-      this.districtId = params.get('id');
-    });
-  //  this.ckeConfig = {
-  //     allowedContent: false,
-  //     extraPlugins: 'divarea',
-  //     forcePasteAsPlainText: true
-  //   };
+  //  this.route.paramMap.subscribe( (params: ParamMap) => {
+  //     this.districtId = params.get('id');
+  //   });
+    console.log((history.state))
   }
   onChange($event: any): void {
     console.log('onChange');
