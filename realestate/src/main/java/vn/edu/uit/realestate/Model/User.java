@@ -16,6 +16,8 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.validation.constraints.Email;
 
 @Entity
@@ -40,15 +42,14 @@ public class User {
 	private UserKind userKind;
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
 	private List<Trade> trades = new ArrayList<Trade>();
-//    @ManyToMany(fetch = FetchType.LAZY,
-//            cascade = {
-//                CascadeType.PERSIST,
-//                CascadeType.MERGE
-//            },
-//            mappedBy = "favoriteUsers")
-//    private List<Trade> favoriteTrades = new ArrayList<Trade>();
-	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
-	private List<FavoriteTrade> favoriteTrades;
+	@JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                CascadeType.PERSIST,
+                CascadeType.MERGE
+            },
+            mappedBy = "favoriteUsers")
+    private List<Trade> favoriteTrades = new ArrayList<Trade>();
 	public User() {
 		super();
 	}	
