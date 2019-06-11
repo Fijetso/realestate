@@ -43,13 +43,15 @@ public class User {
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
 	private List<Trade> trades = new ArrayList<Trade>();
 	@JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                CascadeType.PERSIST,
-                CascadeType.MERGE
-            },
-            mappedBy = "favoriteUsers")
-    private List<Trade> favoriteTrades = new ArrayList<Trade>();
+//    @ManyToMany(fetch = FetchType.LAZY,
+//            cascade = {
+//                CascadeType.PERSIST,
+//                CascadeType.MERGE
+//            },
+//            mappedBy = "favoriteUsers")
+//    private List<Trade> favoriteTrades = new ArrayList<Trade>();
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	private List<FavoriteTrade> favoriteTrades;
 	public User() {
 		super();
 	}	
