@@ -191,7 +191,9 @@ import { AccountManagementComponent } from './core/ui/account-management/account
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     Ng2SearchPipeModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 10000,
+    }),
     CKEditorModule,
     AngularFireMessagingModule,
     MatMenuModule,

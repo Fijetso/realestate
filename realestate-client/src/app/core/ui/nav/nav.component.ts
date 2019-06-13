@@ -27,7 +27,7 @@ export class NavComponent {
     private domSanitizer: DomSanitizer,
     private breakpointObserver: BreakpointObserver,
     private modalService: ModalService,
-    private location: Location,
+    // private location: Location,
     private auth: AuthenticationService
   ) {
     this.matIconRegistry.addSvgIcon(
@@ -46,5 +46,6 @@ export class NavComponent {
   logOut() {
     this.auth.logOut();
     this.loginInfor = JSON.parse(localStorage.getItem('userInfor'));
+    location.reload();
   }
 }

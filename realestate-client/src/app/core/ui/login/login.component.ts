@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
                                                              this.modalService.dialog.closeAll();
                                                              this.toastr.success('Chào mừng bạn đã trở lại ' +
                                                              user.providerData[0].displayName.toString(), 'Đăng nhập');
-                                                            //  location.reload();
+                                                             location.reload();
         }
       ).catch(error => {
         this.isLogedIn = false;
@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
       console.log(JSON.parse(localStorage.getItem('userInfor')));
       this.toastr.success('Chào mừng bạn đã trở lại ' +
       data.user.providerData[0].displayName, 'Đăng nhập');
-      // location.reload();
+      location.reload();
     });
   }
   loginWithFacebook() {
@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
       console.log(JSON.parse(localStorage.getItem('userInfor')));
       this.toastr.success('Chào mừng bạn đã trở lại ' +
       data.user.providerData[0].displayName, 'Đăng nhập');
-      // location.reload();
+      location.reload();
     });
   }
   onLogOut() {
@@ -88,6 +88,7 @@ export class LoginComponent implements OnInit {
     this.isLogedIn = false;
     this.modalService.dialog.closeAll();
     this.toastr.info('Đăng xuất thành công ', 'Đăng xuất');
+    location.reload();
   }
   onSubmitLogin(formValue) {
     this.onLogIn(formValue.email, formValue.password);
