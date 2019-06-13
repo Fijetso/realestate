@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import vn.edu.uit.realestate.Model.Request;
 import vn.edu.uit.realestate.Model.Trade;
 import vn.edu.uit.realestate.Model.User;
 import vn.edu.uit.realestate.Service.EntityService.UserService;
@@ -33,9 +35,8 @@ public class UserController {
 		return new ResponseEntity<>(foundUser, HttpStatus.OK);
 	}
 
-	@SuppressWarnings("rawtypes")
 	@PostMapping("/users")
-	public ResponseEntity post(@Valid @RequestBody User user){
+	public ResponseEntity<?> post(@Valid @RequestBody User user){
 		userService.save(user);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
@@ -47,15 +48,20 @@ public class UserController {
 	}
 
 	@PostMapping("users/{userId}/trades")
-	public ResponseEntity postTradeByUserId(@PathVariable long userId, @Valid @RequestBody Trade trade)
+	public ResponseEntity<?> postTradeByUserId(@PathVariable long userId, @Valid @RequestBody Trade trade)
 			throws Exception {
 		userService.postTradeToUser(userId, trade);
 		return new ResponseEntity<>( HttpStatus.CREATED);
 	}
+	@PostMapping("users/{userId}/requests")
+	public ResponseEntity<?> postRequestByUserId(@PathVariable long userId, @Valid @RequestBody Request request)
+			throws Exception {
+		userService.postRequestToUser(userId, request);
+		return new ResponseEntity<>( HttpStatus.CREATED);
+	}
 
-	@SuppressWarnings("rawtypes")
 	@DeleteMapping("/users/{id}")
-	public ResponseEntity deleteById(@PathVariable long id) {
+	public ResponseEntity<?> deleteById(@PathVariable long id) {
 		userService.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
