@@ -43,13 +43,9 @@ public class User {
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
 	private List<Trade> trades = new ArrayList<Trade>();
 	@JsonIgnore
-//    @ManyToMany(fetch = FetchType.LAZY,
-//            cascade = {
-//                CascadeType.PERSIST,
-//                CascadeType.MERGE
-//            },
-//            mappedBy = "favoriteUsers")
-//    private List<Trade> favoriteTrades = new ArrayList<Trade>();
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	private List<Request> requests = new ArrayList<Request>();
+	@JsonIgnore
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
 	private List<FavoriteTrade> favoriteTrades;
 	public User() {
@@ -134,5 +130,13 @@ public class User {
 
 	public void setFavoriteTrades(List<FavoriteTrade> favoriteTrades) {
 		this.favoriteTrades = favoriteTrades;
+	}
+
+	public List<Request> getRequests() {
+		return requests;
+	}
+
+	public void setRequests(List<Request> requests) {
+		this.requests = requests;
 	}
 }

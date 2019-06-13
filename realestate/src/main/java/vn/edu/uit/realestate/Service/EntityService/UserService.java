@@ -19,12 +19,14 @@ import vn.edu.uit.realestate.DataAccess.BluePrintRepository;
 import vn.edu.uit.realestate.DataAccess.DetailsRepository;
 import vn.edu.uit.realestate.DataAccess.RealEstateKindRepository;
 import vn.edu.uit.realestate.DataAccess.RealImageRepository;
+import vn.edu.uit.realestate.DataAccess.RequestRepository;
 import vn.edu.uit.realestate.DataAccess.TradeKindRepository;
 import vn.edu.uit.realestate.DataAccess.TradeRepository;
 import vn.edu.uit.realestate.DataAccess.UserRepository;
 import vn.edu.uit.realestate.Model.BluePrint;
 import vn.edu.uit.realestate.Model.RealEstateKind;
 import vn.edu.uit.realestate.Model.RealImage;
+import vn.edu.uit.realestate.Model.Request;
 import vn.edu.uit.realestate.Model.Trade;
 import vn.edu.uit.realestate.Model.TradeKind;
 import vn.edu.uit.realestate.Model.User;
@@ -48,6 +50,8 @@ public class UserService implements IEntityService {
 	private RealImageRepository realImageRepository;
 	@Autowired
 	private BluePrintRepository bluePrintRepository;
+	@Autowired
+	private RequestRepository requestRepository;
 
 	@Override
 	public MappingJacksonValue findAll() {
@@ -92,6 +96,7 @@ public class UserService implements IEntityService {
 		}
 		userRepository.save(user);
 	}
+
 	public MappingJacksonValue findAllTradeByUserId(Long userId) {
 		Optional<User> foundUser = userRepository.findById(userId);
 		if (foundUser.isPresent() == false) {
@@ -103,6 +108,15 @@ public class UserService implements IEntityService {
 		MappingJacksonValue mapping = new MappingJacksonValue(foundTradeList);
 		mapping.setFilters(filters);
 		return mapping;
+	}
+
+	public List<Request> findAllRequestByUserId(Long userId) {
+		Optional<User> foundUser = userRepository.findById(userId);
+		if (foundUser.isPresent() == false) {
+			throw new NotFoundException("Cannot find any User with id=" + userId);
+		}
+		List<Request> foundRequestList = foundUser.get().getRequests();
+		return foundRequestList;
 	}
 
 	public void postTradeToUser(Long userId, Trade trade) {
@@ -125,22 +139,34 @@ public class UserService implements IEntityService {
 //		Address tradeAddress = trade.getAddress();
 //		if (tradeAddress != null) {
 //			tradeAddress.setTrade(trade);
-			addressRepository.save(trade.getAddress());
+		addressRepository.save(trade.getAddress());
 //		}
 //		Details tradeDetails = trade.getDetails();
 //		if (tradeDetails != null) {
 //			tradeDetails.setTrade(trade);
-			detailsRepository.save(trade.getDetails());
+		detailsRepository.save(trade.getDetails());
 //		}
 //    	List<BluePrint> bluePrints = trade.getBluePrints();
 //    	bluePrints.addAll(trade.getRealImages());
 //    	imageRepository.save()
 		tradeRepository.save(trade);
-    	List<BluePrint> bluePrints = trade.getBluePrints();
-    	bluePrints.forEach(each->each.setTrade(trade));
+		List<BluePrint> bluePrints = trade.getBluePrints();
+		bluePrints.forEach(each -> each.setTrade(trade));
 		bluePrintRepository.saveAll(bluePrints);
-    	List<RealImage> realImages = trade.getRealImages();
-    	realImages.forEach(each->each.setTrade(trade));
+		List<RealImage> realImages = trade.getRealImages();
+		realImages.forEach(each -> each.setTrade(trade));
 		realImageRepository.saveAll(realImages);
+	}
+
+	public void postRequestToUser(Long userId, Request request) {
+		Optional<User> foundUser = userRepository.findById(userId);
+		if (foundUser.isPresent() == false) {
+			throw new NotFoundException("Cannot find any user with Id=" + userId);
+		}
+		if(request.getLowestPrice() > request.getHighestPrice()) {
+			throw new IllegalArgumentException("HighestPrice must be higher than LowestPrice");
+		}
+		request.setUser(foundUser.get());
+		requestRepository.save(request);
 	}
 }
