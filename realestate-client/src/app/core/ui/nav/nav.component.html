@@ -80,12 +80,20 @@
       >
       <div class="right-nav  align-self-center">
         <a routerLink="dang-tin" routerLinkActive="active" mat-flat-button class="btn btn-sale curve px-4 align-self-center" color="accent">Đăng BĐS</a>
-        <a routerLinkActive="active" (click)="openInfoModal()">
+        <a *ngIf="!loginInfor; else logedIn" routerLinkActive="active" (click)="openInfoModal()">
             <span class="align-items-center ustify-content-center align-self-center icon icon-lg icon-account"
             matTooltip="Thông tin tài khoản"><i class="icon far fa-user-circle text-white"></i></span>
         </a>
+        <ng-template #logedIn>
+          <img [matMenuTriggerFor]="menu" src="{{loginInfor.photoURL}}" alt="{{loginInfor.displayName}}">
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item color="primary">Thông tin tài khoản</button>
+            <button mat-menu-item color="primary" (click)="logOut()">Đăng xuất</button>
+          </mat-menu>
+        </ng-template>
+        
         <a routerLink="yeu-thich" routerLinkActive="active">
-          <span class="align-items-center ustify-content-center align-self-center icon icon-lg icon-favorite"
+          <span matBadge="{{badgeCount}}" matBadgeColor="accent" class="align-items-center ustify-content-center align-self-center icon icon-lg icon-favorite"
           matTooltip="Danh sách yêu thích"><i class="icon far fa-heart"></i></span>
         </a>
       </div>

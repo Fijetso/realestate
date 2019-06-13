@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { Component, Input } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -13,7 +14,8 @@ import { Location } from '@angular/common';
   styleUrls: ['./nav.component.scss']
 })
 export class NavComponent {
-
+  loginInfor = JSON.parse(localStorage.getItem('userInfor'));
+  @Input() badgeCount = 5;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches)
@@ -25,7 +27,8 @@ export class NavComponent {
     private domSanitizer: DomSanitizer,
     private breakpointObserver: BreakpointObserver,
     private modalService: ModalService,
-    private location: Location
+    private location: Location,
+    private auth: AuthenticationService
   ) {
     this.matIconRegistry.addSvgIcon(
       'apple-badge',
@@ -35,8 +38,13 @@ export class NavComponent {
       'google-badge',
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/images/google-badge.svg')
     );
+    // alert(this.loginInfor);
   }
   openInfoModal() {
     this.modalService.openInfoModal();
+  }
+  logOut() {
+    this.auth.logOut();
+    this.loginInfor = JSON.parse(localStorage.getItem('userInfor'));
   }
 }

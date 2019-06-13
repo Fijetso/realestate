@@ -45,7 +45,8 @@ import {
   MatBottomSheet,
   MatBottomSheetRef,
   MatButtonToggleModule,
-  MatFormFieldModule
+  MatFormFieldModule,
+  MatBadgeModule
 } from '@angular/material';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -62,6 +63,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ToastrModule } from 'ngx-toastr';
 import { CKEditorModule } from 'ng2-ckeditor';
 import {} from 'googlemaps';
+import { AngularFireMessagingModule } from '@angular/fire/messaging';
 
 import { RealEstateWrapperComponent } from './components/real-estate/real-estate-wrapper/real-estate-wrapper.component';
 import { AlertComponent } from './core/modal/alert/alert.component';
@@ -190,7 +192,10 @@ import { AccountManagementComponent } from './core/ui/account-management/account
     AngularFireAuthModule,
     Ng2SearchPipeModule,
     ToastrModule.forRoot(),
-    CKEditorModule
+    CKEditorModule,
+    AngularFireMessagingModule,
+    MatMenuModule,
+    MatBadgeModule
   ],
   providers: [
     AuthenticationService,

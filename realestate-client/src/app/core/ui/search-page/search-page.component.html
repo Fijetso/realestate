@@ -1,22 +1,38 @@
-<div class="container">
-  <div class="viewed-section" *ngIf="data">
-    <app-section-header [catTitle]="title" class="p-0"></app-section-header>
-    <app-carousel   [dataRecentRE] = "data" isRecentRE="isRecentRE"></app-carousel>
-  </div>
+<div class="container-fluid">
+    <div class="viewed-section" *ngIf="data">
+      <app-section-header [catTitle]="title" class="p-0"></app-section-header>
+      <app-carousel   [dataRecentRE] = "data" isRecentRE="isRecentRE"></app-carousel>
+    </div>
+    <agm-map 
+    class="col-md-6"
+    [latitude]="lat"
+    [longitude]="lng"
+    [zoom]="zoom"
+    [disableDefaultUI]="false"
+    [zoomControl]="false"
+    (mapClick)="mapClicked($event)">
+  
+    <agm-marker
+        *ngFor="let m of markers; let i = index"
+        (markerClick)="clickedMarker(m.label, i)"
+        [latitude]="m.lat"
+        [longitude]="m.lng"
+        [label]="m.label"
+        [markerDraggable]="m.draggable"
+        (dragEnd)="markerDragEnd(m, $event)">
+        
+      <agm-info-window>
+        <strong>{{data[0].description |json}}</strong>
+      </agm-info-window>
+      
+    </agm-marker>
+    
+    <agm-circle [latitude]="lat + 0.3" [longitude]="lng" 
+        [radius]="5000"
+        [fillColor]="'red'"
+        [circleDraggable]="true"
+        [editable]="true">
+    </agm-circle>
+  
+  </agm-map>
 </div>
-<!-- <form role="form" #myForm="ngForm" accept-charset="UTF-8" novalidate>
-  <div class="form-group has-feedback" 
-        [ngClass]="{ 'has-error': myckeditor.invalid && myckeditor.touched }">
-    <ckeditor [(ngModel)]="mycontent" 
-              #myckeditor="ngModel"
-              name="myckeditor"
-              required
-              [config]="ckeConfig" 
-              debounce="500" 
-              (change)="onChange($event)">
-    </ckeditor>
-    <div *ngIf="myckeditor.invalid && myckeditor.touched" class="help-block">Required field.</div>
-  </div>
-  <button [disabled]="myForm.invalid" class="btn btn-primary">Save</button>
-  </form>
-  <div [innerHTML]="mycontent"></div> --> 

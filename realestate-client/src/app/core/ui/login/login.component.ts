@@ -1,3 +1,5 @@
+import { ToastrService } from 'ngx-toastr';
+import { ModalService } from 'src/app/services/modal.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
@@ -15,7 +17,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   data: any;
   loginError: any;
-  constructor(private authService: AuthenticationService) {
+  constructor(private authService: AuthenticationService, private modalService: ModalService, private toastr: ToastrService) {
     this.userInfo = {
       email: '',
       password: ''
@@ -47,6 +49,10 @@ export class LoginComponent implements OnInit {
                                                              this.isLogedIn = true;
                                                              this.loginError = false;
                                                              this.getUserLogin();
+                                                             this.modalService.dialog.closeAll();
+                                                             this.toastr.success('Chào mừng bạn đã trở lại ' +
+                                                             user.providerData[0].displayName.toString(), 'Đăng nhập');
+                                                            //  location.reload();
         }
       ).catch(error => {
         this.isLogedIn = false;
@@ -59,6 +65,9 @@ export class LoginComponent implements OnInit {
       this.authService.writeUserInfor();
       this.getUserLogin();
       console.log(JSON.parse(localStorage.getItem('userInfor')));
+      this.toastr.success('Chào mừng bạn đã trở lại ' +
+      data.user.providerData[0].displayName, 'Đăng nhập');
+      // location.reload();
     });
   }
   loginWithFacebook() {
@@ -67,6 +76,9 @@ export class LoginComponent implements OnInit {
       this.authService.writeUserInfor();
       this.getUserLogin();
       console.log(JSON.parse(localStorage.getItem('userInfor')));
+      this.toastr.success('Chào mừng bạn đã trở lại ' +
+      data.user.providerData[0].displayName, 'Đăng nhập');
+      // location.reload();
     });
   }
   onLogOut() {
@@ -74,6 +86,8 @@ export class LoginComponent implements OnInit {
     localStorage.setItem('userInfor', null);
     this.data = null;
     this.isLogedIn = false;
+    this.modalService.dialog.closeAll();
+    this.toastr.info('Đăng xuất thành công ', 'Đăng xuất');
   }
   onSubmitLogin(formValue) {
     this.onLogIn(formValue.email, formValue.password);

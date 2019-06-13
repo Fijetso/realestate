@@ -97,4 +97,7 @@ export class ApiService {
   getData() {
     return this.dataStorage;
   }
+  getLocation() {
+    return this.http.get('http://api.ipapi.com/api/check?access_key=' + environment.ipapi.apiKey);
+  }
 }
