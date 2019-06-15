@@ -28,19 +28,16 @@ export class UserComponent implements OnInit {
     }
   ];
   searchTerm: string;
-  constructor(private api: ApiService, private common: CommonService,private router: Router, private route: ActivatedRoute) {
+  constructor(private api: ApiService, private common: CommonService, private router: Router, private route: ActivatedRoute) {
     this.newUser = {
       id: null,
       name: 'Danh Thanh',
       email: '',
       phone: '',
       password: '',
-      gender: 'false',
+      gender: false,
       birthdate: null,
-      userKind: {
-        id: 1,
-        name: 'Chủ nhà'
-      }
+      userKind: 1
     };
     this.searchTerm = '';
   }
@@ -69,7 +66,7 @@ export class UserComponent implements OnInit {
       .createUser(user)
       .subscribe(
         success => alert('Create successfully'),
-        error => alert('Create user failed')
+        err => alert('Create user failed')
       );
   }
   deleteUser(id: number) {

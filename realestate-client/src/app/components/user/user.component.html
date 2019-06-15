@@ -157,12 +157,12 @@
           <mat-label>Giới tính</mat-label>
           <mat-select [(ngModel)]="newUser.gender" name="gender">
             <mat-option
-              value="true"
+              [value]="true"
             >
               Nam
             </mat-option>
             <mat-option
-              value="false"
+              [value]="false"
             >
               Nữ
             </mat-option>
@@ -173,7 +173,7 @@
           <mat-select [(ngModel)]="newUser.userKind" name="userKind">
             <mat-option
               *ngFor="let userKind of userKinds"
-              [value]="userKind"
+              [value]="userKind.id"
             >
               {{ userKind.name }}
             </mat-option>

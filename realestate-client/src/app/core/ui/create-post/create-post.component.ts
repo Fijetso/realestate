@@ -30,7 +30,7 @@ export class CreatePostComponent implements OnInit {
         ward: 0
       },
       price: null,
-      currency: 'VNĐ',
+      currency: 'VND',
       reTradeKind: 'Bán',
       phone: '',
       houseAddress: '',
