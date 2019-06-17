@@ -194,7 +194,7 @@ import { GetIdFromNamePipe } from './ultility/pipe/get-id-from-name.pipe';
     AngularFireAuthModule,
     Ng2SearchPipeModule,
     ToastrModule.forRoot({
-      timeOut: 10000,
+      timeOut: 1000,
     }),
     CKEditorModule,
     AngularFireMessagingModule,
