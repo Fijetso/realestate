@@ -101,6 +101,7 @@ import { GetDistrictNameFromIdPipe } from './ultility/pipe/get-district-name-fro
 import { ThousandSuffixPipe } from './ultility/pipe/thousand-suffix.pipe';
 import { SearchPageComponent } from './core/ui/search-page/search-page.component';
 import { AccountManagementComponent } from './core/ui/account-management/account-management.component';
+import { GetIdFromNamePipe } from './ultility/pipe/get-id-from-name.pipe';
 
 @NgModule({
   declarations: [
@@ -143,7 +144,8 @@ import { AccountManagementComponent } from './core/ui/account-management/account
     GetDistrictNameFromIdPipe,
     ThousandSuffixPipe,
     SearchPageComponent,
-    AccountManagementComponent
+    AccountManagementComponent,
+    GetIdFromNamePipe
   ],
   imports: [
     OwlModule,
@@ -206,7 +208,8 @@ import { AccountManagementComponent } from './core/ui/account-management/account
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,
       multi: true
-    }
+    },
+    GetIdFromNamePipe
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],

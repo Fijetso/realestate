@@ -67,7 +67,7 @@
                   class="form-control"
                   type="number"
                   id="example-text-input"
-                  [(ngModel)]="newUser.id"
+                  [(ngModel)]="user.id"
                   name="id"
                 />
               </div>
@@ -81,7 +81,7 @@
               class="form-control"
               type="text"
               id="example-text-input"
-              [(ngModel)]="newUser.name"
+              [(ngModel)]="user.name"
               name="name"
               required
               autofocus
@@ -96,6 +96,14 @@
           Tên là bắt buộc
         </div>
         <div class="form-group row">
+          <label for="input-birthdate" class="col-md-2 col-form-label"
+            >Ngày sinh:</label
+          >
+          <div class="col-md-10">
+            <input   class="form-control" type="date" [(ngModel)]="user.birthdate">
+          </div>
+        </div>
+        <div class="form-group row">
           <label for="example-email-input" class="col-md-2 col-form-label"
             >Thư điện tử:</label
           >
@@ -104,7 +112,7 @@
               class="form-control"
               type="email"
               id="example-email-input"
-              [(ngModel)]="newUser.email"
+              [(ngModel)]="user.email"
               name="email"
               required
             />
@@ -126,7 +134,7 @@
               class="form-control"
               type="password"
               id="example-password-input"
-              [(ngModel)]="newUser.password"
+              [(ngModel)]="user.password"
               name="password"
               required
             />
@@ -148,14 +156,14 @@
               class="form-control"
               type="tel"
               id="example-tel-input"
-              [(ngModel)]="newUser.phone"
+              [(ngModel)]="user.phone"
               name="phone"
             />
           </div>
         </div>
         <mat-form-field>
           <mat-label>Giới tính</mat-label>
-          <mat-select [(ngModel)]="newUser.gender" name="gender">
+          <mat-select [(ngModel)]="user.gender" name="gender">
             <mat-option
               [value]="true"
             >
@@ -170,7 +178,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>Loại User</mat-label>
-          <mat-select [(ngModel)]="newUser.userKind" name="userKind">
+          <mat-select [(ngModel)]="user.userKind" name="userKind">
             <mat-option
               *ngFor="let userKind of userKinds"
               [value]="userKind.id"

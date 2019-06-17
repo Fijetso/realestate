@@ -7,5 +7,5 @@ export class User {
     password: string;
     birthdate: Date;
     gender: boolean;
-    userKind: UserKind;
+    userKind: number;
 }

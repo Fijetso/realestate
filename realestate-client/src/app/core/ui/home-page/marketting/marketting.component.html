@@ -18,7 +18,7 @@
       </mat-button-toggle>
     </mat-button-toggle-group>
     <div class="example-selected-value">Đã chọn: {{ reKindGroup.value }}</div>
-    <form class="searchForm">
+    <form class="searchForm"   (ngSubmit)="onSubmitSearch(stateNameKey)">
         <mat-form-field class="example-full-width">
           <input type="text" placeholder="Nhập để tìm kiếm" aria-label="Assignee" matInput [formControl]="myControl" [matAutocomplete]="auto" [(ngModel)]="stateNameKey" >
           <mat-autocomplete #auto="matAutocomplete">
@@ -26,7 +26,7 @@
               {{state.nameWithType}}
             </mat-option>
           </mat-autocomplete>
-          <mat-icon matSuffix role="button" class="icon">search</mat-icon>
+          <button type="submit" matSuffix mat-button><mat-icon role="button" class="icon">search</mat-icon></button>
         </mat-form-field>
       </form>
   </div>
