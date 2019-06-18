@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
@@ -8,7 +9,7 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  constructor(private afAuth: AuthenticationService) { }
+  constructor(private afAuth: AuthenticationService,private toastr: ToastrService) { }
   fullName = new FormControl();
   username = new FormControl();
   phone = new FormControl();
@@ -23,7 +24,9 @@ export class RegisterComponent implements OnInit {
 
   register() {
     console.log(this.email.value, this.password.value);
-    this.afAuth.register(this.email.value, this.password.value).then(result => alert('Vui lòng kiểm tra email để kích hoạt đăng ký'));
+    this.afAuth.register(this.email.value, this.password.value).
+    then(result => this.toastr.success('Đăng ký thành công .\r\nVui lòng kiểm tra email để kích hoạt đăng ký','Đăng ký tài khoản'))
+    .catch(err => this.toastr.error('Đăng ký thất bại', 'Đăng ký tài khoản'));
   }
   onFullnameChange() {
     console.log(this.fullName.value);

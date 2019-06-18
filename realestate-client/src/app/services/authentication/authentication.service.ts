@@ -26,7 +26,7 @@ export class AuthenticationService {
       displayName: profile.displayName,
       photoURL: profile.photoURL
     }).then(success => {
-      alert(this.afAuth.auth.currentUser.uid);
+      alert(JSON.stringify(profile) );
       return true;
     }).catch(error => false);
   }
