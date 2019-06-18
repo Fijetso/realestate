@@ -12,7 +12,7 @@ import 'firebase/auth';
 export class AuthenticationService {
   constructor(public afAuth: AngularFireAuth, public router: Router) {
     this.afAuth.authState.subscribe(user => {
-        this.writeUserInfor();
+      this.writeUserInfor();
     });
     this.getUserLogin();
   }
@@ -21,6 +21,15 @@ export class AuthenticationService {
     return user !== null;
   }
   user: Observable<User>;
+  updateProfile(profile: any): any {
+    this.afAuth.auth.currentUser.updateProfile({
+      displayName: profile.displayName,
+      photoURL: profile.photoURL
+    }).then(success => {
+      alert(this.afAuth.auth.currentUser.uid);
+      return true;
+    }).catch(error => false);
+  }
   async getUserLogin() {
     return await JSON.parse(localStorage.getItem('userInfor'));
   }
@@ -60,14 +69,12 @@ export class AuthenticationService {
   }
 
   async writeUserInfor() {
-    firebase.auth().onAuthStateChanged(
-      user => {
-        if (user) {
-          localStorage.setItem('userInfor', JSON.stringify(user.providerData[0]));
-        } else {
-          localStorage.setItem('userInfor', null);
-        }
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        localStorage.setItem('userInfor', JSON.stringify(user.providerData[0]));
+      } else {
+        localStorage.setItem('userInfor', null);
       }
-    );
+    });
   }
 }

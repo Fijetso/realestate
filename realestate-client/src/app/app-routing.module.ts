@@ -12,6 +12,7 @@ import { RegisterComponent } from './core/ui/register/register.component';
 import { CreatePostComponent } from './core/ui/create-post/create-post.component';
 import { UserDetailComponent } from './core/ui/user-detail/user-detail.component';
 import { SearchPageComponent } from './core/ui/search-page/search-page.component';
+import { UserManagerComponent } from './components/user-manager/user-manager.component';
 
 const routes: Routes = [
   {
@@ -63,6 +64,11 @@ const routes: Routes = [
     path: 'tim-kiem',
     component: SearchPageComponent,
     data: { title: 'Tìm kiếm BĐS' }
+  },
+  {
+    path: 'tai-khoan',
+    component: UserManagerComponent,
+    data: { title: 'Quản lý tài khoản' }
   },
   { path: '',
     redirectTo: '/trang-chu',

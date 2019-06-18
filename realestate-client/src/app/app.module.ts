@@ -102,6 +102,7 @@ import { ThousandSuffixPipe } from './ultility/pipe/thousand-suffix.pipe';
 import { SearchPageComponent } from './core/ui/search-page/search-page.component';
 import { AccountManagementComponent } from './core/ui/account-management/account-management.component';
 import { GetIdFromNamePipe } from './ultility/pipe/get-id-from-name.pipe';
+import { UserManagerComponent } from './components/user-manager/user-manager.component';
 
 @NgModule({
   declarations: [
@@ -145,7 +146,8 @@ import { GetIdFromNamePipe } from './ultility/pipe/get-id-from-name.pipe';
     ThousandSuffixPipe,
     SearchPageComponent,
     AccountManagementComponent,
-    GetIdFromNamePipe
+    GetIdFromNamePipe,
+    UserManagerComponent
   ],
   imports: [
     OwlModule,

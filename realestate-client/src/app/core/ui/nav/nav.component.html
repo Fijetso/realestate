@@ -85,9 +85,12 @@
             matTooltip="Thông tin tài khoản"><i class="icon far fa-user-circle text-white"></i></span>
         </a>
         <ng-template #logedIn>
-          <img [matMenuTriggerFor]="menu" src="{{loginInfor.photoURL}}" alt="{{loginInfor.displayName}}">
+          <img [matMenuTriggerFor]="menu" src="{{loginInfor.photoURL}}" alt="{{loginInfor.displayName}}" onError="this.src='../../../../assets/images/login.png'">
           <mat-menu #menu="matMenu">
-            <button mat-menu-item color="primary">Thông tin tài khoản</button>
+            <button mat-menu-item color="primary" [routerLink]="['/tai-khoan']" routerLinkActive="router-link-active" >Thông tin tài khoản</button>
+            <button mat-menu-item color="primary" [routerLink]="['/tai-khoan']" routerLinkActive="router-link-active" >Tin đăng của tôi</button>
+            <button mat-menu-item color="primary" [routerLink]="['/tai-khoan']" routerLinkActive="router-link-active" >Bộ sưu tập</button>
+            <button mat-menu-item color="primary" [routerLink]="['/tai-khoan']" routerLinkActive="router-link-active" >Đổi mật khẩu</button>
             <button mat-menu-item color="primary" (click)="logOut()">Đăng xuất</button>
           </mat-menu>
         </ng-template>
