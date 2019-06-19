@@ -1,7 +1,9 @@
+import { ToastrService } from 'ngx-toastr';
 import { ApiService } from './../../../services/api/api.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { State } from '../home-page/marketting/marketting.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-post',
@@ -18,7 +20,7 @@ export class CreatePostComponent implements OnInit {
   province: any = null;
   districtList: any = null;
   wardList: any = null;
-  constructor(private api: ApiService) {
+  constructor(private api: ApiService, private toastr: ToastrService, private router: Router) {
     this.post = {
       name: '',
       email: '',
@@ -81,6 +83,8 @@ export class CreatePostComponent implements OnInit {
     console.log(formValue);
     this.post = formValue;
     console.log( this.post);
+    this.toastr.success('Thêm bất động sản thành công', 'Thêm bất động sản');
+    this.router.navigate(['/']);
     // throw Error('something go wrong');
   }
 
