@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { Component, Input } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -28,7 +29,8 @@ export class NavComponent {
     private breakpointObserver: BreakpointObserver,
     private modalService: ModalService,
     // private location: Location,
-    private auth: AuthenticationService
+    private auth: AuthenticationService,
+    private router : Router
   ) {
     this.matIconRegistry.addSvgIcon(
       'apple-badge',

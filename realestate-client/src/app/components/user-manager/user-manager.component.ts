@@ -59,9 +59,16 @@ export class UserManagerComponent implements OnInit {
   }
   onSubmitChangePass() {
     this.toastr.info(JSON.stringify(this.changePassForm.value), 'Thông tin mật khẩu');
-    if (this.changePassForm.get('newPassword').value !== this.changePassForm.get('reTypeNewPassword').value){
-      return this.notMatch = true;
+    if (this.changePassForm.get('newPassword').value !== this.changePassForm.get('reTypeNewPassword').value) {
+      this.notMatch = true;
     }
+    if (!this.notMatch) {
+    this.auth.updatePassword(this.changePassForm.get('newPassword').value).then(success =>
+      this.toastr.success('Cập nhật mật khẩu thành công')
+    ).catch(error =>
+      this.toastr.success('Cập nhật mật khẩu thất bại')
+    );
+   }
   }
   get oldPassword() {
     return this.changePassForm.get('oldPassword').value;

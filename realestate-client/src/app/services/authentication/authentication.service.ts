@@ -77,4 +77,7 @@ export class AuthenticationService {
       }
     });
   }
+  updatePassword(password: any) {
+    return this.afAuth.auth.currentUser.updatePassword(password);
+  }
 }
