@@ -1,6 +1,6 @@
 import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
@@ -23,6 +23,8 @@ export class UserManagerComponent implements OnInit {
     },
   ];
   accountForm = null;
+  changePassForm = null;
+  notMatch = false;
   constructor(private auth: AuthenticationService, private toastr: ToastrService) {
     if (this.data) {
       this.accountForm = new FormGroup ({
@@ -35,6 +37,11 @@ export class UserManagerComponent implements OnInit {
       });
       this.photoSrc = this.accountForm.value.photoURL;
     }
+    this.changePassForm = new FormGroup({
+      oldPassword : new FormControl(),
+      newPassword: new FormControl( Validators.minLength(6)),
+      reTypeNewPassword: new FormControl(Validators.minLength(6))
+    });
   }
 
   ngOnInit() {
@@ -49,5 +56,20 @@ export class UserManagerComponent implements OnInit {
      } else {
       this.toastr.error('Cập nhật thất bại');
      }
+  }
+  onSubmitChangePass() {
+    this.toastr.info(JSON.stringify(this.changePassForm.value), 'Thông tin mật khẩu');
+    if (this.changePassForm.get('newPassword').value !== this.changePassForm.get('reTypeNewPassword').value){
+      return this.notMatch = true;
+    }
+  }
+  get oldPassword() {
+    return this.changePassForm.get('oldPassword').value;
+  }
+  get newPassword() {
+    return this.changePassForm.get('newPassword').value;
+  }
+  get reTypeNewPassword() {
+    return this.changePassForm.get('newPassword').value;
   }
 }
