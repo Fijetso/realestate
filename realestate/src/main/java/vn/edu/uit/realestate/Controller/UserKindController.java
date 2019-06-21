@@ -67,17 +67,14 @@ public class UserKindController {
     	return ResponseEntity.created(location).build();
     }
     @PostMapping("/userkinds/{userKindId}/users")
-    public ResponseEntity<User> postUserByUserKindId(@PathVariable (value = "userKindId") Long userKindId,@Valid @RequestBody User user) {
+    public ResponseEntity<?> postUserByUserKindId(@PathVariable (value = "userKindId") Long userKindId,@Valid @RequestBody User user) {
     	Optional<UserKind> foundUserKind = userKindRepository.findById(userKindId);
 		if (foundUserKind.isPresent()==false) {
     		throw new NotFoundException("Cannot find any User Kind with id="+userKindId);
     	}
         user.setUserKind(foundUserKind.get());
         userRepository.save(user);
-    	URI location = ServletUriComponentsBuilder
-    			.fromPath("users/{id}")
-    			.buildAndExpand(user.getId()).toUri();
-    	return ResponseEntity.created(location).build();
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @DeleteMapping("/userkinds/{id}")
     public void deleteUserKindById(@PathVariable long id) {

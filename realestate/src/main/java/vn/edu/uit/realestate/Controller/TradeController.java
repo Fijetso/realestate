@@ -36,18 +36,6 @@ public class TradeController {
     	tradeService.deleteById(id);
     	return new ResponseEntity<>(HttpStatus.OK);
     }
-//    @GetMapping("/trades/{tradeId}/bookings")
-//    public ResponseEntity<List<Booking>> findBookingsByTradeId(@PathVariable long tradeId) {
-//    	Optional<Trade> foundTrade = tradeRepository.findById(tradeId);
-//		if (foundTrade.isPresent()==false) {
-//    		throw new NotFoundException("Cannot find any Trade with id="+tradeId);
-//    	}
-//		List<Booking> bookings = foundTrade.get().getBookings();
-//    	if (bookings.isEmpty()== true) {
-//    		throw new NotFoundException("Cannot find any Booking with Trade Id="+tradeId);
-//    	}
-//        return new ResponseEntity<>(bookings,HttpStatus.OK);
-//    }
     @PostMapping("/trades/{tradeId}/bookings")
     public ResponseEntity<?> postBookingByTradeId(@PathVariable long tradeId, @Valid @RequestBody Booking booking)throws Exception {
     	tradeService.postBookingByTradeId(tradeId, booking);
