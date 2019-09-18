@@ -3,14 +3,14 @@
     class="login-wrapper d-flex justify-content-center align-items-center flex-column"
   >
     <h4 class="title-name">Đăng nhập thành viên</h4>
-    <form>
+    <form #loginForm="ngForm" (ngSubmit)="onSubmitLogin(loginForm.value)" novalidate>
       <div class="form-content">
-        <mat-form-field appearance="outline">
+        <mat-form-field>
           <mat-label>Email</mat-label>
           <mat-icon matPrefix>mail_outline</mat-icon>
-          <input matInput placeholder="email@example.com" name="email"type="email" required  [formControl]="email" (chage)="onEmailChange()"/>
+          <input matInput placeholder="email@example.com" name="email"type="email" required #emailInput required [ngModel]="userInfo.email"/>
         </mat-form-field>
-        <mat-form-field appearance="outline">
+        <mat-form-field>
           <mat-label>Mật khẩu</mat-label>
           <mat-icon matPrefix>lock</mat-icon>
           <input
@@ -19,20 +19,21 @@
             required
             name="password"
             type="password"
-            [formControl]="password"
-            (change)="onPasswordChange()"
-          />
+            #passwordInput
+            id="password"
+            required
+            [ngModel]="userInfo.password"/>
         </mat-form-field>
-        <div class="result-login" *ngIf="loginResult">{{username.value}} - {{password.value}}</div>
-        <button  (click)="loginWithGoogle()" mat-raised-button class="btn-social btn-login-google py-2 mx-3" type="button"><span><i class="fab fa-google"></i></span> Đăng nhập với Google</button>
-        <button (click)="loginWithFacebook()" mat-raised-button class="btn-social btn-login-facebook py-2 mx-3" type="button"><span><i class="fab fa-facebook-f"></i></span> Đăng nhập với Facebook</button>
+        <button  [hidden] ='isLogedIn' (click)="loginWithGoogle()" mat-raised-button class="btn-social btn-login-google py-2 mx-3" type="button"><span><i class="fab fa-google"></i></span> Đăng nhập với Google</button>
+        <button  [hidden] ='isLogedIn' (click)="loginWithFacebook()" mat-raised-button class="btn-social btn-login-facebook py-2 mx-3" type="button"><span><i class="fab fa-facebook-f"></i></span> Đăng nhập với Facebook</button>
       </div>
       <div class="footer-form d-flex justify-content-center flex-row">
         <button
           type="submit"
           mat-raised-button
-          class="btn btn-primary"
-          (click)="onLogIn()"
+          class="btn"
+          color="primary"
+          [disabled]="!loginForm.valid || isLogedIn"
         >
           Đăng Nhập
         </button>
@@ -41,11 +42,22 @@
         mat-raised-button
         class="btn btn-danger"
         (click)="onLogOut()"
+        [hidden]="!isLogedIn"
+        color="warn"
       >
         Đăng Xuất
       </button>
-       
       </div>
     </form>
+    <!-- <div *ngIf="isLogedIn"  b4-a class="alert alert-success" role="alert"><strong>Đăng nhập thành công</strong></div>
+    <div *ngIf="loginError"  b4-a class="alert alert-danger" role="alert"><strong>Đăng nhập thất bại</strong></div> -->
+    <!-- <pre>{{ loginForm.value | json }}</pre> -->
+    <div class="display-data" *ngIf="false">
+      <div class="uid">{{data?.uid}}</div>
+      <img src={{data?.photoURL}} alt={{data?.uid}}/>
+      <div class="email">{{data?.email}}</div>
+      <div class="display-name">{{data?.displayName}}</div>
+      <pre>{{data |json}}</pre>
+    </div>
   </div>
 </div>

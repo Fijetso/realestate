@@ -1,31 +1,66 @@
-<mat-card class="real-estate-card-item md-card" (click)="goToPage('chi-tiet')">
-  <div class="img-hover-zoom">
-      <img class="md-image card-img-top" [lazyLoad]="mainPic" alt="picsum" [defaultImage]="defaultPic" [offset]=100>
-      <mat-icon class="icon icon-like"  matTooltip="Add to your's favorite list">favorite_border</mat-icon>
-      <button class="btn-sm btn-checked" type="button">Đã thẩm định</button>
-  </div>
-  <div class="md-card-body">
-    <div class="price-address d-flex flex-row justify-content-between">
-      <div class="text-left font-weight-bold">
-        <span class="rs-price">3 tỷ</span>
-        <span>  |  </span>
-        <span class="span-acreage">77,5m <sup>2</sup></span>
+<section *ngIf="dataLoaded; else skeleton">
+  <mat-card class="real-estate-card-item md-card align-content-around" [style.background]="'#edeff4'">
+    <div class="img-hover-zoom">
+        <!-- <img class="md-image card-img-top" [lazyLoad]="{{dataItem.realImages[0].imageLink}}" alt="picsum" [defaultImage]="defaultPic" [offset]=100> -->
+        <img *ngIf ="dataItem.realImages"class="card-img-top" src="{{dataItem.realImages[0].imageLink}}" alt="{{dataItem.realImages[0].description}}">
+        <mat-icon class="icon icon-like"  matTooltip="Thêm vào danh sách yêu thích" (click)="toast()">favorite_border</mat-icon>
+        <button class="btn-sm btn-checked" type="button" *ngIf="isAppraised">Đã thẩm định</button>
+    </div>
+    <div class="md-card-body mt-2" (click)="onSelect(dataItem.id)">
+      <div class="price-address d-flex flex-row justify-content-between">
+        <div class="text-left font-weight-bold">
+          <span class="rs-price">{{dataItem.cost | thousandSuffix: 1}}</span>
+          <span>  |  </span>
+          <span class="span-acreage">{{dataItem.details.square}}m<sup>2</sup></span>
+        </div>
+        <div class="text-right">
+          <p class="rs-location">{{ districtList | getDistrictNameFromId : dataItem.address.district}}</p>
+        </div>
       </div>
-      <div class="text-right">
-        <p class="rs-location text-orange">Q.12</p>
+      <div class="rs-desc">
+        <p>{{dataItem.description}}</p>
+      </div>
+      <div class="rs-follow-count my-1">
+        <button mat-raised-button class="mat-button btn-block btn-bg-faded-blue">Có {{dataItem.viewCount}} lượt quan tâm</button>
       </div>
     </div>
-    <div class="rs-desc">
-      <p>Bán căn góc hai mặt hẻm xe hơi Quận 12- Khu hiện hữu, gần chợ,
-        gần trường- Mua ở hoặc kinh doanh</p>
+    <div class="md-card-footer d-flex justify-content-between">
+      <span class="rs-bed-room"><i class="fas fa-bed primary" matTooltip="Số lượng phòng ngủ"></i>{{dataItem.details.bedrooms}}</span>
+      <span class="rs-bath-room"><i class="fas fa-bath primary" matTooltip="Số lượng phòng tắm"></i>{{dataItem.details.bathrooms}}</span>
+      <span class="rs-location-direct"><i class="fas fa-location-arrow primary" matTooltip="Hướng"></i>{{dataItem.details.direction}}</span>
     </div>
-    <div class="rs-follow-count my-1">
-      <button mat-raised-button class="mat-button btn-block btn-bg-faded-blue">Có 1866 lượt quan tâm</button>
+  </mat-card>
+</section>
+
+<ng-template #skeleton>
+  <mat-card class="real-estate-card-item md-card align-content-around" (click)="onSelect(dataItem.id)">
+    <div class="img-hover-zoom">
+        <img class="md-image card-img-top" alt="">
+        <!-- <mat-icon class="icon icon-like"  matTooltip="Thêm vào danh sách yêu thích">favorite_border</mat-icon> -->
+        <button class="btn-sm btn-checked" type="button" *ngIf="isAppraised"></button>
     </div>
-  </div>
-  <div class="md-card-footer d-flex justify-content-between">
-    <span class="rs-bed-room"><i class="fas fa-bed" matTooltip="Bedroom quantity"></i> 4</span>
-    <span class="rs-bath-room"><i class="fas fa-bath" matTooltip="Bathroom quantity"></i> 5</span>
-    <span class="rs-location-direct"><i class="fas fa-location-arrow" matTooltip="Location direction"></i>Nam</span>
-  </div>
-</mat-card>
+    <div class="md-card-body mt-2">
+      <div class="">
+        <div class="text-left font-weight-bold">
+          <span class="rs-price"></span>
+          <span></span>
+          <span class="span-acreage"></span>
+        </div>
+        <div class="text-right">
+          <p class="rs-location text-orange"></p>
+        </div>
+      </div>
+      <div class="rs-desc">
+        <p class="desc"></p>
+      </div>
+      <div class="rs-follow-count my-1">
+        <p class="mat-button btn-block btn-bg-faded-blue"></p>
+      </div>
+    </div>
+    <div class="md-card-footer d-flex justify-content-between">
+      <span class="rs-bed-room"></span>
+      <span class="rs-bath-room"></span>
+      <span class="rs-location-direct"></span>
+    </div>
+  </mat-card>
+</ng-template>

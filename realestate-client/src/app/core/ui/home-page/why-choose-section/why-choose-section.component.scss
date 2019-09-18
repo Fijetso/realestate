@@ -1,3 +1,4 @@
+@import '../../../../../my-theme.scss';
 .why-choose-wrapper {
   margin: 1.5rem 0;
   color: white;
@@ -5,7 +6,10 @@
   justify-content: center;
   align-items: center;
   align-content: center;
-  background-color: #1da7e1;
+  // background-color: #1da7e1;
+  // background-color: $primary;
+  background-color: $bg-light-blue;
+  color: $primary;
   background-size: cover;
   min-height: 455px;
   padding-top: 5px;
@@ -13,8 +17,6 @@
   width: 100%;
   background-position: center;
   padding-bottom: 3rem;
-  mat-button-toggle-broup {
-  }
   mat-button-toggle {
     justify-content: center;
     align-items: center;

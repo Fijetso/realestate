@@ -1,7 +1,8 @@
 <div class="mt-10 container user-container">
   <h5>Danh sách người dùng</h5>
+  <input type="text"[(ngModel)]="searchTerm" id="search" class="form-control my-2" >
   <div class="user-list row">
-    <div *ngFor="let userItem of users" class="col-md-4 col-lg-4 col-sm-4">
+    <div *ngFor="let userItem of users | filter: searchTerm" class="col-md-4 col-lg-4 col-sm-4" (click)="goToUserDetail(userItem.id)">
       <mat-card class="user-card ">
         <mat-card-header>
           <div mat-card-avatar class="example-header-image"></div>
@@ -26,7 +27,7 @@
     </div>
   </div>
   <h5>Lấy thông tin người dùng theo mã</h5>
-  <div class="user-item row">
+  <div class="user-item row" *ngIf="false">
     <mat-card class="user-card col-md-4 col-lg-4 col-sm-4">
       <mat-card-header>
         <div mat-card-avatar class="example-header-image"></div>
@@ -66,7 +67,7 @@
                   class="form-control"
                   type="number"
                   id="example-text-input"
-                  [(ngModel)]="newUser.id"
+                  [(ngModel)]="user.id"
                   name="id"
                 />
               </div>
@@ -80,7 +81,7 @@
               class="form-control"
               type="text"
               id="example-text-input"
-              [(ngModel)]="newUser.name"
+              [(ngModel)]="user.name"
               name="name"
               required
               autofocus
@@ -95,6 +96,14 @@
           Tên là bắt buộc
         </div>
         <div class="form-group row">
+          <label for="input-birthdate" class="col-md-2 col-form-label"
+            >Ngày sinh:</label
+          >
+          <div class="col-md-10">
+            <input   class="form-control" type="date" [(ngModel)]="user.birthdate">
+          </div>
+        </div>
+        <div class="form-group row">
           <label for="example-email-input" class="col-md-2 col-form-label"
             >Thư điện tử:</label
           >
@@ -103,7 +112,7 @@
               class="form-control"
               type="email"
               id="example-email-input"
-              [(ngModel)]="newUser.email"
+              [(ngModel)]="user.email"
               name="email"
               required
             />
@@ -125,7 +134,7 @@
               class="form-control"
               type="password"
               id="example-password-input"
-              [(ngModel)]="newUser.password"
+              [(ngModel)]="user.password"
               name="password"
               required
             />
@@ -147,21 +156,21 @@
               class="form-control"
               type="tel"
               id="example-tel-input"
-              [(ngModel)]="newUser.phone"
+              [(ngModel)]="user.phone"
               name="phone"
             />
           </div>
         </div>
         <mat-form-field>
           <mat-label>Giới tính</mat-label>
-          <mat-select [(ngModel)]="newUser.gender" name="gender">
+          <mat-select [(ngModel)]="user.gender" name="gender">
             <mat-option
-              value="true"
+              [value]="true"
             >
               Nam
             </mat-option>
             <mat-option
-              value="false"
+              [value]="false"
             >
               Nữ
             </mat-option>
@@ -169,10 +178,10 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>Loại User</mat-label>
-          <mat-select [(ngModel)]="newUser.userKind" name="userKind">
+          <mat-select [(ngModel)]="user.userKind" name="userKind">
             <mat-option
               *ngFor="let userKind of userKinds"
-              [value]="userKind"
+              [value]="userKind.id"
             >
               {{ userKind.name }}
             </mat-option>

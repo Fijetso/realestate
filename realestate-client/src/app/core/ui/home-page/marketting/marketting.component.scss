@@ -1,3 +1,4 @@
+@import "../../../../../my-theme.scss";
 .marketting-wrapper {
   color: white;
   display: flex;
@@ -16,8 +17,8 @@
     align-items: center;
   }
   .mat-button-toggle-checked {
-    background-color: #2e79d1;
-    color: #fff;
+    background-color: $primary;
+    color: $text-light;
   }
   .input-group > .form-control:not(:last-child),
   .input-group > .custom-select:not(:last-child) {
@@ -30,24 +31,24 @@
     color:white;
   }
 }
-::ng-deep .mat-focused .mat-form-field-label {
-  /*change color of label*/
-  color: white !important;
- }
+// ::ng-deep .mat-focused .mat-form-field-label {
+//   /*change color of label*/
+//   color: white !important;
+//  }
 
- ::ng-deep.mat-form-field-underline {
-  /*change color of underline*/
-  background-color: white !important;
-} 
+//  ::ng-deep.mat-form-field-underline {
+//   /*change color of underline*/
+//   background-color: white !important;
+// } 
 
-::ng-deep.mat-form-field-ripple {
- /*change color of underline when focused*/
- background-color: white !important;;
-}
-::ng-deep.mat-input-placeholder {
-  color: #fff;
-  font-size: 2em;
-}
+// ::ng-deep.mat-form-field-ripple {
+//  /*change color of underline when focused*/
+//  background-color: white !important;;
+// }
+// ::ng-deep.mat-input-placeholder {
+//   color: #fff;
+//   font-size: 2em;
+// }
 .icon{
   cursor: pointer;
 }

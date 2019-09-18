@@ -1,3 +1,4 @@
+@import '../../../../my-theme.scss';
 .login-wrapper {
   form {
    .form-content{
@@ -13,10 +14,10 @@
       padding:0 .5rem;
     }
     .btn-login-facebook{
-      background-color:#3B5998;
+      background-color:$accent;
     }
     .btn-login-google{
-      background-color:#DD4B39
+      background-color:$accent;
     }
     button,.btn-login{
       color:white;

@@ -1,15 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { CommonService } from './../../../../services/common/common.service';
+import { GetIdFromNamePipe } from './../../../../ultility/pipe/get-id-from-name.pipe';
+import { ApiService } from './../../../../services/api/api.service';
+import { Component, OnInit, ViewChild, Output,EventEmitter  } from '@angular/core';
 import { FormControl  } from '@angular/forms';
-import { Observable, Subject, merge } from 'rxjs';
-import {
-  startWith,
-  map,
-  debounceTime,
-  distinctUntilChanged,
-  filter
-} from 'rxjs/operators';
-import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
-
+import { NavigationExtras, Router } from '@angular/router';
 export interface State {
   name: string;
 }
@@ -19,55 +13,50 @@ export interface State {
   styleUrls: ['./marketting.component.scss']
 })
 export class MarkettingComponent implements OnInit {
-  selectedVal: string;
+  reKindValue: string;
+  stateNameKey: string;
+  stateId: number;
+  @Output()
+  receiveREKind: EventEmitter <string> = new EventEmitter <string>();
+  tradeFromDistrict: any;
+  constructor(private api: ApiService, private getIdFromName: GetIdFromNamePipe, private common : CommonService,private router: Router) {
+
+  }
 
   myControl = new FormControl();
-  states: State[] = [
-    {name: 'Quận 1'},
-    {name: 'Quận 2'},
-    {name: 'Quận 3'},
-    {name: 'Quận 4'},
-    {name: 'Quận 5'},
-    {name: 'Quận 6'},
-    {name: 'Quận 7'},
-    {name: 'Quận 8'},
-    {name: 'Quận 9'},
-    {name: 'Quận 10'},
-    {name: 'Quận 11'},
-    {name: 'Quận 12'},
-    {name: 'Quận Bình Thạnh'},
-    {name: 'Quận Gò Vấp'},
-    {name: 'Quận Tân Bình'},
-    {name: 'Quận Tân Phú'},
-    {name: 'Quận Bình Tân'},
-    {name: 'Huyện Nhà Bè'},
-    {name: 'Huyện Bình Chánh'},
-    {name: 'Huyện Hóc Môn'},
-    {name: 'Huyện Củ Chi'},
-    {name: 'Huyện Cần Giờ'},
-  ];
-  filteredOptions: Observable<State[]>;
+  states: any;
 
   ngOnInit() {
-    this.selectedVal = 'buy';
-    this.filteredOptions = this.myControl.valueChanges
-    .pipe(
-      startWith<string | State>(''),
-      map(value => typeof value === 'string' ? value : value.name),
-      map(name => name ? this._filter(name) : this.states.slice())
-    );
+    this.reKindValue = 'mua';
+    this.getDistrictList();
+    this.receiveREKind.emit(this.reKindValue);
   }
 
   public onValChange(val: string) {
-    this.selectedVal = val;
+    this.reKindValue = val;
+    this.receiveREKind.emit(this.reKindValue);
   }
-  displayFn(state?: State): string | undefined {
-    return state ? state.name : undefined;
+  getDistrictList() {
+    this.api.getDistrictFromProvinceId(79).subscribe(districtList => {
+      this.states = districtList;
+    });
   }
+  onSubmitSearch( value) {
+    this.stateId = this.getIdFromName.transform(this.states, value);
+    this.api.getTradeFromDistrict(this.stateId).subscribe(tradeList => {
+      this.tradeFromDistrict = tradeList;
+      this.api.setData(this.tradeFromDistrict);
+      // this.toastr.warning('Chức năng chưa hoàn thiện');
+      const navExtras: NavigationExtras = {
+        queryParams: {
+          quan: this.common.changeToSlug(value),
+          gia: this.common.changeToSlug('Giá thấp nhất'),
+          loai: this.common.changeToSlug('Nhà ở chung cư')
+        },
+        state: { data:  tradeList, title: value}
+      };
+      this.router.navigate(['tim-kiem'], navExtras);
+    });
 
-  private _filter(name: string): State[] {
-    const filterValue = name.toLowerCase();
-
-    return this.states.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
   }
 }

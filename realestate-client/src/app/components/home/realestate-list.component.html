@@ -1,4 +1,4 @@
-<app-marketting></app-marketting>
+<app-marketting (valueEvent)="receiveREKind($event)"></app-marketting>
 <div class="mt-10 container">
   <app-real-estate-appraised-section></app-real-estate-appraised-section>
   <app-hot-real-estate-section></app-hot-real-estate-section>
@@ -6,4 +6,4 @@
   <app-trading-area-section></app-trading-area-section>
   <app-why-choose-section></app-why-choose-section>
 </div>
-<app-floating-menu-wrapper></app-floating-menu-wrapper>
+<app-floating-menu-wrapper *ngIf="true"></app-floating-menu-wrapper>

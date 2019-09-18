@@ -3,6 +3,7 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 @import "~@fortawesome/fontawesome-free/scss/regular";
 @import "~@fortawesome/fontawesome-free/scss/solid";
 @import "~@fortawesome/fontawesome-free/scss/brands";
+@import '../../../my-theme.scss';
 .re-detail-wrapper {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
@@ -21,6 +22,9 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
       color: grey;
       line-height: 1.5;
     }
+    .icon:hover{
+      color:$accent;
+    }
   }
   .main-content {
     background-color: white;
@@ -28,6 +32,7 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
       img {
         max-width: 100%;
         height: auto;
+        max-height: 30rem;
       }
       .re-desc{
         .re-desc-line-2{
@@ -43,7 +48,7 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
           display: inline-block;
         }
       }
-      .re-detail {
+      .re-detail,.re-read-more {
         .re-elements {
           list-style-type: disc;
           padding:0;
@@ -55,6 +60,12 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
           padding: 6px 0 6px 15px;
         }
       }
+    }
+    .fixed-offset{
+      position: fixed;
+      top:3.5rem;
+      right: 10px;
+      z-index:66;
     }
     .content-right {
       .request-infor {
@@ -88,9 +99,18 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 }
 .carousel-wrapper {
   position: relative;
+  .slide-item{
+    .slide-caption {
+      position: absolute;
+      bottom: 0;
+      text-align:center;
+      background: rgba(0,0,0,.75);
+      width:100%;
+      padding: 1rem 0;
+    }
+  }
 }
 .icon {
-  font-size: 30px;
   color: rgba(1, 1, 1, 0.2);
 }
 .icon:hover {
@@ -106,4 +126,7 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
       width: 100% !important;
     }
   }
+}
+mat-form-field-wrapper {
+  padding-bottom: 0 !important;
 }

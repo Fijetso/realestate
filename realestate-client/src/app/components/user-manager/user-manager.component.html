@@ -1,0 +1,181 @@
+<div class="container-fluid">
+  <div class="d-flex flex-row mt-2">
+    <ul
+      class="nav nav-tabs nav-tabs--vertical nav-tabs--left"
+      role="navigation"
+    >
+      <li>
+       <div>
+          <img
+          src="{{ photoSrc }}"
+          alt=""
+          class="rounded-circle rounded-sm"
+          onError="this.src='../../../assets/images/login.png'"
+        />
+       </div>
+      </li>
+      <li class="nav-item">
+        <a
+          href="#thong-tin-tai-khoan"
+          class="nav-link active"
+          data-toggle="tab"
+          role="tab"
+          aria-controls="lorem"
+          >Thông tin cá nhân</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          href="#bai-dang"
+          class="nav-link"
+          data-toggle="tab"
+          role="tab"
+          aria-controls="ipsum"
+          >Tin đăng của tôi</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          href="#bo-suu-tap"
+          class="nav-link"
+          data-toggle="tab"
+          role="tab"
+          aria-controls="dolor"
+          >Bộ sưu tập</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          href="#doi-mat-khau"
+          class="nav-link"
+          data-toggle="tab"
+          role="tab"
+          aria-controls="sit-amet"
+          >Đổi mật khẩu</a
+        >
+      </li>
+    </ul>
+    <div class="tab-content p-3">
+      <div class="tab-pane fade show active" id="thong-tin-tai-khoan" role="tabpanel">
+        <h1>Thông tin tài khoản</h1>
+        <form
+          class="accountForm"
+          [formGroup]="accountForm"
+          (ngSubmit)="onSubmitAccountUpdate()"
+        >
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  placeholder="Họ tên"
+                  formControlName="displayName"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="w-100">
+                <input matInput placeholder="Ngày sinh" formControlName="dob" />
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="w-100">
+                <mat-label>Giới tính</mat-label>
+                <mat-select formControlName="gender">
+                  <mat-option
+                    *ngFor="let gender of genderList"
+                    [value]="gender.value"
+                  >
+                    {{ gender.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="w-100">
+                <input matInput placeholder="Email" formControlName="email" />
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  placeholder="Số điện thoại"
+                  formControlName="phoneNumber"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="text-center p-3 m-3">
+            <button mat-raised-button color="accent" type="submit">Lưu thay đổi</button>
+          </div>
+        </form>
+      </div>
+      <div class="tab-pane fade" id="bai-dang" role="tabpanel">
+        <h1>Danh sách bài đăng</h1>
+      </div>
+      <div class="tab-pane fade" id="bo-suu-tap" role="tabpanel">
+        <h1>Bộ sưu tập</h1>
+      </div>
+      <div class="tab-pane fade" id="doi-mat-khau" role="tabpanel">
+        <!-- <h1>Đổi mật khẩu</h1> -->
+        <mat-card class="change-password">
+          <mat-card-header>
+            <mat-card-title>Đổi mật khẩu</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+              <form
+              class="changePassForm"
+              [formGroup]="changePassForm"
+              (ngSubmit)="onSubmitChangePass()"
+            >
+              <div class="row">
+                <div class="col-md-4">
+                  <mat-form-field class="w-100">
+                    <input
+                      matInput
+                      placeholder="Mật khẩu cũ"
+                      formControlName="oldPassword"
+                      type="password"
+                      required
+                      minlength="6"
+                    />
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                  <mat-form-field class="w-100">
+                    <input
+                      matInput
+                      placeholder="Mật khẩu mới"
+                      formControlName="newPassword"
+                      type="password"
+                      required
+                    />
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                  <mat-form-field class="w-100">
+                    <input
+                      matInput
+                      placeholder="Nhập lại mật khẩu mới"
+                      formControlName="reTypeNewPassword"
+                      type="password"
+                      required
+                      minlength="6"
+                    />
+                  </mat-form-field>
+                  <mat-error *ngIf="notMatch">
+                      Mật khẩu nhập lại không khớp
+                  </mat-error>
+                </div>
+              </div>
+              <div class="text-center p-3 m-3">
+                <button mat-raised-button color="accent" type="submit" [disabled]="changePassForm.invalid">Lưu</button>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

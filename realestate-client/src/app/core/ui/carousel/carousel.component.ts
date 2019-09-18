@@ -5,11 +5,17 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./carousel.component.scss']
 })
 export class CarouselComponent implements OnInit {
-  @Input() dataSource: any;
-  myCarouselImages = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map(
-    i => `https://picsum.photos/id/${i}/800/400`
-  );
-  myCarouselOptions = {
+  @Input() dataAppraised: any;
+  @Input() isAppraised;
+  @Input() dataTradingArea: any;
+  @Input() isTradingArea;
+  @Input() dataFavorite: any;
+  @Input() isFavRE;
+  @Input() dataHotRE: any;
+  @Input() isHotRE;
+  @Input() dataRecentRE: any;
+  @Input() isRecentRE;
+  carouselOptions = {
     margin: 14,
     responsiveClass: true,
     nav: false,
@@ -21,7 +27,7 @@ export class CarouselComponent implements OnInit {
     autoplay: false,
     autoplayTimeout: 1000,
     autoplayHoverPause: true,
-    loop: true,
+    loop: false,
     responsive: {
         0: {
             items: 1,
@@ -37,5 +43,6 @@ export class CarouselComponent implements OnInit {
         }
     }
   };
-  ngOnInit() {}
+  ngOnInit() {
+  }
 }

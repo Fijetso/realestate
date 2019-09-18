@@ -1,9 +1,13 @@
+import { ToastrService } from 'ngx-toastr';
+import { FilterPipe } from '../../ultility/pipe/filter.pipe';
+import { CommonService } from './../../services/common/common.service';
 import { ApiService } from './../../services/api/api.service';
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/model/user/user';
 import { UserKind } from 'src/app/model/user-kind/user-kind';
 import { Observable } from 'rxjs';
 import { State } from 'src/app/core/ui/home-page/marketting/marketting.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -13,7 +17,6 @@ import { State } from 'src/app/core/ui/home-page/marketting/marketting.component
 export class UserComponent implements OnInit {
   users: User[] = [];
   user: User;
-  newUser: any;
   userKinds = [
     {
       id: 1,
@@ -24,25 +27,31 @@ export class UserComponent implements OnInit {
       name: 'Môi giới'
     }
   ];
-  constructor(private api: ApiService) {
-    this.newUser = {
+  searchTerm: string;
+  constructor(
+    private api: ApiService,
+    private common: CommonService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private toastr: ToastrService
+  ) {
+    this.user = {
       id: null,
       name: 'Danh Thanh',
       email: '',
       phone: '',
       password: '',
-      gender: 'false',
-      birthdate: null,
-      userKind: {
-        id: 1,
-        name: 'Chủ nhà'
-      }
+      gender: false,
+      birthdate: new Date('11/19/1995'),
+      userKind: 1
     };
+    this.searchTerm = '';
   }
   ngOnInit() {
     this.getAllUser();
-    this.getUserById(1);
-    // this.createUser(this.newUser);
+    this.common.userObservable.subscribe(res => {
+      this.getAllUser();
+    });
   }
   getAllUser() {
     this.api.getAllUser().subscribe(listUser => {
@@ -58,19 +67,18 @@ export class UserComponent implements OnInit {
   }
   createUser(user: User) {
     console.log(user);
-    this.api
-      .createUser(user)
-      .subscribe(
-        success => alert('Create successfully'),
-        error => alert('Create user failed')
-      );
+    this.api.createUser(user).subscribe();
   }
   deleteUser(id: number) {
-    this.api
-      .deleteUser(id)
-      .subscribe(
-        success => alert('Delete user successfully'),
-        error => alert('Delete user failed')
-      );
+    this.api.deleteUser(id).subscribe(
+      success => {
+        alert('Delete user successfully');
+        this.common.notifyUserDataChanged();
+      },
+      error => alert('Delete user failed')
+    );
+  }
+  goToUserDetail(userId: string) {
+    this.router.navigate(['nguoi-dung', userId]);
   }
 }

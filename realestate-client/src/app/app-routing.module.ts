@@ -10,16 +10,18 @@ import { MapModuleComponent } from './core/ui/map-module/map-module.component';
 import { RealEstateDetailComponent } from './components/real-estate-detail/real-estate-detail.component';
 import { RegisterComponent } from './core/ui/register/register.component';
 import { CreatePostComponent } from './core/ui/create-post/create-post.component';
+import { UserDetailComponent } from './core/ui/user-detail/user-detail.component';
+import { SearchPageComponent } from './core/ui/search-page/search-page.component';
+import { UserManagerComponent } from './components/user-manager/user-manager.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'trang-chu', pathMatch: 'full' },
   {
     path: 'trang-chu',
     component: RealestateListComponent,
     data: { title: 'Tiêu đề trang chủ' }
   },
   {
-    path: 'chi-tiet',
+    path: 'mua/:slug',
     component: RealEstateDetailComponent,
     data: { title: 'Chi tiết bất động sản' }
   },
@@ -54,6 +56,25 @@ const routes: Routes = [
     data: { title: 'Trang bài đăng' }
   },
   {
+    path: 'nguoi-dung/:id',
+    component: UserDetailComponent,
+    data: { title: 'Chi tiết người dùng' }
+  },
+  {
+    path: 'tim-kiem',
+    component: SearchPageComponent,
+    data: { title: 'Tìm kiếm BĐS' }
+  },
+  {
+    path: 'tai-khoan',
+    component: UserManagerComponent,
+    data: { title: 'Quản lý tài khoản' }
+  },
+  { path: '',
+    redirectTo: '/trang-chu',
+    pathMatch: 'full'
+  },
+  {
     path: '**',
     component: PageNotFoundComponent,
     data: { title: 'Trang không tìm thấy' }
@@ -61,7 +82,11 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    anchorScrolling: 'enabled',
+    scrollPositionRestoration: 'enabled',
+    useHash: false
+  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

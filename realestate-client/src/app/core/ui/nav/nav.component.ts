@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { Component, Input } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ModalService } from 'src/app/services/modal.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-nav',
@@ -12,7 +15,8 @@ import { ModalService } from 'src/app/services/modal.service';
   styleUrls: ['./nav.component.scss']
 })
 export class NavComponent {
-
+  loginInfor = JSON.parse(localStorage.getItem('userInfor'));
+  @Input() badgeCount = 5;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches)
@@ -23,7 +27,10 @@ export class NavComponent {
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private breakpointObserver: BreakpointObserver,
-    private modalService: ModalService
+    private modalService: ModalService,
+    // private location: Location,
+    private auth: AuthenticationService,
+    private router : Router
   ) {
     this.matIconRegistry.addSvgIcon(
       'apple-badge',
@@ -33,8 +40,14 @@ export class NavComponent {
       'google-badge',
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/images/google-badge.svg')
     );
+    // alert(this.loginInfor);
   }
   openInfoModal() {
     this.modalService.openInfoModal();
+  }
+  logOut() {
+    this.auth.logOut();
+    this.loginInfor = JSON.parse(localStorage.getItem('userInfor'));
+    location.reload();
   }
 }

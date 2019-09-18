@@ -1,3 +1,4 @@
+import { ApiService } from './../../../../services/api/api.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RealEstateAppraisedSectionComponent implements OnInit {
 
-  constructor() { }
-
+  dataAppraised: any = null;
+  appraised = true;
+  constructor(private api: ApiService) { }
   ngOnInit() {
+    this.getAllRealEstate();
   }
 
+  getAllRealEstate() {
+    this.api.getAllRealEstate().subscribe(trade => {
+      this.dataAppraised = trade;
+    });
+  }
 }

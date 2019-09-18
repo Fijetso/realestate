@@ -1,7 +1,9 @@
+import { ToastrService } from 'ngx-toastr';
 import { ApiService } from './../../../services/api/api.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { State } from '../home-page/marketting/marketting.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-post',
@@ -14,24 +16,23 @@ export class CreatePostComponent implements OnInit {
   formPost: any;
   imageUrl = '../../../../assets/images/default.png';
   fileToUpload: File = null;
-  constructor(private http: HttpClient, private api:ApiService) {
+  reKinds: string[] = ['Căn hộ/ Chung cư', 'Nhà riêng', 'Đất nền'];
+  province: any = null;
+  districtList: any = null;
+  wardList: any = null;
+  constructor(private api: ApiService, private toastr: ToastrService, private router: Router) {
     this.post = {
       name: '',
       email: '',
-      // social: {
-      //   fb: '',
-      //   twt: '',
-      //   web: ''
-      // },
       reKind: 'Căn hộ/ Chung cư',
       dob: '',
-      diaChi: {
-        tinh: 'Hồ Chí Minh',
-        huyen: 'Quận 1',
-        xa: 'Xã 1'
+      address: {
+        province: 0,
+        district: 0,
+        ward: 0
       },
       price: null,
-      currency: 'VNĐ',
+      currency: 'VND',
       reTradeKind: 'Bán',
       phone: '',
       houseAddress: '',
@@ -40,44 +41,25 @@ export class CreatePostComponent implements OnInit {
       bluePrints: ''
     };
    }
-  reKinds: string[] = ['Căn hộ/ Chung cư', 'Nhà riêng', 'Đất nền'];
-  states: State[] = [
-    {name: 'Quận 1'},
-    {name: 'Quận 2'},
-    {name: 'Quận 3'},
-    {name: 'Quận 4'},
-    {name: 'Quận 5'},
-    {name: 'Quận 6'},
-    {name: 'Quận 7'},
-    {name: 'Quận 8'},
-    {name: 'Quận 9'},
-    {name: 'Quận 10'},
-    {name: 'Quận 11'},
-    {name: 'Quận 12'},
-    {name: 'Quận Bình Thạnh'},
-    {name: 'Quận Gò Vấp'},
-    {name: 'Quận Tân Bình'},
-    {name: 'Quận Tân Phú'},
-    {name: 'Quận Bình Tân'},
-    {name: 'Huyện Nhà Bè'},
-    {name: 'Huyện Bình Chánh'},
-    {name: 'Huyện Hóc Môn'},
-    {name: 'Huyện Củ Chi'},
-    {name: 'Huyện Cần Giờ'},
-  ];
-  xaList = [
-    'Xã 1',
-    'Xã 2',
-    'Xã 3',
-    'Xã 4',
-    'Xã 5',
-    'Xã 6',
-    'Xã 7',
-    'Xã 8',
-    'Xã 9',
-    'Xã 10'
-  ];
+
   ngOnInit() {
+    this.getProvince(79);
+  }
+  getProvince(provinceId: number) {
+    this.api.getProvincesById(provinceId).subscribe(province => {
+      this.province = province;
+    });
+  }
+
+  getDistrictFromProvince(provinceId: number) {
+    this.api.getDistrictFromProvinceId(provinceId).subscribe(districtList => {
+      this.districtList = districtList;
+    });
+  }
+  getWardFromDisctrictId(provinceId: number, districtId: number) {
+    this.api.getWardFromDistrictId(provinceId, districtId).subscribe(wardList => {
+      this.wardList = wardList;
+    });
   }
   onFileChange(event) {
     if (event.target.files.length > 0) {
@@ -85,6 +67,8 @@ export class CreatePostComponent implements OnInit {
       this.formPost.get('bluePrints').setValue(file);
     }
   }
+
+
   private prepareSave(): any {
     const input = new FormData();
     input.append('avatar', this.formPost.get('bluePrints').value);
@@ -99,6 +83,8 @@ export class CreatePostComponent implements OnInit {
     console.log(formValue);
     this.post = formValue;
     console.log( this.post);
+    this.toastr.success('Thêm bất động sản thành công', 'Thêm bất động sản');
+    this.router.navigate(['/']);
     // throw Error('something go wrong');
   }
 

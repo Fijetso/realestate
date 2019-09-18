@@ -1,3 +1,4 @@
+import { HttpErrorInterceptor } from './services/common/http-error.interceptor';
 import { environment } from './../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
@@ -44,11 +45,12 @@ import {
   MatBottomSheet,
   MatBottomSheetRef,
   MatButtonToggleModule,
-  MatFormFieldModule
+  MatFormFieldModule,
+  MatBadgeModule
 } from '@angular/material';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient,HTTP_INTERCEPTORS } from '@angular/common/http';
 import 'hammerjs';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -57,6 +59,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { ToastrModule } from 'ngx-toastr';
+import { CKEditorModule } from 'ng2-ckeditor';
+import {} from 'googlemaps';
+import { AngularFireMessagingModule } from '@angular/fire/messaging';
 
 import { RealEstateWrapperComponent } from './components/real-estate/real-estate-wrapper/real-estate-wrapper.component';
 import { AlertComponent } from './core/modal/alert/alert.component';
@@ -70,7 +77,6 @@ import { TradingAreaItemComponent } from './core/ui/trading-area/trading-area-it
 import { WhyChooseSectionComponent } from './core/ui/home-page/why-choose-section/why-choose-section.component';
 import { TradingAreaSectionComponent } from './core/ui/home-page/trading-area-section/trading-area-section.component';
 import { HotRealEstateSectionComponent } from './core/ui/home-page/hot-real-estate-section/hot-real-estate-section.component';
-// tslint:disable-next-line: max-line-length
 import { RealEstateAppraisedSectionComponent } from './core/ui/home-page/real-estate-appraised-section/real-estate-appraised-section.component';
 import { BuyOnDemandSectionComponent } from './core/ui/home-page/buy-on-demand-section/buy-on-demand-section.component';
 import { NewsSectionComponent } from './core/ui/home-page/news-section/news-section.component';
@@ -88,9 +94,15 @@ import { AuthenticationService } from './services/authentication/authentication.
 import { UserComponent } from './components/user/user.component';
 import { ApiService } from './services/api/api.service';
 import { CreatePostComponent } from './core/ui/create-post/create-post.component';
-
-
-
+import { FilterPipe } from './ultility/pipe/filter.pipe';
+import { UserDetailComponent } from './core/ui/user-detail/user-detail.component';
+import { GetCityPipe } from './ultility/pipe/get-city.pipe';
+import { GetDistrictNameFromIdPipe } from './ultility/pipe/get-district-name-from-id.pipe';
+import { ThousandSuffixPipe } from './ultility/pipe/thousand-suffix.pipe';
+import { SearchPageComponent } from './core/ui/search-page/search-page.component';
+import { AccountManagementComponent } from './core/ui/account-management/account-management.component';
+import { GetIdFromNamePipe } from './ultility/pipe/get-id-from-name.pipe';
+import { UserManagerComponent } from './components/user-manager/user-manager.component';
 
 @NgModule({
   declarations: [
@@ -126,7 +138,16 @@ import { CreatePostComponent } from './core/ui/create-post/create-post.component
     HotPlaceItemComponent,
     RegisterComponent,
     UserComponent,
-    CreatePostComponent
+    CreatePostComponent,
+    FilterPipe,
+    UserDetailComponent,
+    GetCityPipe,
+    GetDistrictNameFromIdPipe,
+    ThousandSuffixPipe,
+    SearchPageComponent,
+    AccountManagementComponent,
+    GetIdFromNamePipe,
+    UserManagerComponent
   ],
   imports: [
     OwlModule,
@@ -136,7 +157,8 @@ import { CreatePostComponent } from './core/ui/create-post/create-post.component
     LazyLoadImageModule,
     BrowserAnimationsModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCTD49hV20zPTBjT7k643sBxjoXx6W7oEo'
+      apiKey: 'AIzaSyCTD49hV20zPTBjT7k643sBxjoXx6W7oEo',
+      libraries: ['places']
     }),
     TranslateModule.forRoot({
       loader: {
@@ -171,11 +193,25 @@ import { CreatePostComponent } from './core/ui/create-post/create-post.component
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    Ng2SearchPipeModule,
+    ToastrModule.forRoot({
+      timeOut: 1000,
+    }),
+    CKEditorModule,
+    AngularFireMessagingModule,
+    MatMenuModule,
+    MatBadgeModule
   ],
   providers: [
     AuthenticationService,
-    ApiService
+    ApiService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    },
+    GetIdFromNamePipe
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],
