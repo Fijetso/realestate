@@ -1,0 +1,69 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/theming';
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "~bootstrap/scss/bootstrap.scss";
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
+@import "~@fortawesome/fontawesome-free/scss/regular";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~@fortawesome/fontawesome-free/scss/brands";
+@import "~material-design-icons/iconfont/material-icons.css";
+*,*:hover,a:hover{
+  font-style: normal;
+  outline: 0;
+  text-decoration: none;
+}
+.main-header {
+  height: 10vh;
+}
+.orange-gradient {
+  background: linear-gradient(
+    to right,
+    rgba(241, 117, 35, 1) 0,
+    rgba(241, 117, 35, 0.94) 20%,
+    rgba(0, 103, 221, 0.72) 100%
+  );
+}
+.nav-link,
+.navbar-brand,
+.navbar-toggler-icon {
+  text-decoration: none;
+  color: white;
+}
+.nav-link:hover,
+.navlink:active,
+.active {
+  color: #ff1744;
+  font-weight: 500;
+}
+.logo-center {
+  position: absolute;
+  margin: 0px auto;
+  width: 100%;
+  text-align: center;
+  margin-top: -20px;
+}
+i:hover {
+  color: #ff1744 !important;
+  cursor: pointer;
+}
+//For car
+//
+.md-card:hover {
+  box-shadow: -1px 10px 29px 0px rgba(0, 0, 0, 0.2);
+}
+.md-card {
+  padding: 0;
+}
+.text-orange {
+  color: orange;
+}
+.bg-faded-blue {
+  background-color: #ecf1f7;
+}
+.btn-search{
+  background-color: #f17423;
+  color: white;
+}
+img{
+  max-width: 100%;
+}

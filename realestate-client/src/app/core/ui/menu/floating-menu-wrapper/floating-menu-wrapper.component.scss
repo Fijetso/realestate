@@ -1,0 +1,156 @@
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
+@import "~@fortawesome/fontawesome-free/scss/regular";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~@fortawesome/fontawesome-free/scss/brands";
+
+#top-bar-left a {
+  position: fixed;
+  left: 0;
+  padding: 1rem 0;
+  width: 52px;
+  text-decoration: none;
+  font-size: 20px;
+  color: white;
+  border-radius: 0 5px 5px 0;
+  -webkit-transition: all 0.5s ease; /* Safari */
+  transition: all 0.5s ease;
+  z-index: 88;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  .re-text {
+    font-size: 0.8rem;
+    font-family: Roboto, sans-serif;
+    text-align: center;
+    white-space: nowrap;
+    width: 100%;
+    display: flex;
+    &::before {
+      padding: 0 20px;
+      margin-right: 1rem;
+      font-style: normal;
+      font-variant: normal;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      font-weight:900;
+    }
+  }
+  .txt-bdsdq {
+    &:before {
+      font-family: "Font Awesome 5 Free";
+      content: "\f015";
+    }
+  }
+  .txt-bdshot {
+    &:before {
+      font-family: "Font Awesome 5 Free";
+      content: "\f015";
+    }
+  }
+  .txt-hot-locations {
+    &:before {
+      font-family: "Font Awesome 5 Free";
+      content: "\f3c5";
+    }
+  }
+  .txt-why-re {
+    &:before {
+      font-family: "Font Awesome 5 Free";
+      content: "\f059";
+    }
+  }
+  .txt-buy-by-request {
+    &:before {
+      font-family: "Font Awesome 5 Free";
+      
+      content: "\f05a";
+    }
+  }
+  .txt-news-bds {
+    &:before {
+      font-family: "Font Awesome 5 Free";
+      
+      content: "\f1ea";
+    }
+  }
+  .txt-download-app {
+    &:before {
+      font-family: "Font Awesome 5 Free";
+      content: "\f3cd";
+    }
+  }
+}
+#top-bar-left a:hover {
+  width: 20rem;
+  transition-timing-function: ease;
+  -webkit-transition-timing-function: ease;
+  .re-text {
+    font-size: 0.8rem;
+    font-family: Roboto, sans-serif;
+    top: 0;
+    left: 0;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    width: 100%;
+    display: flex;
+  }
+}
+
+#bdsdq {
+  top: 140px;
+  background-color: #4caf50;
+}
+
+#bdshot {
+  top: 200px;
+  background-color: #2196f3;
+}
+
+#hot-locations {
+  top: 260px;
+  background-color: #f44336;
+}
+
+#why-re {
+  top: 320px;
+  background-color: orangered;
+}
+#buy-by-request {
+  top: 380px;
+  background-color: #0fe479;
+}
+#news-bds {
+  top: 440px;
+  background-color: tomato;
+}
+#download-app {
+  top: 500px;
+  background-color: purple;
+}
+#top-bar-right a {
+  font-family: Roboto, sans-serif;
+  padding: 0 1rem;
+  font-size: 0.8rem;
+  position: fixed;
+  padding: 1rem 0;
+  width: 80px;
+  text-decoration: none;
+  color: white;
+  z-index: 88;
+  white-space: nowrap;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+#request {
+  right: 0;
+  top: 50vh;
+  background-color: #f17423;
+  border-radius: 5px 0 0 5px;
+}
+#advisory {
+  bottom: 10px;
+  right: 5px;
+}

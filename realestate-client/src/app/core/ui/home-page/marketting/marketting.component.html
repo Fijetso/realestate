@@ -1,0 +1,33 @@
+<div class="marketting-wrapper">
+  <div class="center-div text-center">
+    <div class="title-marketting">
+      <h2>Tìm Kiếm Mua - Thuê Nhà Tại Real Estate</h2>
+    </div>
+    <mat-button-toggle-group
+      #group="matButtonToggleGroup"
+      (change)="onValChange(group.value)"
+      [value]="selectedVal"
+    >
+      <mat-button-toggle value="buy" active>
+        <mat-icon class="text-white">check</mat-icon>
+        Mua
+      </mat-button-toggle>
+      <mat-button-toggle value="rent">
+        <mat-icon class="text-white">check</mat-icon>
+        Thuê
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+    <div class="example-selected-value">Đã chọn: {{ group.value }}</div>
+    <form class="searchForm">
+        <mat-form-field class="example-full-width">
+          <input type="text" placeholder="Nhập để tìm kiếm" aria-label="Assignee" matInput [formControl]="myControl" [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{option.name}}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-icon matSuffix role="button" class="icon">search</mat-icon>
+        </mat-form-field>
+      </form>
+  </div>
+</div>

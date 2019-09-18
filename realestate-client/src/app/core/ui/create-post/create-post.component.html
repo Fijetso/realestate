@@ -1,0 +1,236 @@
+<app-marketting></app-marketting>
+<div class="create-post-wrapper container">
+  <h3>Chủ nhà đăng tin</h3>
+  <form
+    #formPost="ngForm"
+    novalidate
+    (ngSubmit)="onSubmit(formPost.value)"
+    class="row justify-content-md-center"
+  >
+    <div class="col-md-10">
+      <div class="form-group row">
+        <label for="text-input" class="col-md-2 col-form-label">Họ Tên:</label>
+        <div class="col-md-10">
+          <input
+            class="form-control"
+            type="text"
+            id="text-input"
+            [(ngModel)]="post.name"
+            name="name"
+            required
+            autofocus
+          />
+        </div>
+      </div>
+      <div
+        class="col alert alert-danger"
+        role="alert"
+        *ngIf="formPost.controls.name?.errors?.required"
+      >
+        Tên là bắt buộc
+      </div>
+      <div class="form-group row">
+        <label for="email-input" class="col-md-2 col-form-label"
+          >Thư điện tử:</label
+        >
+        <div class="col-md-10">
+          <input
+            class="form-control"
+            type="email"
+            id="email-input"
+            [(ngModel)]="post.email"
+            name="email"
+            required
+          />
+        </div>
+      </div>
+      <div
+        class="col alert alert-danger"
+        role="alert"
+        *ngIf="formPost.controls.email?.errors?.required"
+      >
+        Thư điện tử là bắt buộc
+      </div>
+      <div class="form-group row">
+        <label for="tel-input" class="col-md-2 col-form-label"
+          >Số điện thoại:</label
+        >
+        <div class="col-md-10">
+          <input
+            class="form-control"
+            type="tel"
+            id="tel-input"
+            [(ngModel)]="post.phone"
+            name="phone"
+          />
+        </div>
+      </div>
+      <label id="radio-group-label">Chọn loại BĐS</label>
+      <mat-radio-group
+        aria-labelledby="radio-group-label"
+        class="radio-group"
+        [(ngModel)]="post.reKind"
+        name="reKind"
+      >
+        <mat-radio-button
+          class="radio-button-reKind"
+          *ngFor="let reKind of reKinds"
+          [value]="reKind"
+          name="reKindItem"
+        >
+          {{ reKind }}
+        </mat-radio-button>
+      </mat-radio-group>
+      <h5>Loại hình giao dịch</h5>
+      <mat-radio-group
+        aria-labelledby="radio-group-label"
+        class="radio-group"
+        [(ngModel)]="post.reTradeKind"
+        name="reTradeKind"
+      >
+        <mat-radio-button
+          class="radio-button-sale"
+          value="Bán"
+          name="reTradeKindItem"
+        >
+          Bán
+        </mat-radio-button>
+      </mat-radio-group>
+      <h5>Địa chỉ đăng tin</h5>
+      <fieldset class="dia-chi row" ngModelGroup="diaChi">
+        <mat-form-field>
+          <mat-label>Tỉnh/Tp</mat-label>
+          <mat-select [(ngModel)]="post.diaChi.tinh" name="tinh">
+            <mat-option value="Hồ Chí Minh" name="tinhItem">
+              Hồ Chí Minh
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Quận/Huyện</mat-label>
+          <mat-select [(ngModel)]="post.diaChi.huyen" name="huyen">
+            <mat-option *ngFor="let huyen of states" [value]="huyen.name">
+              {{ huyen.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Phường xã</mat-label>
+          <mat-select [(ngModel)]="post.diaChi.xa" name="xa">
+            <mat-option *ngFor="let xa of xaList" [value]="xa">
+              {{ xa }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </fieldset>
+      <div class="form-group row">
+        <label for="price-input" class="col-md-2 col-form-label"
+          >Gía đề xuất:</label
+        >
+        <div class="col-md-10">
+          <div class="row">
+            <input
+              class="form-control col-md-9"
+              type="number"
+              id="price-input"
+              [(ngModel)]="post.price"
+              name="price"
+              required
+            />
+            <mat-form-field class="col-md-3">
+              <mat-label>Đơn vị</mat-label>
+              <mat-select [(ngModel)]="post.currency" name="currency">
+                <mat-option value="VNĐ">
+                  VNĐ
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col alert alert-danger"
+        role="alert"
+        *ngIf="formPost.controls.price?.errors?.required"
+      >
+        Gía là bắt buộc
+      </div>
+      <div class="form-group row">
+        <div class="col-md-12">
+          <div class="row address">
+            <input
+              class="form-control col-md-8"
+              type="text"
+              id="house-address-input"
+              [(ngModel)]="post.houseAddress"
+              name="houseAddress"
+              placeholder="Số nhà"
+            />
+            <input
+              class="form-control col-md-4"
+              type="tel"
+              id="house-phone-input"
+              [(ngModel)]="post.housePhone"
+              name="housePhone"
+              placeholder="Số điện thoại"
+            />
+          </div>
+        </div>
+      </div>
+      <!-- <div class="form-group row">
+        <div class="col-md-12">
+          <div class="row address">
+            <input
+              class="col-md-3"
+              type="file"
+              id="fileImages"
+              [(ngModel)]="post.houseImages"
+              name="houseImages"
+              #fileImages
+            />
+            <button class="col-md-3">Upload Images</button>
+            <input
+              class="col-md-3"
+              type="file"
+              id="bluePrints"
+              [(ngModel)]="post.bluePrints"
+              name="bluePrints"
+              #fileBluePrints
+              (change)="onFileChange($event)"
+            />
+            <button class="col-md-3" (click)="onUploadFile()">
+              Upload Blue prints
+            </button>
+          </div>
+        </div>
+      </div> -->
+      <div class="form-group row">
+        <div class="col-md-10 offset-md-5">
+          <button
+            class="btn btn-primary"
+            type="submit"
+            [disabled]="!formPost.valid"
+          >
+            Gửi thông tin
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <form #imageForm=ngForm (ngSubmit)="OnSubmit(Caption,Image)">
+      <div class="row">
+        <div class="input-field col s12">
+          <input type="text" #Caption ngModel name="Caption" id="Caption" required>
+          <label for="Caption">Caption</label>
+        </div>
+      </div>
+      <img [src]="imageUrl"  style="width:250px;height:200px">
+      <input type="file" #Image accept="image/*" (change)="handleFileInput($event.target.files)">
+      <button type="submit" class="btn-large btn-submit" [disabled]="Image.value=='' || !imageForm.valid">Submit</button>
+    </form>
+  <pre>{{ formPost.value | json }}</pre>
+  <p>Control Name errors:</p>
+  <pre>{{ formPost.controls.name?.errors | json }}</pre>
+  <p>Control Email errors:</p>
+  <pre>{{ formPost.controls.email?.errors | json }}</pre>
+</div>

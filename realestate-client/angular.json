@@ -8,7 +8,6 @@
       "sourceRoot": "src",
       "projectType": "application",
       "prefix": "app",
-      "schematics": {},
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -23,9 +22,19 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "node_modules/font-awesome/scss/font-awesome.scss",
+              "src/styles.scss",
+              "node_modules/owl.carousel/dist/assets/owl.carousel.min.css",
+              "node_modules/owl.carousel/dist/assets/owl.theme.default.min.css",
+              "node_modules/animate.css/animate.min.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/chart.js/dist/Chart.js",
+              "node_modules/hammerjs/hammer.min.js",
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.js",
+              "node_modules/owl.carousel/dist/owl.carousel.min.js"
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {
@@ -58,7 +67,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "realestate-client:build"
+            "browserTarget": "realestate-client:build",
+            "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "production": {
@@ -101,7 +111,11 @@
             ]
           }
         }
-      }
+      },
+      "schematics": {
+  "@schematics/angular:component": {
+    "styleext": "scss"
+  }}
     },
     "realestate-client-e2e": {
       "root": "e2e/",

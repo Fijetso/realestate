@@ -1,0 +1,199 @@
+<div class="container-fluid re-detail-wrapper">
+  <div class="re-detail-path-header">
+    <span class="area-left">Trang chủ / Tp.HCM / Nhà Quận 12</span>
+    <div class="area-right">
+      <span class="mr-2">Mã tin đăng : 47032</span>
+      <span class="mx-2"><i class="fas fa-eye icon"></i> 1866</span>
+      <span class="mx-2">
+        Chia sẻ : <i class="fab fa-facebook icon icon-facebook"></i>
+      </span>
+      <!-- <span class="mx-2">  <i class="fas fa-facebook-messenger icon icon-messenger"></i></span> -->
+    </div>
+  </div>
+  <div class="main-content">
+    <div class="row">
+      <!-- Left of page -->
+      <div class="col-md-9 col-lg-9 content-left">
+        <mat-card class="main-news mw-100">
+          <!-- <img src="https://picsum.photos/id/237/1080/500" alt="" /> -->
+          <owl-carousel
+            #owlElement
+            [options]="myCarouselOptions"
+            [items]="myCarouselImages"
+            [carouselClasses]="['owl-theme', 'sliding']"
+            class="carousel-container"
+          >
+            <div
+              class="carousel-wrapper"
+              *ngFor="let image of myCarouselImages; let i = index"
+            >
+              <div>
+                <img src="{{ image }}" />
+              </div>
+              <div class="nav-button">
+                <span class="btn-previous p-3 m-3" (click)="onPrevious()">
+                  <i class="fas fa-chevron-left icon"></i>
+                </span>
+                <span class="btn-next p-3 m-3" (click)="onNext()">
+                  <i class="fas fa-chevron-right icon"></i>
+                </span>
+              </div>
+            </div>
+          </owl-carousel>
+
+          <div class="re-desc block-info block-info-1">
+            <div class="re-desc-line-1 div-title-rose">
+              <h3 class="re-inline" itemprop="name">
+                Bán căn góc hai mặt hẻm xe hơi Quận 12- Khu hiện hữu, gần chợ,
+                gần trường- Mua ở hoặc kinh doanh
+              </h3>
+            </div>
+            <div class="re-desc-line-2">
+              <div class=" re-inline re-price">
+                <div class="div-price price-left">
+                  <span class="span-price">3 tỷ</span>
+                  <span class="span-acreage">77,5m <sup>2</sup></span>
+                  <p class="re-inline p-district">
+                    <a
+                      href="/mua/ban-nha-rieng-quan-12?src=detail_district_list"
+                      ><span>Q.12</span></a
+                    >
+                    <a
+                      href="/mua/ban-nha-rieng-quan-12-phuong-tan-chanh-hiep?src=detail_ward_list"
+                      ><span>P.Tân Chánh Hiệp</span></a
+                    >
+                  </p>
+                </div>
+              </div>
+              <div class="re-customer price-right">
+                8 lượt đi xem
+              </div>
+            </div>
+          </div>
+          <div class="re-detail block-info block-info-2 11">
+            <h4>Thông tin bất động sản:</h4>
+            <ul class="re-elements">
+              <li class="elements length">Chiều dài: 14.01m</li>
+              <li class="elements width">Chiều rộng: 4.0m</li>
+              <li class="elements direction">Hướng: Nam</li>
+              <li class="elements alley">Hẻm: 6.0m</li>
+              <li class="elements floors">
+                Tầng: 1 trệt, 1 tầng thượng + 2 lầu
+              </li>
+              <li class="elements ledger">Giấy tờ: Sổ hồng riêng</li>
+              <li class="elements bedroom">Phòng ngủ: 4</li>
+              <li class="elements bathroom">Phòng tắm: 5</li>
+            </ul>
+          </div>
+          <div class="re-detail block-info block-info-5 11">
+            <h4 class="h4-title">Tiện ích:</h4>
+            <ul class="re-elements">
+              <li class="elements" data-id="29">Gần chợ, siêu thị</li>
+              <li class="elements" data-id="30">Gần bệnh viện</li>
+              <li class="elements" data-id="31">Gần công viên, trung tâm</li>
+              <li class="elements" data-id="32">Gần trường học</li>
+              <li class="elements" data-id="34">Hẻm thông</li>
+              <li class="elements" data-id="36">Gần mặt tiền đường</li>
+              <li class="elements" data-id="38">
+                Di chuyển thuận tiện ra trung tâm
+              </li>
+              <li class="elements" data-id="40">Khu vực an ninh, yên tĩnh</li>
+              <li class="elements" data-id="41">Sân để xe rộng rãi</li>
+              <li class="elements" data-id="43">2 Mặt hẻm</li>
+            </ul>
+          </div>
+          <div class="re-read-more lock-info block-info-6">
+            <h4 class="h2-title">Chi tiết tin đăng:</h4>
+            <div class="bl-info readmore-block" style="max-height: none;">
+              <p>
+                -<a routerLink="/mua/ban-nha-rieng-quan-12"
+                  >&nbsp;Bán căn góc hai mặt hẻm xe hơi Quận 12</a
+                >- <strong>Gần Đại học Giao Thông Vận Tải.</strong>
+              </p>
+
+              <p>
+                - Diện tích <strong>5x15.5m</strong>, công nhận đủ
+                <strong>77.5m2</strong>. Nhà cấp 4 có gác lửng, 1PN 2WC. Đang
+                <strong>cho thuê 4.5 triệu/ tháng</strong>.
+              </p>
+
+              <p>
+                - <strong>Hai mặt hẻm 5m,</strong> xe hơi vào thoải mái. Hẻm
+                thông thoáng, thuận tiện di chuyển.
+              </p>
+
+              <p>
+                - Khu đông dân cư, gần Đh Giao Thông Vận Tải, Đh Lao Động Xã Hội
+              </p>
+
+              <p>- <strong>Sổ hồng riêng. Sổ 1 đời chủ.</strong></p>
+
+              <p>&nbsp;</p>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+      <!--Right of page -->
+      <div class="col-md-3 col-lg-3 content-right pl-3">
+        <mat-card class="request-infor">
+          <h5 class="text-center">Yêu cầu thông tin</h5>
+          <form>
+            <mat-form-field appearance="outline">
+              <mat-label>Họ và Tên</mat-label>
+              <mat-icon matPrefix>perm_identity</mat-icon>
+              <input matInput placeholder="Nguyễn Văn A" required name="name" />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Số điện thoại</mat-label>
+              <mat-icon matPrefix>phone</mat-icon>
+              <input matInput placeholder="09xxxxxxxx" required name="phone" />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Email</mat-label>
+              <mat-icon matPrefix>mail_outline</mat-icon>
+              <input matInput placeholder="email@example.com" name="emails" />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Thời gian</mat-label>
+              <input
+                matInput
+                [matDatepicker]="picker"
+                placeholder="dd/MM/yyyy"
+                name="date"
+              />
+              <mat-datepicker-toggle
+                matPrefix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Mã chương trình</mat-label>
+              <mat-icon matPrefix>sentiment_very_satisfied</mat-icon>
+              <input matInput placeholder="ABC123456" name="programCode" />
+            </mat-form-field>
+            <div class="footer-form d-flex justify-content-around flex-wrap">
+              <button
+                type="submit"
+                mat-raised-button
+                color="accent"
+                class="btn-rounded btn-on-plan"
+              >
+                Đặt lịch xem
+              </button>
+              <button
+                type="submit"
+                mat-raised-button
+                class="btn-rounded btn-save text-reack"
+              >
+                <span><i class="far fa-heart"></i></span>
+                Lưu bản tin
+              </button>
+            </div>
+          </form>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  <app-favorite></app-favorite>
+</div>

@@ -1,0 +1,14 @@
+.user-container{
+    .formUser{
+        text-align:center;
+        mat-form-field{
+            width:80%;
+        }
+    }
+    .btn{
+        margin: 1rem;
+    }
+    mat-form-field{
+        width: 100%;
+    }
+}

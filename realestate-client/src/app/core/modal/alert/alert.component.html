@@ -1,0 +1,33 @@
+<div class="custom-modal">
+  <div
+    class="custom-modal-header d-flex justify-content-between border-bottom border-3"
+  >
+    <h4 class="custom-modal-header-title">Đăng ký /Đăng nhập</h4>
+    <div
+      class="custom-modal-header-icon icon icon-close"
+      matTooltip="Close"
+      (click)="handleClose($event)"
+    >
+      <mat-icon>close</mat-icon>
+    </div>
+  </div>
+  <mat-dialog-content>
+    <div class="custom-modal-body">
+      <div class="body-content">
+        <mat-tab-group mat-align-tabs="center">
+          <mat-tab label="Đăng Nhập"> <app-login></app-login></mat-tab>
+          <mat-tab label="Đăng Ký"><app-register></app-register></mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <div
+    class="custom-modal-footer d-flex justify-content-end border-top border-3"
+    *ngIf="false"
+  >
+    <div class="btn btn-cancel btn-primary" (click)="handleClick($event)">
+      Cancel
+    </div>
+    <div class="btn btn-ok btn-warning" (click)="handleClick($event)">OK</div>
+  </div>
+</div>

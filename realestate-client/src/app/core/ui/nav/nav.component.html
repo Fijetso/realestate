@@ -1,0 +1,99 @@
+<mat-sidenav-container class="sidenav-container" autosize>
+  <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [mode]="'over'" [opened]="false">
+    <mat-toolbar class="d-flex justify-content-between">Menu<mat-icon class="icon icon-close" (click)="drawer.toggle()">close</mat-icon></mat-toolbar>
+    <mat-nav-list>
+      <mat-toolbar-row class="h-3em">
+          <form class=" d-flex search-form">
+              <mat-form-field class="d-flex w-100">
+                <input matInput placeholder="Nhập để tìm" value="" class="w-100 search-input">
+                <a mat-button class="w-5" class="btn-search" routerLink="search" matTooltip="Search"><mat-icon class="icon icon-white">search</mat-icon></a>
+              </mat-form-field>
+            </form>
+      </mat-toolbar-row>
+      <mat-toolbar-row class="h-3em" routerLink="trang-chu" routerLinkActive="active">
+        <mat-icon class="icon" aria-hidden="false" aria-label="Home icon">home_outline</mat-icon>
+        <span>Trang chủ</span>
+      </mat-toolbar-row>
+      <mat-toolbar-row class="h-3em" routerLink="mua-bds" routerLinkActive="active">
+        <mat-icon class="icon" aria-hidden="false" aria-label="Buy icon">search</mat-icon>
+        <span>Mua</span>
+      </mat-toolbar-row>
+      <mat-toolbar-row class="h-3em" routerLink="ban-bds" routerLinkActive="active">
+        <mat-icon class="icon" aria-hidden="false" aria-label="Attack money icon">attach_money</mat-icon>
+        <span>Bán</span>
+      </mat-toolbar-row>
+      <mat-toolbar-row class="h-3em" routerLink="dang-ky-hop-tac" routerLinkActive="active">
+        <mat-icon class="icon icon-work" aria-hidden="false" aria-label="Work icon">work_outline</mat-icon>
+        <span>Hợp tác môi giới</span>
+      </mat-toolbar-row>
+      <mat-toolbar-row class="h-3em" routerLink="dich-vu" routerLinkActive="active">
+        <mat-icon class="icon icon-sync" aria-hidden="false" aria-label="Sync icon">sync</mat-icon>
+        <span>Dịch vụ</span>
+      </mat-toolbar-row>
+      <mat-toolbar-row class="h-3em" routerLink="tin-tuc" routerLinkActive="active">
+        <mat-icon class="icon icon-subject" aria-hidden="false" aria-label="Example user verified icon">subject</mat-icon>
+        <span>Tin tức</span>
+      </mat-toolbar-row>
+      <mat-toolbar-row class="h-3em" routerLink="lien-he" routerLinkActive="active">
+        <mat-icon class="icon" aria-hidden="false" aria-label="Contact us icon">chat_bubble_outline</mat-icon>
+        <span>Liên hệ</span>
+      </mat-toolbar-row>
+      <mat-toolbar-row class="h-3em" routerLink="ve-chung-toi" routerLinkActive="active">
+        <mat-icon class="icon icon-about" aria-hidden="false" aria-label="About us icon">group_work</mat-icon>
+        <span>Về chúng tôi</span>
+      </mat-toolbar-row>
+      <hr>
+      <mat-toolbar-row class="h-3em">
+        <mat-icon class="icon" aria-hidden="false" aria-label="Call us" >phone</mat-icon>
+        <span matTooltip="Contact with us" >Hotline: </span><a class="phone pl-2" href="tel:0582372781"  matTooltip="Call us">0582372781</a>
+      </mat-toolbar-row>
+      <hr>
+      <mat-toolbar-row class="h-3em">
+        <mat-icon class="icon" aria-hidden="false" aria-label="Example user verified icon">apps</mat-icon>
+        <span>Tải ứng dụng </span>
+      </mat-toolbar-row>
+      <div>
+        <div class="app-list d-flex flex-column">
+          <!-- <a mat-stroked-button target="_blank" id="get-app play-store" href="https://play.google.com/store/apps/details?id=com.android.chrome" class="my-1"> <i class="fab fa-google-play"></i> Google store</a>
+          <a mat-stroked-button target="_blank"  id="get-app app-store" href="https://itunes.apple.com/us/app/google-chrome/id535886823?mt=8" class="my-1"> <i class="fab fa-apple"></i> App store</a> -->
+          <a target="_blank" class="get-app play-store w-100" href="https://play.google.com/store/apps/details?id=com.android.chrome" class="my-1 "><mat-icon svgIcon="google-badge" class="w-100"></mat-icon></a>
+          <a target="_blank"  class="get-app app-store w-100" href="https://itunes.apple.com/us/app/google-chrome/id535886823?mt=8" class="my-1"><mat-icon svgIcon="apple-badge" class="w-100"></mat-icon></a>
+        </div>
+      </div>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="d-flex justify-content-between align-self-center">
+      <div class="left-nav align-self-center">
+        <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()"
+        >
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <a href="tel:0582372781" class="align-self-center icon-small call-us" matTooltip="Call us"><mat-icon class="icon-medium">phone</mat-icon>0582372781</a>
+      </div>
+      <span class="web-title" routerLink="trang-chu" routerLinkActive="active"
+        >Real Estate Client</span
+      >
+      <div class="right-nav  align-self-center">
+        <a routerLink="dang-tin" routerLinkActive="active" mat-flat-button class="btn btn-sale bg-orange curve px-4 align-self-center">Bán BĐS</a>
+        <a routerLinkActive="active" (click)="openInfoModal()">
+            <span class="align-items-center ustify-content-center align-self-center icon icon-lg icon-account"
+            matTooltip="Account Infor"><i class="icon far fa-user-circle"></i></span>
+        </a>
+        <a routerLink="yeu-thich" routerLinkActive="active">
+          <span class="align-items-center ustify-content-center align-self-center icon icon-lg icon-favorite"
+          matTooltip="Your favorite list"><i class="icon far fa-heart"></i></span>
+        </a>
+      </div>
+    </mat-toolbar>
+    <!-- Add Content Here -->
+    <div class="content">
+      <router-outlet></router-outlet>
+      <app-footer></app-footer>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

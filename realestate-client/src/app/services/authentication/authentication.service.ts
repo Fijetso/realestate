@@ -1,0 +1,61 @@
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { auth } from 'firebase/app';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { User } from 'firebase';
+import { Observable } from 'rxjs';
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthenticationService {
+  user: Observable<User>;
+  constructor(public afAuth: AngularFireAuth, public router: Router) {
+    this.afAuth.authState.subscribe(user => {
+      if (user) {
+        this.user = afAuth.authState;
+        localStorage.setItem('isLogged', JSON.stringify(this.user));
+      } else {
+        localStorage.setItem('isLogged', null);
+      }
+    });
+  }
+  async loginWithEmailPassWord(email: string, password: string) {
+    const result = await this.afAuth.auth.signInWithEmailAndPassword(
+      email,
+      password
+    );
+    // this.router.navigate(['trang-chu']);
+    return result;
+  }
+  async sendEmailVerification() {
+    await this.afAuth.auth.currentUser.sendEmailVerification();
+    // this.router.navigate(['admin/verify-email']);
+  }
+  async register(email: string, password: string) {
+    const result = await this.afAuth.auth.createUserWithEmailAndPassword(
+      email,
+      password
+    );
+    this.sendEmailVerification();
+  }
+  async sendPasswordResetEmail(passwordResetEmail: string) {
+    return await this.afAuth.auth.sendPasswordResetEmail(passwordResetEmail);
+  }
+  async logOut() {
+    return await this.afAuth.auth.signOut();
+  }
+  get isLoggedIn(): boolean {
+    const user = JSON.parse(localStorage.getItem('userInfor'));
+    return user !== null;
+  }
+  async loginWithGoogle() {
+    return await this.afAuth.auth.signInWithPopup(
+      new auth.GoogleAuthProvider()
+    )
+  }
+  async loginWithFacebook() {
+    return await this.afAuth.auth.signInWithPopup(
+      new auth.FacebookAuthProvider()
+    );
+  }
+}

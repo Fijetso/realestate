@@ -1,0 +1,28 @@
+.why-choose-wrapper {
+  margin: 1.5rem 0;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  background-color: #1da7e1;
+  background-size: cover;
+  min-height: 455px;
+  padding-top: 5px;
+  border-radius: 4px;
+  width: 100%;
+  background-position: center;
+  padding-bottom: 3rem;
+  mat-button-toggle-broup {
+  }
+  mat-button-toggle {
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background: transparent;
+  }
+  .mat-button-toggle-checked {
+    background-color: white;
+    color: #1da7e1;
+  }
+}
