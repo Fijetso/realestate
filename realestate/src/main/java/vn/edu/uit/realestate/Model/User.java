@@ -54,7 +54,7 @@ public class User {
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
 	private List<FavoriteTrade> favoriteTrades;
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "id") }, inverseJoinColumns = {
+	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "userId", referencedColumnName="id") }, inverseJoinColumns = {
 			@JoinColumn(name = "roleId", referencedColumnName="id") })
 	private Set<Role> roles;
 	
