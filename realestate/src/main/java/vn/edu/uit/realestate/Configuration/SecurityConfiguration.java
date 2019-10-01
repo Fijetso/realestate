@@ -107,7 +107,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				Set<Role> roles = new HashSet<>();
 				roles.add(roleRepository.findByName("USER").get());
 				Map<String, Object> attributes = oauth2User.getAttributes();
-				User newUser = new User((String) attributes.get("name"), emailOrUsername,"", roles);
+				User newUser = new User((String) attributes.get("name"), emailOrUsername, null, roles);
 				userRepository.save(newUser);
 			}
 			OAuth2UserInfo oauth2UserInfo = new OAuth2UserInfo(authorities, oauth2User.getAttributes(), "id");
@@ -131,7 +131,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				authorities.addAll(oidcUser.getAuthorities());
 				Set<Role> roles = new HashSet<>();
 				roles.add(roleRepository.findByName("USER").get());
-				User newUser = new User(oidcUser.getFullName(), oidcUser.getEmail(),"", roles);
+				User newUser = new User(oidcUser.getFullName(), oidcUser.getEmail(), null, roles);
 				userRepository.save(newUser);
 			}
 			OidcUserInfo oidcUserInfo = new OidcUserInfo(authorities, oidcUser.getIdToken());
