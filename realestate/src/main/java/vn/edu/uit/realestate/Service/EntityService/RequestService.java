@@ -5,11 +5,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
+import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.DataAccess.RequestRepository;
 import vn.edu.uit.realestate.DataAccess.TradeRepository;
 import vn.edu.uit.realestate.Model.Request;
-import vn.edu.uit.realestate.Model.Trade;
 import vn.edu.uit.realestate.Service.IEntityService;
 
 @Service
