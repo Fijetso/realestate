@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,17 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping("/admin/hello")
+	public String helloAdmin() {
+		return "Hello admin";
+	}
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@GetMapping("/user/hello")
+	public String helloUser() {
+		return "Hello user";
+	}
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/users")
 	public ResponseEntity<MappingJacksonValue> getAll() {
 		MappingJacksonValue users = userService.findAll();

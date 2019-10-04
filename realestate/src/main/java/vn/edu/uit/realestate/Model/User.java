@@ -60,13 +60,15 @@ public class User {
 	
 	public User() {
 		super();
+		this.active = false;
 	}	
-	public User(String name, String email, String phoneNumber, Set<Role> roles) {
+	public User(String name, String email, String phoneNumber, Set<Role> roles, boolean active) {
 		this.active = true;
 		this.email = email;
 		this.phone = phoneNumber;
 		this.name = name;
 		this.roles = roles;
+		this.active = active;
 	}
 
 	public Long getId() {

@@ -13,6 +13,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -81,12 +82,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
 		http.authorizeRequests().antMatchers("/*", "/signup", "/login", "/logout").permitAll();
 //		http.authorizeRequests().anyRequest().permitAll();
-		http.authorizeRequests().anyRequest().authenticated().and().formLogin().and().oauth2Login().userInfoEndpoint()
-				.userService(this.oauth2UserService()).oidcUserService(this.oidcUserService());
+		http.authorizeRequests().anyRequest().authenticated()
+		.and().formLogin().failureUrl("/login/error=true").usernameParameter("email").passwordParameter("password")
+		.and().oauth2Login().userInfoEndpoint()
+				.userService(this.oauth2UserService())
+				.oidcUserService(this.oidcUserService());
 		http.logout()
 		.logoutSuccessUrl("/login")
 		.logoutUrl("/logout")
 		.permitAll();
+	}
+	
+
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		web.ignoring().antMatchers("/resources/**","/static/**","/css/**","/js/**","/images/**");
 	}
 
 	private OAuth2UserService<OAuth2UserRequest, OAuth2User> oauth2UserService() {
@@ -108,7 +118,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				Set<Role> roles = new HashSet<>();
 				roles.add(roleRepository.findByName("USER").get());
 				Map<String, Object> attributes = oauth2User.getAttributes();
-				User newUser = new User((String) attributes.get("name"), emailOrUsername, null, roles);
+				User newUser = new User((String) attributes.get("name"), emailOrUsername, null, roles, true);
 				userRepository.save(newUser);
 			}
 			OAuth2UserInfo oauth2UserInfo = new OAuth2UserInfo(authorities, oauth2User.getAttributes(), "id");
@@ -132,7 +142,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				authorities.addAll(oidcUser.getAuthorities());
 				Set<Role> roles = new HashSet<>();
 				roles.add(roleRepository.findByName("USER").get());
-				User newUser = new User(oidcUser.getFullName(), oidcUser.getEmail(), null, roles);
+				User newUser = new User(oidcUser.getFullName(), oidcUser.getEmail(), null, roles, true);
 				userRepository.save(newUser);
 			}
 			OidcUserInfo oidcUserInfo = new OidcUserInfo(authorities, oidcUser.getIdToken());

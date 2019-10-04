@@ -111,6 +111,11 @@
 			<groupId>com.cloudinary</groupId>
 			<artifactId>cloudinary-taglib</artifactId>
 			<version>1.22.1</version>
+		</dependency>		
+		<!-- Active account by email -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 		<!-- Test -->
 		<dependency>
