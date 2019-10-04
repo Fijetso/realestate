@@ -6,6 +6,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,10 +44,12 @@ public class UserAccountController {
 			mailMessage.setSubject("Complete Registration!");
 			mailMessage.setFrom("realestate.uit.edu@gmail.com");
 			mailMessage.setText("To confirm your account, please click here : "
-					+ "http://localhost:8080/confirm-account?token=" + confirmationToken.getConfirmationToken());
+					+ "http://localhost:8081/confirm-account?token=" + confirmationToken.getConfirmationToken());
 			emailSenderService.sendEmail(mailMessage);
-			String hashPwd = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
-			user.setPassword(hashPwd);
+			
+			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+			String hashedPassword = passwordEncoder.encode(user.getPassword());
+			user.setPassword(hashedPassword);
 			Set<Role> roles = new HashSet<>();
 			Role userRole = roleRepository.findByName("USER").get();
 			roles.add(userRole);
@@ -85,7 +88,7 @@ public class UserAccountController {
 		mailMessage.setSubject("Reset Password");
 		mailMessage.setFrom("realestate.uit.edu@gmail.com");
 		mailMessage.setText("To reset your account password, please click here : "
-				+ "http://localhost:8080/reset-password/verify?token=" + confirmationToken.getConfirmationToken());
+				+ "http://localhost:8081/reset-password/verify?token=" + confirmationToken.getConfirmationToken());
 		emailSenderService.sendEmail(mailMessage);
 
 		confirmationTokenRepository.save(confirmationToken);
