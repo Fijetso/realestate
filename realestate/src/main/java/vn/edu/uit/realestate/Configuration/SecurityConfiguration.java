@@ -83,7 +83,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/**", "/signup", "/login", "/logout").permitAll();
 //		http.authorizeRequests().anyRequest().permitAll();
 		http.authorizeRequests().anyRequest().authenticated()
-		.and().formLogin().failureUrl("/login/error=true").usernameParameter("email").passwordParameter("password")
+		.and().formLogin().usernameParameter("email").passwordParameter("password")
 		.and().oauth2Login().userInfoEndpoint()
 				.userService(this.oauth2UserService())
 				.oidcUserService(this.oidcUserService());

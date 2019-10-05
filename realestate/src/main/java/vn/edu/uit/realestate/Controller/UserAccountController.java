@@ -40,7 +40,7 @@ public class UserAccountController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ResponseEntity<?> registerUser(@RequestBody User user) {
 		if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-			throw new ExistContentException("This email has already exist!");
+			throw new ExistContentException("This email has already existed!");
 		} else {
 			ConfirmationToken confirmationToken = new ConfirmationToken(user);
 
@@ -68,7 +68,6 @@ public class UserAccountController {
 	@RequestMapping(value = "/confirm-account", method = RequestMethod.GET)
 	public ResponseEntity<?> confirmUserAccount(@RequestParam("token") String confirmationToken) {
 		ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
-
 		if (token != null) {
 			User user = userRepository.findByEmail(token.getUser().getEmail()).get();
 			user.setActive(true);
@@ -86,23 +85,21 @@ public class UserAccountController {
 			throw new NotFoundException("Cannot find user with email " + userEmail);
 		}
 		ConfirmationToken confirmationToken = new ConfirmationToken(user.get());
-
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
 		mailMessage.setTo(userEmail);
 		mailMessage.setSubject("Reset Password");
 		mailMessage.setFrom("realestate.uit.edu@gmail.com");
-		mailMessage.setText("To reset your account password, please click here : "
-				+ Common.Constains.DOMAIN + "/reset-password/verify?token=" + confirmationToken.getConfirmationToken());
+		mailMessage.setText("To reset your account password, please click here : " + Common.Constains.DOMAIN
+				+ "/reset-password/verify?token=" + confirmationToken.getConfirmationToken());
 		emailSenderService.sendEmail(mailMessage);
-
 		confirmationTokenRepository.save(confirmationToken);
 		return new ResponseEntity<>("Please check your email to confirm for changing password", HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/reset-password/verify", method = RequestMethod.POST)
-	public ResponseEntity<?> resetPasswordVerify(@RequestParam("token") String resetPwdToken, @RequestBody String password) {
+	public ResponseEntity<?> resetPasswordVerify(@RequestParam("token") String resetPwdToken,
+			@RequestBody String password) {
 		ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(resetPwdToken);
-
 		if (token != null) {
 			User user = userRepository.findByEmail(token.getUser().getEmail()).get();
 			String hashPwd = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
