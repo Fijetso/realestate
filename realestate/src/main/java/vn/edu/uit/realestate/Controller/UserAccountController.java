@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import vn.edu.uit.realestate.Common.Common;
 import vn.edu.uit.realestate.DataAccess.ConfirmationTokenRepository;
 import vn.edu.uit.realestate.DataAccess.RoleRepository;
 import vn.edu.uit.realestate.DataAccess.UserRepository;
+import vn.edu.uit.realestate.ExceptionHandler.ExistContentException;
+import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.Model.Role;
 import vn.edu.uit.realestate.Model.User;
 import vn.edu.uit.realestate.Model.Security.ConfirmationToken;
@@ -33,9 +38,9 @@ public class UserAccountController {
 	private EmailSenderService emailSenderService;
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String registerUser(@RequestBody User user) {
+	public ResponseEntity<?> registerUser(@RequestBody User user) {
 		if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-			return "This email has already exist!";
+			throw new ExistContentException("This email has already exist!");
 		} else {
 			ConfirmationToken confirmationToken = new ConfirmationToken(user);
 
@@ -43,44 +48,43 @@ public class UserAccountController {
 			mailMessage.setTo(user.getEmail());
 			mailMessage.setSubject("Complete Registration!");
 			mailMessage.setFrom("realestate.uit.edu@gmail.com");
-			mailMessage.setText("To confirm your account, please click here : "
-					+ "http://localhost:8081/confirm-account?token=" + confirmationToken.getConfirmationToken());
+			mailMessage.setText("To confirm your account, please click here : " + Common.Constains.DOMAIN
+					+ "/confirm-account?token=" + confirmationToken.getConfirmationToken());
 			emailSenderService.sendEmail(mailMessage);
-			
+
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			String hashedPassword = passwordEncoder.encode(user.getPassword());
 			user.setPassword(hashedPassword);
 			Set<Role> roles = new HashSet<>();
-			Role userRole = roleRepository.findByName("USER").get();
+			Role userRole = roleRepository.findByName(Common.Constains.ROLE_USER).get();
 			roles.add(userRole);
 			user.setRoles(roles);
 			userRepository.save(user);
 			confirmationTokenRepository.save(confirmationToken);
-			return "Successful Registration!";
+			return new ResponseEntity<>("Register successfully! Please check your email to confirm", HttpStatus.OK);
 		}
 	}
 
 	@RequestMapping(value = "/confirm-account", method = RequestMethod.GET)
-	public String confirmUserAccount(@RequestParam("token") String confirmationToken) {
+	public ResponseEntity<?> confirmUserAccount(@RequestParam("token") String confirmationToken) {
 		ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
 
 		if (token != null) {
 			User user = userRepository.findByEmail(token.getUser().getEmail()).get();
 			user.setActive(true);
 			userRepository.save(user);
-			return "Account verified";
+			return new ResponseEntity<>("Account verified", HttpStatus.OK);
 		} else {
-			return "The link is invalid or broken!";
+			return new ResponseEntity<>("The link is invalid or broken!", HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@RequestMapping(value = "/reset-password", method = RequestMethod.GET)
-	public String resetPassword(@RequestParam("email") String userEmail) {
+	public ResponseEntity<?> resetPassword(@RequestParam("email") String userEmail) {
 		Optional<User> user = userRepository.findByEmail(userEmail);
-		if (user.isPresent()==false) {
-			throw new RuntimeException("Cannot find user with email "+ userEmail);
+		if (user.isPresent() == false) {
+			throw new NotFoundException("Cannot find user with email " + userEmail);
 		}
-
 		ConfirmationToken confirmationToken = new ConfirmationToken(user.get());
 
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
@@ -88,14 +92,15 @@ public class UserAccountController {
 		mailMessage.setSubject("Reset Password");
 		mailMessage.setFrom("realestate.uit.edu@gmail.com");
 		mailMessage.setText("To reset your account password, please click here : "
-				+ "http://localhost:8081/reset-password/verify?token=" + confirmationToken.getConfirmationToken());
+				+ Common.Constains.DOMAIN + "/reset-password/verify?token=" + confirmationToken.getConfirmationToken());
 		emailSenderService.sendEmail(mailMessage);
 
 		confirmationTokenRepository.save(confirmationToken);
-		return "Successfull! Check your email";
+		return new ResponseEntity<>("Please check your email to confirm for changing password", HttpStatus.OK);
 	}
+
 	@RequestMapping(value = "/reset-password/verify", method = RequestMethod.POST)
-	public String resetPasswordVerify(@RequestParam("token") String resetPwdToken, @RequestBody String password) {
+	public ResponseEntity<?> resetPasswordVerify(@RequestParam("token") String resetPwdToken, @RequestBody String password) {
 		ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(resetPwdToken);
 
 		if (token != null) {
@@ -103,9 +108,9 @@ public class UserAccountController {
 			String hashPwd = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
 			user.setPassword(hashPwd);
 			userRepository.save(user);
-			return "Password has changed";
+			return new ResponseEntity<>("Your new password has been updated", HttpStatus.OK);
 		} else {
-			return "The link is invalid or broken!";
+			return new ResponseEntity<>("The link is invalid or broken!", HttpStatus.BAD_REQUEST);
 		}
 	}
 }
