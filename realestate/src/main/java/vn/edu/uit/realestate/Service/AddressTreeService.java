@@ -15,7 +15,7 @@ import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
+import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.DataAccess.AddressTree.DistrictRepository;
 import vn.edu.uit.realestate.DataAccess.AddressTree.ProvinceRepository;
 import vn.edu.uit.realestate.DataAccess.AddressTree.WardRepository;

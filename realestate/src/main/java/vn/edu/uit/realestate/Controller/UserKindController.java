@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import vn.edu.uit.realestate.Controller.ExceptionHandler.ExistContentException;
-import vn.edu.uit.realestate.Controller.ExceptionHandler.NotFoundException;
+import vn.edu.uit.realestate.ExceptionHandler.ExistContentException;
+import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.DataAccess.UserKindRepository;
 import vn.edu.uit.realestate.DataAccess.UserRepository;
 import vn.edu.uit.realestate.Model.User;
