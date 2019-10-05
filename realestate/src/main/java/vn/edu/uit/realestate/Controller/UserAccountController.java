@@ -37,13 +37,11 @@ public class UserAccountController {
 	private ConfirmationTokenRepository confirmationTokenRepository;
 	@Autowired
 	private EmailSenderService emailSenderService;
-	@Autowired
-	SpecificString specificString = SpecificString.getInstance();
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ResponseEntity<?> registerUser(@RequestBody User user) {
 		if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-			throw new ExistContentException(specificString.email_is_existed);
+			throw new ExistContentException(SpecificString.email_is_existed);
 		} else {
 			ConfirmationToken confirmationToken = new ConfirmationToken(user);
 
@@ -64,7 +62,7 @@ public class UserAccountController {
 			user.setRoles(roles);
 			userRepository.save(user);
 			confirmationTokenRepository.save(confirmationToken);
-			return new ResponseEntity<>(specificString.successful_registration, HttpStatus.OK);
+			return new ResponseEntity<>(SpecificString.successful_registration, HttpStatus.OK);
 		}
 	}
 
@@ -75,9 +73,9 @@ public class UserAccountController {
 			User user = userRepository.findByEmail(token.getUser().getEmail()).get();
 			user.setActive(true);
 			userRepository.save(user);
-			return new ResponseEntity<>(specificString.account_verified, HttpStatus.OK);
+			return new ResponseEntity<>(SpecificString.account_verified, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>(specificString.invalid_or_broken_link, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(SpecificString.invalid_or_broken_link, HttpStatus.BAD_REQUEST);
 		}
 	}
 
@@ -96,7 +94,7 @@ public class UserAccountController {
 				+ "/reset-password/verify?token=" + confirmationToken.getConfirmationToken());
 		emailSenderService.sendEmail(mailMessage);
 		confirmationTokenRepository.save(confirmationToken);
-		return new ResponseEntity<>(specificString.check_email_to_confirm_changing_password, HttpStatus.OK);
+		return new ResponseEntity<>(SpecificString.check_email_to_confirm_changing_password, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/reset-password/verify", method = RequestMethod.POST)
@@ -108,9 +106,9 @@ public class UserAccountController {
 			String hashPwd = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
 			user.setPassword(hashPwd);
 			userRepository.save(user);
-			return new ResponseEntity<>(specificString.new_password_has_been_updated, HttpStatus.OK);
+			return new ResponseEntity<>(SpecificString.new_password_has_been_updated, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>(specificString.invalid_or_broken_link, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(SpecificString.invalid_or_broken_link, HttpStatus.BAD_REQUEST);
 		}
 	}
 }
