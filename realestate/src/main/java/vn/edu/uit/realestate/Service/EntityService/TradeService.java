@@ -46,9 +46,9 @@ public class TradeService implements IEntityService {
 		if (trades.isEmpty() == true) {
 			throw new NotFoundException("Cannot find any Trade");
 		}
-		SimpleBeanPropertyFilter userFilter = SimpleBeanPropertyFilter.serializeAllExcept("trades", "password");
+		SimpleBeanPropertyFilter userFilter = SimpleBeanPropertyFilter.serializeAllExcept("trades", "password","requests","favoriteTrades","roles");
 		SimpleBeanPropertyFilter addressAndDetailFilter = SimpleBeanPropertyFilter.serializeAllExcept("trade");
-		SimpleBeanPropertyFilter filterTrade = SimpleBeanPropertyFilter.serializeAll();
+		SimpleBeanPropertyFilter filterTrade = SimpleBeanPropertyFilter.serializeAllExcept("favoriteTrades");
 		FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", userFilter)
 				.addFilter("AddressFilter", addressAndDetailFilter).addFilter("DetailsFilter", addressAndDetailFilter)
 				.addFilter("TradeFilter", filterTrade);
