@@ -1,4 +1,4 @@
-package vn.edu.uit.realestate.Controller.ExceptionHandler;
+package vn.edu.uit.realestate.ExceptionHandler;
 
 import java.util.Date;
 
