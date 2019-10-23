@@ -2,6 +2,7 @@ package vn.edu.uit.realestate.Service.EntityService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
@@ -55,6 +56,21 @@ public class TradeService implements IEntityService {
 		MappingJacksonValue mapping = new MappingJacksonValue(trades);
 		mapping.setFilters(filters);
 		return mapping;
+	}
+	
+	public List<Trade> findAllGraphQL(final int count) {
+		List<Trade> trades = tradeRepository.findAll().stream().limit(count).collect(Collectors.toList());
+		if (trades.isEmpty() == true) {
+			throw new NotFoundException("Cannot find any Trade");
+		}
+		return trades;
+	}
+	public Optional<Trade> findByIdGraphQL(Long id) {
+		Optional<Trade> foundTrade = tradeRepository.findById(id);
+		if (foundTrade.isPresent() == false) {
+			throw new NotFoundException("Cannot find any Trade with id=" + id);
+		}
+		return foundTrade;
 	}
 
 	@Override

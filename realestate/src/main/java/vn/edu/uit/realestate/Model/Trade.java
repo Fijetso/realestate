@@ -93,7 +93,7 @@ public class Trade {
 	public void setCost(Long cost) {
 		this.cost = cost;
 	}
-
+	
 	public User getUser() {
 		return user;
 	}
