@@ -6,7 +6,7 @@ trades(count: Int):[Trade]!
 type Trade {
 	id: ID!,
 	description: String,
-	cost: Int,
+	cost: Long,
 	user: User,
 	realEstateKind: RealEstateKind,
 	tradeKind: TradeKind,
