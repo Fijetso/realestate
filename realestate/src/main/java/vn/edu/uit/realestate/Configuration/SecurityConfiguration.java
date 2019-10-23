@@ -95,7 +95,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/resources/**","/static/**","/css/**","/js/**","/images/**","/graphiql/**");
+		web.ignoring().antMatchers("/resources/**","/static/**","/css/**","/js/**","/images/**");
 	}
 
 	private OAuth2UserService<OAuth2UserRequest, OAuth2User> oauth2UserService() {
