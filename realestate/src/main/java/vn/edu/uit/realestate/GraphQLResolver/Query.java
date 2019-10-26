@@ -1,4 +1,4 @@
-package vn.edu.uit.realestate.GraphQLResolver.Query;
+package vn.edu.uit.realestate.GraphQLResolver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +28,11 @@ import vn.edu.uit.realestate.Model.User;
 import vn.edu.uit.realestate.Service.EntityService.TradeService;
 
 @Component
-public class TradeQuery implements GraphQLQueryResolver {
+public class Query implements GraphQLQueryResolver {
 	@Autowired
 	private TradeRepository tradeRepository;
+	@Autowired
+	private TradeService tradeService;
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
@@ -45,7 +47,8 @@ public class TradeQuery implements GraphQLQueryResolver {
 	private RealImageRepository realImageRepository;
 	
 	public List<Trade> getTrades(final int count){
-		return tradeRepository.findAll().stream().limit(count).collect(Collectors.toList());
+		List<Trade> foundTrades = tradeService.findAllGraphQL(count);
+		return foundTrades;
 	}
 	public Optional<User> getAuthor(Trade trade) {
 		return userRepository.findById(trade.getUser().getId());
@@ -63,10 +66,7 @@ public class TradeQuery implements GraphQLQueryResolver {
 		return detailsRepository.findById(trade.getDetails().getId());
 	}
 	public List<RealImage> getRealImages(Trade trade) {
-		List<RealImage> result = new ArrayList<>();
-		for(RealImage e: trade.getRealImages()) {
-			result.add(realImageRepository.findById(e.getId()).get());
-		}
+		List<RealImage> result = realImageRepository.findByTrade(trade);
 		return result;
 	}
 	public List<BluePrint> getBluePrints(Trade trade) {
