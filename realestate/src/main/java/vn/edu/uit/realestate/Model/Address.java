@@ -30,17 +30,15 @@ public class Address {
 		super();
 	}
 	
-	public Address(Long id, @NotNull(message = "You must enter the detail address") String detail,
+	public Address(@NotNull(message = "You must enter the detail address") String detail,
 			@NotNull(message = "You must enter the ward") Long ward,
 			@NotNull(message = "You must enter the district") Long district,
-			@NotNull(message = "You must enter the city or province") Long cityOrProvince, Trade trade) {
+			@NotNull(message = "You must enter the city or province") Long cityOrProvince) {
 		super();
-		this.id = id;
 		this.detail = detail;
 		this.ward = ward;
 		this.district = district;
 		this.province = cityOrProvince;
-		this.trade = trade;
 	}
 
 	public Long getId() {

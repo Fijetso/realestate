@@ -1,10 +1,18 @@
 package vn.edu.uit.realestate.Model.AddressTree;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import vn.edu.uit.realestate.Model.Address;
+import vn.edu.uit.realestate.Model.RealImage;
 
 /**
  * @author HUYEN
@@ -22,6 +30,8 @@ public class Ward {
 	@JoinColumn(name="districtId", referencedColumnName="id")
 	@JsonIgnore
 	private District district;
+	@OneToMany(mappedBy="ward")
+	private List<Address> addresses;
 	public Ward() {
 		super();
 	}

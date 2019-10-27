@@ -1,0 +1,79 @@
+type Query {
+	trades(count: Int):[Trade]!
+}
+
+type Mutation {
+	saveTrade(description: String!,cost: Long!, userId: Long!, realEstateKindId: Long!, tradeKindId: Long!,
+			detailAddress: String, wardId: Long!, length: Long, width: Long, square: Long, direction: String,
+			floors: String, legalDocuments: String, bathrooms: Int, bedrooms: Int, utilities: String, others: String): Trade!
+}
+
+type Trade {
+	id: ID!,
+	description: String,
+	cost: Long,
+	user: User,
+	realEstateKind: RealEstateKind,
+	tradeKind: TradeKind,
+	address: String,
+	details: Details,
+	realImages: [RealImage]
+	bluePrints: [BluePrint]
+#	bookings: [Booking]
+}
+
+type User {
+	id: ID!,
+	name: String,
+	email: String,
+	phone: String,
+	birthdate: String,
+	gender: Boolean,
+	active: Boolean,
+	trades: [Trade],
+	roles: [Role]
+}
+	
+type RealEstateKind {
+	id: ID!,
+	name: String,
+	trades: [Trade]
+}
+
+type TradeKind {
+	id: ID!,
+	name: String,
+	trades: [Trade]
+}
+
+type Details {
+	id: ID!,
+	length: Int,
+	width: Int,
+	square:Int,
+	direction: String,
+	floors: String,
+	legalDocuments: String,
+	bathrooms: Int,
+	bedrooms: Int,
+	utilities: String,
+	others: String
+}
+
+type RealImage {
+	id: ID!,
+	imageLink: String,
+	description: String
+}
+
+type BluePrint {
+	id: ID!,
+	imageLink: String,
+	description: String
+}
+
+type Role {
+id: ID!,
+name: String,
+users: [User]
+}
