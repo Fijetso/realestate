@@ -49,7 +49,9 @@ type TradeKind {
 type Address {
 	id: ID!,
 	detail: String
-	#ward: Ward
+	ward: String,
+	district: String,
+	province: String
 }
 
 type Ward {

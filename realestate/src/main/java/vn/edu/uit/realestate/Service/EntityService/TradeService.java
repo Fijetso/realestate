@@ -180,16 +180,4 @@ public class TradeService implements IEntityService {
 		Trade trade = new Trade(description, cost, user.get(), realEstateKind.get(), tradeKind.get(), address, details);
 		return tradeRepository.save(trade);
 	}
-//	public MappingJacksonValue findAllTradeByUserId(Long userId) {
-//		Optional<User> foundUser = userRepository.findById(userId);
-//		if (foundUser.isPresent() == false) {
-//			throw new NotFoundException("Cannot find any User with id=" + userId);
-//		}
-//		List<Trade> foundTradeList = foundUser.get().getTrades();
-//		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.serializeAllExcept("user");
-//		FilterProvider filters = new SimpleFilterProvider().addFilter("TradeFilter", filter);
-//		MappingJacksonValue mapping = new MappingJacksonValue(foundTradeList);
-//		mapping.setFilters(filters);
-//		return mapping;
-//	}
 }
