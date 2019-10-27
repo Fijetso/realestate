@@ -30,10 +30,9 @@ public class Details {
 	public Details() {
 		super();
 	}
-	public Details(Long id, Long length, Long width, Long square, String direction, String floors,
-			String legalDocuments, int bathrooms, int bedrooms, String utilities, String others, Trade trade) {
+	public Details(Long length, Long width, Long square, String direction, String floors,
+			String legalDocuments, int bathrooms, int bedrooms, String utilities, String others) {
 		super();
-		this.id = id;
 		this.length = length;
 		this.width = width;
 		this.square = square;
@@ -44,7 +43,6 @@ public class Details {
 		this.bedrooms = bedrooms;
 		this.utilities = utilities;
 		this.others = others;
-		this.trade = trade;
 	}
 
 	public Long getId() {
