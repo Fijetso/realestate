@@ -46,34 +46,6 @@ type TradeKind {
 	trades: [Trade]
 }
 
-type Address {
-	id: ID!,
-	detail: String
-	ward: String,
-	district: String,
-	province: String
-}
-
-type Ward {
-	id: ID!,
-	name: String,
-	nameWithType: String,
-	district: District
-}
-
-type District {
-	id: ID!,
-	name: String,
-	nameWithType: String,
-	province: Province
-}
-
-type Province {
-	id: ID!,
-	name: String,
-	nameWithType: String
-}
-
 type Details {
 	id: ID!,
 	length: Int,

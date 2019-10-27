@@ -51,33 +51,39 @@ public class TradeResolver implements GraphQLResolver<Trade> {
 	private DetailsRepository detailsRepository;
 	@Autowired
 	private RealImageRepository realImageRepository;
-	
+
 	public Optional<User> getAuthor(Trade trade) {
 		return userRepository.findById(trade.getUser().getId());
 	}
+
 	public Optional<RealEstateKind> getRealEstateKind(Trade trade) {
 		return realEstateKindRepository.findById(trade.getRealEstateKind().getId());
 	}
+
 	public Optional<TradeKind> getTradeKind(Trade trade) {
 		return tradeKindRepository.findById(trade.getTradeKind().getId());
 	}
+
 	public String getAddress(Trade trade) {
 		Optional<Address> address = addressRepository.findById(trade.getAddress().getId());
-		address.orElseThrow(()-> new NotFoundException("Cannot find Address Id = "+ trade.getAddress().getId()));
-		
+		address.orElseThrow(() -> new NotFoundException("Cannot find Address Id = " + trade.getAddress().getId()));
+
 		Optional<Ward> ward = wardRepository.findById(address.get().getWard());
-		ward.orElseThrow(()-> new NotFoundException("Cannot find Ward Id = "+address.get().getWard()));
-		
-		String result = address.get().getDetail() + ward.get().getPathWithType();
+		ward.orElseThrow(() -> new NotFoundException("Cannot find Ward Id = " + address.get().getWard()));
+
+		String result = address.get().getDetail() + ", " + ward.get().getPathWithType();
 		return result;
 	}
+
 	public Optional<Details> getDetails(Trade trade) {
 		return detailsRepository.findById(trade.getDetails().getId());
 	}
+
 	public List<RealImage> getRealImages(Trade trade) {
 		List<RealImage> result = realImageRepository.findByTrade(trade);
 		return result;
 	}
+
 	public List<BluePrint> getBluePrints(Trade trade) {
 		List<BluePrint> result = trade.getBluePrints();
 		return result;
