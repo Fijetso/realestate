@@ -3,6 +3,7 @@ package vn.edu.uit.realestate.Model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -39,11 +40,11 @@ public class Trade {
 	@JoinColumn(name="tradeKindId", referencedColumnName = "id")
 	private TradeKind tradeKind;
 	
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     @JoinColumn(name = "addressId", referencedColumnName = "id")
     private Address address;
 	
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     @JoinColumn(name = "detailsId", referencedColumnName = "id")
     private Details details;
 	
@@ -71,6 +72,18 @@ public class Trade {
     
 	public Trade() {
 		super();
+	}
+
+	public Trade(String description, Long cost, User user, RealEstateKind realEstateKind,
+			TradeKind tradeKind, Address address, Details details) {
+		super();
+		this.description = description;
+		this.cost = cost;
+		this.user = user;
+		this.realEstateKind = realEstateKind;
+		this.tradeKind = tradeKind;
+		this.address = address;
+		this.details = details;
 	}
 
 	public Long getId() {
