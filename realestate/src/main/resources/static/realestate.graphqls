@@ -15,7 +15,7 @@ type Trade {
 	user: User,
 	realEstateKind: RealEstateKind,
 	tradeKind: TradeKind,
-	address: Address,
+	address: String,
 	details: Details,
 	realImages: [RealImage]
 	bluePrints: [BluePrint]
