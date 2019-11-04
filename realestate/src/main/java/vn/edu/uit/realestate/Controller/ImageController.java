@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
-import vn.edu.uit.realestate.DataAccess.ImageRepository;
 import vn.edu.uit.realestate.Model.Image;
+import vn.edu.uit.realestate.Repository.ImageRepository;
 import vn.edu.uit.realestate.Service.CloudinaryService;
 
 @RestController

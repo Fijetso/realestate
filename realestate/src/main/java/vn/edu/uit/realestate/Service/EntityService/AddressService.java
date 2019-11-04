@@ -12,9 +12,9 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
-import vn.edu.uit.realestate.DataAccess.AddressRepository;
 import vn.edu.uit.realestate.Model.Address;
 import vn.edu.uit.realestate.Model.Trade;
+import vn.edu.uit.realestate.Repository.AddressRepository;
 
 @Service
 public class AddressService {

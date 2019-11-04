@@ -1,4 +1,4 @@
-package vn.edu.uit.realestate.DataAccess;
+package vn.edu.uit.realestate.Repository;
 
 import java.util.List;
 

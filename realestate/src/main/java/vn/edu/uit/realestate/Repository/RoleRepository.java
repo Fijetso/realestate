@@ -1,4 +1,4 @@
-package vn.edu.uit.realestate.DataAccess;
+package vn.edu.uit.realestate.Repository;
 
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;

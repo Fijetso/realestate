@@ -26,12 +26,12 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import vn.edu.uit.realestate.DataAccess.RoleRepository;
-import vn.edu.uit.realestate.DataAccess.UserRepository;
 import vn.edu.uit.realestate.Model.User;
 import vn.edu.uit.realestate.Model.Role;
 import vn.edu.uit.realestate.Model.Security.OAuth2UserInfo;
 import vn.edu.uit.realestate.Model.Security.OidcUserInfo;
+import vn.edu.uit.realestate.Repository.RoleRepository;
+import vn.edu.uit.realestate.Repository.UserRepository;
 import vn.edu.uit.realestate.Service.CustomUserDetailsService;
 
 import org.springframework.security.core.GrantedAuthority;

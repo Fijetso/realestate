@@ -8,8 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
-import vn.edu.uit.realestate.DataAccess.DetailsRepository;
 import vn.edu.uit.realestate.Model.Details;
+import vn.edu.uit.realestate.Repository.DetailsRepository;
 
 @RestController
 public class DetailsController {

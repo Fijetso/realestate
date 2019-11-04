@@ -1,4 +1,4 @@
-package vn.edu.uit.realestate.DataAccess.AddressTree;
+package vn.edu.uit.realestate.Repository.AddressTree;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

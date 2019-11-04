@@ -11,14 +11,6 @@ import org.springframework.stereotype.Component;
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.coxautodev.graphql.tools.GraphQLResolver;
 
-import vn.edu.uit.realestate.DataAccess.AddressRepository;
-import vn.edu.uit.realestate.DataAccess.DetailsRepository;
-import vn.edu.uit.realestate.DataAccess.RealEstateKindRepository;
-import vn.edu.uit.realestate.DataAccess.RealImageRepository;
-import vn.edu.uit.realestate.DataAccess.TradeKindRepository;
-import vn.edu.uit.realestate.DataAccess.TradeRepository;
-import vn.edu.uit.realestate.DataAccess.UserRepository;
-import vn.edu.uit.realestate.DataAccess.AddressTree.WardRepository;
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.Model.Address;
 import vn.edu.uit.realestate.Model.BluePrint;
@@ -29,6 +21,14 @@ import vn.edu.uit.realestate.Model.Trade;
 import vn.edu.uit.realestate.Model.TradeKind;
 import vn.edu.uit.realestate.Model.User;
 import vn.edu.uit.realestate.Model.AddressTree.Ward;
+import vn.edu.uit.realestate.Repository.AddressRepository;
+import vn.edu.uit.realestate.Repository.DetailsRepository;
+import vn.edu.uit.realestate.Repository.RealEstateKindRepository;
+import vn.edu.uit.realestate.Repository.RealImageRepository;
+import vn.edu.uit.realestate.Repository.TradeKindRepository;
+import vn.edu.uit.realestate.Repository.TradeRepository;
+import vn.edu.uit.realestate.Repository.UserRepository;
+import vn.edu.uit.realestate.Repository.AddressTree.WardRepository;
 import vn.edu.uit.realestate.Service.EntityService.TradeService;
 
 @Component
