@@ -42,8 +42,6 @@ public class FavoriteTradeService implements IEntityService {
 	@Autowired
 	private BluePrintRepository bluePrintRepository;
 	@Autowired
-	private BookingRepository bookingRepository;
-	@Autowired
 	private AddressRepository addressRepository;
 	@Autowired
 	private DetailsRepository detailsRepository;
