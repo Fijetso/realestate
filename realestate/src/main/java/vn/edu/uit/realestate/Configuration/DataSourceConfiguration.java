@@ -27,7 +27,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableNeo4jRepositories(basePackages = "vn.edu.uit.realestate.Graph")
-@EnableJpaRepositories(basePackages = "vn.edu.uit.realestate.Relational.Repository", transactionManagerRef = "mysqlTransactionManager")
+@EnableJpaRepositories(basePackages = "vn.edu.uit.realestate.Relational", transactionManagerRef = "mysqlTransactionManager")
 @EnableTransactionManagement
 public class DataSourceConfiguration {
 
@@ -67,7 +67,7 @@ public class DataSourceConfiguration {
 		HashMap<String, Object> properties = new HashMap<>();
 		properties.put("spring.jpa.hibernate.ddl-auto", "update");
 		properties.put("spring.jpa.properties.hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-		return builder.dataSource(dataSource).properties(properties).packages("vn.edu.uit.realestate.Relational.Model")
+		return builder.dataSource(dataSource).properties(properties).packages("vn.edu.uit.realestate.Relational")
 				.build();
 	}
 
