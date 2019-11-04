@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
-import vn.edu.uit.realestate.Model.News;
-import vn.edu.uit.realestate.Repository.NewsRepository;
+import vn.edu.uit.realestate.Relational.Model.News;
+import vn.edu.uit.realestate.Relational.Repository.NewsRepository;
 
 @RestController
 public class NewsController {

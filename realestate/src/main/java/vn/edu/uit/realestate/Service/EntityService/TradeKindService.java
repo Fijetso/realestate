@@ -13,9 +13,9 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import vn.edu.uit.realestate.ExceptionHandler.ExistContentException;
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
-import vn.edu.uit.realestate.Model.Trade;
-import vn.edu.uit.realestate.Model.TradeKind;
-import vn.edu.uit.realestate.Repository.TradeKindRepository;
+import vn.edu.uit.realestate.Relational.Model.Trade;
+import vn.edu.uit.realestate.Relational.Model.TradeKind;
+import vn.edu.uit.realestate.Relational.Repository.TradeKindRepository;
 import vn.edu.uit.realestate.Service.IEntityService;
 
 @Service

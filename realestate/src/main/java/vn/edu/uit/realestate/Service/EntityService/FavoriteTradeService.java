@@ -13,20 +13,20 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import vn.edu.uit.realestate.ExceptionHandler.ExistContentException;
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
-import vn.edu.uit.realestate.Model.BluePrint;
-import vn.edu.uit.realestate.Model.Booking;
-import vn.edu.uit.realestate.Model.FavoriteTrade;
-import vn.edu.uit.realestate.Model.RealImage;
-import vn.edu.uit.realestate.Model.Trade;
-import vn.edu.uit.realestate.Model.User;
-import vn.edu.uit.realestate.Repository.AddressRepository;
-import vn.edu.uit.realestate.Repository.BluePrintRepository;
-import vn.edu.uit.realestate.Repository.BookingRepository;
-import vn.edu.uit.realestate.Repository.DetailsRepository;
-import vn.edu.uit.realestate.Repository.FavoriteTradeRepository;
-import vn.edu.uit.realestate.Repository.RealImageRepository;
-import vn.edu.uit.realestate.Repository.TradeRepository;
-import vn.edu.uit.realestate.Repository.UserRepository;
+import vn.edu.uit.realestate.Relational.Model.BluePrint;
+import vn.edu.uit.realestate.Relational.Model.Booking;
+import vn.edu.uit.realestate.Relational.Model.FavoriteTrade;
+import vn.edu.uit.realestate.Relational.Model.RealImage;
+import vn.edu.uit.realestate.Relational.Model.Trade;
+import vn.edu.uit.realestate.Relational.Model.User;
+import vn.edu.uit.realestate.Relational.Repository.AddressRepository;
+import vn.edu.uit.realestate.Relational.Repository.BluePrintRepository;
+import vn.edu.uit.realestate.Relational.Repository.BookingRepository;
+import vn.edu.uit.realestate.Relational.Repository.DetailsRepository;
+import vn.edu.uit.realestate.Relational.Repository.FavoriteTradeRepository;
+import vn.edu.uit.realestate.Relational.Repository.RealImageRepository;
+import vn.edu.uit.realestate.Relational.Repository.TradeRepository;
+import vn.edu.uit.realestate.Relational.Repository.UserRepository;
 import vn.edu.uit.realestate.Service.IEntityService;
 
 @Service

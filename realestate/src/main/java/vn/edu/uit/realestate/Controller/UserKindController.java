@@ -19,10 +19,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import vn.edu.uit.realestate.ExceptionHandler.ExistContentException;
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
-import vn.edu.uit.realestate.Model.User;
-import vn.edu.uit.realestate.Model.UserKind;
-import vn.edu.uit.realestate.Repository.UserKindRepository;
-import vn.edu.uit.realestate.Repository.UserRepository;
+import vn.edu.uit.realestate.Relational.Model.User;
+import vn.edu.uit.realestate.Relational.Model.UserKind;
+import vn.edu.uit.realestate.Relational.Repository.UserKindRepository;
+import vn.edu.uit.realestate.Relational.Repository.UserRepository;
 
 @RestController
 public class UserKindController {

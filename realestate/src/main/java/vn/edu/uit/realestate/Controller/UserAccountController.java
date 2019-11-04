@@ -19,12 +19,12 @@ import vn.edu.uit.realestate.Common.Common;
 import vn.edu.uit.realestate.Common.SpecificString;
 import vn.edu.uit.realestate.ExceptionHandler.ExistContentException;
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
-import vn.edu.uit.realestate.Model.Role;
-import vn.edu.uit.realestate.Model.User;
-import vn.edu.uit.realestate.Model.Security.ConfirmationToken;
-import vn.edu.uit.realestate.Repository.ConfirmationTokenRepository;
-import vn.edu.uit.realestate.Repository.RoleRepository;
-import vn.edu.uit.realestate.Repository.UserRepository;
+import vn.edu.uit.realestate.Relational.Model.Role;
+import vn.edu.uit.realestate.Relational.Model.User;
+import vn.edu.uit.realestate.Relational.Model.Security.ConfirmationToken;
+import vn.edu.uit.realestate.Relational.Repository.ConfirmationTokenRepository;
+import vn.edu.uit.realestate.Relational.Repository.RoleRepository;
+import vn.edu.uit.realestate.Relational.Repository.UserRepository;
 import vn.edu.uit.realestate.Service.EmailSenderService;
 
 @RestController
