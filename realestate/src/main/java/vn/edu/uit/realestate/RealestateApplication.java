@@ -15,8 +15,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import com.cloudinary.Cloudinary;
 
+import vn.edu.uit.realestate.Common.Common;
+
 @SpringBootApplication
-@ComponentScan(value = {"vn.edu.uit.realestate"})
+@ComponentScan(value = {Common.Constains.MAIN_PACKAGE})
 @EnableAutoConfiguration(exclude = {Neo4jDataAutoConfiguration.class, DataSourceAutoConfiguration.class})
 public class RealestateApplication {
 

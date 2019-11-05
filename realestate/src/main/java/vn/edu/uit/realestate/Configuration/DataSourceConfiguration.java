@@ -20,14 +20,18 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import vn.edu.uit.realestate.Common.Common;
+import vn.edu.uit.realestate.Common.SpecificString;
+
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 
 import java.util.HashMap;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableNeo4jRepositories(basePackages = "vn.edu.uit.realestate.Graph")
-@EnableJpaRepositories(basePackages = "vn.edu.uit.realestate.Relational", transactionManagerRef = "mysqlTransactionManager")
+@EnableNeo4jRepositories(basePackages = Common.Constains.GRAPH_PACKAGE)
+@EnableJpaRepositories(basePackages = Common.Constains.RELATIONAL_PACKAGE, transactionManagerRef = "mysqlTransactionManager")
 @EnableTransactionManagement
 public class DataSourceConfiguration {
 
@@ -48,7 +52,7 @@ public class DataSourceConfiguration {
 
 	@Bean
 	public SessionFactory sessionFactory() {
-		return new SessionFactory(configuration(), "vn.edu.uit.realestate.Graph");
+		return new SessionFactory(configuration(), Common.Constains.GRAPH_PACKAGE);
 	}
 
 	@Primary
@@ -67,7 +71,7 @@ public class DataSourceConfiguration {
 		HashMap<String, Object> properties = new HashMap<>();
 		properties.put("spring.jpa.hibernate.ddl-auto", "update");
 		properties.put("spring.jpa.properties.hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-		return builder.dataSource(dataSource).properties(properties).packages("vn.edu.uit.realestate.Relational")
+		return builder.dataSource(dataSource).properties(properties).packages(Common.Constains.RELATIONAL_PACKAGE)
 				.build();
 	}
 
