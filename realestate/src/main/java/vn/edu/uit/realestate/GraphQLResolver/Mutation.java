@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 
-import vn.edu.uit.realestate.Model.Trade;
+import vn.edu.uit.realestate.Relational.Model.Trade;
 import vn.edu.uit.realestate.Service.EntityService.TradeService;
 
 @Component

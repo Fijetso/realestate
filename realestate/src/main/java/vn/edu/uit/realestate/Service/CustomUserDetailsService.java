@@ -12,8 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import vn.edu.uit.realestate.DataAccess.UserRepository;
-import vn.edu.uit.realestate.Model.User;
+import vn.edu.uit.realestate.Relational.Model.User;
+import vn.edu.uit.realestate.Relational.Repository.UserRepository;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService{

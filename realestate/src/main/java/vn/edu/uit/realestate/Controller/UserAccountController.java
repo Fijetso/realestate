@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import vn.edu.uit.realestate.Common.Common;
 import vn.edu.uit.realestate.Common.SpecificString;
-import vn.edu.uit.realestate.DataAccess.ConfirmationTokenRepository;
-import vn.edu.uit.realestate.DataAccess.RoleRepository;
-import vn.edu.uit.realestate.DataAccess.UserRepository;
 import vn.edu.uit.realestate.ExceptionHandler.ExistContentException;
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
-import vn.edu.uit.realestate.Model.Role;
-import vn.edu.uit.realestate.Model.User;
-import vn.edu.uit.realestate.Model.Security.ConfirmationToken;
+import vn.edu.uit.realestate.Relational.Model.Role;
+import vn.edu.uit.realestate.Relational.Model.User;
+import vn.edu.uit.realestate.Relational.Model.Security.ConfirmationToken;
+import vn.edu.uit.realestate.Relational.Repository.ConfirmationTokenRepository;
+import vn.edu.uit.realestate.Relational.Repository.RoleRepository;
+import vn.edu.uit.realestate.Relational.Repository.UserRepository;
 import vn.edu.uit.realestate.Service.EmailSenderService;
 
 @RestController

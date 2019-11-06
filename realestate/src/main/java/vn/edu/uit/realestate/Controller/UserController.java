@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import vn.edu.uit.realestate.Model.Request;
-import vn.edu.uit.realestate.Model.Trade;
-import vn.edu.uit.realestate.Model.User;
+import vn.edu.uit.realestate.Relational.Model.Request;
+import vn.edu.uit.realestate.Relational.Model.Trade;
+import vn.edu.uit.realestate.Relational.Model.User;
 import vn.edu.uit.realestate.Service.EntityService.UserService;
 
 @RestController

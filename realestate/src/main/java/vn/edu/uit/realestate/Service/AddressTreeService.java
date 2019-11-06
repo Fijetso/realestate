@@ -16,12 +16,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
-import vn.edu.uit.realestate.DataAccess.AddressTree.DistrictRepository;
-import vn.edu.uit.realestate.DataAccess.AddressTree.ProvinceRepository;
-import vn.edu.uit.realestate.DataAccess.AddressTree.WardRepository;
-import vn.edu.uit.realestate.Model.AddressTree.District;
-import vn.edu.uit.realestate.Model.AddressTree.Province;
-import vn.edu.uit.realestate.Model.AddressTree.Ward;
+import vn.edu.uit.realestate.Relational.Model.AddressTree.District;
+import vn.edu.uit.realestate.Relational.Model.AddressTree.Province;
+import vn.edu.uit.realestate.Relational.Model.AddressTree.Ward;
+import vn.edu.uit.realestate.Relational.Repository.AddressTree.DistrictRepository;
+import vn.edu.uit.realestate.Relational.Repository.AddressTree.ProvinceRepository;
+import vn.edu.uit.realestate.Relational.Repository.AddressTree.WardRepository;
 
 @Service
 public class AddressTreeService {

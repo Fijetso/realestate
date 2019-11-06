@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import vn.edu.uit.realestate.Model.Booking;
+
+import vn.edu.uit.realestate.Relational.Model.Booking;
 import vn.edu.uit.realestate.Service.EntityService.TradeService;
 
 @RestController

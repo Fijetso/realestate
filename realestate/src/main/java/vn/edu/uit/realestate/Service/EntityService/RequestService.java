@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
-import vn.edu.uit.realestate.DataAccess.RequestRepository;
-import vn.edu.uit.realestate.DataAccess.TradeRepository;
-import vn.edu.uit.realestate.Model.Request;
+import vn.edu.uit.realestate.Relational.Model.Request;
+import vn.edu.uit.realestate.Relational.Repository.RequestRepository;
+import vn.edu.uit.realestate.Relational.Repository.TradeRepository;
 import vn.edu.uit.realestate.Service.IEntityService;
 
 @Service
