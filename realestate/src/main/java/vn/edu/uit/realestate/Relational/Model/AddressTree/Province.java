@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Province {
 	@Id
-	private Long Id;
+	private Long id;
 	private String name;
 	private String slug;
 	private String nameWithType;
@@ -24,17 +24,17 @@ public class Province {
 	}
 	public Province(Long id, String name, String slug, String nameWithType, List<District> district) {
 		super();
-		Id = id;
+		id = id;
 		this.name = name;
 		this.slug = slug;
 		this.nameWithType = nameWithType;
 		this.district = district;
 	}
 	public Long getId() {
-		return Id;
+		return id;
 	}
-	public void setId(Long i) {
-		Id = i;
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public String getName() {
 		return name;

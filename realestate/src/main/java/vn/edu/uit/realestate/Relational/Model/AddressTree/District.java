@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class District {
 	@Id
-	private Long Id;
+	private Long id;
 	private String name;
 	private String slug;
 	private String nameWithType;
@@ -32,7 +32,7 @@ public class District {
 	public District(Long id, String name, String slug, String nameWithType, String pathWithType, Province province,
 			List<Ward> ward) {
 		super();
-		Id = id;
+		id = id;
 		this.name = name;
 		this.slug = slug;
 		this.nameWithType = nameWithType;
@@ -41,10 +41,10 @@ public class District {
 		this.ward = ward;
 	}
 	public Long getId() {
-		return Id;
+		return id;
 	}
 	public void setId(Long id) {
-		Id = id;
+		id = id;
 	}
 	public String getName() {
 		return name;

@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -20,6 +21,7 @@ public class News {
 	private Date composeDate = new Date();
 	private String content;
 	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name = "categoryId", referencedColumnName = "id")
 	private Category category;
 	
 	public News() {

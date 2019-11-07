@@ -38,10 +38,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 
+@Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
-//@EnableJpaRepositories(basePackageClasses = UserRepository.class)
-@Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired

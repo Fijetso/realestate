@@ -21,7 +21,7 @@ import vn.edu.uit.realestate.Relational.Model.RealImage;
 @Entity
 public class Ward {
 	@Id
-	private Long Id;
+	private Long id;
 	private String name;
 	private String slug;
 	private String nameWithType;
@@ -37,7 +37,7 @@ public class Ward {
 	}
 	public Ward(Long id, String name, String slug, String nameWithType, String pathWithType, District district) {
 		super();
-		Id = id;
+		this.id = id;
 		this.name = name;
 		this.slug = slug;
 		this.nameWithType = nameWithType;
@@ -45,10 +45,10 @@ public class Ward {
 		this.district = district;
 	}
 	public Long getId() {
-		return Id;
+		return id;
 	}
 	public void setId(Long id) {
-		Id = id;
+		this.id = id;
 	}
 	public String getName() {
 		return name;

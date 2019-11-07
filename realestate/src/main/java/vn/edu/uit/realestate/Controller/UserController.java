@@ -1,5 +1,7 @@
 package vn.edu.uit.realestate.Controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import vn.edu.uit.realestate.Graph.Model.GraphUser;
+import vn.edu.uit.realestate.Graph.Repository.GraphUserRepository;
 import vn.edu.uit.realestate.Relational.Model.Request;
 import vn.edu.uit.realestate.Relational.Model.Trade;
 import vn.edu.uit.realestate.Relational.Model.User;
@@ -39,6 +43,22 @@ public class UserController {
 	public ResponseEntity<MappingJacksonValue> getAll() {
 		MappingJacksonValue users = userService.findAll();
 		return new ResponseEntity<>(users, HttpStatus.OK);
+	}
+	@Autowired
+	private GraphUserRepository graphUserRepository;
+	@GetMapping("/graph/users")
+	public ResponseEntity<List<GraphUser>> getAllUsersByGraph() {
+		List<GraphUser> result = graphUserRepository.getAllUser();
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
+	@GetMapping("/graph/saveusers")
+	public ResponseEntity<GraphUser> saveByGraph() {
+		GraphUser saveUser = new GraphUser();
+		saveUser.setName("Nguyễn Thị Ngọc Huyền");
+		saveUser.setGender(false);
+		GraphUser result = graphUserRepository.saveNewUser();
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@GetMapping("/users/{id}")

@@ -1,13 +1,16 @@
 package vn.edu.uit.realestate.Configuration;
 
+import java.util.HashMap;
+import javax.sql.DataSource;
+
 import org.neo4j.ogm.session.SessionFactory;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -22,20 +25,13 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import vn.edu.uit.realestate.Common.Common;
-import vn.edu.uit.realestate.Common.SpecificString;
-
-import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
-
-import java.util.HashMap;
-import javax.sql.DataSource;
 
 @Configuration
 @EnableNeo4jRepositories(basePackages = Common.Constains.GRAPH_PACKAGE)
 @EnableJpaRepositories(basePackages = Common.Constains.RELATIONAL_PACKAGE, transactionManagerRef = "mysqlTransactionManager")
 @EnableTransactionManagement
 public class DataSourceConfiguration {
-
-	private static final Logger LOG = LoggerFactory.getLogger(DataSourceConfiguration.class);
+	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(DataSourceConfiguration.class);
 	@Value("${spring.data.neo4j.uri}")
 	private String neo4jBoltDriver;	
 	@Value("${spring.data.neo4j.username}")
@@ -69,12 +65,16 @@ public class DataSourceConfiguration {
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder,
 			@Qualifier("dataSource") DataSource dataSource) {
 		HashMap<String, Object> properties = new HashMap<>();
-		properties.put("spring.jpa.hibernate.ddl-auto", "update");
-		properties.put("spring.jpa.properties.hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-		return builder.dataSource(dataSource).properties(properties).packages(Common.Constains.RELATIONAL_PACKAGE)
+		properties.put("hibernate.hbm2ddl.auto", "update");
+		properties.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+		properties.put("hibernate.show_sql", "true");
+		properties.put("hibernate.ejb.naming_strategy", "org.hibernate.cfg.ImprovedNamingStrategy");
+		LocalContainerEntityManagerFactoryBean result =  builder.dataSource(dataSource)
+				.properties(properties)
+				.packages("vn.edu.uit.realestate")
 				.build();
+		return result;
 	}
-
 	@Bean
 	public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
 		return new PersistenceExceptionTranslationPostProcessor();
@@ -93,7 +93,6 @@ public class DataSourceConfiguration {
 			throws Exception {
 		return new JpaTransactionManager(entityManagerFactory.getObject());
 	}
-
 	@Autowired
 	@Bean(name = "transactionManager")
 	public PlatformTransactionManager transactionManager(Neo4jTransactionManager neo4jTransactionManager,

@@ -6,8 +6,8 @@ import javax.persistence.Id;
 @Entity
 public class Information {
 	@Id
-	private int Id;
-	private String Contact;
+	private int id;
+	private String contact;
 
 	public Information() {
 		super();
@@ -15,25 +15,25 @@ public class Information {
 
 	public Information(int id, String contact) {
 		super();
-		Id = id;
-		Contact = contact;
+		id = id;
+		contact = contact;
 	}
 
 
 	public int getId() {
-		return Id;
+		return id;
 	}
 
 	public void setId(int id) {
-		Id = id;
+		id = id;
 	}
 
 	public String getContact() {
-		return Contact;
+		return contact;
 	}
 
 	public void setContact(String contact) {
-		Contact = contact;
+		contact = contact;
 	}
 	
 }
