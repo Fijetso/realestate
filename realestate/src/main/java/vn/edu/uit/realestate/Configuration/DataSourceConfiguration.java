@@ -27,8 +27,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import vn.edu.uit.realestate.Common.Common;
 
 @Configuration
-@EnableNeo4jRepositories(basePackages = Common.Constains.GRAPH_PACKAGE)
-@EnableJpaRepositories(basePackages = Common.Constains.RELATIONAL_PACKAGE, transactionManagerRef = "mysqlTransactionManager")
+@EnableNeo4jRepositories(basePackages = Common.Constains.GRAPH_REPOSITORY_PACKAGE)
+@EnableJpaRepositories(basePackages = Common.Constains.RELATIONAL_REPOSITORY_PACKAGE, transactionManagerRef = "mysqlTransactionManager")
 @EnableTransactionManagement
 public class DataSourceConfiguration {
 	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(DataSourceConfiguration.class);
@@ -48,7 +48,7 @@ public class DataSourceConfiguration {
 
 	@Bean
 	public SessionFactory sessionFactory() {
-		return new SessionFactory(configuration(), Common.Constains.GRAPH_PACKAGE);
+		return new SessionFactory(configuration(), Common.Constains.GRAPH_MODEL_PACKAGE);
 	}
 
 	@Primary
@@ -69,12 +69,12 @@ public class DataSourceConfiguration {
 		properties.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
 		properties.put("hibernate.show_sql", "true");
 		properties.put("hibernate.ejb.naming_strategy", "org.hibernate.cfg.ImprovedNamingStrategy");
-		LocalContainerEntityManagerFactoryBean result =  builder.dataSource(dataSource)
+		return builder.dataSource(dataSource)
 				.properties(properties)
-				.packages("vn.edu.uit.realestate")
+				.packages(Common.Constains.RELATIONAL_MODEL_PACKAGE)
 				.build();
-		return result;
 	}
+	
 	@Bean
 	public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
 		return new PersistenceExceptionTranslationPostProcessor();
@@ -93,6 +93,7 @@ public class DataSourceConfiguration {
 			throws Exception {
 		return new JpaTransactionManager(entityManagerFactory.getObject());
 	}
+	
 	@Autowired
 	@Bean(name = "transactionManager")
 	public PlatformTransactionManager transactionManager(Neo4jTransactionManager neo4jTransactionManager,

@@ -20,8 +20,9 @@ import com.cloudinary.Cloudinary;
 
 import vn.edu.uit.realestate.Common.Common;
 
-@SpringBootApplication(exclude = {Neo4jDataAutoConfiguration.class, DataSourceAutoConfiguration.class})
+@SpringBootApplication
 @ComponentScan(value = {Common.Constains.MAIN_PACKAGE})
+@EnableAutoConfiguration(exclude = {Neo4jDataAutoConfiguration.class, DataSourceAutoConfiguration.class})
 public class RealestateApplication {
 
 	@Value("${cloudinary.cloud_name}")
