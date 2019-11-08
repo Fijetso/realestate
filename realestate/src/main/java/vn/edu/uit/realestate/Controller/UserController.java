@@ -60,12 +60,14 @@ public class UserController {
 	public List<GraphPerson> graphGetPerson() {
 		return graphPersonRepository.getAllPeople();
 	}
+	
 	@GetMapping("/graph/saveusers")
 	public ResponseEntity<GraphUser> saveByGraph() {
 		GraphUser saveUser = new GraphUser();
-		saveUser.setName("Nguyễn Thị Ngọc Huyền");
+		saveUser.setName("Nguyễn Thị Ngọc Duyên");
 		saveUser.setGender(false);
-		GraphUser result = graphUserRepository.saveNewUser();
+		///Xài chung id user relational và graph
+		GraphUser result = graphUserRepository.save(saveUser);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
