@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import vn.edu.uit.realestate.Graph.Model.GraphPerson;
 import vn.edu.uit.realestate.Graph.Model.GraphUser;
+import vn.edu.uit.realestate.Graph.Repository.GraphPersonRepository;
 import vn.edu.uit.realestate.Graph.Repository.GraphUserRepository;
 import vn.edu.uit.realestate.Relational.Model.Request;
 import vn.edu.uit.realestate.Relational.Model.Trade;
@@ -47,17 +49,25 @@ public class UserController {
 	@Autowired
 	private GraphUserRepository graphUserRepository;
 	@GetMapping("/graph/users")
-	public ResponseEntity<List<GraphUser>> getAllUsersByGraph() {
-		List<GraphUser> result = graphUserRepository.getAllUser();
+	public ResponseEntity<Iterable<GraphUser>> getAllUsersByGraph() {
+		Iterable<GraphUser> result = graphUserRepository.getAllUser();
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	@Autowired
+	private GraphPersonRepository graphPersonRepository;
 
+	@GetMapping("/graph")
+	public List<GraphPerson> graphGetPerson() {
+		return graphPersonRepository.getAllPeople();
+	}
+	
 	@GetMapping("/graph/saveusers")
 	public ResponseEntity<GraphUser> saveByGraph() {
 		GraphUser saveUser = new GraphUser();
-		saveUser.setName("Nguyễn Thị Ngọc Huyền");
+		saveUser.setName("Nguyễn Thị Ngọc Duyên");
 		saveUser.setGender(false);
-		GraphUser result = graphUserRepository.saveNewUser();
+		///Xài chung id user relational và graph
+		GraphUser result = graphUserRepository.save(saveUser);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
@@ -85,6 +95,7 @@ public class UserController {
 		userService.postTradeToUser(userId, trade);
 		return new ResponseEntity<>( HttpStatus.CREATED);
 	}
+	
 	@PostMapping("users/{userId}/requests")
 	public ResponseEntity<?> postRequestByUserId(@PathVariable long userId, @Valid @RequestBody Request request)
 			throws Exception {
