@@ -47,4 +47,5 @@ public class RealestateApplication {
 		cloudinary = new Cloudinary(config);
 		return cloudinary;
 	}
+	
 }
