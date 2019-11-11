@@ -14,5 +14,9 @@ export const environment = {
   },
   api: {
     rootURL: 'http://localhost:4200'
+  },
+  heremap:{
+    appId:'dmdRFi5x5pT0zuy09gle',
+    appCode:'KLtdq3MAUJruxhiJ2GyAFQ'
   }
 };

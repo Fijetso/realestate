@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 @Component({
@@ -7,15 +7,16 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  constructor(private _titleService: Title, private router: Router) {}
+  constructor(private _titleService: Title, private router: Router) {
+  }
   title = 'Real Estate Client';
   ngOnInit(): void {
     this.router.events.subscribe((evt) => {
       if (!(evt instanceof NavigationEnd)) {
-          return;
+        return;
       }
       window.scrollTo(0, 0);
       // this._titleService.setTitle('Real Estate Client');
-  });
+    });
   }
 }

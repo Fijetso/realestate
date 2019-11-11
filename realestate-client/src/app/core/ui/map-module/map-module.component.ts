@@ -1,13 +1,13 @@
 import { Component, OnInit, ElementRef, ViewChild, NgZone } from '@angular/core';
 import { MapsAPILoader, MouseEvent } from '@agm/core';
 
-
 @Component({
   selector: 'app-map-module',
   templateUrl: './map-module.component.html',
   styleUrls: ['./map-module.component.scss']
 })
 export class MapModuleComponent implements OnInit {
+
   latitude: number;
   longitude: number;
   zoom: number;
@@ -16,16 +16,16 @@ export class MapModuleComponent implements OnInit {
 
   @ViewChild('search')
   public searchElementRef: ElementRef;
-
-
   constructor(
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone
-  ) { }
+  ) {
+
+  }
 
 
   ngOnInit() {
-    // load Places Autocomplete
+    //load Places Autocomplete
     this.mapsAPILoader.load().then(() => {
       this.setCurrentLocation();
       this.geoCoder = new google.maps.Geocoder;
@@ -35,15 +35,15 @@ export class MapModuleComponent implements OnInit {
       });
       autocomplete.addListener('place_changed', () => {
         this.ngZone.run(() => {
-          // get the place result
+          //get the place result
           const place: google.maps.places.PlaceResult = autocomplete.getPlace();
 
-          // verify result
+          //verify result
           if (place.geometry === undefined || place.geometry === null) {
             return;
           }
 
-          // set latitude, longitude and zoom
+          //set latitude, longitude and zoom
           this.latitude = place.geometry.location.lat();
           this.longitude = place.geometry.location.lng();
           this.zoom = 12;
@@ -63,7 +63,6 @@ export class MapModuleComponent implements OnInit {
       });
     }
   }
-
 
   markerDragEnd($event: MouseEvent) {
     console.log($event);
@@ -88,5 +87,9 @@ export class MapModuleComponent implements OnInit {
       }
 
     });
+  }
+
+  public ngAfterViewInit() {
+
   }
 }
