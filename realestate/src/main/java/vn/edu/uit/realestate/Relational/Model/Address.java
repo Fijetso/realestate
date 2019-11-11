@@ -39,6 +39,7 @@ public class Address {
 		this.ward = ward;
 		this.district = district;
 		this.province = cityOrProvince;
+		this.id = trade.getId();
 	}
 
 	public Long getId() {

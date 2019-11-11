@@ -17,7 +17,8 @@ type Trade {
 	tradeKind: TradeKind,
 	address: String,
 	details: Details,
-	realImages: [RealImage]
+	coordinate: Coordinate,
+	realImages: [RealImage],
 	bluePrints: [BluePrint]
 #	bookings: [Booking]
 }
@@ -70,6 +71,12 @@ type BluePrint {
 	id: ID!,
 	imageLink: String,
 	description: String
+}
+
+type Coordinate {
+	id: ID!,
+	longitude : Long,
+	latitude: Long
 }
 
 type Role {

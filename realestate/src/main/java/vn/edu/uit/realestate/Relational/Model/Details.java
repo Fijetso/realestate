@@ -43,6 +43,7 @@ public class Details {
 		this.bedrooms = bedrooms;
 		this.utilities = utilities;
 		this.others = others;
+		this.id = trade.getId();
 	}
 
 	public Long getId() {

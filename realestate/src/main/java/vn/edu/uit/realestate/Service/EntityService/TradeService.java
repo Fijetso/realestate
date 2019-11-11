@@ -59,11 +59,11 @@ public class TradeService implements IEntityService {
 		}
 		SimpleBeanPropertyFilter userFilter = SimpleBeanPropertyFilter.serializeAllExcept("trades", "password",
 				"requests", "favoriteTrades", "roles");
-		SimpleBeanPropertyFilter addressAndDetailFilter = SimpleBeanPropertyFilter.serializeAllExcept("trade");
+		SimpleBeanPropertyFilter filterExceptTrade = SimpleBeanPropertyFilter.serializeAllExcept("trade");
 		SimpleBeanPropertyFilter filterTrade = SimpleBeanPropertyFilter.serializeAllExcept("favoriteTrades");
 		FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", userFilter)
-				.addFilter("AddressFilter", addressAndDetailFilter).addFilter("DetailsFilter", addressAndDetailFilter)
-				.addFilter("TradeFilter", filterTrade);
+				.addFilter("AddressFilter", filterExceptTrade).addFilter("DetailsFilter", filterExceptTrade)
+				.addFilter("CoordinateFilter", filterExceptTrade).addFilter("TradeFilter", filterTrade);
 		MappingJacksonValue mapping = new MappingJacksonValue(trades);
 		mapping.setFilters(filters);
 		return mapping;
@@ -92,11 +92,11 @@ public class TradeService implements IEntityService {
 			throw new NotFoundException("Cannot find any Trade with id=" + id);
 		}
 		SimpleBeanPropertyFilter userFilter = SimpleBeanPropertyFilter.serializeAllExcept("trades", "password");
-		SimpleBeanPropertyFilter addressAndDetailFilter = SimpleBeanPropertyFilter.serializeAllExcept("trade");
-		SimpleBeanPropertyFilter filterTrade = SimpleBeanPropertyFilter.serializeAll();
+		SimpleBeanPropertyFilter filterExceptTrade = SimpleBeanPropertyFilter.serializeAllExcept("trade");
+		SimpleBeanPropertyFilter filterTrade = SimpleBeanPropertyFilter.serializeAllExcept("favoriteTrades");
 		FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", userFilter)
-				.addFilter("AddressFilter", addressAndDetailFilter).addFilter("DetailsFilter", addressAndDetailFilter)
-				.addFilter("TradeFilter", filterTrade);
+				.addFilter("AddressFilter", filterExceptTrade).addFilter("DetailsFilter", filterExceptTrade)
+				.addFilter("CoordinateFilter", filterExceptTrade).addFilter("TradeFilter", filterTrade);
 		MappingJacksonValue mapping = new MappingJacksonValue(foundTrade);
 		mapping.setFilters(filters);
 		return mapping;
