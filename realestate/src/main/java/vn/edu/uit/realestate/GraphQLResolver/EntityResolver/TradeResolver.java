@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.coxautodev.graphql.tools.GraphQLResolver;
 
-import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
+import vn.edu.uit.realestate.ExceptionHandler.CustomGraphQLException;
 import vn.edu.uit.realestate.Relational.Model.Address;
 import vn.edu.uit.realestate.Relational.Model.BluePrint;
 import vn.edu.uit.realestate.Relational.Model.Coordinate;
@@ -63,10 +63,12 @@ public class TradeResolver implements GraphQLResolver<Trade> {
 
 	public String getAddress(Trade trade) {
 		Optional<Address> address = addressRepository.findById(trade.getAddress().getId());
-		address.orElseThrow(() -> new NotFoundException("Cannot find Address Id = " + trade.getAddress().getId()));
+		address.orElseThrow(() -> new CustomGraphQLException(400,
+				"Not Found Exception: Cannot find Address Id = " + trade.getAddress().getId()));
 
 		Optional<Ward> ward = wardRepository.findById(address.get().getWard());
-		ward.orElseThrow(() -> new NotFoundException("Cannot find Ward Id = " + address.get().getWard()));
+		ward.orElseThrow(() -> new CustomGraphQLException(400,
+				"Not Found Exception: Cannot find Ward Id = " + address.get().getWard()));
 
 		String result = address.get().getDetail() + ", " + ward.get().getPathWithType();
 		return result;

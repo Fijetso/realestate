@@ -14,7 +14,6 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import vn.edu.uit.realestate.ExceptionHandler.CustomGraphQLException;
 import vn.edu.uit.realestate.ExceptionHandler.ExistContentException;
-import vn.edu.uit.realestate.ExceptionHandler.IllegalArgumentException;
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.Relational.Model.Address;
 import vn.edu.uit.realestate.Relational.Model.BluePrint;
@@ -44,7 +43,11 @@ import vn.edu.uit.realestate.Service.IEntityService;
 @Service
 public class TradeService implements IEntityService {
 	@Autowired
-	private TradeRepository tradeRepository;
+	private RealEstateKindRepository realEstateKindRepository;
+	@Autowired
+	private CoordinateRepository coordinateRepository;
+	@Autowired
+	private TradeKindRepository tradeKindRepository;
 	@Autowired
 	private RealImageRepository realImageRepository;
 	@Autowired
@@ -55,6 +58,12 @@ public class TradeService implements IEntityService {
 	private AddressRepository addressRepository;
 	@Autowired
 	private DetailsRepository detailsRepository;
+	@Autowired
+	private TradeRepository tradeRepository;
+	@Autowired
+	private WardRepository wardRepository;
+	@Autowired
+	private UserRepository userRepository;
 
 	@Override
 	public MappingJacksonValue findAll() {
@@ -72,22 +81,6 @@ public class TradeService implements IEntityService {
 		MappingJacksonValue mapping = new MappingJacksonValue(trades);
 		mapping.setFilters(filters);
 		return mapping;
-	}
-
-	public List<Trade> findAllGraphQL(final int count) {
-		List<Trade> trades = tradeRepository.findAll().stream().limit(count).collect(Collectors.toList());
-		if (trades.isEmpty() == true) {
-			throw new NotFoundException("Cannot find any Trade");
-		}
-		return trades;
-	}
-
-	public Optional<Trade> findByIdGraphQL(Long id) {
-		Optional<Trade> foundTrade = tradeRepository.findById(id);
-		if (foundTrade.isPresent() == false) {
-			throw new NotFoundException("Cannot find any Trade with id=" + id);
-		}
-		return foundTrade;
 	}
 
 	@Override
@@ -136,6 +129,22 @@ public class TradeService implements IEntityService {
 		tradeRepository.deleteById(id);
 	}
 
+	public List<Trade> findAllGraphQL(final int count) {
+		List<Trade> trades = tradeRepository.findAll().stream().limit(count).collect(Collectors.toList());
+		if (trades.isEmpty() == true) {
+			throw new NotFoundException("Cannot find any Trade");
+		}
+		return trades;
+	}
+
+	public Optional<Trade> findByIdGraphQL(Long id) {
+		Optional<Trade> foundTrade = tradeRepository.findById(id);
+		if (foundTrade.isPresent() == false) {
+			throw new NotFoundException("Cannot find any Trade with id=" + id);
+		}
+		return foundTrade;
+	}
+
 	public void postBookingByTradeId(Long tradeId, Booking booking) {
 		Optional<Trade> foundTrade = tradeRepository.findById(tradeId);
 		if (foundTrade.isPresent() == false) {
@@ -154,34 +163,26 @@ public class TradeService implements IEntityService {
 		return foundTrade.get().getViewCount() + 1;
 	}
 
-	@Autowired
-	UserRepository userRepository;
-	@Autowired
-	RealEstateKindRepository realEstateKindRepository;
-	@Autowired
-	TradeKindRepository tradeKindRepository;
-	@Autowired
-	WardRepository wardRepository;
-	@Autowired
-	CoordinateRepository coordinateRepository;
-
 	public Trade saveTradeGraphQL(final String description, final Long cost, final Long userId,
 			final Long realEstateKindId, final Long tradeKindId, final String detailAddress, final Long wardId,
 			final Long length, final Long width, final Long square, final String direction, final String floors,
 			final String legalDocuments, final int bathrooms, final int bedrooms, final String utilities,
 			final String others, final Long longitude, final Long latitude) {
 		Optional<User> user = userRepository.findById(userId);
-		user.orElseThrow(() -> new NotFoundException("Cannot find any User Id=" + userId));
+		user.orElseThrow(
+				() -> new CustomGraphQLException(400, "Not Found Exception: Cannot find any User Id=" + userId));
 
 		Optional<RealEstateKind> realEstateKind = realEstateKindRepository.findById(realEstateKindId);
-		realEstateKind
-				.orElseThrow(() -> new NotFoundException("Cannot find any Real Estate Kind Id=" + realEstateKindId));
+		realEstateKind.orElseThrow(() -> new CustomGraphQLException(400,
+				"Not Found Exception: Cannot find any Real Estate Kind Id=" + realEstateKindId));
 
 		Optional<TradeKind> tradeKind = tradeKindRepository.findById(tradeKindId);
-		tradeKind.orElseThrow(() -> new NotFoundException("Cannot find any Trade Kind Id=" + tradeKindId));
+		tradeKind.orElseThrow(() -> new CustomGraphQLException(400,
+				"Not Found Exception: Cannot find any Trade Kind Id=" + tradeKindId));
 
 		Optional<Ward> ward = wardRepository.findById(wardId);
-		ward.orElseThrow(() -> new NotFoundException("Cannot find any Ward Id=" + wardId));
+		ward.orElseThrow(
+				() -> new CustomGraphQLException(400, "Not Found Exception: Cannot find any Ward Id=" + wardId));
 
 		Address address = new Address(detailAddress, ward.get().getId(), ward.get().getDistrict().getId(),
 				ward.get().getDistrict().getProvince().getId());
@@ -200,7 +201,8 @@ public class TradeService implements IEntityService {
 			String floors, String legalDocuments, int bathrooms, int bedrooms, String utilities, String others,
 			Long longitude, Long latitude, String tradeStatus) {
 		Optional<Trade> trade = tradeRepository.findById(tradeId);
-		trade.orElseThrow(() -> new NotFoundException("Cannot find any Trade Id=" + tradeId));
+		trade.orElseThrow(
+				() -> new CustomGraphQLException(400, "Not Found Exception: Cannot find any Trade Id=" + tradeId));
 		Trade foundTrade = trade.get();
 		if (description != null) {
 			foundTrade.setDescription(description);
@@ -210,19 +212,20 @@ public class TradeService implements IEntityService {
 		}
 		if (realEstateKindId != null) {
 			Optional<RealEstateKind> realEstateKind = realEstateKindRepository.findById(realEstateKindId);
-			realEstateKind.orElseThrow(
-					() -> new NotFoundException("Cannot find any Real Estate Kind Id=" + realEstateKindId));
+			realEstateKind.orElseThrow(() -> new CustomGraphQLException(400,
+					"Not Found Exception: Cannot find any Real Estate Kind Id=" + realEstateKindId));
 			foundTrade.setRealEstateKind(realEstateKind.get());
 		}
 		if (tradeKindId != null) {
 			Optional<TradeKind> tradeKind = tradeKindRepository.findById(tradeKindId);
-			tradeKind.orElseThrow(() -> new NotFoundException("Cannot find any Trade Kind Id=" + tradeKindId));
+			tradeKind.orElseThrow(() -> new CustomGraphQLException(400,
+					"Not Found Exception: Cannot find any Trade Kind Id=" + tradeKindId));
 			foundTrade.setTradeKind(tradeKind.get());
 		}
 		if (detailAddress != null || wardId != null) {
 			Optional<Address> address = addressRepository.findById(foundTrade.getAddress().getId());
-			address.orElseThrow(
-					() -> new NotFoundException("Cannot find any Address Kind Id=" + foundTrade.getAddress().getId()));
+			address.orElseThrow(() -> new CustomGraphQLException(400,
+					"Not Found Exception: Cannot find any Address Kind Id=" + foundTrade.getAddress().getId()));
 			Address foundAddress = address.get();
 
 			foundAddress.setDetail(detailAddress != null ? detailAddress : foundAddress.getDetail());
@@ -239,8 +242,8 @@ public class TradeService implements IEntityService {
 		if (length != null || width != null || square != null || direction != null || floors != null
 				|| legalDocuments != null || bathrooms >= 0 || bedrooms >= 0 || utilities != null || others != null) {
 			Optional<Details> details = detailsRepository.findById(foundTrade.getDetails().getId());
-			details.orElseThrow(
-					() -> new NotFoundException("Cannot find any Details Id=" + foundTrade.getDetails().getId()));
+			details.orElseThrow(() -> new CustomGraphQLException(400,
+					"Not Found Exception: Cannot find any Details Id=" + foundTrade.getDetails().getId()));
 			Details foundDetails = details.get();
 
 			foundDetails.setLength(length != null ? length : foundDetails.getLength());
@@ -258,8 +261,8 @@ public class TradeService implements IEntityService {
 		}
 		if (longitude != null && latitude != null) {
 			Optional<Coordinate> coordinate = coordinateRepository.findById(foundTrade.getCoordinate().getId());
-			coordinate.orElseThrow(
-					() -> new CustomGraphQLException(400,"Cannot find any Coordinate Id=" + foundTrade.getCoordinate().getId()));
+			coordinate.orElseThrow(() -> new CustomGraphQLException(400,
+					"Not Found Exception: Cannot find any Coordinate Id=" + foundTrade.getCoordinate().getId()));
 			Coordinate foundCoordinate = coordinate.get();
 			foundCoordinate.setLongitude(longitude != null ? longitude : foundCoordinate.getLongitude());
 			foundCoordinate.setLatitude(latitude != null ? latitude : foundCoordinate.getLatitude());
@@ -267,9 +270,14 @@ public class TradeService implements IEntityService {
 			coordinateRepository.save(foundCoordinate);
 		}
 
-		if(tradeStatus !=null) {
-			TradeStatus tradeStatusEnum = TradeStatus.valueOf(tradeStatus.toUpperCase());
-			foundTrade.setTradeStatus(tradeStatusEnum);
+		try {
+			if (tradeStatus != null) {
+				TradeStatus tradeStatusEnum = TradeStatus.valueOf(tradeStatus.toUpperCase());
+				foundTrade.setTradeStatus(tradeStatusEnum);
+			}
+		} catch (Exception e) {
+			throw new CustomGraphQLException(400,
+					"Not Found Exception: Cannot find any Trade Status like " + tradeStatus);
 		}
 		return tradeRepository.save(foundTrade);
 	}
