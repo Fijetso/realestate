@@ -82,7 +82,7 @@ public class Trade {
 	}
 
 	public Trade(String description, Long cost, User user, RealEstateKind realEstateKind, TradeKind tradeKind,
-			Address address, Details details) {
+			Address address, Details details, Coordinate coordinate) {
 		super();
 		this.description = description;
 		this.cost = cost;
@@ -91,6 +91,7 @@ public class Trade {
 		this.tradeKind = tradeKind;
 		this.address = address;
 		this.details = details;
+		this.coordinate = coordinate;
 		this.tradeStatus = TradeStatus.WAITING;
 	}
 

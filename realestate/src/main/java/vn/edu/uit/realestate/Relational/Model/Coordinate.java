@@ -24,12 +24,10 @@ public class Coordinate {
 		super();
 	}
 
-	public Coordinate(Long longitude, Long latitude, Trade trade) {
+	public Coordinate(Long longitude, Long latitude) {
 		super();
 		this.longitude = longitude;
 		this.latitude = latitude;
-		this.trade = trade;
-		this.id = trade.getId();
 	}
 
 	public Long getId() {

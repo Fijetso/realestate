@@ -3,9 +3,16 @@ type Query {
 }
 
 type Mutation {
+	
 	saveTrade(description: String!,cost: Long!, userId: Long!, realEstateKindId: Long!, tradeKindId: Long!,
-			detailAddress: String, wardId: Long!, length: Long, width: Long, square: Long, direction: String,
-			floors: String, legalDocuments: String, bathrooms: Int, bedrooms: Int, utilities: String, others: String): Trade!
+			detailAddress: String!, wardId: Long!, length: Long, width: Long, square: Long, direction: String,
+			floors: String, legalDocuments: String, bathrooms: Int, bedrooms: Int, utilities: String, 
+			others: String, longitude: Long, latitude: Long): Trade
+			
+	updateTrade(tradeId: Long!, description: String, cost: Long, realEstateKindId: Long, tradeKindId: Long,	
+			detailAddress: String, wardId: Long, length: Long, width: Long, square: Long, direction: String,
+			floors: String, legalDocuments: String, bathrooms: Int, bedrooms: Int, utilities: String, 
+			others: String, longitude: Long, latitude: Long, tradeStatus: String): Trade
 }
 
 type Trade {
@@ -13,6 +20,7 @@ type Trade {
 	description: String,
 	cost: Long,
 	user: User,
+	tradeStatus: String,
 	realEstateKind: RealEstateKind,
 	tradeKind: TradeKind,
 	address: String,
