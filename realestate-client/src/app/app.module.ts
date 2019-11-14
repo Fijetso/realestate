@@ -99,6 +99,7 @@ import { GetDistrictNameFromIdPipe } from './ultility/pipe/get-district-name-fro
 import { ThousandSuffixPipe } from './ultility/pipe/thousand-suffix.pipe';
 import { SearchPageComponent } from './core/ui/search-page/search-page.component';
 import { AccountManagementComponent } from './core/ui/account-management/account-management.component';
+import {HereMapsModule } from 'ng2-heremaps'
 
 @NgModule({
   declarations: [
@@ -190,7 +191,13 @@ import { AccountManagementComponent } from './core/ui/account-management/account
     AngularFireAuthModule,
     Ng2SearchPipeModule,
     ToastrModule.forRoot(),
-    CKEditorModule
+    CKEditorModule,
+    HereMapsModule.forRoot({
+      apiKey: 'KLtdq3MAUJruxhiJ2GyAFQ',
+      appId: 'dmdRFi5x5pT0zuy09gle',
+      apiVersion: '3.0',
+      libraries: ['core', 'service','ui','mapevents']
+    })
   ],
   providers: [
     AuthenticationService,
