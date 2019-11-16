@@ -1,20 +1,13 @@
-package vn.edu.uit.realestate.Relational.Model;
+package vn.edu.uit.realestate.Graph.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
+import org.neo4j.ogm.annotation.Id;
+import org.neo4j.ogm.annotation.NodeEntity;
 
-@Entity
-//@JsonIgnoreProperties("trade")
-@JsonFilter("AddressFilter")
-public class Address {
+@NodeEntity(label = "Address")
+public class GraphAddress {
 	@Id
-	@GeneratedValue
 	private Long id;
 	@NotNull(message="You must enter the detail address")
 	private String detail;
@@ -24,21 +17,21 @@ public class Address {
 	private Long district;
 	@NotNull(message="You must enter the city or province")
 	private Long province;
-	@OneToOne(mappedBy = "address", fetch=FetchType.LAZY)
-	private Trade trade;
-	public Address() {
+
+	public GraphAddress() {
 		super();
 	}
 	
-	public Address(@NotNull(message = "You must enter the detail address") String detail,
+	public GraphAddress(Long id, @NotNull(message = "You must enter the detail address") String detail,
 			@NotNull(message = "You must enter the ward") Long ward,
 			@NotNull(message = "You must enter the district") Long district,
-			@NotNull(message = "You must enter the city or province") Long cityOrProvince) {
+			@NotNull(message = "You must enter the city or province") Long province) {
 		super();
+		this.id = id;
 		this.detail = detail;
 		this.ward = ward;
 		this.district = district;
-		this.province = cityOrProvince;
+		this.province = province;
 	}
 
 	public Long getId() {
@@ -76,12 +69,5 @@ public class Address {
 
 	public void setCityOrProvince(Long cityOrProvince) {
 		this.province = cityOrProvince;
-	}
-
-	public Trade getTrade() {
-		return trade;
-	}
-	public void setTrade(Trade trade) {
-		this.trade = trade;
 	}
 }

@@ -25,6 +25,7 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.web.bind.annotation.RestController;
 
 import vn.edu.uit.realestate.Relational.Model.Role;
 import vn.edu.uit.realestate.Relational.Model.User;
@@ -71,31 +72,26 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
+		http.authorizeRequests().antMatchers("/", "/register", "/confirm-account", "/reset-password/**", "/login", "/logout").permitAll();
 
 		// Chỉ cho phép user có quyền ADMIN truy cập đường dẫn /admin/**
-		http.authorizeRequests().antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')");
+		http.authorizeRequests().antMatchers("*/admin/**").access("hasRole('ROLE_ADMIN')");
+		http.authorizeRequests().antMatchers("*/manager/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')");
 		// Chỉ cho phép user có quyền ADMIN hoặc USER truy cập đường dẫn /user/**
-		http.authorizeRequests().antMatchers("/user/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')");
+		http.authorizeRequests().antMatchers("*/user/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER') or hasRole('ROLE_USER')");
 		// Khi người dùng đã login, với vai trò USER, Nhưng truy cập vào trang yêu cầu
 		// vai trò ADMIN, sẽ chuyển hướng tới trang /403
 		http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
-		http.authorizeRequests().antMatchers("/**", "/signup", "/login", "/logout").permitAll();
-		http.authorizeRequests().anyRequest().permitAll()
-		.and().formLogin().usernameParameter("email").passwordParameter("password")
-		.and().oauth2Login().userInfoEndpoint()
-				.userService(this.oauth2UserService())
-				.oidcUserService(this.oidcUserService());
-		http.logout()
-		.logoutSuccessUrl("/login")
-		.logoutUrl("/logout")
-		.permitAll();
+		http.authorizeRequests().anyRequest().authenticated().and().formLogin().and().oauth2Login().userInfoEndpoint()
+				.userService(this.oauth2UserService()).oidcUserService(this.oidcUserService());
+		http.logout().logoutSuccessUrl("/login").logoutUrl("/logout").permitAll();
 	}
 	
-
-	@Override
-	public void configure(WebSecurity web) {
-		web.ignoring().antMatchers("/resources/**","/static/**","/css/**","/js/**","/images/**");
-	}
+//
+//	@Override
+//	public void configure(WebSecurity web) {
+//		web.ignoring().antMatchers("/resources/**","/static/**","/css/**","/js/**","/images/**");
+//	}
 
 	private OAuth2UserService<OAuth2UserRequest, OAuth2User> oauth2UserService() {
 		OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
@@ -121,7 +117,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			}
 			OAuth2UserInfo oauth2UserInfo = new OAuth2UserInfo(authorities, oauth2User.getAttributes(), "id");
 			oauth2UserInfo.setUsername(emailOrUsername); /// getUserName()
-			return oauth2User;
+			return oauth2UserInfo;
 		};
 	}
 

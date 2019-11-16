@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,13 +15,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import com.fasterxml.jackson.annotation.JsonFilter;
 
+import vn.edu.uit.realestate.Relational.Model.Enum.TradeStatus;
+
 @Entity
-//@JsonIgnoreProperties("bookings")
 @JsonFilter("TradeFilter")
 public class Trade {
 	@Id
@@ -27,37 +27,44 @@ public class Trade {
 	private Long id;
 	private String description;
 	private Long cost;
-	private Long viewCount =  (long) 0;
+	private Long viewCount = (long) 0;
+	@Enumerated
+    @Column(columnDefinition = "smallint")
+	private TradeStatus tradeStatus = TradeStatus.WAITING;
 	@ManyToOne
-	@JoinColumn(name="userId", referencedColumnName = "id")
+	@JoinColumn(name = "userId", referencedColumnName = "id")
 	private User user;
-	
+
 	@ManyToOne
-	@JoinColumn(name="realEstateKindId", referencedColumnName = "id")
+	@JoinColumn(name = "realEstateKindId", referencedColumnName = "id")
 	private RealEstateKind realEstateKind;
-	
+
 	@ManyToOne
-	@JoinColumn(name="tradeKindId", referencedColumnName = "id")
+	@JoinColumn(name = "tradeKindId", referencedColumnName = "id")
 	private TradeKind tradeKind;
-	
-	@OneToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
-    @JoinColumn(name = "addressId", referencedColumnName = "id")
-    private Address address;
-	
-	@OneToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
-    @JoinColumn(name = "detailsId", referencedColumnName = "id")
-    private Details details;
-	
-	@OneToMany(mappedBy="trade")
+
+	@OneToOne(cascade = { CascadeType.REMOVE, CascadeType.PERSIST })
+	@JoinColumn(name = "addressId", referencedColumnName = "id")
+	private Address address;
+
+	@OneToOne(cascade = { CascadeType.REMOVE, CascadeType.PERSIST })
+	@JoinColumn(name = "detailsId", referencedColumnName = "id")
+	private Details details;
+
+	@OneToOne(cascade = { CascadeType.REMOVE, CascadeType.PERSIST })
+	@JoinColumn(name = "coordinateId", referencedColumnName = "id")
+	private Coordinate coordinate;
+
+	@OneToMany(mappedBy = "trade")
 	private List<RealImage> realImages = new ArrayList<RealImage>();
-	
-	@OneToMany(mappedBy="trade")
+
+	@OneToMany(mappedBy = "trade")
 	private List<BluePrint> bluePrints = new ArrayList<BluePrint>();
-	
+
 	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name="bookingId", referencedColumnName = "id")
-	private  List<Booking> bookings = new ArrayList<Booking>();
-	
+	@JoinColumn(name = "bookingId", referencedColumnName = "id")
+	private List<Booking> bookings = new ArrayList<Booking>();
+
 //    @ManyToMany(fetch = FetchType.LAZY,
 //            cascade = {
 //                CascadeType.PERSIST,
@@ -67,15 +74,15 @@ public class Trade {
 //            joinColumns = { @JoinColumn(name = "tradeId") },
 //            inverseJoinColumns = { @JoinColumn(name = "userId") })
 //	private List<User> favoriteUsers = new ArrayList<User>();
-	@OneToMany(mappedBy="trade", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy = "trade", fetch = FetchType.LAZY)
 	private List<FavoriteTrade> favoriteTrades;
-    
+
 	public Trade() {
 		super();
 	}
 
-	public Trade(String description, Long cost, User user, RealEstateKind realEstateKind,
-			TradeKind tradeKind, Address address, Details details) {
+	public Trade(String description, Long cost, User user, RealEstateKind realEstateKind, TradeKind tradeKind,
+			Address address, Details details, Coordinate coordinate) {
 		super();
 		this.description = description;
 		this.cost = cost;
@@ -84,6 +91,8 @@ public class Trade {
 		this.tradeKind = tradeKind;
 		this.address = address;
 		this.details = details;
+		this.coordinate = coordinate;
+		this.tradeStatus = TradeStatus.WAITING;
 	}
 
 	public Long getId() {
@@ -109,7 +118,7 @@ public class Trade {
 	public void setCost(Long cost) {
 		this.cost = cost;
 	}
-	
+
 	public User getUser() {
 		return user;
 	}
@@ -174,12 +183,28 @@ public class Trade {
 		this.bookings = bookings;
 	}
 
+	public Coordinate getCoordinate() {
+		return coordinate;
+	}
+
+	public void setCoordinate(Coordinate coordinate) {
+		this.coordinate = coordinate;
+	}
+
 	public Long getViewCount() {
 		return viewCount;
 	}
 
 	public void setViewCount(Long viewCount) {
 		this.viewCount = viewCount;
+	}
+
+	public TradeStatus getTradeStatus() {
+		return tradeStatus;
+	}
+
+	public void setTradeStatus(TradeStatus tradeStatus) {
+		this.tradeStatus = tradeStatus;
 	}
 
 	public List<FavoriteTrade> getFavoriteTrades() {
