@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import vn.edu.uit.realestate.ExceptionHandler.CustomGraphQLException;
 import vn.edu.uit.realestate.ExceptionHandler.ExistContentException;
+import vn.edu.uit.realestate.ExceptionHandler.IllegalArgumentException;
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.Relational.Model.Address;
 import vn.edu.uit.realestate.Relational.Model.BluePrint;
@@ -127,6 +128,28 @@ public class TradeService implements IEntityService {
 			bluePrintRepository.deleteAll(tradeBluePrints);
 		}
 		tradeRepository.deleteById(id);
+	}
+
+	public MappingJacksonValue updateTradeStatus(Long id, String newStatus) {
+		Optional<Trade> foundTrade = tradeRepository.findById(id);
+		if (foundTrade.isPresent() == false) {
+			throw new NotFoundException("Cannot find any Trade with id=" + id);
+		}
+		try {
+			TradeStatus newTradeStatus = TradeStatus.valueOf(newStatus.toUpperCase());
+			foundTrade.get().setTradeStatus(newTradeStatus);
+		} catch (Exception e) {
+			throw new IllegalArgumentException("Cannot find any Trade Status like " + newStatus);
+		}
+		SimpleBeanPropertyFilter userFilter = SimpleBeanPropertyFilter.serializeAllExcept("trades", "password");
+		SimpleBeanPropertyFilter filterExceptTrade = SimpleBeanPropertyFilter.serializeAllExcept("trade");
+		SimpleBeanPropertyFilter filterTrade = SimpleBeanPropertyFilter.serializeAllExcept("favoriteTrades");
+		FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", userFilter)
+				.addFilter("AddressFilter", filterExceptTrade).addFilter("DetailsFilter", filterExceptTrade)
+				.addFilter("CoordinateFilter", filterExceptTrade).addFilter("TradeFilter", filterTrade);
+		MappingJacksonValue mapping = new MappingJacksonValue(tradeRepository.save(foundTrade.get()));
+		mapping.setFilters(filters);
+		return mapping;
 	}
 
 	public List<Trade> findAllGraphQL(final int count) {
