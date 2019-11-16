@@ -4,18 +4,18 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.Email;
 
 @NodeEntity(label = "User")
 public class GraphUser {
 	@Id
-	@GeneratedValue
 	private Long id;
 	@Size(min=2, message="Name should have at least 2 characters")
 	private String name;
@@ -27,6 +27,8 @@ public class GraphUser {
 	private Date birthdate;
 	private boolean gender;
 	private String job;
+	@Relationship(type = "POST", direction = Relationship.OUTGOING)
+	private List<GraphTrade> trade;
 	public GraphUser() {
 		super();
 	}
@@ -83,5 +85,11 @@ public class GraphUser {
 	}
 	public void setJob(String job) {
 		this.job = job;
+	}
+	public List<GraphTrade> getTrade() {
+		return trade;
+	}
+	public void setTrade(List<GraphTrade> trade) {
+		this.trade = trade;
 	}
 }

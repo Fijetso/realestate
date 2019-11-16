@@ -31,28 +31,39 @@ public class UserController {
 	private UserService userService;
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping("/admin/hello")
+	@GetMapping("/secured/admin")
 	public String helloAdmin() {
 		return "Hello admin";
 	}
-	@PreAuthorize("hasRole('ROLE_USER')")
-	@GetMapping("/user/hello")
+
+	@PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN') OR hasRole('ROLE_MANAGER')")
+	@GetMapping("/secured/user")
 	public String helloUser() {
 		return "Hello user";
 	}
+
+	@PreAuthorize("hasRole('ROLE_MANAGER') OR hasRole('ROLE_ADMIN')")
+	@GetMapping("/secured/manager")
+	public String helloManager() {
+		return "Hello manager";
+	}
+
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping("/users")
+	@GetMapping("/secured/manager/users")
 	public ResponseEntity<MappingJacksonValue> getAll() {
 		MappingJacksonValue users = userService.findAll();
 		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
+
 	@Autowired
 	private GraphUserRepository graphUserRepository;
+
 	@GetMapping("/graph/users")
 	public ResponseEntity<Iterable<GraphUser>> getAllUsersByGraph() {
 		Iterable<GraphUser> result = graphUserRepository.getAllUser();
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+
 	@Autowired
 	private GraphPersonRepository graphPersonRepository;
 
@@ -60,13 +71,13 @@ public class UserController {
 	public List<GraphPerson> graphGetPerson() {
 		return graphPersonRepository.getAllPeople();
 	}
-	
+
 	@GetMapping("/graph/saveusers")
 	public ResponseEntity<GraphUser> saveByGraph() {
 		GraphUser saveUser = new GraphUser();
 		saveUser.setName("Nguyễn Thị Ngọc Duyên");
 		saveUser.setGender(false);
-		///Xài chung id user relational và graph
+		/// Xài chung id user relational và graph
 		GraphUser result = graphUserRepository.save(saveUser);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
@@ -78,13 +89,13 @@ public class UserController {
 	}
 
 	@PostMapping("/users")
-	public ResponseEntity<?> post(@Valid @RequestBody User user){
+	public ResponseEntity<?> post(@Valid @RequestBody User user) {
 		userService.save(user);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 	@GetMapping("/users/{userId}/trades")
-	public ResponseEntity<MappingJacksonValue> getAllTradesByUserId(@PathVariable long userId){
+	public ResponseEntity<MappingJacksonValue> getAllTradesByUserId(@PathVariable long userId) {
 		MappingJacksonValue tradeList = userService.findAllTradeByUserId(userId);
 		return new ResponseEntity<>(tradeList, HttpStatus.OK);
 	}
@@ -93,14 +104,14 @@ public class UserController {
 	public ResponseEntity<?> postTradeByUserId(@PathVariable long userId, @Valid @RequestBody Trade trade)
 			throws Exception {
 		userService.postTradeToUser(userId, trade);
-		return new ResponseEntity<>( HttpStatus.CREATED);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
-	
+
 	@PostMapping("users/{userId}/requests")
 	public ResponseEntity<?> postRequestByUserId(@PathVariable long userId, @Valid @RequestBody Request request)
 			throws Exception {
 		userService.postRequestToUser(userId, request);
-		return new ResponseEntity<>( HttpStatus.CREATED);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 	@DeleteMapping("/users/{id}")
