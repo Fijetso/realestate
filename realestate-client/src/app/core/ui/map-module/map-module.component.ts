@@ -1,7 +1,8 @@
-import { environment } from './../../../../environments/environment';
-import { Component, OnInit, ElementRef, ViewChild, NgZone } from '@angular/core';
-import { MapsAPILoader, MouseEvent } from '@agm/core';
-
+import { MarkerOptions, HereMapsManager, LazyMapsApiLoader } from 'ng2-heremaps';
+// import { environment } from './../../../../environments/environment';
+import { Component, OnInit, ElementRef, ViewChild, NgZone, Input } from '@angular/core';
+import { BubbleOptions } from 'ng2-heremaps/src/interface/bubble-options';
+// import { MapsAPILoader, MouseEvent } from '@agm/core';
 declare var H: any;
 @Component({
   selector: 'app-map-module',
@@ -20,14 +21,26 @@ export class MapModuleComponent implements OnInit {
   // public searchElementRef: ElementRef;
 
   private platform: any;
-
+  @Input()
+  private position :any ;
   @ViewChild("map")
   public mapElement: ElementRef;
+  @Input()
+  private markerOptions: MarkerOptions;
+  @Input()
+  private mapManager : HereMapsManager;
+  @Input()
+  private bubleOptions: BubbleOptions;
+  
   constructor(
     // private mapsAPILoader: MapsAPILoader,
     // private ngZone: NgZone
   ) {
-   
+   this.position = {latitude: 10.8830014, longitude: 106.7817025}
+   this.markerOptions = {title:'Tiêu đề', visible: true, label:"Nhãn",position:this.position}
+    console.log(this.markerOptions);
+   this.bubleOptions ={position: this.position}
+   console.log(this.bubleOptions);
   }
 
 

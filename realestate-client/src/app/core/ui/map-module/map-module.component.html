@@ -1,5 +1,5 @@
 
-<div class="container">
+<div class="map-view">
  
   <!-- <h1>Angular Google Maps with Places Search Example</h1>
  
@@ -16,7 +16,9 @@
   <h5>Địa chỉ: {{address}}</h5>
   <div>Kinh độ: {{latitude}}</div>
   <div>Vĩ độ: {{longitude}}</div> -->
-  <div style="height: 400px; width: 600px;">
-    <heremap [center]="{latitude: 40.730610, longitude: -73.935242}"></heremap>
+  <div style="height: 80vh; width: 80vw;">
+    <heremap [center]="position" [zoom]="14" [mapManager] = "mapManager">
+      <map-marker [position] = "position"></map-marker>
+    </heremap>
   </div>
 </div>
