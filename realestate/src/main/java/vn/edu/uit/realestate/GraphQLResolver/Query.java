@@ -1,10 +1,7 @@
 package vn.edu.uit.realestate.GraphQLResolver;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,14 +20,13 @@ import vn.edu.uit.realestate.Relational.Repository.DetailsRepository;
 import vn.edu.uit.realestate.Relational.Repository.RealEstateKindRepository;
 import vn.edu.uit.realestate.Relational.Repository.RealImageRepository;
 import vn.edu.uit.realestate.Relational.Repository.TradeKindRepository;
-import vn.edu.uit.realestate.Relational.Repository.TradeRepository;
 import vn.edu.uit.realestate.Relational.Repository.UserRepository;
 import vn.edu.uit.realestate.Service.EntityService.TradeService;
 
 @Component
 public class Query implements GraphQLQueryResolver {
-	@Autowired
-	private TradeRepository tradeRepository;
+//	@Autowired
+//	private TradeRepository tradeRepository;
 	@Autowired
 	private TradeService tradeService;
 	@Autowired
