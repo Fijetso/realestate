@@ -1,4 +1,4 @@
-import { MarkerOptions, HereMapsManager, LazyMapsApiLoader } from 'ng2-heremaps';
+import { MarkerOptions, HereMapsManager } from 'ng2-heremaps';
 // import { environment } from './../../../../environments/environment';
 import { Component, OnInit, ElementRef, ViewChild, NgZone, Input } from '@angular/core';
 import { BubbleOptions } from 'ng2-heremaps/src/interface/bubble-options';
