@@ -16,9 +16,10 @@
   <h5>Địa chỉ: {{address}}</h5>
   <div>Kinh độ: {{latitude}}</div>
   <div>Vĩ độ: {{longitude}}</div> -->
-  <div style="height: 80vh; width: 80vw;">
-    <heremap [center]="position" [zoom]="14" [mapManager] = "mapManager">
-      <map-marker [position] = "position"></map-marker>
+  <div style="height: 100vh; width: 80vw;">
+    <heremap [center]="position" [zoom]="14">
+      <map-marker [position] = "position" (click) ="showBubleInfor($event)"></map-marker>
+      <map-bubble [position] = "position" [contentElement]= "bubleInfor.title" *ngIf="isShowBuble"></map-bubble>
     </heremap>
   </div>
 </div>

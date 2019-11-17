@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { MarkerOptions, HereMapsManager } from 'ng2-heremaps';
 // import { environment } from './../../../../environments/environment';
 import { Component, OnInit, ElementRef, ViewChild, NgZone, Input } from '@angular/core';
@@ -26,19 +27,17 @@ export class MapModuleComponent implements OnInit {
   @ViewChild("map")
   public mapElement: ElementRef;
   @Input()
-  private markerOptions: MarkerOptions;
-  @Input()
-  private mapManager : HereMapsManager;
+  private bubleInfor: MarkerOptions;
   @Input()
   private bubleOptions: BubbleOptions;
-  
+  private isShowBuble : boolean;
   constructor(
     // private mapsAPILoader: MapsAPILoader,
     // private ngZone: NgZone
   ) {
    this.position = {latitude: 10.8830014, longitude: 106.7817025}
-   this.markerOptions = {title:'Tiêu đề', visible: true, label:"Nhãn",position:this.position}
-    console.log(this.markerOptions);
+   this.bubleInfor = {title:'Tiêu đề', visible: true, label:"Nhãn",position:this.position}
+    console.log(this.bubleInfor);
    this.bubleOptions ={position: this.position}
    console.log(this.bubleOptions);
   }
@@ -108,4 +107,7 @@ export class MapModuleComponent implements OnInit {
 
   //   });
   // }
+  showBubleInfor($event){
+   this.isShowBuble = !this.isShowBuble;
+  }
 }
