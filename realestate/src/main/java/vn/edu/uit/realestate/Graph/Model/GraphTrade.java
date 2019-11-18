@@ -12,11 +12,11 @@ import vn.edu.uit.realestate.Relational.Model.Enum.TradeStatus;
 @NodeEntity(label = "Trade")
 public class GraphTrade {
 	@Id
-	private Long id;
+	private long id;
 	private String description;
-	private Long cost;
+	private long cost;
 	//// problem
-	private TradeStatus tradeStatus = TradeStatus.WAITING;
+	private String tradeStatus = TradeStatus.WAITING.toString();
 
 	@Relationship(type = "HAVE", direction = Relationship.OUTGOING)
 	private GraphAddress address;
@@ -44,7 +44,7 @@ public class GraphTrade {
 		super();
 	}
 
-	public GraphTrade(Long id, String description, Long cost, TradeStatus tradeStatus, GraphAddress address,
+	public GraphTrade(Long id, String description, Long cost, String tradeStatus, GraphAddress address,
 			GraphDetails details, GraphCoordinate coordinate, List<GraphRealImage> realImages,
 			List<GraphBluePrint> bluePrints, GraphTradeKind tradeKind, GraphRealEstateKind realEstateKind, GraphUser user) {
 		super();
@@ -86,11 +86,11 @@ public class GraphTrade {
 		this.cost = cost;
 	}
 
-	public TradeStatus getTradeStatus() {
+	public String getTradeStatus() {
 		return tradeStatus;
 	}
 
-	public void setTradeStatus(TradeStatus tradeStatus) {
+	public void setTradeStatus(String tradeStatus) {
 		this.tradeStatus = tradeStatus;
 	}
 

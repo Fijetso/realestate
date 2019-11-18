@@ -8,15 +8,15 @@ import org.neo4j.ogm.annotation.NodeEntity;
 @NodeEntity(label = "Address")
 public class GraphAddress {
 	@Id
-	private Long id;
+	private long id;
 	@NotNull(message="You must enter the detail address")
 	private String detail;
 	@NotNull(message="You must enter the ward")
-	private Long ward;
+	private long ward;
 	@NotNull(message="You must enter the district")
-	private Long district;
+	private long district;
 	@NotNull(message="You must enter the city or province")
-	private Long province;
+	private long province;
 
 	public GraphAddress() {
 		super();
