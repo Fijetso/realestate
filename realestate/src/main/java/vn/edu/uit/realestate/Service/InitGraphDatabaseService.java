@@ -123,34 +123,44 @@ public class InitGraphDatabaseService {
 		}
 		return convertedBluePrints;
 	}
-	
+
+	private GraphUser convertUser(User user) {
+		GraphUser graphUser = new GraphUser();
+		if (user != null) {
+			String job = user.getJob() == null ? "" : user.getJob().getName();
+			graphUser = new GraphUser(user.getId(), user.getName(), user.getEmail(), user.getPhone(),
+					user.getBirthdate(), user.getGender(), job);
+		}
+		return graphUser;
+	}
+
 	private GraphDetails convertDetails(Details details) {
 		GraphDetails graphDetails = new GraphDetails();
 		if (details != null) {
 			graphDetails.setId(details.getId());
-			if(graphDetails.getLength() != 0) {
+			if (graphDetails.getLength() != 0) {
 				graphDetails.setLength(details.getLength());
 			}
-			if(graphDetails.getWidth() != 0) {
+			if (graphDetails.getWidth() != 0) {
 				graphDetails.setWidth(details.getWidth());
 			}
-			if(graphDetails.getSquare() != 0) {
+			if (graphDetails.getSquare() != 0) {
 				graphDetails.setSquare(details.getSquare());
 			}
-			if(graphDetails.getDirection() != null) {
+			if (graphDetails.getDirection() != null) {
 				graphDetails.setDirection(details.getDirection());
 			}
-			if(graphDetails.getFloors() != null) {
+			if (graphDetails.getFloors() != null) {
 				graphDetails.setFloors(details.getFloors());
 			}
-			if(graphDetails.getLegalDocuments() != null) {
+			if (graphDetails.getLegalDocuments() != null) {
 				graphDetails.setLegalDocuments(details.getLegalDocuments());
 			}
-			if(graphDetails.getOthers() != null) {
+			if (graphDetails.getOthers() != null) {
 				graphDetails.setOthers(details.getOthers());
 			}
-				graphDetails.setBathrooms(details.getBathrooms());
-				graphDetails.setBedrooms(details.getBedrooms());
+			graphDetails.setBathrooms(details.getBathrooms());
+			graphDetails.setBedrooms(details.getBedrooms());
 		}
 		return graphDetails;
 	}
@@ -182,10 +192,16 @@ public class InitGraphDatabaseService {
 			}
 			graphTrade
 					.setTradeKind(new GraphTradeKind(element.getTradeKind().getId(), element.getTradeKind().getName()));
+
 			graphTrade.setRealEstateKind(new GraphRealEstateKind(element.getRealEstateKind().getId(),
 					element.getRealEstateKind().getName()));
+
 			graphTrade.setRealImages(convertRealImages(element.getRealImages()));
+
 			graphTrade.setBluePrints(convertBluePrints(element.getBluePrints()));
+
+			graphTrade.setUser(convertUser(element.getUser()));
+
 			convertedGraphTradeList.add(graphTrade);
 		}
 		return graphTradeRepository.saveAll(convertedGraphTradeList);
