@@ -6,7 +6,7 @@ import org.neo4j.ogm.annotation.NodeEntity;
 @NodeEntity(label = "BluePrint")
 public class GraphBluePrint {
 	@Id
-	private Long id;
+	private long id;
 	private String imageLink;
 	private String description;
 

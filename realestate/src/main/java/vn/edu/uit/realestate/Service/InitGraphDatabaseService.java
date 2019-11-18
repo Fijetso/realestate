@@ -16,7 +16,9 @@ import vn.edu.uit.realestate.Graph.Model.GraphTrade;
 import vn.edu.uit.realestate.Graph.Model.GraphTradeKind;
 import vn.edu.uit.realestate.Graph.Model.GraphUser;
 import vn.edu.uit.realestate.Graph.Repository.GraphAddressRepository;
+import vn.edu.uit.realestate.Graph.Repository.GraphDetailsRepository;
 import vn.edu.uit.realestate.Graph.Repository.GraphRealEstateKindRepository;
+import vn.edu.uit.realestate.Graph.Repository.GraphRealImageRepository;
 import vn.edu.uit.realestate.Graph.Repository.GraphTradeKindRepository;
 import vn.edu.uit.realestate.Graph.Repository.GraphTradeRepository;
 import vn.edu.uit.realestate.Graph.Repository.GraphUserRepository;
@@ -31,6 +33,7 @@ import vn.edu.uit.realestate.Relational.Model.TradeKind;
 import vn.edu.uit.realestate.Relational.Model.User;
 import vn.edu.uit.realestate.Relational.Repository.AddressRepository;
 import vn.edu.uit.realestate.Relational.Repository.RealEstateKindRepository;
+import vn.edu.uit.realestate.Relational.Repository.RealImageRepository;
 import vn.edu.uit.realestate.Relational.Repository.TradeKindRepository;
 import vn.edu.uit.realestate.Relational.Repository.TradeRepository;
 import vn.edu.uit.realestate.Relational.Repository.UserRepository;
@@ -58,6 +61,12 @@ public class InitGraphDatabaseService {
 	UserRepository userRepository;
 	@Autowired
 	GraphUserRepository graphUserRepository;
+	@Autowired
+	RealImageRepository realImageRepository;
+	@Autowired
+	GraphRealImageRepository graphRealImageRepository;
+	@Autowired
+	GraphDetailsRepository graphDetailsRepository;
 
 	public void deleteEntireNeo4j() {
 		graphTradeRepository.deleteEntireNeo4j();
@@ -102,7 +111,7 @@ public class InitGraphDatabaseService {
 					element.getDescription());
 			convertedRealImages.add(graphRealImage);
 		}
-		return convertedRealImages;
+		return (List<GraphRealImage>) graphRealImageRepository.saveAll(convertedRealImages);
 	}
 
 	private List<GraphBluePrint> convertBluePrints(List<BluePrint> bluePrints) {
@@ -114,45 +123,69 @@ public class InitGraphDatabaseService {
 		}
 		return convertedBluePrints;
 	}
+	
+	private GraphDetails convertDetails(Details details) {
+		GraphDetails graphDetails = new GraphDetails();
+		if (details != null) {
+			graphDetails.setId(details.getId());
+			if(graphDetails.getLength() != 0) {
+				graphDetails.setLength(details.getLength());
+			}
+			if(graphDetails.getWidth() != 0) {
+				graphDetails.setWidth(details.getWidth());
+			}
+			if(graphDetails.getSquare() != 0) {
+				graphDetails.setSquare(details.getSquare());
+			}
+			if(graphDetails.getDirection() != null) {
+				graphDetails.setDirection(details.getDirection());
+			}
+			if(graphDetails.getFloors() != null) {
+				graphDetails.setFloors(details.getFloors());
+			}
+			if(graphDetails.getLegalDocuments() != null) {
+				graphDetails.setLegalDocuments(details.getLegalDocuments());
+			}
+			if(graphDetails.getOthers() != null) {
+				graphDetails.setOthers(details.getOthers());
+			}
+				graphDetails.setBathrooms(details.getBathrooms());
+				graphDetails.setBedrooms(details.getBedrooms());
+		}
+		return graphDetails;
+	}
 
 	public Iterable<GraphTrade> saveTradeToNeo4j() {
 		List<Trade> tradeListInMySQL = tradeRepository.findAll();
 		List<GraphTrade> convertedGraphTradeList = new ArrayList<>();
 		for (Trade element : tradeListInMySQL) {
 			GraphTrade graphTrade = new GraphTrade();
-			
+
 			graphTrade.setId(element.getId());
 			graphTrade.setDescription(element.getDescription());
 			graphTrade.setCost(element.getCost());
-			graphTrade.setTradeStatus(element.getTradeStatus()==null? null:element.getTradeStatus().toString());
-			
-//			Address address = element.getAddress();
-//			if (address != null) {
-//				GraphAddress graphAddress = new GraphAddress(address.getId(), address.getDetail(), address.getWard(),
-//						address.getDistrict(), address.getCityOrProvince());
-//				graphTrade.setAddress(graphAddress);
-//			}
-//			
-//			Details details = element.getDetails();
-//			if (details != null) {
-//				GraphDetails graphDetails = new GraphDetails(details.getId(), details.getLength(), details.getWidth(),
-//						details.getSquare(), details.getDirection(), details.getFloors(), details.getLegalDocuments(),
-//						details.getBathrooms(), details.getBedrooms(), details.getUtilities(), details.getOthers());
-//				graphTrade.setDetails(graphDetails);
-//			}
-//			
-//			Coordinate coordinate = element.getCoordinate();
-//			if (coordinate != null) {
-//
-//				GraphCoordinate graphCoordinate = new GraphCoordinate(coordinate.getId(), coordinate.getLongitude(),
-//						coordinate.getLatitude());
-//				graphTrade.setCoordinate(graphCoordinate);
-//			}
-//			
-//			List<GraphRealImage> realImages = convertRealImages(element.getRealImages());
-//			graphTrade.setRealImages(realImages);
-//			List<GraphBluePrint> bluePrints = convertBluePrints(element.getBluePrints());
-//			graphTrade.setBluePrints(bluePrints);
+			graphTrade.setTradeStatus(element.getTradeStatus() == null ? null : element.getTradeStatus().toString());
+
+			Address address = element.getAddress();
+			if (address != null) {
+				GraphAddress graphAddress = new GraphAddress(address.getId(), address.getDetail(), address.getWard(),
+						address.getDistrict(), address.getCityOrProvince());
+				graphTrade.setAddress(graphAddress);
+			}
+			graphTrade.setDetails(convertDetails(element.getDetails()));
+			Coordinate coordinate = element.getCoordinate();
+			if (coordinate != null) {
+
+				GraphCoordinate graphCoordinate = new GraphCoordinate(coordinate.getId(), coordinate.getLongitude(),
+						coordinate.getLatitude());
+				graphTrade.setCoordinate(graphCoordinate);
+			}
+			graphTrade
+					.setTradeKind(new GraphTradeKind(element.getTradeKind().getId(), element.getTradeKind().getName()));
+			graphTrade.setRealEstateKind(new GraphRealEstateKind(element.getRealEstateKind().getId(),
+					element.getRealEstateKind().getName()));
+			graphTrade.setRealImages(convertRealImages(element.getRealImages()));
+			graphTrade.setBluePrints(convertBluePrints(element.getBluePrints()));
 			convertedGraphTradeList.add(graphTrade);
 		}
 		return graphTradeRepository.saveAll(convertedGraphTradeList);
