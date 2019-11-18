@@ -21,16 +21,16 @@ export class MapModuleComponent implements OnInit {
   // @ViewChild('search')
   // public searchElementRef: ElementRef;
 
-  private platform: any;
+  public platform: any;
   @Input()
-  private position :any ;
+  public position :any ;
   @ViewChild("map")
   public mapElement: ElementRef;
   @Input()
-  private bubleInfor: MarkerOptions;
+  public bubleInfor: MarkerOptions;
   @Input()
-  private bubleOptions: BubbleOptions;
-  private isShowBuble : boolean;
+  public bubleOptions: BubbleOptions;
+  public isShowBuble : boolean;
   constructor(
     // private mapsAPILoader: MapsAPILoader,
     // private ngZone: NgZone
