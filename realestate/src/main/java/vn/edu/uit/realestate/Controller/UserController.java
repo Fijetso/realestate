@@ -60,7 +60,7 @@ public class UserController {
 
 	@GetMapping("/graph/users")
 	public ResponseEntity<Iterable<GraphUser>> getAllUsersByGraph() {
-		Iterable<GraphUser> result = graphUserRepository.getAllUser();
+		Iterable<GraphUser> result = graphUserRepository.findAll();
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 

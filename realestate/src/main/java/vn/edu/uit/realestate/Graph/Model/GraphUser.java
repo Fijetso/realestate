@@ -6,17 +6,13 @@ import javax.validation.constraints.Size;
 
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
-import org.neo4j.ogm.annotation.Relationship;
-
 import java.util.Date;
-import java.util.List;
-
 import javax.validation.constraints.Email;
 
 @NodeEntity(label = "User")
 public class GraphUser {
 	@Id
-	private Long id;
+	private long id;
 	@Size(min=2, message="Name should have at least 2 characters")
 	private String name;
 	@Email(message="Please provide a valid email address")
@@ -27,16 +23,15 @@ public class GraphUser {
 	private Date birthdate;
 	private boolean gender;
 	private String job;
-	@Relationship(type = "POST", direction = Relationship.OUTGOING)
-	private List<GraphTrade> trade;
 	public GraphUser() {
 		super();
 	}
-	public GraphUser(@Size(min = 2, message = "Name should have at least 2 characters") String name,
+	public GraphUser(Long id, @Size(min = 2, message = "Name should have at least 2 characters") String name,
 			@Email(message = "Please provide a valid email address") String email,
 			@Pattern(regexp = "([0-9]{10}$)", message = "Please provide a valid phone number") String phone,
 			@Past(message = "BirthDate must be in the past") Date birthdate, boolean gender, String job) {
 		super();
+		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
@@ -85,11 +80,5 @@ public class GraphUser {
 	}
 	public void setJob(String job) {
 		this.job = job;
-	}
-	public List<GraphTrade> getTrade() {
-		return trade;
-	}
-	public void setTrade(List<GraphTrade> trade) {
-		this.trade = trade;
 	}
 }

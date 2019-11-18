@@ -33,13 +33,20 @@ public class GraphTrade {
 	@Relationship(type = "ILLUSTRATE", direction = Relationship.INCOMING)
 	private List<GraphBluePrint> bluePrints = new ArrayList<GraphBluePrint>();
 
+	@Relationship(type="CONTAIN", direction = Relationship.INCOMING)
+	private GraphTradeKind tradeKind;
+	@Relationship(type = "CONTAIN", direction = Relationship.INCOMING)
+	private GraphRealEstateKind realEstateKind;
+	@Relationship(type = "POST", direction = Relationship.INCOMING)
+	private GraphUser user;
+	
 	public GraphTrade() {
 		super();
 	}
 
 	public GraphTrade(Long id, String description, Long cost, TradeStatus tradeStatus, GraphAddress address,
 			GraphDetails details, GraphCoordinate coordinate, List<GraphRealImage> realImages,
-			List<GraphBluePrint> bluePrints) {
+			List<GraphBluePrint> bluePrints, GraphTradeKind tradeKind, GraphRealEstateKind realEstateKind, GraphUser user) {
 		super();
 		this.id = id;
 		this.description = description;
@@ -50,6 +57,9 @@ public class GraphTrade {
 		this.coordinate = coordinate;
 		this.realImages = realImages;
 		this.bluePrints = bluePrints;
+		this.tradeKind = tradeKind;
+		this.realEstateKind = realEstateKind;
+		this.user = user;
 	}
 
 	public Long getId() {
@@ -122,5 +132,29 @@ public class GraphTrade {
 
 	public void setBluePrints(List<GraphBluePrint> bluePrints) {
 		this.bluePrints = bluePrints;
+	}
+
+	public GraphTradeKind getTradeKind() {
+		return tradeKind;
+	}
+
+	public void setTradeKind(GraphTradeKind tradeKind) {
+		this.tradeKind = tradeKind;
+	}
+
+	public GraphRealEstateKind getRealEstateKind() {
+		return realEstateKind;
+	}
+
+	public void setRealEstateKind(GraphRealEstateKind realEstateKind) {
+		this.realEstateKind = realEstateKind;
+	}
+
+	public GraphUser getUser() {
+		return user;
+	}
+
+	public void setUser(GraphUser user) {
+		this.user = user;
 	}
 }

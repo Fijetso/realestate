@@ -41,6 +41,9 @@ public class User {
 	@Past(message="BirthDate must be in the past")
 	private Date birthdate;
 	private boolean gender;
+	@ManyToOne
+	@JoinColumn(name="jobId", referencedColumnName="id")
+	private Job job;
 	private boolean active;
 	@ManyToOne
 	@JoinColumn(name="userKindId", referencedColumnName="id")
@@ -133,7 +136,7 @@ public class User {
 		this.birthdate = birthdate;
 	}
 
-	public boolean isGender() {
+	public boolean getGender() {
 		return gender;
 	}
 
@@ -171,5 +174,11 @@ public class User {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+	public Job getJob() {
+		return job;
+	}
+	public void setJob(Job job) {
+		this.job = job;
 	}
 }
