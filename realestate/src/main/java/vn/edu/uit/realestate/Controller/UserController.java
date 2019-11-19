@@ -48,45 +48,23 @@ public class UserController {
 		return "Hello manager";
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping("/secured/manager/users")
-	public ResponseEntity<MappingJacksonValue> getAll() {
-		MappingJacksonValue users = userService.findAll();
-		return new ResponseEntity<>(users, HttpStatus.OK);
-	}
+
 
 	@Autowired
 	private GraphUserRepository graphUserRepository;
 
-	@GetMapping("/graph/users")
-	public ResponseEntity<Iterable<GraphUser>> getAllUsersByGraph() {
-		Iterable<GraphUser> result = graphUserRepository.findAll();
-		return new ResponseEntity<>(result, HttpStatus.OK);
-	}
 
-	@Autowired
-	private GraphPersonRepository graphPersonRepository;
+//	@GetMapping("/graph/saveusers")
+//	public ResponseEntity<GraphUser> saveByGraph() {
+//		GraphUser saveUser = new GraphUser();
+//		saveUser.setName("Nguyễn Thị Ngọc Duyên");
+//		saveUser.setGender(false);
+//		/// Xài chung id user relational và graph
+//		GraphUser result = graphUserRepository.save(saveUser);
+//		return new ResponseEntity<>(result, HttpStatus.OK);
+//	}
 
-	@GetMapping("/graph")
-	public List<GraphPerson> graphGetPerson() {
-		return graphPersonRepository.getAllPeople();
-	}
 
-	@GetMapping("/graph/saveusers")
-	public ResponseEntity<GraphUser> saveByGraph() {
-		GraphUser saveUser = new GraphUser();
-		saveUser.setName("Nguyễn Thị Ngọc Duyên");
-		saveUser.setGender(false);
-		/// Xài chung id user relational và graph
-		GraphUser result = graphUserRepository.save(saveUser);
-		return new ResponseEntity<>(result, HttpStatus.OK);
-	}
-
-	@GetMapping("/users/{id}")
-	public ResponseEntity<MappingJacksonValue> getById(@PathVariable long id) {
-		MappingJacksonValue foundUser = userService.findById(id);
-		return new ResponseEntity<>(foundUser, HttpStatus.OK);
-	}
 
 	@PostMapping("/users")
 	public ResponseEntity<?> post(@Valid @RequestBody User user) {

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 
+import vn.edu.uit.realestate.GraphQLResolver.Service.GraphQLTradeService;
 import vn.edu.uit.realestate.Relational.Model.Trade;
 import vn.edu.uit.realestate.Service.EntityService.TradeService;
 
@@ -12,7 +13,7 @@ import vn.edu.uit.realestate.Service.EntityService.TradeService;
 public class Mutation implements GraphQLMutationResolver {
 
 	@Autowired
-	TradeService tradeService;
+	GraphQLTradeService tradeService;
 
 	public Trade saveTrade(final String description, final Long cost, final Long userId, final Long realEstateKindId,
 			final Long tradeKindId, final String detailAddress, final Long wardId, final Long length, final Long width,
