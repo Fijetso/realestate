@@ -1,21 +1,28 @@
 package vn.edu.uit.realestate.GraphQLResolver.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import vn.edu.uit.realestate.ExceptionHandler.CustomGraphQLException;
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.Graph.Model.GraphAddress;
+import vn.edu.uit.realestate.Graph.Model.GraphBluePrint;
 import vn.edu.uit.realestate.Graph.Model.GraphRealEstateKind;
+import vn.edu.uit.realestate.Graph.Model.GraphRealImage;
 import vn.edu.uit.realestate.Graph.Model.GraphTrade;
 import vn.edu.uit.realestate.Graph.Model.GraphTradeKind;
 import vn.edu.uit.realestate.Graph.Repository.GraphTradeRepository;
 import vn.edu.uit.realestate.Relational.Model.Address;
+import vn.edu.uit.realestate.Relational.Model.BluePrint;
 import vn.edu.uit.realestate.Relational.Model.Coordinate;
 import vn.edu.uit.realestate.Relational.Model.Details;
 import vn.edu.uit.realestate.Relational.Model.RealEstateKind;
+import vn.edu.uit.realestate.Relational.Model.RealImage;
 import vn.edu.uit.realestate.Relational.Model.Trade;
 import vn.edu.uit.realestate.Relational.Model.TradeKind;
 import vn.edu.uit.realestate.Relational.Model.User;
@@ -29,6 +36,7 @@ import vn.edu.uit.realestate.Relational.Repository.TradeKindRepository;
 import vn.edu.uit.realestate.Relational.Repository.TradeRepository;
 import vn.edu.uit.realestate.Relational.Repository.UserRepository;
 import vn.edu.uit.realestate.Relational.Repository.AddressTree.WardRepository;
+import vn.edu.uit.realestate.Service.ModelMapperService;
 
 @Service
 public class GraphQLTradeService {
@@ -50,27 +58,26 @@ public class GraphQLTradeService {
 	private WardRepository wardRepository;
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	ModelMapperService modelMapper;
 
+//	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')")
 	public Trade udpateTradeGraphQL(Long tradeId, String description, Long cost, Long realEstateKindId,
 			Long tradeKindId, String detailAddress, Long wardId, Long length, Long width, Long square, String direction,
 			String floors, String legalDocuments, int bathrooms, int bedrooms, String utilities, String others,
-			Long longitude, Long latitude, String tradeStatus) {
+			Long longitude, Long latitude, String tradeStatus){
 		Optional<Trade> trade = tradeRepository.findById(tradeId);
 		trade.orElseThrow(() -> new CustomGraphQLException(400,
 				"Not Found Exception: Cannot find any Trade in MySQL with Id=" + tradeId));
 		Trade foundTrade = trade.get();
-		GraphTrade graphTrade = new GraphTrade();
-		graphTrade.setId(foundTrade.getId());
 
 		if (description != null) {
 			foundTrade.setDescription(description);
 		}
-		graphTrade.setDescription(foundTrade.getDescription());
 
 		if (cost != null) {
 			foundTrade.setCost(cost);
 		}
-		graphTrade.setCost(foundTrade.getCost());
 
 		if (realEstateKindId != null) {
 			Optional<RealEstateKind> realEstateKind = realEstateKindRepository.findById(realEstateKindId);
@@ -78,8 +85,6 @@ public class GraphQLTradeService {
 					"Not Found Exception: Cannot find any Real Estate Kind Id=" + realEstateKindId));
 			foundTrade.setRealEstateKind(realEstateKind.get());
 		}
-		graphTrade.setRealEstateKind(new GraphRealEstateKind(foundTrade.getRealEstateKind().getId(),
-				foundTrade.getRealEstateKind().getName()));
 
 		if (tradeKindId != null) {
 			Optional<TradeKind> tradeKind = tradeKindRepository.findById(tradeKindId);
@@ -87,8 +92,6 @@ public class GraphQLTradeService {
 					"Not Found Exception: Cannot find any Trade Kind Id=" + tradeKindId));
 			foundTrade.setTradeKind(tradeKind.get());
 		}
-		graphTrade.setTradeKind(
-				new GraphTradeKind(foundTrade.getTradeKind().getId(), foundTrade.getTradeKind().getName()));
 
 		if (detailAddress != null || wardId != null) {
 			Optional<Address> address = addressRepository.findById(foundTrade.getAddress().getId());
@@ -108,10 +111,7 @@ public class GraphQLTradeService {
 			foundTrade.setAddress(updatedAddress);
 			addressRepository.save(updatedAddress);
 		}
-		graphTrade.setAddress(new GraphAddress(foundTrade.getAddress().getId(), foundTrade.getAddress().getDetail(),
-				foundTrade.getAddress().getWard(), foundTrade.getAddress().getDistrict(),
-				foundTrade.getAddress().getCityOrProvince()));
-		
+
 		if (length != null || width != null || square != null || direction != null || floors != null
 				|| legalDocuments != null || bathrooms >= 0 || bedrooms >= 0 || utilities != null || others != null) {
 			Optional<Details> details = detailsRepository.findById(foundTrade.getDetails().getId());
@@ -132,6 +132,7 @@ public class GraphQLTradeService {
 			foundTrade.setDetails(foundDetails);
 			detailsRepository.save(foundDetails);
 		}
+
 		if (longitude != null && latitude != null) {
 			Optional<Coordinate> coordinate = coordinateRepository.findById(foundTrade.getCoordinate().getId());
 			coordinate.orElseThrow(() -> new CustomGraphQLException(400,
@@ -140,6 +141,7 @@ public class GraphQLTradeService {
 			foundCoordinate.setLongitude(longitude != null ? longitude : foundCoordinate.getLongitude());
 			foundCoordinate.setLatitude(latitude != null ? latitude : foundCoordinate.getLatitude());
 
+			foundTrade.setCoordinate(foundCoordinate);
 			coordinateRepository.save(foundCoordinate);
 		}
 
@@ -152,6 +154,8 @@ public class GraphQLTradeService {
 			throw new CustomGraphQLException(400,
 					"Not Found Exception: Cannot find any Trade Status like " + tradeStatus);
 		}
+
+		graphTradeRepository.save(modelMapper.convertTrade(foundTrade));
 		return tradeRepository.save(foundTrade);
 	}
 
@@ -185,6 +189,8 @@ public class GraphQLTradeService {
 
 		Trade trade = new Trade(description, cost, user.get(), realEstateKind.get(), tradeKind.get(), address, details,
 				coordinate);
+		GraphTrade graphTrade = modelMapper.convertTrade(trade);
+		graphTradeRepository.save(graphTrade);
 		return tradeRepository.save(trade);
 	}
 }
