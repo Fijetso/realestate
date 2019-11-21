@@ -25,7 +25,8 @@ public class AdminTradeController {
 			@RequestParam(value = "status", required = true) String status) {
 		MappingJacksonValue updatedTrade = tradeService.updateTradeStatus(id, status);
 		return new ResponseEntity<>(updatedTrade, HttpStatus.OK);
-	}	
+	}
+
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/trades")
 	public ResponseEntity<String> demo() {

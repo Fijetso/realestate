@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import vn.edu.uit.realestate.ExceptionHandler.ExistContentException;
 import vn.edu.uit.realestate.ExceptionHandler.IllegalArgumentException;
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
+import vn.edu.uit.realestate.Graph.Repository.GraphTradeRepository;
 import vn.edu.uit.realestate.Relational.Model.BluePrint;
 import vn.edu.uit.realestate.Relational.Model.Booking;
 import vn.edu.uit.realestate.Relational.Model.RealImage;
@@ -43,6 +44,8 @@ public class TradeService implements IEntityService {
 	private DetailsRepository detailsRepository;
 	@Autowired
 	private TradeRepository tradeRepository;
+	@Autowired
+	private GraphTradeRepository graphTradeRepository;
 
 	@Override
 	public MappingJacksonValue findAll() {
@@ -110,23 +113,27 @@ public class TradeService implements IEntityService {
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public MappingJacksonValue updateTradeStatus(Long id, String newStatus) {
-		Optional<Trade> foundTrade = tradeRepository.findById(id);
-		if (foundTrade.isPresent() == false) {
+		Optional<Trade> trade = tradeRepository.findById(id);
+		if (trade.isPresent() == false) {
 			throw new NotFoundException("Cannot find any Trade with id=" + id);
 		}
+		Trade foundTrade = trade.get();
 		try {
 			TradeStatus newTradeStatus = TradeStatus.valueOf(newStatus.toUpperCase());
-			foundTrade.get().setTradeStatus(newTradeStatus);
+			foundTrade.setTradeStatus(newTradeStatus);
 		} catch (Exception e) {
 			throw new IllegalArgumentException("Cannot find any Trade Status like " + newStatus);
 		}
+		
+		graphTradeRepository.updateTradeStatus(foundTrade.getId(), foundTrade.getTradeStatus().toString());
+		
 		SimpleBeanPropertyFilter userFilter = SimpleBeanPropertyFilter.serializeAllExcept("trades", "password");
 		SimpleBeanPropertyFilter filterExceptTrade = SimpleBeanPropertyFilter.serializeAllExcept("trade");
 		SimpleBeanPropertyFilter filterTrade = SimpleBeanPropertyFilter.serializeAllExcept("favoriteTrades");
 		FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", userFilter)
 				.addFilter("AddressFilter", filterExceptTrade).addFilter("DetailsFilter", filterExceptTrade)
 				.addFilter("CoordinateFilter", filterExceptTrade).addFilter("TradeFilter", filterTrade);
-		MappingJacksonValue mapping = new MappingJacksonValue(tradeRepository.save(foundTrade.get()));
+		MappingJacksonValue mapping = new MappingJacksonValue(tradeRepository.save(foundTrade));
 		mapping.setFilters(filters);
 		return mapping;
 	}
