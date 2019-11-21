@@ -1,28 +1,18 @@
 package vn.edu.uit.realestate.GraphQLResolver.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import vn.edu.uit.realestate.ExceptionHandler.CustomGraphQLException;
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
-import vn.edu.uit.realestate.Graph.Model.GraphAddress;
-import vn.edu.uit.realestate.Graph.Model.GraphBluePrint;
-import vn.edu.uit.realestate.Graph.Model.GraphRealEstateKind;
-import vn.edu.uit.realestate.Graph.Model.GraphRealImage;
 import vn.edu.uit.realestate.Graph.Model.GraphTrade;
-import vn.edu.uit.realestate.Graph.Model.GraphTradeKind;
 import vn.edu.uit.realestate.Graph.Repository.GraphTradeRepository;
 import vn.edu.uit.realestate.Relational.Model.Address;
-import vn.edu.uit.realestate.Relational.Model.BluePrint;
 import vn.edu.uit.realestate.Relational.Model.Coordinate;
 import vn.edu.uit.realestate.Relational.Model.Details;
 import vn.edu.uit.realestate.Relational.Model.RealEstateKind;
-import vn.edu.uit.realestate.Relational.Model.RealImage;
 import vn.edu.uit.realestate.Relational.Model.Trade;
 import vn.edu.uit.realestate.Relational.Model.TradeKind;
 import vn.edu.uit.realestate.Relational.Model.User;
@@ -65,7 +55,7 @@ public class GraphQLTradeService {
 	public Trade udpateTradeGraphQL(Long tradeId, String description, Long cost, Long realEstateKindId,
 			Long tradeKindId, String detailAddress, Long wardId, Long length, Long width, Long square, String direction,
 			String floors, String legalDocuments, int bathrooms, int bedrooms, String utilities, String others,
-			Long longitude, Long latitude, String tradeStatus){
+			Long longitude, Long latitude, String tradeStatus) {
 		Optional<Trade> trade = tradeRepository.findById(tradeId);
 		trade.orElseThrow(() -> new CustomGraphQLException(400,
 				"Not Found Exception: Cannot find any Trade in MySQL with Id=" + tradeId));

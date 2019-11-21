@@ -6,49 +6,31 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
-import vn.edu.uit.realestate.ExceptionHandler.CustomGraphQLException;
 import vn.edu.uit.realestate.ExceptionHandler.ExistContentException;
 import vn.edu.uit.realestate.ExceptionHandler.IllegalArgumentException;
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
-import vn.edu.uit.realestate.Relational.Model.Address;
 import vn.edu.uit.realestate.Relational.Model.BluePrint;
 import vn.edu.uit.realestate.Relational.Model.Booking;
-import vn.edu.uit.realestate.Relational.Model.Coordinate;
-import vn.edu.uit.realestate.Relational.Model.Details;
-import vn.edu.uit.realestate.Relational.Model.RealEstateKind;
 import vn.edu.uit.realestate.Relational.Model.RealImage;
 import vn.edu.uit.realestate.Relational.Model.Trade;
-import vn.edu.uit.realestate.Relational.Model.TradeKind;
-import vn.edu.uit.realestate.Relational.Model.User;
-import vn.edu.uit.realestate.Relational.Model.AddressTree.Ward;
 import vn.edu.uit.realestate.Relational.Model.Enum.TradeStatus;
 import vn.edu.uit.realestate.Relational.Repository.AddressRepository;
 import vn.edu.uit.realestate.Relational.Repository.BluePrintRepository;
 import vn.edu.uit.realestate.Relational.Repository.BookingRepository;
-import vn.edu.uit.realestate.Relational.Repository.CoordinateRepository;
 import vn.edu.uit.realestate.Relational.Repository.DetailsRepository;
-import vn.edu.uit.realestate.Relational.Repository.RealEstateKindRepository;
 import vn.edu.uit.realestate.Relational.Repository.RealImageRepository;
-import vn.edu.uit.realestate.Relational.Repository.TradeKindRepository;
 import vn.edu.uit.realestate.Relational.Repository.TradeRepository;
-import vn.edu.uit.realestate.Relational.Repository.UserRepository;
-import vn.edu.uit.realestate.Relational.Repository.AddressTree.WardRepository;
 import vn.edu.uit.realestate.Service.IEntityService;
 
 @Service
 public class TradeService implements IEntityService {
-	@Autowired
-	private RealEstateKindRepository realEstateKindRepository;
-	@Autowired
-	private CoordinateRepository coordinateRepository;
-	@Autowired
-	private TradeKindRepository tradeKindRepository;
 	@Autowired
 	private RealImageRepository realImageRepository;
 	@Autowired
@@ -61,10 +43,6 @@ public class TradeService implements IEntityService {
 	private DetailsRepository detailsRepository;
 	@Autowired
 	private TradeRepository tradeRepository;
-	@Autowired
-	private WardRepository wardRepository;
-	@Autowired
-	private UserRepository userRepository;
 
 	@Override
 	public MappingJacksonValue findAll() {
@@ -130,6 +108,7 @@ public class TradeService implements IEntityService {
 		tradeRepository.deleteById(id);
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public MappingJacksonValue updateTradeStatus(Long id, String newStatus) {
 		Optional<Trade> foundTrade = tradeRepository.findById(id);
 		if (foundTrade.isPresent() == false) {
@@ -184,38 +163,5 @@ public class TradeService implements IEntityService {
 		}
 		tradeRepository.increaseViewCountById(tradeId);
 		return foundTrade.get().getViewCount() + 1;
-	}
-
-	public Trade saveTradeGraphQL(final String description, final Long cost, final Long userId,
-			final Long realEstateKindId, final Long tradeKindId, final String detailAddress, final Long wardId,
-			final Long length, final Long width, final Long square, final String direction, final String floors,
-			final String legalDocuments, final int bathrooms, final int bedrooms, final String utilities,
-			final String others, final Long longitude, final Long latitude) {
-		Optional<User> user = userRepository.findById(userId);
-		user.orElseThrow(
-				() -> new CustomGraphQLException(400, "Not Found Exception: Cannot find any User Id=" + userId));
-
-		Optional<RealEstateKind> realEstateKind = realEstateKindRepository.findById(realEstateKindId);
-		realEstateKind.orElseThrow(() -> new CustomGraphQLException(400,
-				"Not Found Exception: Cannot find any Real Estate Kind Id=" + realEstateKindId));
-
-		Optional<TradeKind> tradeKind = tradeKindRepository.findById(tradeKindId);
-		tradeKind.orElseThrow(() -> new CustomGraphQLException(400,
-				"Not Found Exception: Cannot find any Trade Kind Id=" + tradeKindId));
-
-		Optional<Ward> ward = wardRepository.findById(wardId);
-		ward.orElseThrow(
-				() -> new CustomGraphQLException(400, "Not Found Exception: Cannot find any Ward Id=" + wardId));
-
-		Address address = new Address(detailAddress, ward.get().getId(), ward.get().getDistrict().getId(),
-				ward.get().getDistrict().getProvince().getId());
-
-		Details details = new Details(length, width, square, direction, floors, legalDocuments, bathrooms, bedrooms,
-				utilities, others);
-		Coordinate coordinate = new Coordinate(longitude, latitude);
-
-		Trade trade = new Trade(description, cost, user.get(), realEstateKind.get(), tradeKind.get(), address, details,
-				coordinate);
-		return tradeRepository.save(trade);
 	}
 }
