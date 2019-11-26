@@ -12,7 +12,10 @@ type Mutation {
 	updateTrade(tradeId: Long!, description: String, cost: Long, realEstateKindId: Long, tradeKindId: Long,	
 			detailAddress: String, wardId: Long, length: Long, width: Long, square: Long, direction: String,
 			floors: String, legalDocuments: String, bathrooms: Int, bedrooms: Int, utilities: String, 
-			others: String, longitude: Long, latitude: Long, tradeStatus: String): Trade
+			others: String, longitude: Long, latitude: Long): Trade
+	
+	updateUser(userId: Long!, name: String, email: String, phone: String, birthdate: String, gender: Boolean,
+			job: String, userKindId: Long): User
 }
 
 type Trade {
@@ -40,7 +43,7 @@ type User {
 	gender: Boolean,
 	active: Boolean,
 	trades: [Trade],
-	roles: [Role]
+	job: String
 }
 	
 type RealEstateKind {
@@ -87,8 +90,3 @@ type Coordinate {
 	latitude: Long
 }
 
-type Role {
-id: ID!,
-name: String,
-users: [User]
-}

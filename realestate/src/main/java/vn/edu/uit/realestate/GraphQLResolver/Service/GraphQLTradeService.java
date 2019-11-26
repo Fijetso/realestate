@@ -3,26 +3,32 @@ package vn.edu.uit.realestate.GraphQLResolver.Service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import vn.edu.uit.realestate.ExceptionHandler.CustomGraphQLException;
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.Graph.Model.GraphTrade;
 import vn.edu.uit.realestate.Graph.Repository.GraphTradeRepository;
+import vn.edu.uit.realestate.Graph.Repository.GraphUserRepository;
 import vn.edu.uit.realestate.Relational.Model.Address;
 import vn.edu.uit.realestate.Relational.Model.Coordinate;
 import vn.edu.uit.realestate.Relational.Model.Details;
+import vn.edu.uit.realestate.Relational.Model.Job;
 import vn.edu.uit.realestate.Relational.Model.RealEstateKind;
 import vn.edu.uit.realestate.Relational.Model.Trade;
 import vn.edu.uit.realestate.Relational.Model.TradeKind;
 import vn.edu.uit.realestate.Relational.Model.User;
+import vn.edu.uit.realestate.Relational.Model.UserKind;
 import vn.edu.uit.realestate.Relational.Model.AddressTree.Ward;
 import vn.edu.uit.realestate.Relational.Repository.AddressRepository;
 import vn.edu.uit.realestate.Relational.Repository.CoordinateRepository;
 import vn.edu.uit.realestate.Relational.Repository.DetailsRepository;
+import vn.edu.uit.realestate.Relational.Repository.JobRepository;
 import vn.edu.uit.realestate.Relational.Repository.RealEstateKindRepository;
 import vn.edu.uit.realestate.Relational.Repository.TradeKindRepository;
 import vn.edu.uit.realestate.Relational.Repository.TradeRepository;
+import vn.edu.uit.realestate.Relational.Repository.UserKindRepository;
 import vn.edu.uit.realestate.Relational.Repository.UserRepository;
 import vn.edu.uit.realestate.Relational.Repository.AddressTree.WardRepository;
 import vn.edu.uit.realestate.Service.ModelMapperService;
@@ -49,9 +55,15 @@ public class GraphQLTradeService {
 	private UserRepository userRepository;
 	@Autowired
 	ModelMapperService modelMapper;
+	@Autowired
+	private JobRepository jobRepository;
+	@Autowired
+	private UserKindRepository userKindRepository;
+	@Autowired
+	private GraphUserRepository graphUserRepository;
 
-//	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')")
-	public Trade udpateTradeGraphQL(Long tradeId, String description, Long cost, Long realEstateKindId,
+	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')")
+	public Trade updateTradeGraphQL(Long tradeId, String description, Long cost, Long realEstateKindId,
 			Long tradeKindId, String detailAddress, Long wardId, Long length, Long width, Long square, String direction,
 			String floors, String legalDocuments, int bathrooms, int bedrooms, String utilities, String others,
 			Long longitude, Long latitude) {
@@ -171,5 +183,37 @@ public class GraphQLTradeService {
 		GraphTrade graphTrade = modelMapper.convertTrade(trade);
 		graphTradeRepository.save(graphTrade);
 		return tradeRepository.save(trade);
+	}
+
+	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')")
+	public User updateUserGraphQL(final Long userId, final String name, final String email, final String phone,
+			final String birthdate, final Boolean gender, final String job, final Long userKindId) {
+		Optional<User> user = userRepository.findById(userId);
+		user.orElseThrow(() -> new CustomGraphQLException(400,
+				"Not Found Exception: Cannot find any User in MySQL with Id=" + userId));
+		User foundUser = user.get();
+		if (name != null)
+			foundUser.setName(name);
+		if (email != null)
+			foundUser.setEmail(email);
+		if (phone != null)
+			foundUser.setPhone(phone);
+		if (birthdate != null) {
+			foundUser.setBirthdate(birthdate);
+		}
+		if (gender != null)
+			foundUser.setGender(gender);
+		if (job != null) {
+			Optional<Job> jobInMySQL = jobRepository.findByName(job);
+			jobInMySQL.ifPresentOrElse((foundJob) -> foundUser.setJob(foundJob), () -> foundUser.setJob(new Job(job)));
+		}
+		if (userKindId != null) {
+			Optional<UserKind> userKindInMySQL = userKindRepository.findById(userKindId);
+			userKindInMySQL.ifPresent((foundUserKind) -> foundUser.setUserKind(foundUserKind));
+			userKindInMySQL.orElseThrow(() -> new CustomGraphQLException(400,
+					"Not Found Exception: Cannot find any UserKind in MySQL with Id=" + userKindId));
+		}
+		graphUserRepository.save(modelMapper.convertUser(foundUser));
+		return userRepository.save(foundUser);
 	}
 }

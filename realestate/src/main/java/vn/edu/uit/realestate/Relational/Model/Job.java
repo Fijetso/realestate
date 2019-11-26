@@ -21,9 +21,8 @@ public class Job {
 		super();
 	}
 	
-	public Job(Long id, String name) {
+	public Job(String name) {
 		super();
-		this.id = id;
 		this.name = name;
 	}
 

@@ -97,8 +97,8 @@ public class InitGraphDatabaseService {
 		List<GraphUser> convertedUserList = new ArrayList<>();
 		for (User element : userListInMySQL) {
 			String job = element.getJob() == null ? "" : element.getJob().getName();
-			GraphUser graphUser = new GraphUser(element.getId(), element.getName(), element.getEmail(),
-					element.getPhone(), element.getBirthdate(), element.getGender(), job);
+			GraphUser graphUser = new GraphUser(element.getId(), element.getName(), element.getEmail(), element.getPhone(),
+					element.getBirthdate(), element.getGender(), job);
 			convertedUserList.add(graphUser);
 		}
 		return graphUserRepository.saveAll(convertedUserList);

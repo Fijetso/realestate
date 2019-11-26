@@ -8,12 +8,14 @@ import vn.edu.uit.realestate.Graph.Model.GraphDetails;
 import vn.edu.uit.realestate.Graph.Model.GraphRealEstateKind;
 import vn.edu.uit.realestate.Graph.Model.GraphTrade;
 import vn.edu.uit.realestate.Graph.Model.GraphTradeKind;
+import vn.edu.uit.realestate.Graph.Model.GraphUser;
 import vn.edu.uit.realestate.Relational.Model.Address;
 import vn.edu.uit.realestate.Relational.Model.Coordinate;
 import vn.edu.uit.realestate.Relational.Model.Details;
 import vn.edu.uit.realestate.Relational.Model.RealEstateKind;
 import vn.edu.uit.realestate.Relational.Model.Trade;
 import vn.edu.uit.realestate.Relational.Model.TradeKind;
+import vn.edu.uit.realestate.Relational.Model.User;
 
 /**
  * Model Mapper Service is to convert from Relational Model to Graph Model.
@@ -21,6 +23,24 @@ import vn.edu.uit.realestate.Relational.Model.TradeKind;
  */
 @Service
 public class ModelMapperService {
+
+	public GraphUser convertUser(User user) {
+		if (user == null) {
+			return null;
+		}
+		GraphUser graphUser = new GraphUser();
+
+		graphUser.setId(user.getId());
+		graphUser.setName(user.getName());
+		graphUser.setBirthdate(user.getBirthdate());
+		graphUser.setGender(user.getGender());
+		graphUser.setEmail(user.getEmail());
+		graphUser.setPhone(user.getPhone());
+		if (user.getJob() != null) {
+			graphUser.setJob(user.getJob().getName());
+		}
+		return graphUser;
+	}
 
 	public GraphTrade convertTrade(Trade trade) {
 		if (trade == null) {
