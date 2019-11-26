@@ -17,7 +17,6 @@ import vn.edu.uit.realestate.Relational.Model.Trade;
 import vn.edu.uit.realestate.Relational.Model.TradeKind;
 import vn.edu.uit.realestate.Relational.Model.User;
 import vn.edu.uit.realestate.Relational.Model.AddressTree.Ward;
-import vn.edu.uit.realestate.Relational.Model.Enum.TradeStatus;
 import vn.edu.uit.realestate.Relational.Repository.AddressRepository;
 import vn.edu.uit.realestate.Relational.Repository.CoordinateRepository;
 import vn.edu.uit.realestate.Relational.Repository.DetailsRepository;
@@ -55,7 +54,7 @@ public class GraphQLTradeService {
 	public Trade udpateTradeGraphQL(Long tradeId, String description, Long cost, Long realEstateKindId,
 			Long tradeKindId, String detailAddress, Long wardId, Long length, Long width, Long square, String direction,
 			String floors, String legalDocuments, int bathrooms, int bedrooms, String utilities, String others,
-			Long longitude, Long latitude, String tradeStatus) {
+			Long longitude, Long latitude) {
 		Optional<Trade> trade = tradeRepository.findById(tradeId);
 		trade.orElseThrow(() -> new CustomGraphQLException(400,
 				"Not Found Exception: Cannot find any Trade in MySQL with Id=" + tradeId));
@@ -133,16 +132,6 @@ public class GraphQLTradeService {
 
 			foundTrade.setCoordinate(foundCoordinate);
 			coordinateRepository.save(foundCoordinate);
-		}
-
-		try {
-			if (tradeStatus != null) {
-				TradeStatus tradeStatusEnum = TradeStatus.valueOf(tradeStatus.toUpperCase());
-				foundTrade.setTradeStatus(tradeStatusEnum);
-			}
-		} catch (Exception e) {
-			throw new CustomGraphQLException(400,
-					"Not Found Exception: Cannot find any Trade Status like " + tradeStatus);
 		}
 
 		graphTradeRepository.save(modelMapper.convertTrade(foundTrade));
