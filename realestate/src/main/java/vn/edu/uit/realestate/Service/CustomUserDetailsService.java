@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,7 +31,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 		///khong hieu khuc nay
 		User user = optionalUser.get();
 		if(user.isActive()==false) {
-				throw new RuntimeException("The Account hasn't activated yet");
+				throw new BadCredentialsException("Your Account hasn't activated yet. Please check your email first");
 		}
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		user.getRoles().forEach(authority ->
