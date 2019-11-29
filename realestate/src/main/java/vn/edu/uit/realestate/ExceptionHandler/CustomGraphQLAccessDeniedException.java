@@ -8,13 +8,13 @@ import graphql.ErrorType;
 import graphql.GraphQLError;
 import graphql.language.SourceLocation;
 
-public class CustomGraphQLException extends RuntimeException implements GraphQLError {
+public class CustomGraphQLAccessDeniedException extends RuntimeException implements GraphQLError {
 	private static final long serialVersionUID = 1L;
 	private final int errorCode;
 	
-	public CustomGraphQLException(int errorCode, String message) {
-		super(message);
-        this.errorCode = errorCode;
+	public CustomGraphQLAccessDeniedException() {
+		super("AccessDeniedException: You're not allowed to access this method");
+        this.errorCode = 401;
     }
 
 	@Override

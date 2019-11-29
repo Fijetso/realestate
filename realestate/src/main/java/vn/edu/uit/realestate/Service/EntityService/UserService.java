@@ -1,7 +1,9 @@
 package vn.edu.uit.realestate.Service.EntityService;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
@@ -18,6 +20,7 @@ import vn.edu.uit.realestate.Relational.Model.BluePrint;
 import vn.edu.uit.realestate.Relational.Model.RealEstateKind;
 import vn.edu.uit.realestate.Relational.Model.RealImage;
 import vn.edu.uit.realestate.Relational.Model.Request;
+import vn.edu.uit.realestate.Relational.Model.Role;
 import vn.edu.uit.realestate.Relational.Model.Trade;
 import vn.edu.uit.realestate.Relational.Model.TradeKind;
 import vn.edu.uit.realestate.Relational.Model.User;
@@ -27,6 +30,7 @@ import vn.edu.uit.realestate.Relational.Repository.DetailsRepository;
 import vn.edu.uit.realestate.Relational.Repository.RealEstateKindRepository;
 import vn.edu.uit.realestate.Relational.Repository.RealImageRepository;
 import vn.edu.uit.realestate.Relational.Repository.RequestRepository;
+import vn.edu.uit.realestate.Relational.Repository.RoleRepository;
 import vn.edu.uit.realestate.Relational.Repository.TradeKindRepository;
 import vn.edu.uit.realestate.Relational.Repository.TradeRepository;
 import vn.edu.uit.realestate.Relational.Repository.UserRepository;
@@ -52,6 +56,8 @@ public class UserService implements IEntityService {
 	private BluePrintRepository bluePrintRepository;
 	@Autowired
 	private RequestRepository requestRepository;
+	@Autowired
+	private RoleRepository roleRepository;
 
 	@Override
 	public MappingJacksonValue findAll() {
@@ -97,6 +103,27 @@ public class UserService implements IEntityService {
 		userRepository.save(user);
 	}
 
+	public MappingJacksonValue updateUserRole(Long userId, Set<String> roles) {
+		Optional<User> user = userRepository.findById(userId);
+		if (user.isPresent() == false) {
+			throw new NotFoundException("Cannot find any User with id=" + userId);
+		}
+		User foundUser = user.get();
+		Set<Role> foundRoles = new HashSet<>();
+		for (String role : roles) {
+			Optional<Role> foundRole = roleRepository.findByName(role.toUpperCase());
+			foundRole.orElseThrow(() -> new IllegalArgumentException("Cannot find any Role called '" + role + "'"));
+			foundRoles.add(foundRole.get());
+		}
+		foundUser.setRoles(foundRoles);
+		userRepository.save(foundUser);
+		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.serializeAllExcept("trades", "password");
+		FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", filter);
+		MappingJacksonValue mapping = new MappingJacksonValue(foundUser);
+		mapping.setFilters(filters);
+		return mapping;
+	}
+
 	public MappingJacksonValue findAllTradeByUserId(Long userId) {
 		Optional<User> foundUser = userRepository.findById(userId);
 		if (foundUser.isPresent() == false) {
@@ -121,8 +148,8 @@ public class UserService implements IEntityService {
 
 	public void postTradeToUser(Long userId, Trade trade) {
 		Optional<User> foundUser = userRepository.findById(userId);
-		if(foundUser.isPresent() == false) {
-			throw new NotFoundException("Cannot find any user with Id="+userId);
+		if (foundUser.isPresent() == false) {
+			throw new NotFoundException("Cannot find any user with Id=" + userId);
 		}
 		trade.setViewCount((long) 0);
 		trade.setUser(foundUser.get());
@@ -136,19 +163,8 @@ public class UserService implements IEntityService {
 		if (tradeKind == null || !tradeKindRepository.findById(tradeKind.getId()).isPresent()) {
 			throw new NotFoundException("You must enter suitable Trade Kind");
 		}
-//		Address tradeAddress = trade.getAddress();
-//		if (tradeAddress != null) {
-//			tradeAddress.setTrade(trade);
 		addressRepository.save(trade.getAddress());
-//		}
-//		Details tradeDetails = trade.getDetails();
-//		if (tradeDetails != null) {
-//			tradeDetails.setTrade(trade);
 		detailsRepository.save(trade.getDetails());
-//		}
-//    	List<BluePrint> bluePrints = trade.getBluePrints();
-//    	bluePrints.addAll(trade.getRealImages());
-//    	imageRepository.save()
 		tradeRepository.save(trade);
 		List<BluePrint> bluePrints = trade.getBluePrints();
 		bluePrints.forEach(each -> each.setTrade(trade));
@@ -163,7 +179,7 @@ public class UserService implements IEntityService {
 		if (foundUser.isPresent() == false) {
 			throw new NotFoundException("Cannot find any user with Id=" + userId);
 		}
-		if(request.getLowestPrice() > request.getHighestPrice()) {
+		if (request.getLowestPrice() > request.getHighestPrice()) {
 			throw new IllegalArgumentException("HighestPrice must be higher than LowestPrice");
 		}
 		request.setUser(foundUser.get());

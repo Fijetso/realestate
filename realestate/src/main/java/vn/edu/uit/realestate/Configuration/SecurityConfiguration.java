@@ -8,12 +8,10 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,8 +23,6 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.web.bind.annotation.RestController;
-
 import vn.edu.uit.realestate.Relational.Model.Role;
 import vn.edu.uit.realestate.Relational.Model.User;
 import vn.edu.uit.realestate.Relational.Model.Security.OAuth2UserInfo;
@@ -37,7 +33,6 @@ import vn.edu.uit.realestate.Service.CustomUserDetailsService;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -72,21 +67,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
-		http.authorizeRequests().antMatchers("/", "/register", "/confirm-account", "/reset-password/**", "/login", "/logout").permitAll();
+		http.authorizeRequests()
+				.antMatchers("/", "/register", "/confirm-account", "/reset-password/**", "/login", "/logout")
+				.permitAll();
 
 		// Chỉ cho phép user có quyền ADMIN truy cập đường dẫn /admin/**
 		http.authorizeRequests().antMatchers("*/admin/**").access("hasRole('ROLE_ADMIN')");
 		http.authorizeRequests().antMatchers("*/manager/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')");
 		// Chỉ cho phép user có quyền ADMIN hoặc USER truy cập đường dẫn /user/**
-		http.authorizeRequests().antMatchers("*/user/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER') or hasRole('ROLE_USER')");
+		http.authorizeRequests().antMatchers("*/user/**")
+				.access("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER') or hasRole('ROLE_USER')");
 		// Khi người dùng đã login, với vai trò USER, Nhưng truy cập vào trang yêu cầu
 		// vai trò ADMIN, sẽ chuyển hướng tới trang /403
 		http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
-		http.authorizeRequests().anyRequest().authenticated().and().formLogin().and().oauth2Login().userInfoEndpoint()
-				.userService(this.oauth2UserService()).oidcUserService(this.oidcUserService());
+		http.authorizeRequests().antMatchers("/secured/**").authenticated().and().formLogin().and().oauth2Login()
+				.userInfoEndpoint().userService(this.oauth2UserService()).oidcUserService(this.oidcUserService());
 		http.logout().logoutSuccessUrl("/login").logoutUrl("/logout").permitAll();
 	}
-	
+
 //
 //	@Override
 //	public void configure(WebSecurity web) {
