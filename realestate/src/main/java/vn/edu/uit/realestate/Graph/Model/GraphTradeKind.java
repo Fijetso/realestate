@@ -11,18 +11,16 @@ public class GraphTradeKind {
 	@Id
 	private long id;
 	private String name;
-	@Relationship(type="CONTAIN", direction = Relationship.OUTGOING)
-	private List<GraphTrade> trades;
+
 
 	public GraphTradeKind() {
 		super();
 	}
 
-	public GraphTradeKind(long id, String name, List<GraphTrade> trades) {
+	public GraphTradeKind(long id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.trades = trades;
 	}
 
 	public long getId() {
@@ -39,13 +37,5 @@ public class GraphTradeKind {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public List<GraphTrade> getTrades() {
-		return trades;
-	}
-
-	public void setTrades(List<GraphTrade> trades) {
-		this.trades = trades;
 	}
 }

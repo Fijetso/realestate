@@ -46,6 +46,11 @@ public class Query implements GraphQLQueryResolver {
 		List<Trade> foundTrades = tradeService.findAllGraphQL(count);
 		return foundTrades;
 	}
+	
+//	public List<Trade> suggestTrades(final int count){
+//		List<Trade> foundTrades = tradeService.suggestGraphQL(count);
+//	}
+	
 	public Optional<User> getAuthor(Trade trade) {
 		return userRepository.findById(trade.getUser().getId());
 	}

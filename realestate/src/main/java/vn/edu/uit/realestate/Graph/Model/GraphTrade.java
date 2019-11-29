@@ -12,11 +12,11 @@ import vn.edu.uit.realestate.Relational.Model.Enum.TradeStatus;
 @NodeEntity(label = "Trade")
 public class GraphTrade {
 	@Id
-	private Long id;
+	private long id;
 	private String description;
-	private Long cost;
+	private long cost;
 	//// problem
-	private TradeStatus tradeStatus = TradeStatus.WAITING;
+	private String tradeStatus = TradeStatus.WAITING.toString();
 
 	@Relationship(type = "HAVE", direction = Relationship.OUTGOING)
 	private GraphAddress address;
@@ -33,13 +33,20 @@ public class GraphTrade {
 	@Relationship(type = "ILLUSTRATE", direction = Relationship.INCOMING)
 	private List<GraphBluePrint> bluePrints = new ArrayList<GraphBluePrint>();
 
+	@Relationship(type="CONTAIN", direction = Relationship.INCOMING)
+	private GraphTradeKind tradeKind;
+	@Relationship(type = "CONTAIN", direction = Relationship.INCOMING)
+	private GraphRealEstateKind realEstateKind;
+	@Relationship(type = "POST", direction = Relationship.INCOMING)
+	private GraphUser user;
+	
 	public GraphTrade() {
 		super();
 	}
 
-	public GraphTrade(Long id, String description, Long cost, TradeStatus tradeStatus, GraphAddress address,
+	public GraphTrade(Long id, String description, Long cost, String tradeStatus, GraphAddress address,
 			GraphDetails details, GraphCoordinate coordinate, List<GraphRealImage> realImages,
-			List<GraphBluePrint> bluePrints) {
+			List<GraphBluePrint> bluePrints, GraphTradeKind tradeKind, GraphRealEstateKind realEstateKind, GraphUser user) {
 		super();
 		this.id = id;
 		this.description = description;
@@ -50,6 +57,9 @@ public class GraphTrade {
 		this.coordinate = coordinate;
 		this.realImages = realImages;
 		this.bluePrints = bluePrints;
+		this.tradeKind = tradeKind;
+		this.realEstateKind = realEstateKind;
+		this.user = user;
 	}
 
 	public Long getId() {
@@ -76,11 +86,11 @@ public class GraphTrade {
 		this.cost = cost;
 	}
 
-	public TradeStatus getTradeStatus() {
+	public String getTradeStatus() {
 		return tradeStatus;
 	}
 
-	public void setTradeStatus(TradeStatus tradeStatus) {
+	public void setTradeStatus(String tradeStatus) {
 		this.tradeStatus = tradeStatus;
 	}
 
@@ -122,5 +132,29 @@ public class GraphTrade {
 
 	public void setBluePrints(List<GraphBluePrint> bluePrints) {
 		this.bluePrints = bluePrints;
+	}
+
+	public GraphTradeKind getTradeKind() {
+		return tradeKind;
+	}
+
+	public void setTradeKind(GraphTradeKind tradeKind) {
+		this.tradeKind = tradeKind;
+	}
+
+	public GraphRealEstateKind getRealEstateKind() {
+		return realEstateKind;
+	}
+
+	public void setRealEstateKind(GraphRealEstateKind realEstateKind) {
+		this.realEstateKind = realEstateKind;
+	}
+
+	public GraphUser getUser() {
+		return user;
+	}
+
+	public void setUser(GraphUser user) {
+		this.user = user;
 	}
 }

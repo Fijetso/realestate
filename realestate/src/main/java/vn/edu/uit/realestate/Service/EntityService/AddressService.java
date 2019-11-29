@@ -20,6 +20,7 @@ import vn.edu.uit.realestate.Relational.Repository.AddressRepository;
 public class AddressService {
 	@Autowired
 	private AddressRepository addressRepository;
+	
 	public MappingJacksonValue findTradeByProvince(Long province) {
     	List<Address> addresses = (List<Address>) addressRepository.findByProvince(province);
 		if (addresses.isEmpty() == true) {
@@ -39,6 +40,7 @@ public class AddressService {
 		mapping.setFilters(filters);
 		return mapping;
 	}
+	
 	public MappingJacksonValue findTradeByDistrict(Long district) {
     	List<Address> addresses = (List<Address>) addressRepository.findByDistrict(district);
 		if (addresses.isEmpty() == true) {
@@ -58,6 +60,7 @@ public class AddressService {
 		mapping.setFilters(filters);
 		return mapping;
 	}
+	
 	public MappingJacksonValue findTradeByWard(Long ward) {
     	List<Address> addresses = (List<Address>) addressRepository.findByWard(ward);
 		if (addresses.isEmpty() == true) {

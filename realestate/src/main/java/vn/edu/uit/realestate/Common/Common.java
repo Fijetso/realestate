@@ -9,6 +9,8 @@ public class Common {
 		public static String ROLE_USER = "USER";
 
 		public static String MONEY_UNIT = " VNĐ";
+		
+		public static String LOCAL_DATE_FORMAT = "dd/MM/yyyy";
 
 		@Value("${server.port}")
 		private static String port;

@@ -6,10 +6,10 @@ import org.neo4j.ogm.annotation.NodeEntity;
 @NodeEntity(label = "Details")
 public class GraphDetails {
 	@Id
-	private Long id;
-	private Long length;
-	private Long width;
-	private Long square;
+	private long id;
+	private long length;
+	private long width;
+	private long square;
 	private String direction;
 	private String floors;
 	private String legalDocuments;

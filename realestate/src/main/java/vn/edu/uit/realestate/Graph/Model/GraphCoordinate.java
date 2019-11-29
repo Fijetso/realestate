@@ -6,9 +6,9 @@ import org.neo4j.ogm.annotation.NodeEntity;
 @NodeEntity(label = "Coordinate")
 public class GraphCoordinate {
 	@Id
-	private Long id;
-	private Long longitude;
-	private Long latitude;
+	private long id;
+	private long longitude;
+	private long latitude;
 
 	public GraphCoordinate() {
 		super();
