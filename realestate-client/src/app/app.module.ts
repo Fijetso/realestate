@@ -5,7 +5,6 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AgmCoreModule } from '@agm/core';
-import { AgmDirectionModule } from 'agm-direction'; // agm-direction
 import { MatDialogModule } from '@angular/material/dialog';
 import { AppComponent } from './app.component';
 import { LayoutComponent } from './components/layout/layout.component';
@@ -22,45 +21,34 @@ import { LayoutModule } from '@angular/cdk/layout';
 import {
   MatButtonModule,
   MatCardModule,
-  MatMenuModule,
   MatToolbarModule,
   MatIconModule,
   MatInputModule,
   MatDatepickerModule,
   MatNativeDateModule,
   MatProgressSpinnerModule,
-  MatTableModule,
-  MatExpansionModule,
   MatSelectModule,
-  MatSnackBarModule,
   MatTooltipModule,
-  MatChipsModule,
   MatListModule,
   MatSidenavModule,
   MatTabsModule,
-  MatProgressBarModule,
   MatRadioModule,
   MatSlideToggleModule,
   MatAutocompleteModule,
-  MatBottomSheet,
-  MatBottomSheetRef,
   MatButtonToggleModule,
   MatFormFieldModule
 } from '@angular/material';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 import { HttpClientModule, HttpClient,HTTP_INTERCEPTORS } from '@angular/common/http';
 import 'hammerjs';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { OwlModule } from 'ngx-owl-carousel';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ToastrModule } from 'ngx-toastr';
-import { CKEditorModule } from 'ng2-ckeditor';
 import {} from 'googlemaps';
 
 import { RealEstateWrapperComponent } from './components/real-estate/real-estate-wrapper/real-estate-wrapper.component';
@@ -146,7 +134,6 @@ import {HereMapsModule } from 'ng2-heremaps'
   ],
   imports: [
     OwlModule,
-    NgbModule,
     BrowserModule,
     AppRoutingModule,
     LazyLoadImageModule,
@@ -162,7 +149,6 @@ import {HereMapsModule } from 'ng2-heremaps'
         deps: [HttpClient]
       }
     }),
-    AgmDirectionModule,
     MatFormFieldModule,
     MatDialogModule,
     LayoutModule,
@@ -191,7 +177,6 @@ import {HereMapsModule } from 'ng2-heremaps'
     AngularFireAuthModule,
     Ng2SearchPipeModule,
     ToastrModule.forRoot(),
-    CKEditorModule,
     HereMapsModule.forRoot({
       apiKey: 'KLtdq3MAUJruxhiJ2GyAFQ',
       appId: 'dmdRFi5x5pT0zuy09gle',
