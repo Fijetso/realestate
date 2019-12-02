@@ -4,7 +4,6 @@
     <heremap [center]="position" [zoom]="14">
       <map-marker [position] = "position" (click) ="showBubleInfor($event)"></map-marker>
       <map-bubble [position] = "position" [contentElement]= "bubleInfor.title" *ngIf="isShowBuble"></map-bubble>
-      <map-polyline [fillColor]="blue" [strokeColor]='light-blue' [lineWidth]="2" [options]="polyOptions"></map-polyline>
     </heremap>
   </div>
 </div>
