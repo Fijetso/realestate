@@ -1,9 +1,2 @@
 
-<div class="map-view">
-  <div style="height: 100vh; width: 80vw;">
-    <heremap [center]="position" [zoom]="14">
-      <map-marker [position] = "position" (click) ="showBubleInfor($event)"></map-marker>
-      <map-bubble [position] = "position" [contentElement]= "bubleInfor.title" *ngIf="isShowBuble"></map-bubble>
-    </heremap>
-  </div>
-</div>
+<app-map [markers]="markers"></app-map>

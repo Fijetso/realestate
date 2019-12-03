@@ -1,3 +1,4 @@
+import { MapComponent } from './core/ui/maps/map.component';
 import { HttpErrorInterceptor } from './services/common/http-error.interceptor';
 import { environment } from './../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
@@ -87,7 +88,9 @@ import { GetDistrictNameFromIdPipe } from './ultility/pipe/get-district-name-fro
 import { ThousandSuffixPipe } from './ultility/pipe/thousand-suffix.pipe';
 import { SearchPageComponent } from './core/ui/search-page/search-page.component';
 import { AccountManagementComponent } from './core/ui/account-management/account-management.component';
-import {HereMapsModule } from 'ng2-heremaps'
+import {HereMapsModule } from 'ng2-heremaps';
+import { INIT_COORDS } from './core/ui/maps/token';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @NgModule({
   declarations: [
@@ -130,7 +133,9 @@ import {HereMapsModule } from 'ng2-heremaps'
     GetDistrictNameFromIdPipe,
     ThousandSuffixPipe,
     SearchPageComponent,
-    AccountManagementComponent
+    AccountManagementComponent,
+    MapModuleComponent,
+    MapComponent
   ],
   imports: [
     OwlModule,
@@ -182,7 +187,8 @@ import {HereMapsModule } from 'ng2-heremaps'
       appId: 'dmdRFi5x5pT0zuy09gle',
       apiVersion: '3.0',
       libraries: ['core', 'service','ui','mapevents']
-    })
+    }),
+    LeafletModule.forRoot()
   ],
   providers: [
     AuthenticationService,
@@ -191,7 +197,8 @@ import {HereMapsModule } from 'ng2-heremaps'
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,
       multi: true
-    }
+    },
+    { provide: INIT_COORDS, useValue: {lat: 10.823099, long: 106.629662} },
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],

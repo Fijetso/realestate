@@ -1,47 +1,26 @@
-import { map } from 'rxjs/operators';
-import { MarkerOptions, HereMapsManager,PolylineOptions } from 'ng2-heremaps';
-// import { environment } from './../../../../environments/environment';
-import { Component, OnInit, ElementRef, ViewChild, NgZone, Input } from '@angular/core';
-import { BubbleOptions } from 'ng2-heremaps/src/interface/bubble-options';
-// import { MapsAPILoader, MouseEvent } from '@agm/core';
-declare var H: any;
+import {
+  Component,OnInit
+} from '@angular/core';
 @Component({
   selector: 'app-map-module',
+
   templateUrl: './map-module.component.html',
-  styleUrls: ['./map-module.component.scss']
+
+  styleUrls: ['./map-module.component.scss'],
 })
+export class MapModuleComponent implements OnInit{
+  public markers: {lat: number, long: number}[];   // Map markers (relevance depends on map center)
 
-
-export class MapModuleComponent implements OnInit {
-
-  public platform: any;
-  @Input()
-  public position :any ;
-  @ViewChild("map",{static: true})
-  public mapElement: ElementRef;
-  @Input()
-  public bubleInfor: MarkerOptions;
-  @Input()
-  public bubleOptions: BubbleOptions;
-  @Input()
-  public polyOntions : PolylineOptions;
-  
-  public isShowBuble : boolean;
-  constructor(
-    // private mapsAPILoader: MapsAPILoader,
-    // private ngZone: NgZone
-  ) {
-   this.position = {latitude: 10.8830014, longitude: 106.7817025}
-   this.bubleInfor = {title:'Test tiêu đề', visible: true, label:"Nhãn buble",position:this.position}
-    console.log(this.bubleInfor);
-   this.bubleOptions ={position: this.position}
-   console.log(this.bubleOptions);
+  constructor()
+  {
+    // some map markers
+    this.markers = [
+      { lat: 10.823099, long: 106.629662   },
+      { lat: 10.5, long: 106.5 },
+      { lat: 10.3  , long: 106.7 },
+      { lat: 10.7, long: 106.8 },
+    ];
   }
-
-  ngOnInit() {
-  }
-
-  showBubleInfor($event){
-   this.isShowBuble = !this.isShowBuble;
+  ngOnInit(): void {
   }
 }
