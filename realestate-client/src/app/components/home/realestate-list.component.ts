@@ -16,7 +16,7 @@ export class RealestateListComponent implements OnInit, AfterViewInit {
   }
   isLoading = true;
   reKind = '';
-  @ViewChild(MarkettingComponent) marketting;
+  @ViewChild(MarkettingComponent,{static: false}) marketting: MarkettingComponent;
   openInfoModal() {
     this.modalService.openInfoModal();
   }

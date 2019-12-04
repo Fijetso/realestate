@@ -1,92 +1,26 @@
-import { Component, OnInit, ElementRef, ViewChild, NgZone } from '@angular/core';
-import { MapsAPILoader, MouseEvent } from '@agm/core';
-
-
+import {
+  Component,OnInit
+} from '@angular/core';
 @Component({
   selector: 'app-map-module',
+
   templateUrl: './map-module.component.html',
-  styleUrls: ['./map-module.component.scss']
+
+  styleUrls: ['./map-module.component.scss'],
 })
-export class MapModuleComponent implements OnInit {
-  latitude: number;
-  longitude: number;
-  zoom: number;
-  address: string;
-  private geoCoder;
+export class MapModuleComponent implements OnInit{
+  public markers: {lat: number, long: number}[];   // Map markers (relevance depends on map center)
 
-  @ViewChild('search')
-  public searchElementRef: ElementRef;
-
-
-  constructor(
-    private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone
-  ) { }
-
-
-  ngOnInit() {
-    // load Places Autocomplete
-    this.mapsAPILoader.load().then(() => {
-      this.setCurrentLocation();
-      this.geoCoder = new google.maps.Geocoder;
-
-      const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-        types: ['address']
-      });
-      autocomplete.addListener('place_changed', () => {
-        this.ngZone.run(() => {
-          // get the place result
-          const place: google.maps.places.PlaceResult = autocomplete.getPlace();
-
-          // verify result
-          if (place.geometry === undefined || place.geometry === null) {
-            return;
-          }
-
-          // set latitude, longitude and zoom
-          this.latitude = place.geometry.location.lat();
-          this.longitude = place.geometry.location.lng();
-          this.zoom = 12;
-        });
-      });
-    });
+  constructor()
+  {
+    // some map markers
+    this.markers = [
+      { lat: 10.823099, long: 106.629662   },
+      { lat: 10.5, long: 106.5 },
+      { lat: 10.3  , long: 106.7 },
+      { lat: 10.7, long: 106.8 },
+    ];
   }
-
-  // Get Current Location Coordinates
-  private setCurrentLocation() {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.latitude = position.coords.latitude;
-        this.longitude = position.coords.longitude;
-        this.zoom = 8;
-        this.getAddress(this.latitude, this.longitude);
-      });
-    }
-  }
-
-
-  markerDragEnd($event: MouseEvent) {
-    console.log($event);
-    this.latitude = $event.coords.lat;
-    this.longitude = $event.coords.lng;
-    this.getAddress(this.latitude, this.longitude);
-  }
-
-  getAddress(latitude, longitude) {
-    this.geoCoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
-      console.log(results);
-      console.log(status);
-      if (status === 'OK') {
-        if (results[0]) {
-          this.zoom = 12;
-          this.address = results[0].formatted_address;
-        } else {
-          window.alert('No results found');
-        }
-      } else {
-        window.alert('Geocoder failed due to: ' + status);
-      }
-
-    });
+  ngOnInit(): void {
   }
 }

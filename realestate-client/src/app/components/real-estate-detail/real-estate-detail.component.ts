@@ -23,7 +23,7 @@ export class RealEstateDetailComponent implements OnInit {
   reSameClass = null;
   constructor(private route: ActivatedRoute, private api: ApiService, private common: CommonService) {
   }
-  @ViewChild('owlElement') owlElement: OwlCarousel;
+  @ViewChild('owlElement',{static:true}) owlElement: OwlCarousel;
   // myCarouselImages = [
   //   1,
   //   2,
