@@ -8,12 +8,12 @@ type Mutation {
 	saveTrade(description: String!,cost: Long!, userId: Long!, realEstateKindId: Long!, tradeKindId: Long!,
 			detailAddress: String!, wardId: Long!, length: Long, width: Long, square: Long, direction: String,
 			floors: String, legalDocuments: String, bathrooms: Int, bedrooms: Int, utilities: String, 
-			others: String, longitude: Long, latitude: Long): Trade
+			others: String, longitude: Float, latitude: Float): Trade
 			
 	updateTrade(tradeId: Long!, description: String, cost: Long, realEstateKindId: Long, tradeKindId: Long,	
 			detailAddress: String, wardId: Long, length: Long, width: Long, square: Long, direction: String,
 			floors: String, legalDocuments: String, bathrooms: Int, bedrooms: Int, utilities: String, 
-			others: String, longitude: Long, latitude: Long): Trade
+			others: String, longitude: Float, latitude: Float): Trade
 	
 	updateUser(userId: Long!, name: String, email: String, phone: String, birthdate: String, gender: Boolean,
 			job: String, userKindId: Long): User
@@ -87,7 +87,7 @@ type BluePrint {
 
 type Coordinate {
 	id: ID!,
-	longitude : Long,
-	latitude: Long
+	longitude : Float,
+	latitude: Float
 }
 

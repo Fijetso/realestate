@@ -7,18 +7,18 @@ import org.neo4j.ogm.annotation.NodeEntity;
 public class GraphCoordinate {
 	@Id
 	private long id;
-	private long longitude;
-	private long latitude;
+	private float longitude;
+	private float latitude;
 
 	public GraphCoordinate() {
 		super();
 	}
 
-	public GraphCoordinate(Long id, Long longitude, Long latitude) {
+	public GraphCoordinate(Long id, float f, float g) {
 		super();
 		this.id = id;
-		this.longitude = longitude;
-		this.latitude = latitude;
+		this.longitude = f;
+		this.latitude = g;
 	}
 
 	public Long getId() {
@@ -29,7 +29,7 @@ public class GraphCoordinate {
 		this.id = id;
 	}
 
-	public Long getLongitude() {
+	public float getLongitude() {
 		return longitude;
 	}
 
@@ -37,7 +37,7 @@ public class GraphCoordinate {
 		this.longitude = longitude;
 	}
 
-	public Long getLatitude() {
+	public float getLatitude() {
 		return latitude;
 	}
 
