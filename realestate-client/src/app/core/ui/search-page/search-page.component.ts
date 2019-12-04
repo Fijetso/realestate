@@ -13,7 +13,6 @@ export class SearchPageComponent implements OnInit {
   // ckeConfig: any;
   // mycontent: string;
   // log = '';
-  @ViewChild('myckeditor') ckeditor: any;
   constructor(private api: ApiService, private route: ActivatedRoute) {
     // this.mycontent = `<p>My html content</p>`;
   }
