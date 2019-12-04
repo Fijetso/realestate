@@ -26,9 +26,6 @@ public class CustomUserDetailsService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Optional<User> optionalUser = userRepository.findByEmail(username);
 		optionalUser.orElseThrow(() -> new UsernameNotFoundException("Email not found"));
-//		optionalUser
-//		.ifPresent(user ->  new CustomUserDetails(user));
-		///khong hieu khuc nay
 		User user = optionalUser.get();
 		if(user.isActive()==false) {
 				throw new BadCredentialsException("Your Account hasn't activated yet. Please check your email first");
