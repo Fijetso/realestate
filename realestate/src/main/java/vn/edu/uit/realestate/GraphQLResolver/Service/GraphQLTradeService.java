@@ -66,7 +66,7 @@ public class GraphQLTradeService {
 	public Trade updateTradeGraphQL(Long tradeId, String description, Long cost, Long realEstateKindId,
 			Long tradeKindId, String detailAddress, Long wardId, Long length, Long width, Long square, String direction,
 			String floors, String legalDocuments, int bathrooms, int bedrooms, String utilities, String others,
-			Long longitude, Long latitude) {
+			Float longitude, Float latitude) {
 		Optional<Trade> trade = tradeRepository.findById(tradeId);
 		trade.orElseThrow(() -> new CustomGraphQLException(400,
 				"Not Found Exception: Cannot find any Trade in MySQL with Id=" + tradeId));

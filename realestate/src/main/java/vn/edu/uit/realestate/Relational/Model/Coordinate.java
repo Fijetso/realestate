@@ -15,8 +15,8 @@ public class Coordinate {
 	@Id
 	@GeneratedValue
 	private Long id;
-	private Long longitude;
-	private Long latitude;
+	private float longitude;
+	private float latitude;
 	@OneToOne(mappedBy = "coordinate", fetch = FetchType.LAZY)
 	private Trade trade;
 
@@ -24,7 +24,7 @@ public class Coordinate {
 		super();
 	}
 
-	public Coordinate(Long longitude, Long latitude) {
+	public Coordinate(float longitude, float latitude) {
 		super();
 		this.longitude = longitude;
 		this.latitude = latitude;
@@ -38,19 +38,19 @@ public class Coordinate {
 		this.id = id;
 	}
 
-	public Long getLongitude() {
+	public float getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(Long longitude) {
-		this.longitude = longitude;
+	public void setLongitude(float f) {
+		this.longitude = f;
 	}
 
-	public Long getLatitude() {
+	public float getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(Long latitude) {
+	public void setLatitude(float latitude) {
 		this.latitude = latitude;
 	}
 
