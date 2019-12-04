@@ -1,4 +1,6 @@
-import { MapComponent } from './core/ui/maps/map.component';
+import { PopupService } from './services/map/popup.service';
+import { MarkerService } from './services/map/marker.service';
+import { MapComponent } from './core/ui/map/map.component';
 import { HttpErrorInterceptor } from './services/common/http-error.interceptor';
 import { environment } from './../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
@@ -89,7 +91,6 @@ import { ThousandSuffixPipe } from './ultility/pipe/thousand-suffix.pipe';
 import { SearchPageComponent } from './core/ui/search-page/search-page.component';
 import { AccountManagementComponent } from './core/ui/account-management/account-management.component';
 import {HereMapsModule } from 'ng2-heremaps';
-import { INIT_COORDS } from './core/ui/maps/token';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @NgModule({
@@ -188,7 +189,8 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
       apiVersion: '3.0',
       libraries: ['core', 'service','ui','mapevents']
     }),
-    LeafletModule.forRoot()
+    LeafletModule.forRoot(),
+    HttpClientModule
   ],
   providers: [
     AuthenticationService,
@@ -198,7 +200,8 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
       useClass: HttpErrorInterceptor,
       multi: true
     },
-    { provide: INIT_COORDS, useValue: {lat: 10.823099, long: 106.629662} },
+    MarkerService,
+    PopupService
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],
