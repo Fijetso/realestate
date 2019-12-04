@@ -45,7 +45,7 @@ public class User {
 	@Past(message = "BirthDate must be in the past")
 	private Date birthdate;
 	private boolean gender;
-	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	@ManyToOne(cascade =  {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
 	@JoinColumn(name = "jobId", referencedColumnName = "id")
 	private Job job;
 	private boolean active;

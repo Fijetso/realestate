@@ -12,8 +12,9 @@ public class Common {
 		
 		public static String LOCAL_DATE_FORMAT = "dd/MM/yyyy";
 
-		@Value("${server.port}")
-		private static String port;
+//		@Value("${local.server.port}")
+		private static String port="8081";
+		
 		public static String DOMAIN = "http://localhost:" + port;
 		
 		public static final String GRAPH_MODEL_PACKAGE = "vn.edu.uit.realestate.Graph.Model";
