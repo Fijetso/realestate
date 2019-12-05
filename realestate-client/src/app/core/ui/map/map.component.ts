@@ -1,4 +1,4 @@
-import { environment } from './../../../../environments/environment.prod';
+import { environment } from './../../../../environments/environment';
 import { MarkerService } from './../../../services/map/marker.service';
 import { Component, AfterViewInit } from '@angular/core';
 import * as L from 'leaflet';
@@ -40,7 +40,8 @@ export class MapComponent implements AfterViewInit {
       // 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
       'https://1.base.maps.api.here.com' +
       '/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/256/png' +
-      '?app_id=' + environment.heremap.appId + '&app_code=' + environment.heremap.appCode
+      '?app_id=' + environment.heremap.appId + '&app_code=' + environment.heremap.appCode+
+      '&lg='+environment.heremap.defaultLang
       , {
         maxZoom: 19,
         // attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
