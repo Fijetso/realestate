@@ -12,6 +12,8 @@ export class PopupService {
       `<div>Phường: ${ 'Quận 3'}</div>` +
       `<div>Quận: ${'Tp Hồ Chí Minh' }</div>`+
       `<div>Diện tích: ${ '' }</div>`+
-      `<img src="${data}"/>`
+      `<img src="${data}"/>`+
+      `<a href="${'https://facebook.com/danh.thanh.418'}">Visit Facebook</a>`
+
   }
 }

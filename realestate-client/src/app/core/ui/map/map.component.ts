@@ -1,6 +1,7 @@
 import { MarkerService } from './../../../services/map/marker.service';
 import { Component,AfterViewInit } from '@angular/core';
 import * as L from 'leaflet';
+import * as LD from 'leaflet-draw'
 
 const iconRetinaUrl = 'assets/map/marker-icon-2x.png';
 const iconUrl = 'assets/map/marker-icon.png';
@@ -30,8 +31,8 @@ export class MapComponent implements AfterViewInit {
   initMap() {
     this.map = L.map('map',{
       center:[10.823099,106.629662],
-      // center: [ 39.8282, -98.5795 ],
       zoom:8,
+      drawControl:true
     });
     const tile= L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
       maxZoom: 19,

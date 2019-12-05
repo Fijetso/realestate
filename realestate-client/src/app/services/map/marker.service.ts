@@ -4,7 +4,7 @@ import { PopupService } from './popup.service';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as L from 'leaflet';
-
+import * as LD from 'leaflet-draw';
 // const data = {
 //   "data": [
 //     {
@@ -30,7 +30,7 @@ export class MarkerService {
   }
   makeCapitalMarkers(map: L.Map): void {
     this.apiService.getAllRealEstate().subscribe((trades: any) => {
-      // console.log(trades);
+      console.log(trades);
       const dataImage= trades[0].realImages[0].imageLink;
       for (const trade of trades) {
         const lat = trade.coordinate.latitude;
@@ -64,5 +64,9 @@ export class MarkerService {
   }
   static ScaledRadius(val: number, maxVal: number): number {
     return 20 * (val / maxVal);
+  }
+
+  renderDrawTools(map: L.Map){
+
   }
 }
