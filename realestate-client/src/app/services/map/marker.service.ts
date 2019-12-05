@@ -65,8 +65,4 @@ export class MarkerService {
   static ScaledRadius(val: number, maxVal: number): number {
     return 20 * (val / maxVal);
   }
-
-  renderDrawTools(map: L.Map){
-
-  }
 }

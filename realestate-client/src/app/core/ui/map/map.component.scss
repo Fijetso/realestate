@@ -3,15 +3,12 @@
     position: relative;
     width:50vw;
     height:100vh;
-    overflow: auto;;
     .map-frame {
       position: relative;
       height: inherit; 
       width: inherit;
-      overflow: auto;
       #map {
-        height: 100%;
-        overflow: auto;
+        height: 99%;
       }
     }
   }
