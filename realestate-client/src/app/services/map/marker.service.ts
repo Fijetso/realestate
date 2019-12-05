@@ -25,17 +25,24 @@ export class MarkerService {
   constructor(private http: HttpClient, private popupService: PopupService, private apiService: ApiService) {
   }
 
-  getDataImage(trade){
-   return trade.realImages[0].imageLink
+  getDataImage(trade) {
+    return trade.realImages[0].imageLink
   }
   makeCapitalMarkers(map: L.Map): void {
     this.apiService.getAllRealEstate().subscribe((trades: any) => {
-      console.log(trades);
+      // console.log(trades);
       // const dataImage= trades[0].realImages[0].imageLink;
       for (const trade of trades) {
         const lat = trade.coordinate.latitude;
         const lon = trade.coordinate.longitude;
-        const marker = L.marker([lat, lon]).bindPopup(this.popupService.makeCapitalPopup(trade.realImages[0].imageLink))
+        const popupData = {"description":trade.description, 
+        "cost":trade.cost, 
+        "kind":trade.realEstateKind.name,
+        "img":trade.realImages[0].imageLink,
+        "square":trade.details.square
+      };
+        console.log(popupData);
+        const marker = L.marker([lat, lon]).bindPopup(this.popupService.makeCapitalPopup(popupData))
           .addTo(map);
         // console.log(lat,lon);
       }

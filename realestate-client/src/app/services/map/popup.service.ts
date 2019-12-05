@@ -7,12 +7,15 @@ export class PopupService {
 
   constructor() { }
   makeCapitalPopup(data: any): any {
-    console.log(data);
+    // console.log(data);
     return `` +
-      `<div>Phường: ${ 'Quận 3'}</div>` +
-      `<div>Quận: ${'Tp Hồ Chí Minh' }</div>`+
-      `<div>Diện tích: ${ '' }</div>`+
-      `<img src="${data}"/>`+
+      `<div class="desc" style="color: #FD784F;
+      font-size: 1.5em;
+      font-weight: bold;">${data.description}</div>` +
+      `<div class="square">Diện tích: ${ data.square }m<sup>2</sup></div>`+
+      `<div class="cost">Giá: ${data.cost}</div>`+
+      `<div class="kind">Loại: ${data.kind}</div>`+
+      `<img src="${data.img}"/>`+
       `<a href="${'https://facebook.com/danh.thanh.418'}">Visit Facebook</a>`
 
   }
