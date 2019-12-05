@@ -1,7 +1,8 @@
 import { MarkerService } from './../../../services/map/marker.service';
-import { Component,AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import * as L from 'leaflet';
-import * as LD from 'leaflet-draw'
+import 'leaflet-draw'
+// import * as LD from 'leaflet-draw'
 
 const iconRetinaUrl = 'assets/map/marker-icon-2x.png';
 const iconUrl = 'assets/map/marker-icon.png';
@@ -29,15 +30,15 @@ export class MapComponent implements AfterViewInit {
   constructor(private markerService: MarkerService) { }
 
   initMap() {
-    this.map = L.map('map',{
-      center:[10.823099,106.629662],
-      zoom:8,
-      drawControl:true
+    this.map = L.map('map', {
+      center: [10.823099, 106.629662],
+      zoom: 8,
+      drawControl: true
     });
-    const tile= L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    const tile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      updateWhenZooming:true,
+      updateWhenZooming: true,
     })
     tile.addTo(this.map);
     console.log('Map view inited');
@@ -45,6 +46,17 @@ export class MapComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.initMap();
+    this.addControls(this.map);
     this.markerService.makeCapitalMarkers(this.map);
+  }
+  addControls(map: L.Map) {
+    const drawnItems = L.featureGroup();
+    map.addLayer(drawnItems);
+    const drawControl = new L.Control.Draw({
+      edit: {
+        featureGroup: drawnItems
+      }
+    });
+    map.addControl(drawControl);
   }
 }
