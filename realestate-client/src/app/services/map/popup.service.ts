@@ -9,9 +9,9 @@ export class PopupService {
   makeCapitalPopup(data: any): any {
     console.log(data);
     return `` +
-      `<div>Capital: ${ data.data[0].name }</div>` +
-      `<div>State: ${data.data[0].state }</div>`+
-      `<div>Population: ${ data.data[0].population }</div>`+
-      `<img src="${ data.data[0].img}"/>`
+      `<div>Phường: ${ 'Quận 3'}</div>` +
+      `<div>Quận: ${'Tp Hồ Chí Minh' }</div>`+
+      `<div>Diện tích: ${ '' }</div>`+
+      `<img src="${data}"/>`
   }
 }
