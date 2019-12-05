@@ -31,11 +31,11 @@ export class MarkerService {
   makeCapitalMarkers(map: L.Map): void {
     this.apiService.getAllRealEstate().subscribe((trades: any) => {
       console.log(trades);
-      const dataImage= trades[0].realImages[0].imageLink;
+      // const dataImage= trades[0].realImages[0].imageLink;
       for (const trade of trades) {
         const lat = trade.coordinate.latitude;
         const lon = trade.coordinate.longitude;
-        const marker = L.marker([lat, lon]).bindPopup(this.popupService.makeCapitalPopup(dataImage))
+        const marker = L.marker([lat, lon]).bindPopup(this.popupService.makeCapitalPopup(trade.realImages[0].imageLink))
           .addTo(map);
         // console.log(lat,lon);
       }
