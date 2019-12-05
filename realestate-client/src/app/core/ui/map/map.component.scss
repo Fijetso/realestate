@@ -1,7 +1,4 @@
 .map-wrapper{
-  .left-content {
-
-  }
   .map-container {
     position: relative;
     width:50vw;
@@ -14,7 +11,7 @@
       overflow: hidden;
       #map {
         height: 100%;
-        overflow: hidden;
+        overflow: auto;
       }
     }
   }
