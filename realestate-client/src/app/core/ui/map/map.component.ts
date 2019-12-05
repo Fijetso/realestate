@@ -1,3 +1,4 @@
+import { environment } from './../../../../environments/environment.prod';
 import { MarkerService } from './../../../services/map/marker.service';
 import { Component, AfterViewInit } from '@angular/core';
 import * as L from 'leaflet';
@@ -35,11 +36,17 @@ export class MapComponent implements AfterViewInit {
       zoom: 8,
       drawControl: true
     });
-    const tile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      updateWhenZooming: true,
-    })
+    const tile = L.tileLayer(
+      // 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+      'https://1.base.maps.api.here.com' +
+      '/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/256/png' +
+      '?app_id=' + environment.heremap.appId + '&app_code=' + environment.heremap.appCode
+      , {
+        maxZoom: 19,
+        // attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        attribution: '&copy; <a href="http://developer.here.com">HERE</a>',
+        updateWhenZooming: true,
+      })
     tile.addTo(this.map);
     console.log('Map view inited');
   }
