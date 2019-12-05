@@ -46,7 +46,7 @@ export class MapComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.initMap();
-    this.addControls(this.map);
+    // this.addControls(this.map);
     this.markerService.makeCapitalMarkers(this.map);
   }
   addControls(map: L.Map) {
