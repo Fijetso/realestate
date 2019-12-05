@@ -1,13 +1,13 @@
--- MySQL dump 10.13  Distrib 8.0.18, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.15, for Win64 (x86_64)
 --
 -- Host: localhost    Database: realestate
 -- ------------------------------------------------------
--- Server version	8.0.18
+-- Server version	8.0.15
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8 */;
+ SET NAMES utf8 ;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -21,7 +21,7 @@
 
 DROP TABLE IF EXISTS `address`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `address` (
   `id` bigint(20) NOT NULL,
   `detail` varchar(255) NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE `address` (
 
 LOCK TABLES `address` WRITE;
 /*!40000 ALTER TABLE `address` DISABLE KEYS */;
-INSERT INTO `address` VALUES (1,'Số nhà 53',760,79,26749),(2,'Số nhà 201',760,79,26746),(3,'Số nhà 94',762,79,26827),(4,'Số nhà 94',762,79,26806),(5,'Số nhà 94',774,79,27313),(6,'Số nhà 201',774,79,27328),(28,'34 Tân Hưng',774,79,27313);
+INSERT INTO `address` VALUES (1,'Số nhà 53',760,79,26749),(2,'Số nhà 201',760,79,26746),(3,'Số nhà 94',762,79,26827),(4,'Số nhà 94',762,79,27301),(5,'Số nhà 94',774,79,27313),(6,'Số nhà 201',774,79,27328),(28,'34 Tân Hưng',774,79,27313);
 /*!40000 ALTER TABLE `address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -49,7 +49,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `blueprint`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `blueprint` (
   `id` bigint(20) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
@@ -75,7 +75,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `booking`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `booking` (
   `id` bigint(20) NOT NULL,
   `email` varchar(255) DEFAULT NULL,
@@ -106,7 +106,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `category`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `category` (
   `id` bigint(20) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
@@ -129,7 +129,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `confirmationtoken`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `confirmationtoken` (
   `tokenId` bigint(20) NOT NULL,
   `confirmationToken` varchar(255) DEFAULT NULL,
@@ -146,8 +146,33 @@ CREATE TABLE `confirmationtoken` (
 
 LOCK TABLES `confirmationtoken` WRITE;
 /*!40000 ALTER TABLE `confirmationtoken` DISABLE KEYS */;
-INSERT INTO `confirmationtoken` VALUES (10,'81ffaceb-cfaf-4f9d-9fd2-012f619210e6','2019-10-04 08:21:13',9),(11,'dd861e6a-2d88-49ea-9b68-3ff3ac4ba9a6','2019-10-04 08:38:17',9),(13,'57fc2fbb-991f-49fa-9c62-bec02df2c19a','2019-10-04 17:06:23',12);
+INSERT INTO `confirmationtoken` VALUES (10,'81ffaceb-cfaf-4f9d-9fd2-012f619210e6','2019-10-04 08:21:13',9),(11,'dd861e6a-2d88-49ea-9b68-3ff3ac4ba9a6','2019-10-04 08:38:17',9),(13,'57fc2fbb-991f-49fa-9c62-bec02df2c19a','2019-10-04 17:06:23',12),(36,'217cbae0-3fe6-465c-afe5-2b1419912e21','2019-12-03 10:51:21',34),(39,'b0c50660-3b34-466d-9fb9-0b8684799180','2019-12-03 15:34:48',37),(42,'4223205b-5b95-4ad0-9bec-86775f75983b','2019-12-03 16:11:45',40),(45,'48cc8e51-89f4-41a6-9c17-ec9fee750c2a','2019-12-03 16:57:26',43),(46,'d13f927d-1c26-48f1-8980-ee1ea0e82179','2019-12-03 17:10:42',43),(49,'4374966e-f0ed-44fc-9cac-fb2e995fb8b4','2019-12-04 12:07:55',47);
 /*!40000 ALTER TABLE `confirmationtoken` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `coordinate`
+--
+
+DROP TABLE IF EXISTS `coordinate`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `coordinate` (
+  `id` bigint(20) NOT NULL,
+  `latitude` float NOT NULL,
+  `longitude` float NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `coordinate`
+--
+
+LOCK TABLES `coordinate` WRITE;
+/*!40000 ALTER TABLE `coordinate` DISABLE KEYS */;
+INSERT INTO `coordinate` VALUES (1,10.7683,106.687),(2,10.7684,106.699),(3,10.8403,106.757),(4,10.8577,106.734),(5,10.7614,106.681),(6,10.7538,106.662);
+/*!40000 ALTER TABLE `coordinate` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -156,7 +181,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `details`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `details` (
   `id` bigint(20) NOT NULL,
   `bathrooms` int(11) NOT NULL,
@@ -179,7 +204,7 @@ CREATE TABLE `details` (
 
 LOCK TABLES `details` WRITE;
 /*!40000 ALTER TABLE `details` DISABLE KEYS */;
-INSERT INTO `details` VALUES (1,2,2,'Đông Bắc','1 trệt + 1 lầu','Sổ hồng riêng',20,'Nhà mặt tiền Quận 1, nhà đang cho thuê, sổ hồng chính chủ',665,'Gần chợ, siêu thị',4),(2,2,2,'Đông Bắc','1 trệt + 1 lầu','Sổ hồng riêng',20,'Nhà mặt tiền Quận 1, nhà đang cho thuê, sổ hồng chính chủ',665,'Gần chợ, siêu thị',50),(3,3,3,'Tây','1 trệt + 1 lầu','Sổ hồng riêng',17,'Bán nhà Quận Thủ Đức. Khu dân cư an ninh, yên tĩnh, không ngập nước, gần trường THPT Bách Việt',456,'Gần chợ, siêu thị, gần trường học, gần công viên, trung tâm',50),(4,2,1,'Tây','1 trệt + 1 lầu','Sổ hồng riêng',17,'Bán nhà Quận Thủ Đức. Khu dân cư an ninh, yên tĩnh, không ngập nước, gần trường THPT Bách Việt',434,'Gần chợ, siêu thị, gần trường học, gần công viên, trung tâm',50),(5,1,2,'Tây','1 trệt + 1 lầu','Sổ hồng riêng',9,'Bán nhà riêng quận 5, đang cho thuê 6tr/tháng sổ hồng chính chủ',37,'Gần chợ, siêu thị, gần trường học',4),(6,1,2,'Đông','1 trệt + 1 lầu','Sổ hồng riêng',7,'Bán nhà riêng quận 5, Sổ hồng chính chủ - Pháp lý minh bạch, rõ ràng',24,'Gần chợ, siêu thị, gần trường học',4);
+INSERT INTO `details` VALUES (1,2,2,'Đông Bắc','1 trệt + 1 lầu','Sổ hồng riêng',20,'Nhà mặt tiền Quận 1, nhà đang cho thuê, sổ hồng chính chủ',665,'Gần chợ, siêu thị',4),(2,2,2,'Đông Bắc','1 trệt + 1 lầu','Sổ hồng riêng',20,'Nhà mặt tiền Quận 1, nhà đang cho thuê, sổ hồng chính chủ',665,'Gần chợ, siêu thị',50),(3,3,3,'Tây','1 trệt + 1 lầu','Sổ hồng riêng',17,'Bán nhà Quận Thủ Đức. Khu dân cư an ninh, yên tĩnh, không ngập nước, gần trường THPT Bách Việt',456,'Gần chợ, siêu thị, gần trường học, gần công viên, trung tâm',50),(4,2,1,'Tây','1 trệt + 1 lầu','Sổ hồng riêng',17,'Bán nhà Quận Thủ Đức. Khu dân cư an ninh, yên tĩnh, không ngập nước, gần trường THPT Bách Việt',434,'Gần chợ, siêu thị, gần trường học, gần công viên, trung tâm',50),(5,1,2,'Tây','1 trệt + 1 lầu','Sổ hồng riêng',9,'Bán nhà riêng quận 5, đang cho thuê 6tr/tháng sổ hồng chính chủ',37,'Gần chợ, siêu thị, gần trường học',4),(6,0,0,'Đông','1 trệt + 1 lầu','Sổ hồng riêng',7,'Bán nhà riêng quận 5, Sổ hồng chính chủ - Pháp lý minh bạch, rõ ràng',24,'Gần chợ, siêu thị, gần trường học',4),(29,2,3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `details` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -189,7 +214,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `district`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `district` (
   `id` bigint(20) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
@@ -218,7 +243,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `favoritetrade`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `favoritetrade` (
   `tradeId` bigint(20) NOT NULL,
   `userId` bigint(20) NOT NULL,
@@ -242,7 +267,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `hibernate_sequence`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `hibernate_sequence` (
   `next_val` bigint(20) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -254,7 +279,7 @@ CREATE TABLE `hibernate_sequence` (
 
 LOCK TABLES `hibernate_sequence` WRITE;
 /*!40000 ALTER TABLE `hibernate_sequence` DISABLE KEYS */;
-INSERT INTO `hibernate_sequence` VALUES (31),(31),(31),(31),(31),(31),(31),(31),(31),(31),(31),(31),(31),(31);
+INSERT INTO `hibernate_sequence` VALUES (50),(50),(50),(50),(50),(50),(50),(50),(50),(50),(50),(50),(50),(50);
 /*!40000 ALTER TABLE `hibernate_sequence` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -264,7 +289,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `image`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `image` (
   `id` bigint(20) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
@@ -289,7 +314,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `information`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `information` (
   `id` int(11) NOT NULL,
   `contact` varchar(255) DEFAULT NULL,
@@ -307,12 +332,36 @@ LOCK TABLES `information` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `job`
+--
+
+DROP TABLE IF EXISTS `job`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `job` (
+  `id` bigint(20) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `job`
+--
+
+LOCK TABLES `job` WRITE;
+/*!40000 ALTER TABLE `job` DISABLE KEYS */;
+INSERT INTO `job` VALUES (31,'Giáo viên'),(35,'Lập trình viên'),(38,'Lập trình viên'),(41,'Lập trình viên'),(44,'Lập trình viên'),(48,'Lập trình viên');
+/*!40000 ALTER TABLE `job` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `menu`
 --
 
 DROP TABLE IF EXISTS `menu`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `menu` (
   `id` bigint(20) NOT NULL,
   `icon` varchar(255) DEFAULT NULL,
@@ -337,7 +386,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `news`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `news` (
   `id` bigint(20) NOT NULL,
   `composeDate` datetime DEFAULT NULL,
@@ -364,7 +413,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `province`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `province` (
   `id` bigint(20) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
@@ -390,7 +439,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `realestatekind`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `realestatekind` (
   `id` bigint(20) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
@@ -414,7 +463,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `realimage`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `realimage` (
   `id` bigint(20) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
@@ -441,7 +490,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `request`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `request` (
   `id` bigint(20) NOT NULL,
   `email` varchar(255) DEFAULT NULL,
@@ -475,7 +524,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `role` (
   `id` bigint(20) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
@@ -489,7 +538,7 @@ CREATE TABLE `role` (
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` VALUES (1,'ADMIN'),(2,'USER'),(4,'HR'),(8,'MANAGER');
+INSERT INTO `role` VALUES (1,'ADMIN'),(2,'USER'),(4,'MANAGER'),(8,'HR');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -499,7 +548,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `trade`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `trade` (
   `id` bigint(20) NOT NULL,
   `cost` bigint(20) DEFAULT NULL,
@@ -510,12 +559,15 @@ CREATE TABLE `trade` (
   `realEstateKindId` bigint(20) DEFAULT NULL,
   `tradeKindId` bigint(20) DEFAULT NULL,
   `userId` bigint(20) DEFAULT NULL,
+  `tradeStatus` smallint(6) DEFAULT NULL,
+  `coordinateId` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKq3anaqws3f17pky65jkx1il75` (`addressId`),
   KEY `FKlpws3d4em5htg1c42jejl2ium` (`detailsId`),
   KEY `FK2jy9tpeixc0vrvv7y68ynyuyp` (`realEstateKindId`),
   KEY `FKfbw184hpw3cco4kcqi5bmdfgo` (`tradeKindId`),
-  KEY `FKd986y1i64s1k88weqamt2p6t5` (`userId`)
+  KEY `FKd986y1i64s1k88weqamt2p6t5` (`userId`),
+  KEY `FKpepp1nyu7djyad4ncuih8nep` (`coordinateId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -525,7 +577,7 @@ CREATE TABLE `trade` (
 
 LOCK TABLES `trade` WRITE;
 /*!40000 ALTER TABLE `trade` DISABLE KEYS */;
-INSERT INTO `trade` VALUES (1,40000000000,'Nhà mặt tiền quận 1 thuận tiện kinh doanh',2,1,1,3,1,1),(2,53000000000,'Nhà quận 1 rộng rãi thoáng mát',0,2,2,3,1,2),(3,3800000000,'Bán nhà hẻm xe hơi phường Hiệp Bình Phước, Quận Thủ Đức, hướng Tây',0,3,3,1,2,2),(4,5100000000,'Bán nhà hẻm xe hơi phường Hiệp Bình Phước, Quận Thủ Đức, hướng Tây',0,4,4,2,2,1),(5,3300000000,'Bán nhà riêng quận 5 đang cho thuê 6tr/tháng',0,5,5,3,2,2),(6,3700000000,'Bán nhà riêng quận 5 Nhà 3 tầng mặt tiền cần thuê gấp',0,6,6,3,2,1);
+INSERT INTO `trade` VALUES (1,40000000000,'Nhà mặt tiền quận 1 thuận tiện kinh doanh',2,1,1,3,1,1,NULL,1),(2,53000000000,'Nhà quận 1 rộng rãi thoáng mát',0,2,2,3,1,2,NULL,2),(3,3800000000,'Bán nhà hẻm xe hơi phường Hiệp Bình Phước, Quận Thủ Đức, hướng Tây',0,3,3,1,2,2,NULL,3),(4,5100000000,'Bán nhà hẻm xe hơi phường Hiệp Bình Phước, Quận Thủ Đức, hướng Tây',0,4,4,2,2,1,NULL,4),(5,3300000000,'Bán nhà riêng quận 5 đang cho thuê 6tr/tháng',0,5,5,3,2,2,NULL,5),(6,3700000000,'Bán nhà riêng quận 5',0,6,6,3,2,1,3,6);
 /*!40000 ALTER TABLE `trade` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -535,7 +587,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tradekind`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `tradekind` (
   `id` bigint(20) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
@@ -559,7 +611,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `user` (
   `id` bigint(20) NOT NULL,
   `birthdate` datetime DEFAULT NULL,
@@ -570,8 +622,11 @@ CREATE TABLE `user` (
   `phone` varchar(255) DEFAULT NULL,
   `userKindId` bigint(20) DEFAULT NULL,
   `active` bit(1) NOT NULL,
+  `jobId` bigint(20) DEFAULT NULL,
+  `dateFormat` tinyblob,
   PRIMARY KEY (`id`),
-  KEY `FKr3ev5cp30260s7n0eni85a8q3` (`userKindId`)
+  KEY `FKr3ev5cp30260s7n0eni85a8q3` (`userKindId`),
+  KEY `FK323s8f8mb3rgqx6p7tdbm1r0j` (`jobId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -581,7 +636,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (2,'1997-06-05 00:00:00','danhthanh0605@gmail.com',_binary '\0','Danh Thanh','werf1651','0123456789',2,_binary '\0'),(3,'1991-11-30 11:57:24','152032545@gmail.com',_binary '\0','Lê Thị Thảo Trâm','dfgsfgsdfg','0123456789',NULL,_binary '\0'),(1,NULL,'henrynguyen02081997@gmail.com',_binary '\0','Nguyễn Thị Ngọc Huyền',NULL,NULL,NULL,_binary ''),(7,NULL,'15520325@gm.uit.edu.vn',_binary '\0','HUYỀN NGUYỄN THỊ NGỌC',NULL,NULL,NULL,_binary ''),(12,NULL,'jessicakelny02081997@gmail.com',_binary '\0','Jessica','$2a$10$6JSBBfIfsZkf6V5ETitYROnvQz.Uz7z7YscjCB8IBnmqBWrc6XpUa','0123456789',NULL,_binary '');
+INSERT INTO `user` VALUES (2,'1997-06-05 00:00:00','danhthanh0605@gmail.com',_binary '\0','Danh Thanh','','0123456789',2,_binary '\0',31,NULL),(3,'1991-11-30 11:57:24','152032545@gmail.com',_binary '\0','Lê Thị Thảo Trâm','dfgsfgsdfg','0123456789',NULL,_binary '\0',NULL,NULL),(1,NULL,'henrynguyen02081997@gmail.com',_binary '\0','Nguyễn Thị Ngọc Huyền',NULL,NULL,NULL,_binary '',NULL,NULL),(7,NULL,'15520325@gm.uit.edu.vn',_binary '\0','HUYỀN NGUYỄN THỊ NGỌC',NULL,NULL,NULL,_binary '',NULL,NULL),(12,NULL,'jessicakelny02081997@gmail.com',_binary '\0','Jessica','$2a$10$6JSBBfIfsZkf6V5ETitYROnvQz.Uz7z7YscjCB8IBnmqBWrc6XpUa','0123456789',NULL,_binary '',NULL,NULL),(47,'2019-08-12 00:00:00','realestate.uit.edu@gmail.com',_binary '','huyền','$2a$10$NM1BzL.fudWDRMclu92d1e5/1m7MM6a33tUIQ66cJgVoQ3MLiozLe',NULL,NULL,_binary '',48,NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -591,7 +646,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `user_role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `user_role` (
   `userId` bigint(20) NOT NULL,
   `roleId` bigint(20) NOT NULL,
@@ -607,7 +662,7 @@ CREATE TABLE `user_role` (
 
 LOCK TABLES `user_role` WRITE;
 /*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
-INSERT INTO `user_role` VALUES (2,2),(8,2),(9,2),(12,2),(30,2);
+INSERT INTO `user_role` VALUES (1,1),(2,2),(7,1),(8,2),(9,2),(12,2),(34,2),(37,2),(40,2),(43,2),(47,2);
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -617,7 +672,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `userkind`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `userkind` (
   `id` bigint(20) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
@@ -641,7 +696,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `ward`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `ward` (
   `id` bigint(20) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
@@ -673,4 +728,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-09 17:28:21
+-- Dump completed on 2019-12-04 14:48:41
