@@ -3,15 +3,12 @@
     position: relative;
     width:50vw;
     height:100vh;
-    overflow: hidden;;
     .map-frame {
       position: relative;
       height: inherit; 
       width: inherit;
-      overflow: hidden;
       #map {
-        height: 100%;
-        overflow: auto;
+        height: 99%;
       }
     }
   }
@@ -22,4 +19,9 @@
 
 .column {
   flex: 50%;
+}
+.desc{
+  color: #FD784F;
+  font-size: 1.5em;
+  font-weight: bold;
 }
