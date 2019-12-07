@@ -1,15 +1,27 @@
-.map-container {
-    position: absolute;
-    top: 60px;
-    left: 0;
-    right: 0;
-    bottom: 0;
+.map-wrapper{
+  .map-container {
+    position: relative;
+    width:50vw;
+    height:100vh;
+    .map-frame {
+      position: relative;
+      height: inherit; 
+      width: inherit;
+      #map {
+        height: 99%;
+      }
+    }
   }
-  
-  .map-frame {
-    height: 100%;
-  }
-  
-  #map {
-    height: 100%;
-  }
+}
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 50%;
+}
+.desc{
+  color: #FD784F;
+  font-size: 1.5em;
+  font-weight: bold;
+}

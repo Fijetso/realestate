@@ -18,6 +18,8 @@ export const environment = {
   heremap:{
     appId:'dmdRFi5x5pT0zuy09gle',
     appCode:'KLtdq3MAUJruxhiJ2GyAFQ',
-    apiKey:'Rqsg3eYkotn3qt2GajbTQzc8CSA-4u3yZvLIdq8C7Kc'
+    apiKey:'Rqsg3eYkotn3qt2GajbTQzc8CSA-4u3yZvLIdq8C7Kc',
+    defaultLang:'vie',
+    secondLang:'eng'
   }
 };
