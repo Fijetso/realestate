@@ -3,6 +3,7 @@ package vn.edu.uit.realestate.Relational.Model;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,7 +20,7 @@ public class Role {
 	@GeneratedValue
 	private long id;
 	private String name;
-	@ManyToMany(mappedBy="roles", fetch=FetchType.LAZY)
+	@ManyToMany(mappedBy="roles",cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch=FetchType.LAZY)
 	private List<User> users;
 	public Role() {
 		super();
