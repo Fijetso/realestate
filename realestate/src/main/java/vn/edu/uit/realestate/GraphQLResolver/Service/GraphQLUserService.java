@@ -73,7 +73,7 @@ public class GraphQLUserService {
 				}
 				else {
 					Job newJob = new Job(job);
-//					newJob = jobRepository.save(newJob);
+					newJob = jobRepository.save(newJob);
 					newUser.setJob(newJob);
 				}
 			}

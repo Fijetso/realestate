@@ -18,7 +18,7 @@ public class Job {
 	@GeneratedValue
 	private Long id;
 	private String name;
-	@OneToMany(mappedBy="job", fetch=FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@OneToMany(mappedBy="job", fetch=FetchType.LAZY)
 	private List<User> users;
 
 	public Job() {
