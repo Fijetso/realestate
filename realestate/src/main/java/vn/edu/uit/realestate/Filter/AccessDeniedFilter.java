@@ -16,34 +16,31 @@ import org.springframework.web.util.NestedServletException;
 
 public class AccessDeniedFilter extends GenericFilterBean {
 
-@Override
-public void doFilter(
-        ServletRequest request,
-        ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
+			throws IOException, ServletException {
 
-    try {
-        filterChain.doFilter(request, response);
-    } catch (Exception e) {
+		try {
+			filterChain.doFilter(request, response);
+		} catch (Exception e) {
 
-        if (e instanceof NestedServletException &&
-                ((NestedServletException) e).getRootCause() instanceof AccessDeniedException) {
+			if (e instanceof NestedServletException
+					&& ((NestedServletException) e).getRootCause() instanceof AccessDeniedException) {
 
-            HttpServletRequest rq = (HttpServletRequest) request;
-            HttpServletResponse rs = (HttpServletResponse) response;
+				HttpServletRequest rq = (HttpServletRequest) request;
+				HttpServletResponse rs = (HttpServletResponse) response;
 
-            if (isAjax(rq)) {
-                rs.sendError(HttpStatus.FORBIDDEN.value());
-            } else {
-                rs.sendRedirect("/");
-            }
-        }
-    }
-}
+//				if (isAjax(rq)) {
+					rs.sendError(HttpStatus.FORBIDDEN.value());
+//            } else {
+//                rs.sendRedirect("/");
+				}
+			}
+		}
 
-private Boolean isAjax(HttpServletRequest request) {
-    return request.getContentType() != null &&
-           request.getContentType().contains("application/json") &&
-           request.getRequestURI() != null &&
-           (request.getRequestURI().contains("api") || request.getRequestURI().contains("rest"));
-    }
+	private Boolean isAjax(HttpServletRequest request) {
+		return request.getContentType() != null && request.getContentType().contains("application/json")
+				&& request.getRequestURI() != null
+				&& (request.getRequestURI().contains("api") || request.getRequestURI().contains("rest"));
+	}
 }

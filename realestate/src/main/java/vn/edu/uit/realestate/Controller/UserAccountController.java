@@ -3,11 +3,18 @@ package vn.edu.uit.realestate.Controller;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,9 +27,11 @@ import vn.edu.uit.realestate.Common.Common;
 import vn.edu.uit.realestate.Common.SpecificString;
 import vn.edu.uit.realestate.ExceptionHandler.ExistContentException;
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
+import vn.edu.uit.realestate.Filter.JwtTokenProvider;
 import vn.edu.uit.realestate.Relational.Model.Role;
 import vn.edu.uit.realestate.Relational.Model.User;
 import vn.edu.uit.realestate.Relational.Model.Security.ConfirmationToken;
+import vn.edu.uit.realestate.Relational.Model.Security.CustomUserDetails;
 import vn.edu.uit.realestate.Relational.Repository.ConfirmationTokenRepository;
 import vn.edu.uit.realestate.Relational.Repository.RoleRepository;
 import vn.edu.uit.realestate.Relational.Repository.UserRepository;
@@ -38,6 +47,28 @@ public class UserAccountController {
 	private ConfirmationTokenRepository confirmationTokenRepository;
 	@Autowired
 	private EmailSenderService emailSenderService;
+	@Autowired
+	private AuthenticationManager authenticationManager;
+
+	@Autowired
+	private JwtTokenProvider tokenProvider;
+
+//	@RequestMapping(value = "/login", method = RequestMethod.POST)
+//	public LoginResponse authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+//
+//		// Xác thực từ username và password.
+//		Authentication authentication = authenticationManager.authenticate(
+//				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+//
+//		// Nếu không xảy ra exception tức là thông tin hợp lệ
+//		// Set thông tin authentication vào Security Context
+//		SecurityContextHolder.getContext().setAuthentication(authentication);
+//
+//		// Trả về jwt cho người dùng.
+//		String jwt = tokenProvider.generateToken((CustomUserDetails) authentication.getPrincipal());
+//		return new LoginResponse(jwt);
+//	}
+
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ResponseEntity<?> registerUser(@RequestBody User user) {
 		if (userRepository.findByEmail(user.getEmail()).isPresent()) {
