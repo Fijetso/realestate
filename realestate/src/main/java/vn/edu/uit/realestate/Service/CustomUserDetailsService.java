@@ -14,26 +14,42 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import vn.edu.uit.realestate.Relational.Model.User;
+import vn.edu.uit.realestate.Relational.Model.Security.CustomUserDetails;
 import vn.edu.uit.realestate.Relational.Repository.UserRepository;
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService{
+public class CustomUserDetailsService implements UserDetailsService {
 
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Optional<User> optionalUser = userRepository.findByEmail(username);
 		optionalUser.orElseThrow(() -> new UsernameNotFoundException("Email not found"));
 		User user = optionalUser.get();
-		if(user.isActive()==false) {
-				throw new BadCredentialsException("Your Account hasn't activated yet. Please check your email first");
+		if (user.isActive() == false) {
+			throw new BadCredentialsException("Your Account hasn't activated yet. Please check your email first");
 		}
 		List<GrantedAuthority> authorities = new ArrayList<>();
-		user.getRoles().forEach(authority ->
-			authorities.add(new SimpleGrantedAuthority("ROLE_"+authority.getName()))
-				);
-		return org.springframework.security.core.userdetails.User.builder().username(user.getEmail()).password(user.getPassword()).authorities(authorities).build();
+		user.getRoles()
+				.forEach(authority -> authorities.add(new SimpleGrantedAuthority("ROLE_" + authority.getName())));
+		return new CustomUserDetails(user);
+//		return org.springframework.security.core.userdetails.User.builder().username(user.getEmail())
+//				.password(user.getPassword()).authorities(authorities).disabled(!user.isActive()).build();
+	}
+	
+	public UserDetails loadUserById(Long id) {
+		Optional<User> optionalUser = userRepository.findById(id);
+		optionalUser.orElseThrow(() -> new UsernameNotFoundException("user Id="+id+" not found"));
+		User user = optionalUser.get();
+		if (user.isActive() == false) {
+			throw new BadCredentialsException("Your Account hasn't activated yet. Please check your email first");
+		}
+		List<GrantedAuthority> authorities = new ArrayList<>();
+		user.getRoles()
+				.forEach(authority -> authorities.add(new SimpleGrantedAuthority("ROLE_" + authority.getName())));
+		return org.springframework.security.core.userdetails.User.builder().username(user.getEmail())
+				.password(user.getPassword()).authorities(authorities).disabled(!user.isActive()).build();
 	}
 }

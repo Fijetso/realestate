@@ -7,18 +7,24 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import vn.edu.uit.realestate.Common.Common;
 import vn.edu.uit.realestate.Common.SpecificString;
 import vn.edu.uit.realestate.ExceptionHandler.CustomGraphQLException;
+import vn.edu.uit.realestate.Filter.JwtTokenProvider;
 import vn.edu.uit.realestate.Graph.Repository.GraphUserRepository;
 import vn.edu.uit.realestate.Relational.Model.Job;
 import vn.edu.uit.realestate.Relational.Model.Role;
 import vn.edu.uit.realestate.Relational.Model.User;
 import vn.edu.uit.realestate.Relational.Model.UserKind;
 import vn.edu.uit.realestate.Relational.Model.Security.ConfirmationToken;
+import vn.edu.uit.realestate.Relational.Model.Security.CustomUserDetails;
 import vn.edu.uit.realestate.Relational.Repository.ConfirmationTokenRepository;
 import vn.edu.uit.realestate.Relational.Repository.JobRepository;
 import vn.edu.uit.realestate.Relational.Repository.RoleRepository;
@@ -114,15 +120,23 @@ public class GraphQLUserService {
 		}
 	}
 
-	public User login(String email, String password) {
-//		UsernamePasswordAuthenticationToken authReq
-//	      = new UsernamePasswordAuthenticationToken(email, password);
-//	    Authentication auth = authManager.authenticate(authReq);
-//	    SecurityContext sc = SecurityContextHolder.getContext();
-//	    sc.setAuthentication(auth);
-//	    HttpSession session = req.getSession(true);
-//	    session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, sc);
-		return null;
+	@Autowired
+	private AuthenticationManager authenticationManager;
+	@Autowired
+	private JwtTokenProvider tokenProvider;
+	
+	public String login(final String email, final String password) {
+		// Xác thực từ username và password.
+		Authentication authentication = authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(email, password));
+
+		// Nếu không xảy ra exception tức là thông tin hợp lệ
+		// Set thông tin authentication vào Security Context
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+
+		// Trả về jwt cho người dùng.
+		String jwt = tokenProvider.generateToken((CustomUserDetails) authentication.getPrincipal());
+		return jwt;
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')")

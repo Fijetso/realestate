@@ -8,10 +8,13 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,6 +26,9 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import vn.edu.uit.realestate.Filter.JwtAuthenticationFilter;
 import vn.edu.uit.realestate.Relational.Model.Role;
 import vn.edu.uit.realestate.Relational.Model.User;
 import vn.edu.uit.realestate.Relational.Model.Security.OAuth2UserInfo;
@@ -55,19 +61,34 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        return new JwtAuthenticationFilter();
+	}
+
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		// Get AuthenticationManager bean
+		return super.authenticationManagerBean();
+	}
+
+	@Bean
 	public PasswordEncoder encoder() {
 		return new BCryptPasswordEncoder();
 	}
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.authenticationProvider(authenticationProvider());
+//		auth.authenticationProvider(authenticationProvider());
+		auth.userDetailsService(userDetailsService) // Cung cáp userservice cho spring security
+        .passwordEncoder(encoder()); // cung cấp password encoder
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
-		http.authorizeRequests()
+		http.cors() // Ngăn chặn request từ một domain khác
+				.and().authorizeRequests()
 				.antMatchers("/", "/register", "/confirm-account", "/reset-password/**", "/login", "/logout")
 				.permitAll();
 
@@ -77,19 +98,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		// Chỉ cho phép user có quyền ADMIN hoặc USER truy cập đường dẫn /user/**
 		http.authorizeRequests().antMatchers("*/user/**")
 				.access("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER') or hasRole('ROLE_USER')");
+		// Thêm một lớp Filter kiểm tra jwt
+		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+
 		// Khi người dùng đã login, với vai trò USER, Nhưng truy cập vào trang yêu cầu
 		// vai trò ADMIN, sẽ chuyển hướng tới trang /403
 		http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
-		http.authorizeRequests().antMatchers("/secured/**").authenticated().and().formLogin().and().oauth2Login()
-				.userInfoEndpoint().userService(this.oauth2UserService()).oidcUserService(this.oidcUserService());
-		http.logout().logoutSuccessUrl("/login").logoutUrl("/logout").permitAll();
+		http.authorizeRequests().antMatchers("/secured/**").authenticated()
+		.and().oauth2Login().userInfoEndpoint()
+				.userService(this.oauth2UserService()).oidcUserService(this.oidcUserService());
+		http.logout().logoutSuccessUrl("/").logoutUrl("/logout").permitAll();
 	}
 
-//
-//	@Override
-//	public void configure(WebSecurity web) {
-//		web.ignoring().antMatchers("/resources/**","/static/**","/css/**","/js/**","/images/**");
-//	}
+	@Override
+	public void configure(WebSecurity web) {
+		web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+	}
 
 	private OAuth2UserService<OAuth2UserRequest, OAuth2User> oauth2UserService() {
 		OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();

@@ -4,7 +4,7 @@ type Query {
 }
 
 type Mutation {
-	login(email: String!, password: String!): User
+	login(email: String!, password: String!): String
 	
 	register(name: String!, email: String!, password: String!, phone: String, birthdate: String, gender: Boolean, job: String,
 			userKindId: Long): User

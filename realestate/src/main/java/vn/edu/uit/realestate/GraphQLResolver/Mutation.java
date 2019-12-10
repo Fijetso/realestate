@@ -18,7 +18,7 @@ public class Mutation implements GraphQLMutationResolver {
 	@Autowired
 	GraphQLUserService userService;
 
-	public User login(final String email, final String password) {
+	public String login(final String email, final String password) {
 		return userService.login(email, password);
 	}
 	

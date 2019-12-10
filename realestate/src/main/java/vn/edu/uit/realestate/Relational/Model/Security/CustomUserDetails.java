@@ -9,17 +9,28 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import vn.edu.uit.realestate.Relational.Model.User;
 
-public class CustomUserDetails extends User implements UserDetails{
+public class CustomUserDetails implements UserDetails{
 	
-	public CustomUserDetails() {
+	private User user;
+	public CustomUserDetails(User user) {
 		super();
-		// TODO Auto-generated constructor stub
+		this.user = user;
+	}
+	
+
+	public User getUser() {
+		return user;
+	}
+
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	///học lại đoạn này khong hieu
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return getRoles()
+		return user.getRoles()
 				.stream()
 				.map(role -> new SimpleGrantedAuthority("ROLE_"+ role.getName()))
 				.collect(Collectors.toList());
@@ -27,8 +38,12 @@ public class CustomUserDetails extends User implements UserDetails{
 
 	@Override
 	public String getUsername() {
-		return super.getName();
+		return user.getEmail();
 	}
+    @Override
+    public String getPassword() {
+        return user.getPassword();
+    }
 
 	@Override
 	public boolean isAccountNonExpired() {
@@ -47,7 +62,7 @@ public class CustomUserDetails extends User implements UserDetails{
 
 	@Override
 	public boolean isEnabled() {
-		return true;
+		return user.isActive();
 	}
 
 }
