@@ -41,7 +41,7 @@ export class MarkerService {
         "img":trade.realImages[0].imageLink,
         "square":trade.details.square
       };
-        console.log(popupData);
+        // console.log(popupData);
         const marker = L.marker([lat, lon]).bindPopup(this.popupService.makeCapitalPopup(popupData))
           .addTo(map);
         // console.log(lat,lon);

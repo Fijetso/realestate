@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../../environments/environment';
 import { MarkerService } from './../../../services/map/marker.service';
 import { Component, AfterViewInit } from '@angular/core';
@@ -28,15 +29,12 @@ L.Marker.prototype.options.icon = iconDefault;
 export class MapComponent implements AfterViewInit {
 
   private map;
-  constructor(private markerService: MarkerService) { }
+  private geoJsonData;
+  private geoData
+  constructor(private markerService: MarkerService,private http: HttpClient) { }
 
   initMap() {
-    this.map = L.map('map', {
-      center: [10.823099, 106.629662],
-      zoom: 8,
-      drawControl: true
-    });
-    const tile = L.tileLayer(
+    const mapTile = L.tileLayer(
       // 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
       'https://1.base.maps.api.here.com' +
       '/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/256/png' +
@@ -47,15 +45,59 @@ export class MapComponent implements AfterViewInit {
         // attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         attribution: '&copy; <a href="http://developer.here.com">HERE</a>',
         updateWhenZooming: true,
-      })
-    tile.addTo(this.map);
-    console.log('Map view inited');
+      });
+    const streetTile =L.tileLayer(
+      // 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+      'https://1.base.maps.api.here.com' +
+      '/maptile/2.1/streettile/newest/normal.day/{z}/{x}/{y}/256/png' +
+      '?app_id=' + environment.heremap.appId + '&app_code=' + environment.heremap.appCode+
+      '&lg='+environment.heremap.defaultLang
+      , {
+        maxZoom: 19,
+        // attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        attribution: '&copy; <a href="http://developer.here.com">HERE</a>',
+        updateWhenZooming: true,
+      });
+
+      const aLabelTile =L.tileLayer(
+        // 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+        'https://1.base.maps.api.here.com' +
+        '/maptile/2.1/alabeltile/newest/normal.day/{z}/{x}/{y}/256/png' +
+        '?app_id=' + environment.heremap.appId + '&app_code=' + environment.heremap.appCode+
+        '&lg='+environment.heremap.defaultLang
+        , {
+          maxZoom: 19,
+          // attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+          attribution: '&copy; <a href="http://developer.here.com">HERE</a>',
+          updateWhenZooming: true,
+        });
+      this.map = L.map('map', {
+        center: [10.823099, 106.629662],
+        zoom: 8,
+        drawControl: true,
+        layers: [mapTile,streetTile]
+      });
+      const baseMaps = {
+        "Default": mapTile,
+        "Streets": streetTile,
+    };
+      L.control.layers(baseMaps).addTo(this.map);
+    // mapTile.addTo(this.map);
   }
 
   ngAfterViewInit(): void {
     this.initMap();
-    // this.addControls(this.map);
+    this.loadGeoJsonData();
     this.markerService.makeCapitalMarkers(this.map);
+  }
+  loadGeoJsonData() {
+    this.geoJsonData = this.getGeoJsonFile();
+  }
+  getGeoJsonFile(): any {
+    return this.http.get('assets/map/vietnam-ward-map.geojson').subscribe(geoData=> {
+      this.geoData= geoData;
+      console.log(this.geoData.features.map(feature =>feature));
+    }, error => console.error(error));
   }
   addControls(map: L.Map) {
     const drawnItems = L.featureGroup();

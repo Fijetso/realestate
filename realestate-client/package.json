@@ -29,6 +29,7 @@
     "@angular/router": "^8.2.14",
     "@asymmetrik/ngx-leaflet": "^6.0.1",
     "@fortawesome/fontawesome-free": "^5.8.1",
+    "@maptiler/geocoder": "^1.1.0",
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
     "@types/googlemaps": "^3.30.19",
