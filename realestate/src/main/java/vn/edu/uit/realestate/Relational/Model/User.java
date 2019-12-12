@@ -45,7 +45,7 @@ public class User {
 	@Past(message = "BirthDate must be in the past")
 	private Date birthdate;
 	private boolean gender;
-	@ManyToOne(cascade =  {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "jobId", referencedColumnName = "id")
 	private Job job;
 	private boolean active;
@@ -60,7 +60,7 @@ public class User {
 	@JsonIgnore
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	private List<FavoriteTrade> favoriteTrades;
-	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	@ManyToMany( fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role", joinColumns = {
 			@JoinColumn(name = "userId", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "roleId", referencedColumnName = "id") })
