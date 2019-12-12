@@ -92,6 +92,7 @@ import { SearchPageComponent } from './core/ui/search-page/search-page.component
 import { AccountManagementComponent } from './core/ui/account-management/account-management.component';
 import {HereMapsModule } from 'ng2-heremaps';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { PopupRendererComponent } from './core/ui/map/popup-renderer/popup-renderer.component';
 
 @NgModule({
   declarations: [
@@ -136,7 +137,8 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     SearchPageComponent,
     AccountManagementComponent,
     MapModuleComponent,
-    MapComponent
+    MapComponent,
+    PopupRendererComponent
   ],
   imports: [
     OwlModule,
