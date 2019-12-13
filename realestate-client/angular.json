@@ -36,7 +36,9 @@
               "node_modules/hammerjs/hammer.min.js",
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.js",
-              "node_modules/owl.carousel/dist/owl.carousel.min.js"
+              "node_modules/owl.carousel/dist/owl.carousel.min.js",
+              "node_modules/auth0-js/build/auth0.js",
+              "node_modules/angular-auth0/dist/angular-auth0.js"
             ],
             "es5BrowserSupport": true
           },
