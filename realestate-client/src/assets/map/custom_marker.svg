@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="36px" height="43px" viewBox="0 0 36 43" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
+    <title>Group 16</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="12.2780762 0.333333333 21.9570312 6 30.5244141 10.8779297 24.7021484 22 2.43261719 28.3333333 0.908203125 18.1171875 8.1484375 8"></polygon>
+        <linearGradient x1="50%" y1="50.6151908%" x2="50%" y2="97.2044604%" id="linearGradient-3">
+            <stop stop-color="#000000" stop-opacity="0.03" offset="0%"></stop>
+            <stop stop-color="#000000" stop-opacity="0.5" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-16">
+            <g id="Shape" transform="translate(9.000000, 22.142857)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="Mask"></g>
+                <path d="M6.34255409,20.1564331 L26.2116035,9.15970822 C29.9467641,5.97607422 29.9467641,-0.893018244 26.1067227,-4.21517666 C24.0317368,-6.01108534 21.2727275,-7 18.3384157,-7 C15.4041039,-7 12.6450945,-6.01108534 10.5701087,-4.21567236 C6.73006726,-0.893513941 6.25342777,5.35672412 9.53662596,9.14434162 L6.34255409,20.1564331 Z" fill="url(#linearGradient-3)" fill-rule="nonzero" mask="url(#mask-2)"></path>
+            </g>
+            <path d="M15.3440718,42.2857143 L27.344793,25.2329304 C31.8459435,19.3290669 31.1950994,9.62474987 25.9515798,4.4666618 C23.1182174,1.67827727 19.3508311,0.142857143 15.3440718,0.142857143 C11.3373126,0.142857143 7.56992626,1.67827727 4.73656388,4.46589216 C-0.506955719,9.62398023 -1.15779986,19.3282972 3.32535855,25.2090718 L15.3440718,42.2857143 Z" id="Shape" fill="#0098DA" fill-rule="nonzero"></path>
+            <polygon id="" fill="#FFFFFF" fill-rule="nonzero" points="13.6625541 20.8942857 9.52255409 20.8942857 9.52255409 14.2142857 7.02255409 14.2142857 15.3425541 6.71428571 23.6625541 14.2142857 21.1625541 14.2142857 21.1625541 20.8942857 17.0225541 20.8942857 17.0225541 15.8942857 13.6625541 15.8942857"></polygon>
+        </g>
+    </g>
+</svg>
