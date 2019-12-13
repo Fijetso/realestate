@@ -20,9 +20,9 @@
     "lib": [
       "es2018",
       "dom"
-    ],
-    "angularCompilerOptions": {   
-      "enableIvy": true  
-    } 
-  }
+    ]
+  },
+  "angularCompilerOptions": {   
+    "enableIvy": true  
+  } 
 }
