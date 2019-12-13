@@ -9,6 +9,8 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -25,8 +27,10 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import vn.edu.uit.realestate.Common.Common;
+import vn.edu.uit.realestate.Security.AuthProvider;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 
 @Entity
 //@JsonIgnoreProperties("trades")
@@ -39,6 +43,11 @@ public class User {
 	private String name;
 	@Email(message = "Please provide a valid email address")
 	private String email;
+    private String imageUrl;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private AuthProvider provider;
+    private String providerId;
 	@Pattern(regexp = "([0-9]{10}$)", message = "Please provide a valid phone number")
 	private String phone;
 	private String password;
@@ -112,6 +121,30 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
+	public AuthProvider getProvider() {
+		return provider;
+	}
+
+	public void setProvider(AuthProvider provider) {
+		this.provider = provider;
+	}
+
+	public String getProviderId() {
+		return providerId;
+	}
+
+	public void setProviderId(String providerId) {
+		this.providerId = providerId;
 	}
 
 	public String getPhone() {

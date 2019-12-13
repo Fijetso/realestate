@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 
-import vn.edu.uit.realestate.Filter.JwtTokenProvider;
 import vn.edu.uit.realestate.Relational.Model.Address;
 import vn.edu.uit.realestate.Relational.Model.BluePrint;
 import vn.edu.uit.realestate.Relational.Model.Details;
@@ -26,6 +25,7 @@ import vn.edu.uit.realestate.Relational.Repository.RealEstateKindRepository;
 import vn.edu.uit.realestate.Relational.Repository.RealImageRepository;
 import vn.edu.uit.realestate.Relational.Repository.TradeKindRepository;
 import vn.edu.uit.realestate.Relational.Repository.UserRepository;
+import vn.edu.uit.realestate.Security.JwtTokenProvider;
 import vn.edu.uit.realestate.Service.EntityService.TradeService;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

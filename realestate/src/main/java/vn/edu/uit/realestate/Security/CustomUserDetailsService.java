@@ -1,8 +1,10 @@
-package vn.edu.uit.realestate.Service;
+package vn.edu.uit.realestate.Security;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -24,6 +26,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	UserRepository userRepository;
 
 	@Override
+	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Optional<User> optionalUser = userRepository.findByEmail(username);
 		optionalUser.orElseThrow(() -> new UsernameNotFoundException("Email not found"));
@@ -38,10 +41,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 //		return org.springframework.security.core.userdetails.User.builder().username(user.getEmail())
 //				.password(user.getPassword()).authorities(authorities).disabled(!user.isActive()).build();
 	}
-	
+
+	@Transactional
 	public UserDetails loadUserById(Long id) {
 		Optional<User> optionalUser = userRepository.findById(id);
-		optionalUser.orElseThrow(() -> new UsernameNotFoundException("user Id="+id+" not found"));
+		optionalUser.orElseThrow(() -> new UsernameNotFoundException("user Id=" + id + " not found"));
 		User user = optionalUser.get();
 		if (user.isActive() == false) {
 			throw new BadCredentialsException("Your Account hasn't activated yet. Please check your email first");
@@ -49,7 +53,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		user.getRoles()
 				.forEach(authority -> authorities.add(new SimpleGrantedAuthority("ROLE_" + authority.getName())));
-		return org.springframework.security.core.userdetails.User.builder().username(user.getEmail())
-				.password(user.getPassword()).authorities(authorities).disabled(!user.isActive()).build();
+
+		return UserPrincipal.create(user);
+//		return org.springframework.security.core.userdetails.User.builder().username(user.getEmail())
+//				.password(user.getPassword()).authorities(authorities).disabled(!user.isActive()).build();
 	}
 }

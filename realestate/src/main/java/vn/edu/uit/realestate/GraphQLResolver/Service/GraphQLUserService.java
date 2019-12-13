@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import vn.edu.uit.realestate.Common.Common;
 import vn.edu.uit.realestate.Common.SpecificString;
 import vn.edu.uit.realestate.ExceptionHandler.CustomGraphQLException;
-import vn.edu.uit.realestate.Filter.JwtTokenProvider;
 import vn.edu.uit.realestate.Graph.Repository.GraphUserRepository;
 import vn.edu.uit.realestate.Relational.Model.Job;
 import vn.edu.uit.realestate.Relational.Model.Role;
@@ -30,6 +29,7 @@ import vn.edu.uit.realestate.Relational.Repository.JobRepository;
 import vn.edu.uit.realestate.Relational.Repository.RoleRepository;
 import vn.edu.uit.realestate.Relational.Repository.UserKindRepository;
 import vn.edu.uit.realestate.Relational.Repository.UserRepository;
+import vn.edu.uit.realestate.Security.JwtTokenProvider;
 import vn.edu.uit.realestate.Service.EmailSenderService;
 import vn.edu.uit.realestate.Service.ModelMapperService;
 
@@ -135,8 +135,9 @@ public class GraphQLUserService {
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
 		// Trả về jwt cho người dùng.
-		String jwt = tokenProvider.generateToken((CustomUserDetails) authentication.getPrincipal());
-		return jwt;
+		 String token = tokenProvider.createToken(authentication);
+//		String jwt = tokenProvider.generateToken((CustomUserDetails) authentication.getPrincipal());
+		return token;
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')")

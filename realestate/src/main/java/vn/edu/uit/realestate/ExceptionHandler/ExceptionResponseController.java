@@ -31,6 +31,16 @@ public class ExceptionResponseController extends ResponseEntityExceptionHandler 
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),ex.getMessage(), request.getDescription(false));
 		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
 	}
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public final ResponseEntity<Object> handleResourceNotFoundException(Exception ex, WebRequest request) throws Exception {
+		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),ex.getMessage(), request.getDescription(false));
+		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
+	}
+	@ExceptionHandler(BadRequestException.class)
+	public final ResponseEntity<Object> handleBadRequestException(Exception ex, WebRequest request) throws Exception {
+		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),ex.getMessage(), request.getDescription(false));
+		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.BAD_REQUEST);
+	}
 	@ExceptionHandler(ExistContentException.class)
 	public final ResponseEntity<Object> handleExistContentException(Exception ex, WebRequest request) throws Exception {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),ex.getMessage(), request.getDescription(false));
