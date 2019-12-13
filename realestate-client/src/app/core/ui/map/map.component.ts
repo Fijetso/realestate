@@ -29,9 +29,22 @@ L.Marker.prototype.options.icon = iconDefault;
 export class MapComponent implements AfterViewInit {
 
   private map;
-  private geoJsonData;
   private geoData
-  constructor(private markerService: MarkerService,private http: HttpClient) { }
+  private curLat;
+  private curLong;
+  private geoJsonData;
+  constructor(private markerService: MarkerService,private http: HttpClient) { 
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(pos => {
+      console.info(pos.coords);
+      this.curLat = pos.coords.latitude;
+      this.curLong = pos.coords.longitude;
+      // this.browserLocation.lat = pos.coords.latitude;
+      // this.browserLocation.lng = pos.coords.longitude;
+      console.info(this.curLat,this.curLong);
+      })
+    }
+  }
 
   initMap() {
     const mapTile = L.tileLayer(
@@ -96,7 +109,7 @@ export class MapComponent implements AfterViewInit {
   getGeoJsonFile(): any {
     return this.http.get('assets/map/vietnam-ward-map.geojson').subscribe(geoData=> {
       this.geoData= geoData;
-      console.log(this.geoData.features.map(feature =>feature));
+      // console.log(this.geoData.features.map(feature =>feature));
     }, error => console.error(error));
   }
   addControls(map: L.Map) {
