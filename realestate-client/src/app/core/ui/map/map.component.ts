@@ -27,12 +27,12 @@ L.Marker.prototype.options.icon = iconDefault;
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements AfterViewInit {
-
-  private map;
-  private geoData
-  private curLat;
-  private curLong;
-  private geoJsonData;
+  protected map;
+  protected geoData
+  protected curLat;
+  protected curLong;
+  protected geoJsonData;
+  protected layer
   constructor(private markerService: MarkerService,private http: HttpClient) { 
     if(navigator.geolocation){
       navigator.geolocation.getCurrentPosition(pos => {
@@ -41,7 +41,7 @@ export class MapComponent implements AfterViewInit {
       this.curLong = pos.coords.longitude;
       // this.browserLocation.lat = pos.coords.latitude;
       // this.browserLocation.lng = pos.coords.longitude;
-      console.info(this.curLat,this.curLong);
+      // console.info(this.curLat,this.curLong);
       })
     }
   }
@@ -59,6 +59,7 @@ export class MapComponent implements AfterViewInit {
         attribution: '&copy; <a href="http://developer.here.com">HERE</a>',
         updateWhenZooming: true,
       });
+    this.layer= mapTile;
     const streetTile =L.tileLayer(
       // 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
       'https://1.base.maps.api.here.com' +
@@ -104,13 +105,23 @@ export class MapComponent implements AfterViewInit {
     this.markerService.makeCapitalMarkers(this.map);
   }
   loadGeoJsonData() {
-    this.geoJsonData = this.getGeoJsonFile();
+    this.getGeoJsonFile(); 
   }
   getGeoJsonFile(): any {
     return this.http.get('assets/map/vietnam-ward-map.geojson').subscribe(geoData=> {
       this.geoData= geoData;
-      // console.log(this.geoData.features.map(feature =>feature));
+      const feature = this.geoData.features.map(feature =>feature);
+      console.info(feature);
+      L.geoJSON(this.geoData,{style : this.setStyle()}).addTo(this.map);
     }, error => console.error(error));
+  }
+  setStyle(): L.PathOptions | L.StyleFunction<any> {
+    return {
+      fillColor : 'red',
+      color : 'blue',
+      fillOpacity: 0.2,
+      weight: 0.5
+    }
   }
   addControls(map: L.Map) {
     const drawnItems = L.featureGroup();
@@ -121,5 +132,10 @@ export class MapComponent implements AfterViewInit {
       }
     });
     map.addControl(drawControl);
+  }
+  onEachFeature(feature, layer): any{
+    if(feature.properties){
+      layer.bindPopup(feature.properties.QuanHuyen)
+    }
   }
 }
