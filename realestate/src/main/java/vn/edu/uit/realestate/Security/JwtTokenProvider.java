@@ -12,7 +12,6 @@ import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import vn.edu.uit.realestate.Configuration.AppProperties;
 import vn.edu.uit.realestate.ExceptionHandler.JwtTokenMissingException;
-import vn.edu.uit.realestate.Relational.Model.Security.CustomUserDetails;
 
 @Service
 @Slf4j

@@ -16,7 +16,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import vn.edu.uit.realestate.Relational.Model.User;
-import vn.edu.uit.realestate.Relational.Model.Security.CustomUserDetails;
 import vn.edu.uit.realestate.Relational.Repository.UserRepository;
 
 @Service
@@ -37,7 +36,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		user.getRoles()
 				.forEach(authority -> authorities.add(new SimpleGrantedAuthority("ROLE_" + authority.getName())));
-		return new CustomUserDetails(user);
+		return UserPrincipal.create(user);
 //		return org.springframework.security.core.userdetails.User.builder().username(user.getEmail())
 //				.password(user.getPassword()).authorities(authorities).disabled(!user.isActive()).build();
 	}

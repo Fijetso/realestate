@@ -23,7 +23,6 @@ import vn.edu.uit.realestate.Relational.Model.Role;
 import vn.edu.uit.realestate.Relational.Model.User;
 import vn.edu.uit.realestate.Relational.Model.UserKind;
 import vn.edu.uit.realestate.Relational.Model.Security.ConfirmationToken;
-import vn.edu.uit.realestate.Relational.Model.Security.CustomUserDetails;
 import vn.edu.uit.realestate.Relational.Repository.ConfirmationTokenRepository;
 import vn.edu.uit.realestate.Relational.Repository.JobRepository;
 import vn.edu.uit.realestate.Relational.Repository.RoleRepository;

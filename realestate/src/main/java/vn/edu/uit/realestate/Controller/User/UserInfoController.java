@@ -35,8 +35,8 @@ public class UserInfoController {
 	
 	@RequestMapping(value = "/me", method = RequestMethod.GET)
     @PreAuthorize("hasRole('USER')")
-    public User getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
-        return userRepository.findById(userPrincipal.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
+    public ResponseEntity<MappingJacksonValue> getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
+		MappingJacksonValue foundUser = userService.findById(userPrincipal.getId());
+		return new ResponseEntity<>(foundUser, HttpStatus.OK);
     }
 }
