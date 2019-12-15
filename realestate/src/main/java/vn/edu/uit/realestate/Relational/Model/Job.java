@@ -2,7 +2,6 @@ package vn.edu.uit.realestate.Relational.Model;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -18,7 +17,7 @@ public class Job {
 	@GeneratedValue
 	private Long id;
 	private String name;
-	@OneToMany(mappedBy="job", fetch=FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@OneToMany(mappedBy="job", fetch=FetchType.LAZY)
 	private List<User> users;
 
 	public Job() {

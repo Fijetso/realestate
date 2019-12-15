@@ -8,13 +8,12 @@ import org.springframework.stereotype.Service;
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.Relational.Model.Request;
 import vn.edu.uit.realestate.Relational.Repository.RequestRepository;
-import vn.edu.uit.realestate.Relational.Repository.TradeRepository;
 import vn.edu.uit.realestate.Service.IEntityService;
 
 @Service
 public class RequestService implements IEntityService {
-	@Autowired
-	private TradeRepository tradeRepository;
+//	@Autowired
+//	private TradeRepository tradeRepository;
 	@Autowired
 	private RequestRepository requestRepository;
 	

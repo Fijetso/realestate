@@ -3,8 +3,8 @@ package vn.edu.uit.realestate.Controller;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
@@ -38,6 +38,7 @@ public class UserAccountController {
 	private ConfirmationTokenRepository confirmationTokenRepository;
 	@Autowired
 	private EmailSenderService emailSenderService;
+
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ResponseEntity<?> registerUser(@RequestBody User user) {
 		if (userRepository.findByEmail(user.getEmail()).isPresent()) {

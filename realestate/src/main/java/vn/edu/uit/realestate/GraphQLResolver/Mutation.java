@@ -18,13 +18,13 @@ public class Mutation implements GraphQLMutationResolver {
 	@Autowired
 	GraphQLUserService userService;
 
-	public User login(final String email, final String password) {
+	public String login(final String email, final String password) {
 		return userService.login(email, password);
 	}
 	
 	public User register(final String name, final String email, final String password, final String phone,
-			final String birthdate, final Boolean gender, final String job, final Long userKindId) {
-		return userService.register(name, email, password, phone, birthdate, gender, job, userKindId);
+			final String birthdate, final Boolean gender, final String job, final Long userKindId, final String imageLink) {
+		return userService.register(name, email, password, phone, birthdate, gender, job, userKindId, imageLink);
 	}
 	
 	public User updateUser(final Long userId, final String name, final String email, final String phone, final String birthdate,
