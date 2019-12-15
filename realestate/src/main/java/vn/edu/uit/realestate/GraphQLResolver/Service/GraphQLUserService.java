@@ -7,6 +7,10 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +28,8 @@ import vn.edu.uit.realestate.Relational.Repository.JobRepository;
 import vn.edu.uit.realestate.Relational.Repository.RoleRepository;
 import vn.edu.uit.realestate.Relational.Repository.UserKindRepository;
 import vn.edu.uit.realestate.Relational.Repository.UserRepository;
+import vn.edu.uit.realestate.Security.AuthProvider;
+import vn.edu.uit.realestate.Security.JwtTokenProvider;
 import vn.edu.uit.realestate.Service.EmailSenderService;
 import vn.edu.uit.realestate.Service.ModelMapperService;
 
@@ -47,7 +53,7 @@ public class GraphQLUserService {
 	private UserKindRepository userKindRepository;
 
 	public User register(final String name, final String email, final String password, final String phone,
-			final String birthdate, final Boolean gender, final String job, final Long userKindId) {
+			final String birthdate, final Boolean gender, final String job, final Long userKindId, final String imageLink) {
 		if (userRepository.findByEmail(email).isPresent()) {
 			throw new CustomGraphQLException(400, SpecificString.email_is_existed);
 		} else {
@@ -73,7 +79,7 @@ public class GraphQLUserService {
 				}
 				else {
 					Job newJob = new Job(job);
-//					newJob = jobRepository.save(newJob);
+					newJob = jobRepository.save(newJob);
 					newUser.setJob(newJob);
 				}
 			}
@@ -87,6 +93,11 @@ public class GraphQLUserService {
 							"Not Found Exception: Cannot find any UserKind in MySQL with Id=" + userKindId);
 				}
 			}
+			if(imageLink !=null) {
+				newUser.setImageUrl(imageLink);
+			}
+			newUser.setProvider(AuthProvider.local);
+			newUser.setProviderId("0");
 			
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			String hashedPassword = passwordEncoder.encode(password);
@@ -114,15 +125,24 @@ public class GraphQLUserService {
 		}
 	}
 
-	public User login(String email, String password) {
-//		UsernamePasswordAuthenticationToken authReq
-//	      = new UsernamePasswordAuthenticationToken(email, password);
-//	    Authentication auth = authManager.authenticate(authReq);
-//	    SecurityContext sc = SecurityContextHolder.getContext();
-//	    sc.setAuthentication(auth);
-//	    HttpSession session = req.getSession(true);
-//	    session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, sc);
-		return null;
+	@Autowired
+	private AuthenticationManager authenticationManager;
+	@Autowired
+	private JwtTokenProvider tokenProvider;
+	
+	public String login(final String email, final String password) {
+		// Xác thực từ username và password.
+		Authentication authentication = authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(email, password));
+
+		// Nếu không xảy ra exception tức là thông tin hợp lệ
+		// Set thông tin authentication vào Security Context
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+
+		// Trả về jwt cho người dùng.
+		 String token = tokenProvider.createToken(authentication);
+//		String jwt = tokenProvider.generateToken((CustomUserDetails) authentication.getPrincipal());
+		return token;
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')")

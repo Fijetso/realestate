@@ -15,8 +15,8 @@ public class Information {
 
 	public Information(int id, String contact) {
 		super();
-		id = id;
-		contact = contact;
+		this.id = id;
+		this.contact = contact;
 	}
 
 
@@ -25,7 +25,7 @@ public class Information {
 	}
 
 	public void setId(int id) {
-		id = id;
+		this.id = id;
 	}
 
 	public String getContact() {
@@ -33,7 +33,7 @@ public class Information {
 	}
 
 	public void setContact(String contact) {
-		contact = contact;
+		this.contact = contact;
 	}
 	
 }

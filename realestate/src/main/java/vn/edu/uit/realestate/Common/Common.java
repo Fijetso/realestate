@@ -1,7 +1,5 @@
 package vn.edu.uit.realestate.Common;
 
-import org.springframework.beans.factory.annotation.Value;
-
 public class Common {
 	public static class Constains {
 		public static String ROLE_ADMIN = "ADMIN";
