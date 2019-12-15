@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import vn.edu.uit.realestate.ExceptionHandler.OAuth2AuthenticationProcessingException;
+import vn.edu.uit.realestate.Graph.Repository.GraphUserRepository;
 import vn.edu.uit.realestate.Relational.Model.Role;
 import vn.edu.uit.realestate.Relational.Model.User;
 import vn.edu.uit.realestate.Relational.Repository.RoleRepository;
@@ -21,6 +22,7 @@ import vn.edu.uit.realestate.Security.AuthProvider;
 import vn.edu.uit.realestate.Security.UserPrincipal;
 import vn.edu.uit.realestate.Security.oauth2.user.OAuth2UserInfo;
 import vn.edu.uit.realestate.Security.oauth2.user.OAuth2UserInfoFactory;
+import vn.edu.uit.realestate.Service.ModelMapperService;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -33,6 +35,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 	private UserRepository userRepository;
 	@Autowired
 	private RoleRepository roleRepository;
+	@Autowired
+	private GraphUserRepository graphUserRepository;
+	@Autowired
+	ModelMapperService modelMapper;
 
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
@@ -89,7 +95,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		Set<Role> roles = new HashSet<>();
 		roles.add(roleRepository.findByName("USER").get());
 		user.setRoles(roles);
-		return userRepository.save(user);
+		user = userRepository.save(user);
+		graphUserRepository.save(modelMapper.convertUser(user));
+		return user;
 	}
 
 	private User updateExistingUser(User existingUser, OAuth2UserInfo oAuth2UserInfo) {
