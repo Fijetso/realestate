@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import vn.edu.uit.realestate.ExceptionHandler.ResourceNotFoundException;
-import vn.edu.uit.realestate.Relational.Model.User;
-import vn.edu.uit.realestate.Relational.Repository.UserRepository;
 import vn.edu.uit.realestate.Security.CurrentUser;
 import vn.edu.uit.realestate.Security.UserPrincipal;
 import vn.edu.uit.realestate.Service.EntityService.UserService;
@@ -24,8 +21,6 @@ import vn.edu.uit.realestate.Service.EntityService.UserService;
 public class UserInfoController {
 	@Autowired
 	private UserService userService;
-	@Autowired
-	private UserRepository userRepository;
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<MappingJacksonValue> getById(@PathVariable long id) {
@@ -34,7 +29,6 @@ public class UserInfoController {
 	}
 	
 	@RequestMapping(value = "/me", method = RequestMethod.GET)
-    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<MappingJacksonValue> getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
 		MappingJacksonValue foundUser = userService.findById(userPrincipal.getId());
 		return new ResponseEntity<>(foundUser, HttpStatus.OK);

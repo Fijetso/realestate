@@ -28,6 +28,7 @@ import vn.edu.uit.realestate.Relational.Repository.JobRepository;
 import vn.edu.uit.realestate.Relational.Repository.RoleRepository;
 import vn.edu.uit.realestate.Relational.Repository.UserKindRepository;
 import vn.edu.uit.realestate.Relational.Repository.UserRepository;
+import vn.edu.uit.realestate.Security.AuthProvider;
 import vn.edu.uit.realestate.Security.JwtTokenProvider;
 import vn.edu.uit.realestate.Service.EmailSenderService;
 import vn.edu.uit.realestate.Service.ModelMapperService;
@@ -52,7 +53,7 @@ public class GraphQLUserService {
 	private UserKindRepository userKindRepository;
 
 	public User register(final String name, final String email, final String password, final String phone,
-			final String birthdate, final Boolean gender, final String job, final Long userKindId) {
+			final String birthdate, final Boolean gender, final String job, final Long userKindId, final String imageLink) {
 		if (userRepository.findByEmail(email).isPresent()) {
 			throw new CustomGraphQLException(400, SpecificString.email_is_existed);
 		} else {
@@ -92,6 +93,11 @@ public class GraphQLUserService {
 							"Not Found Exception: Cannot find any UserKind in MySQL with Id=" + userKindId);
 				}
 			}
+			if(imageLink !=null) {
+				newUser.setImageUrl(imageLink);
+			}
+			newUser.setProvider(AuthProvider.local);
+			newUser.setProviderId("0");
 			
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			String hashedPassword = passwordEncoder.encode(password);

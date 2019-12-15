@@ -1,14 +1,8 @@
 package vn.edu.uit.realestate.Configuration;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.BeanIds;
@@ -21,21 +15,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
-import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
-import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
-import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import vn.edu.uit.realestate.Relational.Model.Role;
-import vn.edu.uit.realestate.Relational.Model.User;
-import vn.edu.uit.realestate.Relational.Model.Security.OidcUserInfo;
-import vn.edu.uit.realestate.Relational.Repository.RoleRepository;
-import vn.edu.uit.realestate.Relational.Repository.UserRepository;
 import vn.edu.uit.realestate.Security.CustomUserDetailsService;
 import vn.edu.uit.realestate.Security.JwtAuthenticationFilter;
 import vn.edu.uit.realestate.Security.RestAuthenticationEntryPoint;
@@ -43,10 +24,6 @@ import vn.edu.uit.realestate.Security.oauth2.CustomOAuth2UserService;
 import vn.edu.uit.realestate.Security.oauth2.HttpCookieOAuth2AuthorizationRequestRepository;
 import vn.edu.uit.realestate.Security.oauth2.OAuth2AuthenticationFailureHandler;
 import vn.edu.uit.realestate.Security.oauth2.OAuth2AuthenticationSuccessHandler;
-import vn.edu.uit.realestate.Security.oauth2.user.OAuth2UserInfo;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @Configuration
 @EnableWebSecurity
@@ -61,18 +38,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
 	@Autowired
 	private OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
-	@Autowired
-	private HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
-	@Autowired
-	private UserRepository userRepository;
-	@Autowired
-	private RoleRepository roleRepository;
 
 	@Bean
-	public JwtAuthenticationFilter tokenAuthenticationFilter() {
-		return new JwtAuthenticationFilter();
-	}
-
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        return new JwtAuthenticationFilter();
+    }
 	/*
 	 * By default, Spring OAuth2 uses
 	 * HttpSessionOAuth2AuthorizationRequestRepository to save the authorization
@@ -92,11 +62,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		return authProvider;
 	}
 
-	@Bean
-	public JwtAuthenticationFilter jwtAuthenticationFilter() {
-		return new JwtAuthenticationFilter();
-	}
-
 	@Bean(BeanIds.AUTHENTICATION_MANAGER)
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -111,7 +76,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//		auth.authenticationProvider(authenticationProvider());
+		auth.authenticationProvider(authenticationProvider());
 		auth.userDetailsService(userDetailsService) // Cung cáp userservice cho spring security
 				.passwordEncoder(encoder()); // cung cấp password encoder
 	}
@@ -151,57 +116,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) {
 		web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
 	}
-
-//	private OAuth2UserService<OAuth2UserRequest, OAuth2User> oauth2UserService() {
-//		OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
-//		return (OAuth2UserRequest userRequest) -> {
-//			OAuth2User oauth2User = delegate.loadUser(userRequest);
-//			String emailOrUsername = (String) oauth2User.getAttributes().get("email");
-//			if (emailOrUsername == null) {
-//				emailOrUsername = (String) oauth2User.getAttributes().get("login");
-//			}
-//			Optional<User> optionalUser = userRepository.findByEmail(emailOrUsername);
-//			Set<GrantedAuthority> authorities = new HashSet<>();
-//			if (optionalUser.isPresent()) {
-//				optionalUser.get().getRoles().forEach(authority -> {
-//					authorities.add(new SimpleGrantedAuthority("ROLE_" + authority.getName()));
-//				});
-//			} else {
-//				authorities.addAll(oauth2User.getAuthorities());
-//				Set<Role> roles = new HashSet<>();
-//				roles.add(roleRepository.findByName("USER").get());
-//				Map<String, Object> attributes = oauth2User.getAttributes();
-//				User newUser = new User((String) attributes.get("name"), emailOrUsername, null, roles, true);
-//				userRepository.save(newUser);
-//			}
-//			OAuth2UserInfo oauth2UserInfo = new OAuth2UserInfo(authorities, oauth2User.getAttributes(), "id");
-//			oauth2UserInfo.setUsername(emailOrUsername); /// getUserName()
-//			return oauth2UserInfo;
-//		};
-//	}
-//
-//	private OAuth2UserService<OidcUserRequest, OidcUser> oidcUserService() {
-//		OAuth2UserService<OidcUserRequest, OidcUser> delegate = new OidcUserService();
-//		return (OidcUserRequest userRequest) -> {
-//			OidcUser oidcUser = delegate.loadUser(userRequest);
-//			String email = (String) oidcUser.getEmail();
-//			Optional<User> optionalUser = userRepository.findByEmail(email);
-//			Set<GrantedAuthority> authorities = new HashSet<>();
-//			if (optionalUser.isPresent()) {
-//				optionalUser.get().getRoles().forEach(authority -> {
-//					authorities.add(new SimpleGrantedAuthority("ROLE_" + authority.getName()));
-//				});
-//			} else {
-//				authorities.addAll(oidcUser.getAuthorities());
-//				Set<Role> roles = new HashSet<>();
-//				roles.add(roleRepository.findByName("USER").get());
-//				User newUser = new User(oidcUser.getFullName(), oidcUser.getEmail(), null, roles, true);
-//				userRepository.save(newUser);
-//			}
-//			OidcUserInfo oidcUserInfo = new OidcUserInfo(authorities, oidcUser.getIdToken());
-//			oidcUserInfo.setUsername(oidcUser.getFullName()); /// getUserName()
-//			return oidcUserInfo;
-//		};
-//	}
-
 }

@@ -7,7 +7,7 @@ type Mutation {
 	login(email: String!, password: String!): String
 	
 	register(name: String!, email: String!, password: String!, phone: String, birthdate: String, gender: Boolean, job: String,
-			userKindId: Long): User
+			userKindId: Long, imageLink: String): User
 	
 	saveTrade(description: String!,cost: Long!, userId: Long!, realEstateKindId: Long!, tradeKindId: Long!,
 			detailAddress: String!, wardId: Long!, length: Long, width: Long, square: Long, direction: String,

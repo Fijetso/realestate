@@ -3,9 +3,6 @@ package vn.edu.uit.realestate.GraphQLResolver;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
@@ -24,10 +21,7 @@ import vn.edu.uit.realestate.Relational.Repository.RealEstateKindRepository;
 import vn.edu.uit.realestate.Relational.Repository.RealImageRepository;
 import vn.edu.uit.realestate.Relational.Repository.TradeKindRepository;
 import vn.edu.uit.realestate.Relational.Repository.UserRepository;
-import vn.edu.uit.realestate.Security.JwtTokenProvider;
 import vn.edu.uit.realestate.Service.EntityService.TradeService;
-
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 @Component
 public class Query implements GraphQLQueryResolver {
 //	@Autowired

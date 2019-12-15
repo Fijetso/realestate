@@ -42,9 +42,10 @@ public class UserPrincipal implements OAuth2User, UserDetails {
         );
     }
 
-    public static UserPrincipal create(User user, Map<String, Object> attributes) {
+    public static UserPrincipal create(User user, Map<String, Object> attributes, Collection<? extends GrantedAuthority> authorities) {
         UserPrincipal userPrincipal = UserPrincipal.create(user);
         userPrincipal.setAttributes(attributes);
+        userPrincipal.setAuthorities(authorities);
         return userPrincipal;
     }
 
@@ -89,6 +90,10 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
+    }
+    
+    private void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+    	this.authorities = authorities;
     }
 
     @Override

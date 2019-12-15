@@ -5,13 +5,11 @@ import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import vn.edu.uit.realestate.Configuration.AppProperties;
-import vn.edu.uit.realestate.ExceptionHandler.JwtTokenMissingException;
 
 @Service
 @Slf4j
@@ -26,7 +24,6 @@ public class JwtTokenProvider {
 
 	    public String createToken(Authentication authentication) {
 	        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-
 	        Date now = new Date();
 	        Date expiryDate = new Date(now.getTime() + appProperties.getAuth().getTokenExpirationMsec());
 
