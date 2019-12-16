@@ -53,6 +53,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ToastrModule } from 'ngx-toastr';
 import {} from 'googlemaps';
+import { ApolloModule } from 'apollo-angular';
+import { HttpLinkModule } from 'apollo-angular-link-http';
 
 import { RealEstateWrapperComponent } from './components/real-estate/real-estate-wrapper/real-estate-wrapper.component';
 import { AlertComponent } from './core/modal/alert/alert.component';
@@ -93,6 +95,9 @@ import { AccountManagementComponent } from './core/ui/account-management/account
 import {HereMapsModule } from 'ng2-heremaps';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { PopupRendererComponent } from './core/ui/map/popup-renderer/popup-renderer.component';
+import { AddReComponent } from './core/ui/create-post/add-re/add-re.component';
+import { UpdateReComponent } from './core/ui/create-post/update-re/update-re.component';
+import { DeleteReComponent } from './core/ui/create-post/delete-re/delete-re.component';
 
 @NgModule({
   declarations: [
@@ -138,7 +143,10 @@ import { PopupRendererComponent } from './core/ui/map/popup-renderer/popup-rende
     AccountManagementComponent,
     MapModuleComponent,
     MapComponent,
-    PopupRendererComponent
+    PopupRendererComponent,
+    AddReComponent,
+    UpdateReComponent,
+    DeleteReComponent
   ],
   imports: [
     OwlModule,
@@ -192,7 +200,9 @@ import { PopupRendererComponent } from './core/ui/map/popup-renderer/popup-rende
       libraries: ['core', 'service','ui','mapevents']
     }),
     LeafletModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    ApolloModule,
+    HttpLinkModule
   ],
   providers: [
     AuthenticationService,

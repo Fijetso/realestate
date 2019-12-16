@@ -1,3 +1,4 @@
+import { AddReComponent } from './core/ui/create-post/add-re/add-re.component';
 import { UserComponent } from './components/user/user.component';
 import { FavoriteComponent } from './components/favorite/favorite.component';
 import { LoginComponent } from './core/ui/login/login.component';
@@ -63,6 +64,11 @@ const routes: Routes = [
     path: 'tim-kiem/:id',
     component: SearchPageComponent,
     data: { title: 'Tìm kiếm BĐS' }
+  },
+  {
+    path: 'them-tin',
+    component: AddReComponent,
+    data: { title: 'Thêm bất động sản' }
   },
   {
     path: '**',

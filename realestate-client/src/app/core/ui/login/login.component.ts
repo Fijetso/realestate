@@ -1,3 +1,5 @@
+import { GraphQueryService } from './../../../services/graphql/graph-query.service';
+import { User } from './../../../model/user/user';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
@@ -15,7 +17,8 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   data: any;
   loginError: any;
-  constructor(private authService: AuthenticationService) {
+  user: User;
+  constructor(private authService: AuthenticationService,private graphql: GraphQueryService) {
     this.userInfo = {
       email: '',
       password: ''
@@ -41,17 +44,20 @@ export class LoginComponent implements OnInit {
   }
 
   onLogIn(email: string, password: string) {
-   this.authService
-      .loginWithEmailPassWord(email, password).then(user => {console.log(user.providerData[0]),
-                                                             this.authService.writeUserInfor();
-                                                             this.isLogedIn = true;
-                                                             this.loginError = false;
-                                                             this.getUserLogin();
-        }
-      ).catch(error => {
-        this.isLogedIn = false;
-        this.loginError = true;
-      });
+  //  this.authService
+  //     .loginWithEmailPassWord(email, password).then(user => {console.log(user.providerData[0]),
+  //                                                            this.authService.writeUserInfor();
+  //                                                            this.isLogedIn = true;
+  //                                                            this.loginError = false;
+  //                                                            this.getUserLogin();
+  //       }
+  //     ).catch(error => {
+  //       this.isLogedIn = false;
+  //       this.loginError = true;
+  //     });
+    this.user.email = email;
+    this.user.password = password;
+    this.graphql.login(this.user);
   }
   loginWithGoogle() {
     this.authService.loginWithGoogle().then(data => {
