@@ -42,17 +42,27 @@ public class GraphUser {
 			String job) {
 		super();
 		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.phone = phone;
-		try {
-			this.birthdate = dateFormat.parse(birthdate);
-		} catch (ParseException e) {
-			e.printStackTrace();
-			throw new IllegalArgumentException("The variable 'birthdate' is invalid");
+		if (name != null) {
+			this.name = name;
+		}
+		if (email != null) {
+			this.email = email;
+		}
+		if (phone != null) {
+			this.phone = phone;
+		}
+		if (birthdate != null && birthdate != "") {
+			try {
+				this.birthdate = dateFormat.parse(birthdate);
+			} catch (ParseException e) {
+				e.printStackTrace();
+				throw new IllegalArgumentException("The variable 'birthdate' is invalid");
+			}
 		}
 		this.gender = gender;
-		this.job = job;
+		if (job != "") {
+			this.job = job;
+		}
 	}
 
 	public Long getId() {
@@ -88,7 +98,10 @@ public class GraphUser {
 	}
 
 	public String getBirthdate() {
-		return dateFormat.format(birthdate);
+		if(this.birthdate == null) {
+			return null;
+		}
+		return dateFormat.format(this.birthdate);
 	}
 
 	public void setBirthdate(String birthdate) {
