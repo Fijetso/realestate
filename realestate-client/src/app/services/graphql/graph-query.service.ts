@@ -17,7 +17,7 @@ export class GraphQueryService {
    }
 
   //  login by email password
-  login=(emailInput,passwordInput) => {
+  login=(emailInput,passwordInput):any => {
     console.info(emailInput,passwordInput);
     this.apollo.mutate<LoginMutationResponse>({
       mutation: LOGIN_MUTATION,
@@ -26,20 +26,25 @@ export class GraphQueryService {
         password: passwordInput
       }
     }).subscribe(response => {
-      console.info(response.data.login);
+      const data = response.data.login
+      if(data){
+        console.log('SET-TOKEN',data);
+        localStorage.setItem("login",data);
+        return data;
+      }
     })
   }
 // get infor login
   getLoginInfo(loginToken:any) {
-    console.log(loginToken);
-    const httpOptions = {
+    console.log('GET-TOKEN',loginToken);
+    const reqHearder = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
-        'Authorization': 'Bearier '+loginToken
-      })
+        'Authorization': 'Bearer '+loginToken
+      }),
     };
-    const result = this.http.get('http://localhost:8081/secured/user/me',httpOptions);
-    console.info(result);
+    console.info(reqHearder);
+    const result = this.http.get<any>('http://localhost:8081/secured/user/me',reqHearder);
     return result;
   }
 
@@ -48,7 +53,7 @@ export class GraphQueryService {
     this.apollo.watchQuery<GetAllTradeResponse>({
       query: GET_ALL_TRADE_QUERY
     }).valueChanges.subscribe((response) => {
-        console.info(response.data);
+        // console.info(response.data);
         return response.data
     })
   }

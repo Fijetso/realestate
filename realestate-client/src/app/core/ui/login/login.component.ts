@@ -50,6 +50,13 @@ export class LoginComponent implements OnInit {
 
   onLogIn(email: string, password: string) {
     this.login = this.graphql.login(email, password);
+    const token = localStorage.getItem('login');
+    if(token){
+      console.info('getToken', token)
+      this.graphql.getLoginInfo(token).subscribe((res) => {
+        console.info(res);
+      })
+    }
     this.allTrade = this.graphql.getAllTrade();
   }
 
