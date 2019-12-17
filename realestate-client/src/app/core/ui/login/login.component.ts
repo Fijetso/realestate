@@ -55,9 +55,7 @@ export class LoginComponent implements OnInit {
   //       this.isLogedIn = false;
   //       this.loginError = true;
   //     });
-    this.user.email = email;
-    this.user.password = password;
-    this.graphql.login(this.user);
+    this.graphql.login(email,password);
   }
   loginWithGoogle() {
     this.authService.loginWithGoogle().then(data => {

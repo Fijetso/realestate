@@ -1,3 +1,4 @@
+import { GraphQueryService } from './services/graphql/graph-query.service';
 import { PopupService } from './services/map/popup.service';
 import { MarkerService } from './services/map/marker.service';
 import { MapComponent } from './core/ui/map/map.component';
@@ -213,7 +214,8 @@ import { DeleteReComponent } from './core/ui/create-post/delete-re/delete-re.com
       multi: true
     },
     MarkerService,
-    PopupService
+    PopupService,
+    GraphQueryService
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],

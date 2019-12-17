@@ -1,0 +1,97 @@
+type Query {
+	trades(count: Int):[Trade]!
+	#suggestTrades(count: Int): [Trade]!
+}
+
+type Mutation {
+	login(email: String!, password: String!): String
+	
+	register(name: String!, email: String!, password: String!, phone: String, birthdate: String, gender: Boolean, job: String,
+			userKindId: Int, imageLink: String): User
+	
+	saveTrade(description: String!,cost: Float!, userId: Int!, realEstateKindId: Int!, tradeKindId: Int!,
+			detailAddress: String!, wardId: Int!, length: Float, width: Float, square: Float, direction: String,
+			floors: String, legalDocuments: String, bathrooms: Int, bedrooms: Int, utilities: String, 
+			others: String, longitude: Float, latitude: Float): Trade
+			
+	updateTrade(tradeId: Int!, description: String, cost: Float, realEstateKindId: Int, tradeKindId: Int,	
+			detailAddress: String, wardId: Int, length: Float, width: Float, square: Float, direction: String,
+			floors: String, legalDocuments: String, bathrooms: Int, bedrooms: Int, utilities: String, 
+			others: String, longitude: Float, latitude: Float): Trade
+	
+	updateUser(userId: Int!, name: String, email: String, phone: String, birthdate: String, gender: Boolean,
+			job: String, userKindId: Int): User
+}
+
+type Trade {
+	id: ID!,
+	description: String,
+	cost: Float,
+	user: User,
+	tradeStatus: String,
+	realEstateKind: RealEstateKind,
+	tradeKind: TradeKind,
+	address: String,
+	details: Details,
+	coordinate: Coordinate,
+	realImages: [RealImage],
+	bluePrints: [BluePrint]
+#	bookings: [Booking]
+}
+
+type User {
+	id: ID!,
+	name: String,
+	email: String,
+	phone: String,
+	birthdate: String,
+	gender: Boolean,
+	active: Boolean,
+	trades: [Trade],
+	job: String
+}
+	
+type RealEstateKind {
+	id: ID!,
+	name: String,
+	trades: [Trade]
+}
+
+type TradeKind {
+	id: ID!,
+	name: String,
+	trades: [Trade]
+}
+
+type Details {
+	id: ID!,
+	length: Int,
+	width: Int,
+	square:Int,
+	direction: String,
+	floors: String,
+	legalDocuments: String,
+	bathrooms: Int,
+	bedrooms: Int,
+	utilities: String,
+	others: String
+}
+
+type RealImage {
+	id: ID!,
+	imageLink: String,
+	description: String
+}
+
+type BluePrint {
+	id: ID!,
+	imageLink: String,
+	description: String
+}
+
+type Coordinate {
+	id: ID!,
+	longitude : Float,
+	latitude: Float
+}
+
