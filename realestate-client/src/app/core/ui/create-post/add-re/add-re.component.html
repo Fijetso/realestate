@@ -1,48 +1,73 @@
 <h3>Add RE</h3>
 <form [formGroup]="realEstate" (ngSubmit)="save($event)">
     <table>
-        <tr>
-            <td>Id</td>
-            <td>
-                <input type="number" formControlName="id">
-            </td>
-        </tr>
-        <tr>
-            <td>Description</td>
-            <td>
-                <input type="text" formControlName="description">
-            </td>
-        </tr>
-        <tr>
-            <td>Cost</td>
-            <td>
-                <input type="text" formControlName="cost">
-            </td>
-        </tr>
-        <tr>
-            <td>User ID</td>
-            <td>
-                <input type="text" formControlName="userId">
-            </td>
-        </tr>
-        <tr>
-            <td>User Name</td>
-            <td>
-                <input type="text" formControlName="userName">
-            </td>
-        </tr>
-        <tr>
-            <td>User Email</td>
-            <td>
-                <input type="text" formControlName="userEmail">
-            </td>
-        </tr>
-        <tr>
-            <td>User Phone</td>
-            <td>
-                <input type="text" formControlName="userPhone">
-            </td>
-        </tr>
+        <div>
+            <tr>
+                <td>Id</td>
+                <td>
+                    <input type="number" formControlName="id">
+                </td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td>
+                    <input type="text" formControlName="description">
+                </td>
+            </tr>
+            <tr>
+                <td>Cost</td>
+                <td>
+                    <input type="text" formControlName="cost">
+                </td>
+            </tr>
+        </div>
+        <div formGroupName="user">
+            <tr>
+                <td>User Id</td>
+                <td>
+                    <input type="text" formControlName="id">
+                </td>
+            </tr>
+            <tr>
+                <td>User Name</td>
+                <td>
+                    <input type="text" formControlName="name">
+                </td>
+            </tr>
+            <tr>
+                <td>User Email</td>
+                <td>
+                    <input type="text" formControlName="email">
+                </td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td>
+                    <input type="password" formControlName="password">
+                </td>
+            </tr>
+            <tr>
+                <td>User Phone</td>
+                <td>
+                    <input type="text" formControlName="phone">
+                </td>
+            </tr>
+            <tr>
+                <td>Birth Day</td>
+                <td>
+                    <input type="date" formControlName="birthdate">
+                </td>
+            </tr>
+            <tr>
+                <td>Gender</td>
+                <td>
+                    <select formControlName="gender" (change)="onChangeGender($event)">
+                        <option value="true" selected="gender.value">Nam</option>
+                        <option value="false">Nữ</option>
+                      </select>
+                </td>
+            </tr>
+        </div>
         <tr>
             <td>
                 <button type="submit">Save</button>

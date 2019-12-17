@@ -15,18 +15,20 @@ export class AddReComponent implements OnInit {
   constructor(private api: ApiService, private fb: FormBuilder, private router: Router) { }
 
   ngOnInit() {
-    this.realEstate = this.fb.group({ id: 1,
+    this.realEstate = this.fb.group({
+      id: 1,
       description: 'Mô tả',
       cost: 0,
-      user: {id: 0,
+      user: this.fb.group ({
+        id: 0,
         name: 'Name',
-        email: 'exampale@eail.com',
-        phone: '',
-        password: '',
-        birthdate:new Date('19/11/1995'),
+        email: 'exampale@email.com',
+        phone: '0985922740',
+        password: 'password',
+        birthdate:new Date("1995-19-11"),
         gender: true,
         userKind: null
-      },
+      }),
       tradeKind: null,
       realEstateKind: null,
       address: null,
@@ -41,5 +43,9 @@ export class AddReComponent implements OnInit {
     this.api.createRE(this.realEstate.value);
     console.info(this.realEstate.value);
     // this.router.navigate(['./dang-tin']);
+  }
+
+  onChangeGender($event){ 
+    console.info($event.target.value);
   }
 }
