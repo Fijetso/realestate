@@ -6,11 +6,13 @@ import { User } from 'firebase';
 import { Observable } from 'rxjs';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  constructor(public afAuth: AngularFireAuth, public router: Router) {
+  headers: any;
+  constructor(public afAuth: AngularFireAuth, public router: Router, private http: HttpClient) {
     this.afAuth.authState.subscribe(user => {
         this.writeUserInfor();
     });
@@ -71,3 +73,4 @@ export class AuthenticationService {
     );
   }
 }
+

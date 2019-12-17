@@ -18,45 +18,41 @@ export class LoginComponent implements OnInit {
   data: any;
   loginError: any;
   user: User;
-  constructor(private authService: AuthenticationService,private graphql: GraphQueryService) {
+  login: any;
+  allTrade: any[];
+  constructor(private authService: AuthenticationService, private graphql: GraphQueryService) {
     this.userInfo = {
       email: '',
       password: ''
     };
+    
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)])
     });
   }
+
   ngOnInit(): void {
     this.getUserLogin();
   }
+
   getUserLogin() {
     firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-          this.data = user.providerData[0];
-          this.isLogedIn = true;
-        } else {
-          this.data = null;
-          this.isLogedIn = false;
-        }
+      if (user) {
+        this.data = user.providerData[0];
+        this.isLogedIn = true;
+      } else {
+        this.data = null;
+        this.isLogedIn = false;
+      }
     });
   }
 
   onLogIn(email: string, password: string) {
-  //  this.authService
-  //     .loginWithEmailPassWord(email, password).then(user => {console.log(user.providerData[0]),
-  //                                                            this.authService.writeUserInfor();
-  //                                                            this.isLogedIn = true;
-  //                                                            this.loginError = false;
-  //                                                            this.getUserLogin();
-  //       }
-  //     ).catch(error => {
-  //       this.isLogedIn = false;
-  //       this.loginError = true;
-  //     });
-    this.graphql.login(email,password);
+    this.login = this.graphql.login(email, password);
+    this.allTrade = this.graphql.getAllTrade();
   }
+
   loginWithGoogle() {
     this.authService.loginWithGoogle().then(data => {
       this.isLogedIn = true;
@@ -65,6 +61,7 @@ export class LoginComponent implements OnInit {
       console.log(JSON.parse(localStorage.getItem('userInfor')));
     });
   }
+
   loginWithFacebook() {
     this.authService.loginWithFacebook().then(data => {
       this.isLogedIn = true;
