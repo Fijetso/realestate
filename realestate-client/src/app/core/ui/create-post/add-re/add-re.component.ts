@@ -1,3 +1,5 @@
+import { UserKind } from './../../../../model/user-kind/user-kind';
+import { Address } from './../../../../model/address/address';
 import { Router } from '@angular/router';
 import { FormGroup,FormBuilder } from '@angular/forms';
 import { RealEstate } from './../../../../model/real-estate/real-estate';
@@ -11,7 +13,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddReComponent implements OnInit {
 
-  realEstate: FormGroup
+  realEstate: FormGroup;
+  public imagePath;
+  imgURL: any;
+  message: string;
+  address: Address;
+  userKind: UserKind
   constructor(private api: ApiService, private fb: FormBuilder, private router: Router) { }
 
   ngOnInit() {
@@ -27,12 +34,20 @@ export class AddReComponent implements OnInit {
         password: 'password',
         birthdate:new Date("1995-19-11"),
         gender: true,
-        userKind: null
+        userKind: this.fb.group({
+          id:0
+        })
       }),
       tradeKind: null,
       realEstateKind: null,
-      address: null,
-      details: null,
+      address: this.fb.group({
+        id: 0,
+        detail: 'detail',
+        ward: 0,
+        district: 0,
+        cityOrProvince: 0
+      }),
+      details: 'Mô tả chi tiết',
       realImages: null,
       bluePrints: null,
       booking: null
@@ -47,5 +62,26 @@ export class AddReComponent implements OnInit {
 
   onChangeGender($event){ 
     console.info($event.target.value);
+  }
+
+  onChangeUserKind($event){ 
+    console.info($event.target.value);
+  }
+  preview(files) {
+    if (files.length === 0)
+      return;
+ 
+    let mimeType = files[0].type;
+    if (mimeType.match(/image\/*/) == null) {
+      this.message = "Only images are supported.";
+      return;
+    }
+ 
+    let reader = new FileReader();
+    this.imagePath = files;
+    reader.readAsDataURL(files[0]); 
+    reader.onload = (_event) => { 
+      this.imgURL = reader.result; 
+    }
   }
 }

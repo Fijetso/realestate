@@ -37,15 +37,15 @@ export class LoginComponent implements OnInit {
   }
 
   getUserLogin() {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.data = user.providerData[0];
-        this.isLogedIn = true;
-      } else {
-        this.data = null;
-        this.isLogedIn = false;
-      }
-    });
+    // firebase.auth().onAuthStateChanged(user => {
+    //   if (user) {
+    //     this.data = user.providerData[0];
+    //     this.isLogedIn = true;
+    //   } else {
+    //     this.data = null;
+    //     this.isLogedIn = false;
+    //   }
+    // });
   }
 
   onLogIn(email: string, password: string) {
@@ -54,7 +54,9 @@ export class LoginComponent implements OnInit {
     if(token){
       console.info('getToken', token)
       this.graphql.getLoginInfo(token).subscribe((res) => {
+        this.data= res;
         console.info(res);
+        this.isLogedIn= true;
       })
     }
     this.allTrade = this.graphql.getAllTrade();
@@ -78,10 +80,15 @@ export class LoginComponent implements OnInit {
     });
   }
   onLogOut() {
-    this.authService.logOut();
-    localStorage.setItem('userInfor', null);
-    this.data = null;
-    this.isLogedIn = false;
+    // this.authService.logOut();
+    // localStorage.setItem('userInfor', null);
+    // this.data = null;
+    // this.isLogedIn = false;
+    this.graphql.logout().subscribe(res => {
+      console.info('logout successful',res),
+      localStorage.clear();
+      this.isLogedIn = false;
+    }, error => {console.error(error)});
   }
   onSubmitLogin(formValue) {
     this.onLogIn(formValue.email, formValue.password);

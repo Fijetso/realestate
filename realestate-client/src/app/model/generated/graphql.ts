@@ -54,3 +54,16 @@ export const UPDATE_TRADE = gql `mutation UpdateTradeMutation($tradeId:Int!, $co
 export interface UpdateTradeResponse {
   updateTrade: any;
 }
+
+export const REGISTER_MUTATION = gql `mutation register($name:String!,$email:String!,$password:String!,$job: String, $phone: String!){
+  register(name:$name,email: $email, password: $password,job: $job, phone: $phone){
+    name,
+    email,
+    phone,
+    job
+  }
+}
+`
+export interface RegisterMutationResponse{
+  register: any;
+}

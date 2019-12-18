@@ -64,7 +64,37 @@
                     <select formControlName="gender" (change)="onChangeGender($event)">
                         <option value="true" selected="gender.value">Nam</option>
                         <option value="false">Nữ</option>
-                      </select>
+                    </select>
+                </td>
+            </tr>
+            <div formGroupName="userKind">
+                <tr>
+                    <td>User kind</td>
+                    <td>
+                        <select formControlName="id" (change)="onChangeUserKind($event)">
+                            <option value="0" selected="gender.value">Mua</option>
+                            <option value="1" selected="gender.value">Bán</option>
+                            <option value="2" selected="gender.value">Môi giới</option>
+                        </select>
+                    </td>
+                </tr>
+            </div>
+        </div>
+        <div>
+            <tr>
+                <td>Hình ảnh</td>
+                <td>
+                    <span style="color:red;" *ngIf="message">{{message}}</span>
+                    <input #file type="file" accept='image/*' (change)="preview(file.files)" formControlName="realImages" placeholder="Chọn file"/>
+                    <img [src]="imgURL" height="200" *ngIf="imgURL">
+                </td>
+            </tr>
+        </div>
+        <div>
+            <tr>
+                <td>Mô tả thêm</td>
+                <td>
+                    <input  type="text" formControlName="details" multiple="true"/>
                 </td>
             </tr>
         </div>
