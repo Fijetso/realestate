@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { auth } from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -7,12 +7,13 @@ import { Observable } from 'rxjs';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { DOCUMENT } from '@angular/common';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
   headers: any;
-  constructor(public afAuth: AngularFireAuth, public router: Router, private http: HttpClient) {
+  constructor(public afAuth: AngularFireAuth, public router: Router, private http: HttpClient,@Inject(DOCUMENT) private document: Document) {
     this.afAuth.authState.subscribe(user => {
         this.writeUserInfor();
     });
@@ -37,23 +38,25 @@ export class AuthenticationService {
     await this.afAuth.auth.currentUser.sendEmailVerification();
     // this.router.navigate(['admin/verify-email']);
   }
-  async register(email: string, password: string) {
-    const result = await this.afAuth.auth.createUserWithEmailAndPassword(
-      email,
-      password
-    );
-    this.sendEmailVerification();
-  }
-  async sendPasswordResetEmail(passwordResetEmail: string) {
-    return await this.afAuth.auth.sendPasswordResetEmail(passwordResetEmail);
-  }
-  async logOut() {
-    return await this.afAuth.auth.signOut();
-  }
+  // async register(email: string, password: string) {
+  //   const result = await this.afAuth.auth.createUserWithEmailAndPassword(
+  //     email,
+  //     password
+  //   );
+  //   this.sendEmailVerification();
+  // }
+  // async sendPasswordResetEmail(passwordResetEmail: string) {
+  //   return await this.afAuth.auth.sendPasswordResetEmail(passwordResetEmail);
+  // }
+  // async logOut() {
+  //   return await this.afAuth.auth.signOut();
+  // }
   async loginWithGoogle() {
-    return await this.afAuth.auth.signInWithPopup(
-      new auth.GoogleAuthProvider()
-    );
+    // return await this.afAuth.auth.signInWithPopup(
+    //   new auth.GoogleAuthProvider()
+    // );
+    const redirectGoogle = this.document.location.href='http://localhost:8081/oauth2/authorize/google';
+    return await redirectGoogle;
   }
   async loginWithFacebook() {
     return await this.afAuth.auth.signInWithPopup(

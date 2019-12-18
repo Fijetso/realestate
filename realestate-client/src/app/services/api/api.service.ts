@@ -1,11 +1,11 @@
+import { environment } from './../../../environments/environment.prod';
 import { UserKind } from './../../model/user-kind/user-kind';
 import { User } from './../../model/user/user';
 import { RealEstate } from './../../model/real-estate/real-estate';
 import { Address } from './../../model/address/address';
-import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +18,8 @@ export class ApiService {
   addressURL = this.baseURL + 'addresstree/provinces/';
   data = null;
   private reList: RealEstate[];
+
+  
   constructor(private http: HttpClient) {
     this.reList = [
       { id: 1,
@@ -83,6 +85,9 @@ export class ApiService {
     ]
   }
 
+  getAllUserKind() {
+    return this.http.get(this.baseURL+'userkinds');
+  }
   // User service
   createUser(user: User) {
     return this.http.post<User>(this.userURL, user);
@@ -128,7 +133,8 @@ export class ApiService {
   }
   // get Trade by District
   findTradeByDistrict(districtId: number) {
-    return this.http.get<RealEstate>(this.baseURL + 'district/' + districtId + '/trades');
+    // return this.http.get<RealEstate>(this.baseURL + 'district/' + districtId + '/trades');
+    return  this.http.get<RealEstate[]>(this.baseURL + 'trades');
   }
 
   // GetTradeById service
@@ -198,5 +204,11 @@ export class ApiService {
     this.reList[index].description = re.description;
     this.reList[index].cost = re.cost;
     this.reList[index].user = re.user;
+  }
+
+  uploadImages(imageLink, desc){
+    let imageInfo = [imageLink, desc]
+    console.info('uploadImages '+this.baseURL);
+    return this.http.post<any>(this.baseURL+'image/upload',imageInfo);
   }
 }

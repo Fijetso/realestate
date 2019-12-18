@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment.prod';
 import { Observable } from 'rxjs';
 import { RegisterMutationResponse, REGISTER_MUTATION } from './../../model/generated/graphql';
 import { Injectable } from '@angular/core';
@@ -82,7 +83,7 @@ export class GraphQueryService {
         'Content-Type': 'application/json'
       }),
     };
-    return this.http.post<any>('http://localhost:8081/logout', reqHearder);
+    return this.http.post<any>(environment.api.baseURL+'logout', reqHearder);
   }
 
   register(name, email, password, phone, job): any{

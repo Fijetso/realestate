@@ -26,9 +26,9 @@ const routes: Routes = [
     data: { title: 'Chi tiết bất động sản' }
   },
   {
-    path: 'ban-do',
+    path: 'tim-kiem',
     component: MapModuleComponent,
-    data: { title: 'Trang bản đồ' }
+    data: { title: 'Tìm kiếm chi tiết các bất dộng sản' }
   },
   {
     path: 'dang-nhap',

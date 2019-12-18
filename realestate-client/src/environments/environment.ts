@@ -13,7 +13,9 @@ export const environment = {
     apiKey: 'e41bcfed8462dbd69772bdb4f6616a24'
   },
   api: {
-    rootURL: 'http://localhost:4200'
+    rootURL: 'http://localhost:4200',
+    posFix:'api',
+    baseURL:'http://localhost:4200/api/'
   },
   heremap:{
     appId:'dmdRFi5x5pT0zuy09gle',

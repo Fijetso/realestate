@@ -72,9 +72,7 @@
                     <td>User kind</td>
                     <td>
                         <select formControlName="id" (change)="onChangeUserKind($event)">
-                            <option value="0" selected="gender.value">Mua</option>
-                            <option value="1" selected="gender.value">Bán</option>
-                            <option value="2" selected="gender.value">Môi giới</option>
+                            <option [value]="userKind.id" *ngFor="let userKind of userKinds">{{userKind.name}}</option>
                         </select>
                     </td>
                 </tr>

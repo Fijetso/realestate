@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
       email: '',
       password: ''
     };
-    
+
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)])
@@ -51,23 +51,33 @@ export class LoginComponent implements OnInit {
   onLogIn(email: string, password: string) {
     this.login = this.graphql.login(email, password);
     const token = localStorage.getItem('login');
-    if(token){
+    if (token) {
       console.info('getToken', token)
       this.graphql.getLoginInfo(token).subscribe((res) => {
-        this.data= res;
+        this.data = res;
         // console.info('login infor',res);
-        this.isLogedIn= true;
+        this.isLogedIn = true;
       })
     }
     this.allTrade = this.graphql.getAllTrade();
   }
 
+  getUserInfoSocial(datasource) {
+    if (datasource) {
+      this.data = datasource;
+      this.isLogedIn = true;
+    } else {
+      this.data = null;
+      this.isLogedIn = false;
+    }
+  }
   loginWithGoogle() {
     this.authService.loginWithGoogle().then(data => {
       this.isLogedIn = true;
       this.authService.writeUserInfor();
-      this.getUserLogin();
-      console.log(JSON.parse(localStorage.getItem('userInfor')));
+      this.getUserInfoSocial(data);
+      // this.getUserLogin();
+      // console.log(JSON.parse(localStorage.getItem('userInfor')));
     });
   }
 
@@ -85,10 +95,10 @@ export class LoginComponent implements OnInit {
     // this.data = null;
     // this.isLogedIn = false;
     this.graphql.logout().subscribe(res => {
-      console.info('logout successful',res),
-      localStorage.clear();
+      console.info('logout successful', res),
+        localStorage.clear();
       this.isLogedIn = false;
-    }, error => {console.error(error)});
+    }, error => { console.error(error) });
   }
   onSubmitLogin(formValue) {
     this.onLogIn(formValue.email, formValue.password);

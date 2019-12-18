@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { UserKind } from './../../../../model/user-kind/user-kind';
 import { Address } from './../../../../model/address/address';
 import { Router } from '@angular/router';
@@ -18,10 +19,15 @@ export class AddReComponent implements OnInit {
   imgURL: any;
   message: string;
   address: Address;
-  userKind: UserKind
-  constructor(private api: ApiService, private fb: FormBuilder, private router: Router) { }
-
+  userKinds: UserKind[]
+  constructor(private api: ApiService, private fb: FormBuilder, private router: Router) {
+    this.api.getAllUserKind().subscribe(res => {
+      // console.info(res);
+      this.userKinds = res as UserKind[];
+    });
+   }
   ngOnInit() {
+    
     this.realEstate = this.fb.group({
       id: 1,
       description: 'Mô tả',
@@ -35,7 +41,7 @@ export class AddReComponent implements OnInit {
         birthdate:new Date("1995-19-11"),
         gender: true,
         userKind: this.fb.group({
-          id:0
+          id:1
         })
       }),
       tradeKind: null,
@@ -56,6 +62,11 @@ export class AddReComponent implements OnInit {
 
   save($event){
     this.api.createRE(this.realEstate.value);
+    if(this.imgURL){
+      this.api.uploadImages(this.imgURL,'upload'+new Date().getTime).subscribe((res) => {
+        console.info('Upload success',res);
+      })
+    }
     console.info(this.realEstate.value);
     // this.router.navigate(['./dang-tin']);
   }

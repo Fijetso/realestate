@@ -1,8 +1,9 @@
+import { ApiService } from 'src/app/services/api/api.service';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../../environments/environment';
 import { MarkerService } from './../../../services/map/marker.service';
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, Input, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-draw'
 // import * as LD from 'leaflet-draw'
@@ -20,6 +21,23 @@ const iconDefault = L.icon({
   tooltipAnchor: [16, -28],
   shadowSize: [41, 41]
 });
+
+// const markerHtmlStyles = `
+// background-color: #FD784F;
+// width: 3rem;
+// height: 3rem;
+// display: block;
+// position: relative;
+// border-radius: 3rem 3rem 0;
+// transform: rotate(45deg);
+// text-align: center;
+// border: 1px solid #FFFFFF`;
+// const customIcon = L.divIcon({
+//   className: "my-custom-pin",
+//   iconAnchor: [0, 24],
+//   popupAnchor: [0, -36],
+//   html: `<div style="${markerHtmlStyles}">12</div>`
+// })
 L.Marker.prototype.options.icon = iconDefault;
 
 @Component({
@@ -27,7 +45,7 @@ L.Marker.prototype.options.icon = iconDefault;
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements AfterViewInit {
+export class MapComponent implements AfterViewInit,OnInit {
   protected map;
   protected geoData
   protected curLat;
@@ -35,7 +53,9 @@ export class MapComponent implements AfterViewInit {
   protected geoJsonData;
   protected layer;
   private markerData;
-  constructor(private markerService: MarkerService, private http: HttpClient) {
+  @Input()
+  private reList;
+  constructor(private markerService: MarkerService, private http: HttpClient, private api: ApiService) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(pos => {
         // console.info(pos.coords);
@@ -46,6 +66,14 @@ export class MapComponent implements AfterViewInit {
         // console.info(this.curLat,this.curLong);
       })
     }
+    
+  }
+  ngOnInit(): void {
+    this.api.getAllRealEstate().subscribe(res => {
+      this.reList = res;
+      console.info(res);
+    });
+    
   }
 
   initMap() {
@@ -89,8 +117,8 @@ export class MapComponent implements AfterViewInit {
       });
     this.map = L.map('map', {
       center: this.curLat?[this.curLat,this.curLong]:[10.823099, 106.629662],
-      zoom: 8,
-      drawControl: true,
+      zoom: 10,
+      drawControl: false,
       layers: [mapTile, streetTile]
     });
     const baseMaps = {
@@ -103,7 +131,7 @@ export class MapComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.initMap();
-    this.loadGeoJsonData();
+    // this.loadGeoJsonData();
     this.markerService.makeCapitalMarkers(this.map);
   }
   loadGeoJsonData() {
@@ -125,20 +153,31 @@ export class MapComponent implements AfterViewInit {
 
       const markerHtmlStyles = `
       background-color: ${myCustomColour};
-      width: 2rem;
-      height: 2rem;
+      width: 3rem;
+      height: 3rem;
       display: block;
       left: -1rem;
       top: -1rem;
       position: relative;
-      border-radius: 2rem 2rem 0;
+      border-radius: 3rem 3rem 0;
       transform: rotate(45deg);
-      border: 1px solid #FFFFFF`
+      text-align: center;
+      border: 1px solid #FFFFFF`;
+      const markerHtmlStyles2 = `
+      background-color: ${myCustomColour};
+      width: 3rem;
+      height: 3rem;
+      display: block;
+      position: relative;
+      border-radius: 50%;
+      transform: rotate(45deg);
+      text-align: center;
+      border: 1px solid #FFFFFF`;
       const icon = L.divIcon({
         className: "my-custom-pin",
         iconAnchor: [0, 24],
         popupAnchor: [0, -36],
-        html: `<span style="${markerHtmlStyles}" />`
+        html: `<div style="${markerHtmlStyles}">12</div>`
       })
       // L.marker([this.curLat, this.curLong],{icon:icon}).bindPopup(`[${this.curLat},${this.curLong}]`).addTo(this.map);
       // L.circleMarker([this.curLat, this.curLong], { radius: 5 }).bindPopup(`[${this.curLat},${this.curLong}]`).addTo(this.map);
@@ -147,7 +186,7 @@ export class MapComponent implements AfterViewInit {
       //   // console.info(JSON.stringify(point[0]));
       //   return L.marker([this.curLat, this.curLong]).bindPopup(`[${point[0].lat},${point[0].lng}]`).addTo(this.map);
       // });
-      for(let i = 0; i<1000;i++){
+      for(let i = 0; i<100;i++){
         const wardName = feature[i].properties.Ten;
         const coordinate = feature[i].geometry.coordinates[0].map(array => array[0]);
         //coordinate is reverse in map coordinate

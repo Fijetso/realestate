@@ -40,7 +40,8 @@ import {
   MatSlideToggleModule,
   MatAutocompleteModule,
   MatButtonToggleModule,
-  MatFormFieldModule
+  MatFormFieldModule,
+  MatChipsModule
 } from '@angular/material';
 import { HttpClientModule, HttpClient,HTTP_INTERCEPTORS } from '@angular/common/http';
 import 'hammerjs';
@@ -147,7 +148,7 @@ import { DeleteReComponent } from './core/ui/create-post/delete-re/delete-re.com
     PopupRendererComponent,
     AddReComponent,
     UpdateReComponent,
-    DeleteReComponent
+    DeleteReComponent,
   ],
   imports: [
     OwlModule,
@@ -203,7 +204,8 @@ import { DeleteReComponent } from './core/ui/create-post/delete-re/delete-re.com
     LeafletModule.forRoot(),
     HttpClientModule,
     ApolloModule,
-    HttpLinkModule
+    HttpLinkModule,
+    MatChipsModule
   ],
   providers: [
     AuthenticationService,
