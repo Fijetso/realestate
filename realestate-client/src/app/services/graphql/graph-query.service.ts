@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { RegisterMutationResponse, REGISTER_MUTATION } from './../../model/generated/graphql';
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
@@ -31,8 +32,11 @@ export class GraphQueryService {
       if (data) {
         console.log('SET-TOKEN', data);
         localStorage.setItem("login", data);
-        return data;
+        return response && data;
       }
+    },error => {
+      console.error('Login failed',error);
+      return error;
     })
   }
   // get infor login
@@ -54,8 +58,10 @@ export class GraphQueryService {
     this.apollo.watchQuery<GetAllTradeResponse>({
       query: GET_ALL_TRADE_QUERY
     }).valueChanges.subscribe((response) => {
-      // console.info(response.data);
-      return response.data
+      console.info(response && response.data);
+      return response && response.data;
+    },error => {
+      console.error('Get all trade grapql '+error)
     })
   }
 
@@ -76,11 +82,11 @@ export class GraphQueryService {
         'Content-Type': 'application/json'
       }),
     };
-    return this.http.post<any>('http://localhost:4200/logout', reqHearder);
+    return this.http.post<any>('http://localhost:8081/logout', reqHearder);
   }
 
-  register(name, email, password, phone, job): any {
-    this.apollo.mutate<RegisterMutationResponse>({
+  register(name, email, password, phone, job): any{
+    return this.apollo.mutate<RegisterMutationResponse>({
       mutation: REGISTER_MUTATION,
       variables: {
         name: name,
@@ -91,7 +97,7 @@ export class GraphQueryService {
       }
     }).subscribe(res => {
       console.info("Register", res.data);
-      return res.data
+      return res && res.data
     }, error => {
       console.error(error)
       return error;

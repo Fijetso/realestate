@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
       console.info('getToken', token)
       this.graphql.getLoginInfo(token).subscribe((res) => {
         this.data= res;
-        console.info(res);
+        // console.info('login infor',res);
         this.isLogedIn= true;
       })
     }

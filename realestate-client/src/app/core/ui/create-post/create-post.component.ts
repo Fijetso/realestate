@@ -1,3 +1,4 @@
+import { GraphQueryService } from './../../../services/graphql/graph-query.service';
 import { RealEstate } from './../../../model/real-estate/real-estate';
 import { ApiService } from './../../../services/api/api.service';
 import { HttpClient } from '@angular/common/http';
@@ -12,7 +13,8 @@ import { State } from '../home-page/marketting/marketting.component';
 export class CreatePostComponent implements OnInit {
  
   reList: RealEstate[];
-  constructor(private api: ApiService) {
+  constructor(private api: ApiService,private graphql : GraphQueryService) {
+    this.graphql.getAllTrade();
   }
 
   ngOnInit() {
