@@ -29,6 +29,7 @@ import vn.edu.uit.realestate.Relational.Repository.DetailsRepository;
 import vn.edu.uit.realestate.Relational.Repository.RealImageRepository;
 import vn.edu.uit.realestate.Relational.Repository.TradeRepository;
 import vn.edu.uit.realestate.Service.IEntityService;
+import vn.edu.uit.realestate.Service.ModelMapperService;
 
 @Service
 public class TradeService implements IEntityService {
@@ -46,6 +47,8 @@ public class TradeService implements IEntityService {
 	private TradeRepository tradeRepository;
 	@Autowired
 	private GraphTradeRepository graphTradeRepository;
+	@Autowired
+	private ModelMapperService modelMapper;
 
 	@Override
 	public MappingJacksonValue findAll() {
@@ -124,8 +127,8 @@ public class TradeService implements IEntityService {
 		} catch (Exception e) {
 			throw new IllegalArgumentException("Cannot find any Trade Status like " + newStatus);
 		}
-		
-		graphTradeRepository.updateTradeStatus(foundTrade.getId(), foundTrade.getTradeStatus().toString());
+		foundTrade = tradeRepository.save(foundTrade);
+		graphTradeRepository.save(modelMapper.convertTrade(foundTrade));
 		
 		SimpleBeanPropertyFilter userFilter = SimpleBeanPropertyFilter.serializeAllExcept("trades", "password");
 		SimpleBeanPropertyFilter filterExceptTrade = SimpleBeanPropertyFilter.serializeAllExcept("trade");
@@ -133,7 +136,7 @@ public class TradeService implements IEntityService {
 		FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", userFilter)
 				.addFilter("AddressFilter", filterExceptTrade).addFilter("DetailsFilter", filterExceptTrade)
 				.addFilter("CoordinateFilter", filterExceptTrade).addFilter("TradeFilter", filterTrade);
-		MappingJacksonValue mapping = new MappingJacksonValue(tradeRepository.save(foundTrade));
+		MappingJacksonValue mapping = new MappingJacksonValue(foundTrade);
 		mapping.setFilters(filters);
 		return mapping;
 	}

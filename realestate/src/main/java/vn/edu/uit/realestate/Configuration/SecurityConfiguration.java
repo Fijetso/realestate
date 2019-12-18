@@ -109,7 +109,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/secured/**").authenticated();
 //		.and().formLogin().disable().oauth2Login().userInfoEndpoint()
 //				.userService(this.oauth2UserService()).oidcUserService(this.oidcUserService());
-		http.logout().logoutSuccessUrl("/").logoutUrl("/logout").permitAll();
+		http.logout().logoutSuccessUrl("/logout/success").logoutUrl("/logout").permitAll();
 	}
 
 	@Override

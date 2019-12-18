@@ -113,4 +113,13 @@ public class UserAccountController {
 			return new ResponseEntity<>(SpecificString.invalid_or_broken_link, HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@RequestMapping(value = "/logout/success", method = RequestMethod.GET)
+	public ResponseEntity<?> successfulLogout() {
+		return new ResponseEntity<>("Log out successfully", HttpStatus.OK);
+	}	
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public ResponseEntity<?> successfulLogout(@RequestParam("token")String token) {
+		return new ResponseEntity<>(token, HttpStatus.OK);
+	}
 }
