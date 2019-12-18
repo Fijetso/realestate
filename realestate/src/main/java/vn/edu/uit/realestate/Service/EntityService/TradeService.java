@@ -62,7 +62,7 @@ public class TradeService implements IEntityService {
 		SimpleBeanPropertyFilter filterTrade = SimpleBeanPropertyFilter.serializeAllExcept("favoriteTrades");
 		FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", userFilter)
 				.addFilter("AddressFilter", filterExceptTrade).addFilter("DetailsFilter", filterExceptTrade)
-				.addFilter("CoordinateFilter", filterExceptTrade).addFilter("TradeFilter", filterTrade);
+				.addFilter("TradeFilter", filterTrade);
 		MappingJacksonValue mapping = new MappingJacksonValue(trades);
 		mapping.setFilters(filters);
 		return mapping;
@@ -79,7 +79,7 @@ public class TradeService implements IEntityService {
 		SimpleBeanPropertyFilter filterTrade = SimpleBeanPropertyFilter.serializeAllExcept("favoriteTrades");
 		FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", userFilter)
 				.addFilter("AddressFilter", filterExceptTrade).addFilter("DetailsFilter", filterExceptTrade)
-				.addFilter("CoordinateFilter", filterExceptTrade).addFilter("TradeFilter", filterTrade);
+				.addFilter("TradeFilter", filterTrade);
 		MappingJacksonValue mapping = new MappingJacksonValue(foundTrade);
 		mapping.setFilters(filters);
 		return mapping;
@@ -135,7 +135,7 @@ public class TradeService implements IEntityService {
 		SimpleBeanPropertyFilter filterTrade = SimpleBeanPropertyFilter.serializeAllExcept("favoriteTrades");
 		FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", userFilter)
 				.addFilter("AddressFilter", filterExceptTrade).addFilter("DetailsFilter", filterExceptTrade)
-				.addFilter("CoordinateFilter", filterExceptTrade).addFilter("TradeFilter", filterTrade);
+				.addFilter("TradeFilter", filterTrade);
 		MappingJacksonValue mapping = new MappingJacksonValue(foundTrade);
 		mapping.setFilters(filters);
 		return mapping;

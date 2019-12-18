@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @JsonIgnoreProperties("trade")
-@JsonFilter("CoordinateFilter")
+//@JsonFilter("CoordinateFilter")
 public class Coordinate {
 	@Id
 	@GeneratedValue
