@@ -1,5 +1,4 @@
 import { ApiService } from 'src/app/services/api/api.service';
-import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../../environments/environment';
 import { MarkerService } from './../../../services/map/marker.service';
