@@ -19,7 +19,8 @@ export class AddReComponent implements OnInit {
   imgURL: any;
   message: string;
   address: Address;
-  userKinds: UserKind[]
+  userKinds: UserKind[];
+  selectedFile: File
   constructor(private api: ApiService, private fb: FormBuilder, private router: Router) {
     this.api.getAllUserKind().subscribe(res => {
       // console.info(res);
@@ -62,13 +63,11 @@ export class AddReComponent implements OnInit {
 
   save($event){
     this.api.createRE(this.realEstate.value);
-    if(this.imgURL){
-      this.api.uploadImages(this.imgURL,'upload'+new Date().getTime).subscribe((res) => {
-        console.info('Upload success',res);
-      })
-    }
+    this.api.uploadImages(this.imagePath,'Mô tả').subscribe(res => {
+      console.info(res);
+      return res;
+    })
     console.info(this.realEstate.value);
-    // this.router.navigate(['./dang-tin']);
   }
 
   onChangeGender($event){ 
@@ -78,19 +77,19 @@ export class AddReComponent implements OnInit {
   onChangeUserKind($event){ 
     console.info($event.target.value);
   }
-  preview(files) {
-    if (files.length === 0)
-      return;
+  preview(event) {
+    // if (files.length === 0)
+    //   return;
  
-    let mimeType = files[0].type;
-    if (mimeType.match(/image\/*/) == null) {
-      this.message = "Only images are supported.";
-      return;
-    }
- 
+    // let mimeType = files[0].type;
+    // if (mimeType.match(/image\/*/) == null) {
+    //   this.message = "Only images are supported.";
+    //   return;
+    // }
+    this.selectedFile = event.target.files[0]
     let reader = new FileReader();
-    this.imagePath = files;
-    reader.readAsDataURL(files[0]); 
+    this.imagePath = event.target.files[0];
+    reader.readAsDataURL(event.target.files[0]); 
     reader.onload = (_event) => { 
       this.imgURL = reader.result; 
     }

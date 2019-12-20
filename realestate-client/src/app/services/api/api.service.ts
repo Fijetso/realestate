@@ -206,9 +206,11 @@ export class ApiService {
     this.reList[index].user = re.user;
   }
 
-  uploadImages(imageLink, desc){
-    let imageInfo = [imageLink, desc]
-    console.info('uploadImages '+this.baseURL);
-    return this.http.post<any>(this.baseURL+'image/upload',imageInfo);
+  uploadImages(selectedFile, desc){
+    let uploadData = new FormData();
+    uploadData.append('file', selectedFile, selectedFile.name);
+    uploadData.append('desc', desc);
+    console.log(uploadData);
+    return this.http.post<any>(this.baseURL+'image/upload',uploadData);
   }
 }
