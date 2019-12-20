@@ -12,13 +12,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import vn.edu.uit.realestate.Graph.Model.GraphTrade;
 import vn.edu.uit.realestate.Graph.Repository.GraphAddressRepository;
+import vn.edu.uit.realestate.Graph.Repository.GraphTradeRepository;
 
 @RestController
 public class RecommenderSystemController {
 	@Autowired
 	private GraphAddressRepository graphAddressRepository;
+	@Autowired
+	private GraphTradeRepository graphTradeRepository;
 	@GetMapping("trades/suggest")
-    public ResponseEntity<List<GraphTrade>> findTradeByProvince(@RequestParam long districtId) {
+    public ResponseEntity<Iterable<GraphTrade>> findTradeByProvince(@RequestParam long districtId) {
     	List<GraphTrade> foundTrade = graphAddressRepository.findTradeByDistrictId(districtId);
         return new ResponseEntity<>(foundTrade,HttpStatus.OK);
     }

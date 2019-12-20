@@ -2,6 +2,7 @@ package vn.edu.uit.realestate.Graph.Model;
 
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
 
 @NodeEntity(label = "Coordinate")
 public class GraphCoordinate {
@@ -9,6 +10,8 @@ public class GraphCoordinate {
 	private long id;
 	private float longitude;
 	private float latitude;
+	@Relationship(type = "LOCATE", direction = Relationship.INCOMING)
+	private GraphTrade trade;
 
 	public GraphCoordinate() {
 		super();
@@ -43,5 +46,13 @@ public class GraphCoordinate {
 
 	public void setLatitude(Long latitude) {
 		this.latitude = latitude;
+	}
+
+//	public GraphTrade getTrade() {
+//		return trade;
+//	}
+
+	public void setTrade(GraphTrade trade) {
+		this.trade = trade;
 	}
 }

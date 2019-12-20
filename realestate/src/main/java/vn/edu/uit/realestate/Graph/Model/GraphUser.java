@@ -6,6 +6,7 @@ import javax.validation.constraints.Size;
 
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
 
 import vn.edu.uit.realestate.Common.Common;
 import vn.edu.uit.realestate.ExceptionHandler.IllegalArgumentException;
@@ -13,6 +14,10 @@ import vn.edu.uit.realestate.ExceptionHandler.IllegalArgumentException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.validation.constraints.Email;
 
 @NodeEntity(label = "User")
@@ -29,6 +34,8 @@ public class GraphUser {
 	private Date birthdate;
 	private boolean gender;
 	private String job;
+	@Relationship(type = "POST", direction = Relationship.OUTGOING)
+	private List<GraphTrade> trade;
 	private transient SimpleDateFormat dateFormat = new SimpleDateFormat(Common.Constains.LOCAL_DATE_FORMAT);
 
 	public GraphUser() {
@@ -67,10 +74,6 @@ public class GraphUser {
 
 	public Long getId() {
 		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getName() {
@@ -130,5 +133,17 @@ public class GraphUser {
 
 	public void setJob(String job) {
 		this.job = job;
+	}
+
+	public List<GraphTrade> getTrade() {
+		return trade;
+	}
+
+	public void setTrade(List<GraphTrade> trade) {
+		this.trade = trade;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 }

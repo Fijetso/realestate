@@ -4,6 +4,7 @@ import javax.validation.constraints.NotNull;
 
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
 
 @NodeEntity(label = "Address")
 public class GraphAddress {
@@ -16,7 +17,9 @@ public class GraphAddress {
 	@NotNull(message="You must enter the district")
 	private long district;
 	@NotNull(message="You must enter the city or province")
-	private long province;
+	private long province;	
+	@Relationship(type = "HAVE", direction = Relationship.INCOMING)
+	private GraphTrade trade;
 
 	public GraphAddress() {
 		super();
@@ -69,5 +72,13 @@ public class GraphAddress {
 
 	public void setCityOrProvince(Long cityOrProvince) {
 		this.province = cityOrProvince;
+	}
+
+//	public GraphTrade getTrade() {
+//		return trade;
+//	}
+
+	public void setTrade(GraphTrade trade) {
+		this.trade = trade;
 	}
 }
