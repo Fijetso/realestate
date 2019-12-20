@@ -41,4 +41,8 @@ public class GraphRealEstateKind {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public void setTrade(List<GraphTrade> trade) {
+		this.trade = trade;
+	}
 }

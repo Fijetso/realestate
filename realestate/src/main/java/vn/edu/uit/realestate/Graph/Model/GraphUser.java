@@ -135,9 +135,9 @@ public class GraphUser {
 		this.job = job;
 	}
 
-	public List<GraphTrade> getTrade() {
-		return trade;
-	}
+//	public List<GraphTrade> getTrade() {
+//		return trade;
+//	}
 
 	public void setTrade(List<GraphTrade> trade) {
 		this.trade = trade;
