@@ -45,11 +45,11 @@ export class UserComponent implements OnInit {
     this.searchTerm = '';
   }
   ngOnInit() {
-    this.getAllUser();
-    this.common.userObservable.subscribe(res => {
-      this.getAllUser();
-      }
-    );
+    // this.getAllUser();
+    // this.common.userObservable.subscribe(res => {
+    //   this.getAllUser();
+    //   }
+    // );
   }
   getAllUser() {
     this.api.getAllUser().subscribe(listUser => {

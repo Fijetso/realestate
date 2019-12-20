@@ -4,7 +4,7 @@ import { MarkerService } from './services/map/marker.service';
 import { MapComponent } from './core/ui/map/map.component';
 import { HttpErrorInterceptor } from './services/common/http-error.interceptor';
 import { environment } from './../environments/environment';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
@@ -100,6 +100,9 @@ import { PopupRendererComponent } from './core/ui/map/popup-renderer/popup-rende
 import { AddReComponent } from './core/ui/create-post/add-re/add-re.component';
 import { UpdateReComponent } from './core/ui/create-post/update-re/update-re.component';
 import { DeleteReComponent } from './core/ui/create-post/delete-re/delete-re.component';
+import { NewsComponent } from './core/ui/news/news.component';
+import { ContactComponent } from './core/ui/contact/contact.component';
+import { NewsDetailComponent } from './core/ui/news-detail/news-detail.component';
 
 @NgModule({
   declarations: [
@@ -149,6 +152,9 @@ import { DeleteReComponent } from './core/ui/create-post/delete-re/delete-re.com
     AddReComponent,
     UpdateReComponent,
     DeleteReComponent,
+    NewsComponent,
+    ContactComponent,
+    NewsDetailComponent,
   ],
   imports: [
     OwlModule,
@@ -217,7 +223,8 @@ import { DeleteReComponent } from './core/ui/create-post/delete-re/delete-re.com
     },
     MarkerService,
     PopupService,
-    GraphQueryService
+    GraphQueryService,
+    Title
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],

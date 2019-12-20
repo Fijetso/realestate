@@ -1,3 +1,4 @@
+import { AccountManagementComponent } from './core/ui/account-management/account-management.component';
 import { AddReComponent } from './core/ui/create-post/add-re/add-re.component';
 import { UserComponent } from './components/user/user.component';
 import { FavoriteComponent } from './components/favorite/favorite.component';
@@ -13,12 +14,15 @@ import { RegisterComponent } from './core/ui/register/register.component';
 import { CreatePostComponent } from './core/ui/create-post/create-post.component';
 import { UserDetailComponent } from './core/ui/user-detail/user-detail.component';
 import { SearchPageComponent } from './core/ui/search-page/search-page.component';
+import { NewsComponent } from './core/ui/news/news.component';
+import { ContactComponent } from './core/ui/contact/contact.component';
+import { NewsDetailComponent } from './core/ui/news-detail/news-detail.component';
 
 const routes: Routes = [
   {
     path: '',
     component: RealestateListComponent,
-    data: { title: 'Tiêu đề trang chủ' }
+    data: { title: 'Trang chủ' }
   },
   {
     path: 'mua/:slug',
@@ -51,7 +55,7 @@ const routes: Routes = [
     data: { title: 'Trang người dùng' }
   },
   {
-    path: 'dang-tin',
+    path: 'tam',
     component: CreatePostComponent,
     data: { title: 'Trang bài đăng' }
   },
@@ -66,9 +70,24 @@ const routes: Routes = [
     data: { title: 'Tìm kiếm BĐS' }
   },
   {
-    path: 'them-tin',
+    path: 'dang-tin',
     component: AddReComponent,
-    data: { title: 'Thêm bất động sản' }
+    data: { title: 'Tạo bài đăng bất động sản' }
+  },
+  {
+    path: 'tin-tuc',
+    component: NewsComponent,
+    data: { title: 'Tin tức bất động sản' }
+  },
+  {
+    path: 'tin-tuc/:id',
+    component: NewsDetailComponent,
+    data: { title: 'Chi tiết tin' }
+  },
+  {
+    path: 'lien-he',
+    component: ContactComponent,
+    data: { title: 'Thông tin liên hệ' }
   },
   {
     path: '**',
