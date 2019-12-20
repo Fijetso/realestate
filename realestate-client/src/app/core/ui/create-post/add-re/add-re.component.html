@@ -82,9 +82,9 @@
             <tr>
                 <td>Hình ảnh</td>
                 <td>
-                    <span style="color:red;" *ngIf="message">{{message}}</span>
-                    <input #file type="file" accept='image/*' (change)="preview($event)" formControlName="realImages"/>
-                    <img [src]="imgURL" height="200" *ngIf="imgURL">
+                    <button mat-button (click)="onSelectFile()">Chọn ảnh</button>
+                    <img [src]="imgURL" [style.height.px]="height" *ngIf="imgURL">
+                    <input #file type="file" accept='image/*' (change)="preview($event)" formControlName="realImages" multiple class="hidden"/>
                 </td>
             </tr>
         </div>
@@ -92,13 +92,13 @@
             <tr>
                 <td>Mô tả thêm</td>
                 <td>
-                    <input  type="text" formControlName="details" multiple="true"/>
+                    <textarea  type="text" formControlName="details"></textarea>
                 </td>
             </tr>
         </div>
         <tr>
             <td>
-                <button type="submit">Save</button>
+                <button mat-raised-button type="submit">Đăng bài</button>
             </td>
         </tr>
     </table>

@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { FormGroup,FormBuilder } from '@angular/forms';
 import { RealEstate } from './../../../../model/real-estate/real-estate';
 import { ApiService } from 'src/app/services/api/api.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-add-re',
@@ -20,7 +20,9 @@ export class AddReComponent implements OnInit {
   message: string;
   address: Address;
   userKinds: UserKind[];
-  selectedFile: File
+  selectedFile: File;
+  @Input()
+  height: number;
   constructor(private api: ApiService, private fb: FormBuilder, private router: Router) {
     this.api.getAllUserKind().subscribe(res => {
       // console.info(res);
@@ -28,7 +30,7 @@ export class AddReComponent implements OnInit {
     });
    }
   ngOnInit() {
-    
+    this.height=200;
     this.realEstate = this.fb.group({
       id: 1,
       description: 'Mô tả',
@@ -62,11 +64,13 @@ export class AddReComponent implements OnInit {
   }
 
   save($event){
-    this.api.createRE(this.realEstate.value);
-    this.api.uploadImages(this.imagePath,'Mô tả').subscribe(res => {
+    // this.api.createRE(this.realEstate.value);
+   if(this.selectedFile){
+    this.api.uploadImages(this.selectedFile,'Mô tả').subscribe(res => {
       console.info(res);
       return res;
-    })
+    });
+   }
     console.info(this.realEstate.value);
   }
 
@@ -78,14 +82,6 @@ export class AddReComponent implements OnInit {
     console.info($event.target.value);
   }
   preview(event) {
-    // if (files.length === 0)
-    //   return;
- 
-    // let mimeType = files[0].type;
-    // if (mimeType.match(/image\/*/) == null) {
-    //   this.message = "Only images are supported.";
-    //   return;
-    // }
     this.selectedFile = event.target.files[0]
     let reader = new FileReader();
     this.imagePath = event.target.files[0];
@@ -93,5 +89,10 @@ export class AddReComponent implements OnInit {
     reader.onload = (_event) => { 
       this.imgURL = reader.result; 
     }
+  }
+
+  onSelectFile(){
+    let element: HTMLElement = document.querySelector('input[type="file"]') as HTMLElement;
+    element.click();
   }
 }

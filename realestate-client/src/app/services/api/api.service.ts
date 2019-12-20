@@ -208,7 +208,7 @@ export class ApiService {
 
   uploadImages(selectedFile, desc){
     let uploadData = new FormData();
-    uploadData.append('file', selectedFile, selectedFile.name);
+    uploadData.append('file', selectedFile, selectedFile?selectedFile.name:null);
     uploadData.append('desc', desc);
     console.log(uploadData);
     return this.http.post<any>(this.baseURL+'image/upload',uploadData);
