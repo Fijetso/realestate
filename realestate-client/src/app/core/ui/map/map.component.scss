@@ -8,7 +8,8 @@
       height: inherit; 
       width: inherit;
       #map {
-        height: 99%;  
+        height: 99%; 
+        z-index: 10;
       }
     }
   }
