@@ -1,3 +1,5 @@
+import { element } from 'protractor';
+import { ActivatedRoute } from '@angular/router';
 import {
   Component, OnInit
 } from '@angular/core';
@@ -9,10 +11,20 @@ import {
   styleUrls: ['./map-module.component.scss'],
 })
 export class MapModuleComponent implements OnInit {
-  public markers: { lat: number, long: number }[];   // Map markers (relevance depends on map center)
+  reId: number;
+  provinceId:number;
+  constructor(private activatedRoute: ActivatedRoute) {
 
-  constructor() {
   }
   ngOnInit(): void {
+    //  this.activatedRoute.params.subscribe((params)=> {
+    //     this.reId = +params['id'];
+    //     console.info(this.reId);
+    //   })
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.provinceId = params.tinh;
+      this.reId = params.quan;
+      console.log(this.provinceId,this.reId);
+    })
   }
 }

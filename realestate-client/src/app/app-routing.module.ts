@@ -64,11 +64,11 @@ const routes: Routes = [
     component: UserDetailComponent,
     data: { title: 'Chi tiết người dùng' }
   },
-  {
-    path: 'tim-kiem/:id',
-    component: SearchPageComponent,
-    data: { title: 'Tìm kiếm BĐS' }
-  },
+  // {
+  //   path: 'tim-kiem/:id',
+  //   component: SearchPageComponent,
+  //   data: { title: 'Tìm kiếm BĐS' }
+  // },
   {
     path: 'dang-tin',
     component: AddReComponent,
