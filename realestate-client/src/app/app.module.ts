@@ -1,14 +1,13 @@
+import { environment } from './../environments/environment.prod';
 import { GraphQueryService } from './services/graphql/graph-query.service';
 import { PopupService } from './services/map/popup.service';
 import { MarkerService } from './services/map/marker.service';
 import { MapComponent } from './core/ui/map/map.component';
 import { HttpErrorInterceptor } from './services/common/http-error.interceptor';
-import { environment } from './../environments/environment';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
-import { AgmCoreModule } from '@agm/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AppComponent } from './app.component';
 import { LayoutComponent } from './components/layout/layout.component';
@@ -54,9 +53,10 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ToastrModule } from 'ngx-toastr';
-import {} from 'googlemaps';
 import { ApolloModule } from 'apollo-angular';
 import { HttpLinkModule } from 'apollo-angular-link-http';
+import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
+import { GoogleLoginProvider, FacebookLoginProvider } from "angularx-social-login";
 
 import { RealEstateWrapperComponent } from './components/real-estate/real-estate-wrapper/real-estate-wrapper.component';
 import { AlertComponent } from './core/modal/alert/alert.component';
@@ -103,6 +103,21 @@ import { DeleteReComponent } from './core/ui/create-post/delete-re/delete-re.com
 import { NewsComponent } from './core/ui/news/news.component';
 import { ContactComponent } from './core/ui/contact/contact.component';
 import { NewsDetailComponent } from './core/ui/news-detail/news-detail.component';
+
+let config = new AuthServiceConfig([
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider(environment.soicialProvider.google.clientId)
+  },
+  {
+    id: FacebookLoginProvider.PROVIDER_ID,
+    provider: new FacebookLoginProvider(environment.soicialProvider.facebook.appId)
+  }
+]);
+ 
+export function provideConfig() {
+  return config;
+}
 
 @NgModule({
   declarations: [
@@ -162,10 +177,6 @@ import { NewsDetailComponent } from './core/ui/news-detail/news-detail.component
     AppRoutingModule,
     LazyLoadImageModule,
     BrowserAnimationsModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCTD49hV20zPTBjT7k643sBxjoXx6W7oEo',
-      libraries: ['places']
-    }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -211,7 +222,8 @@ import { NewsDetailComponent } from './core/ui/news-detail/news-detail.component
     HttpClientModule,
     ApolloModule,
     HttpLinkModule,
-    MatChipsModule
+    MatChipsModule,
+    SocialLoginModule
   ],
   providers: [
     AuthenticationService,
@@ -224,7 +236,11 @@ import { NewsDetailComponent } from './core/ui/news-detail/news-detail.component
     MarkerService,
     PopupService,
     GraphQueryService,
-    Title
+    Title,
+    {
+      provide: AuthServiceConfig,
+      useFactory: provideConfig
+    }
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],

@@ -83,7 +83,7 @@ export class GraphQueryService {
         'Content-Type': 'application/json'
       }),
     };
-    return this.http.post<any>(environment.api.baseURL+'logout', reqHearder);
+    return this.http.post<any>('http://localhost:8081/logout', reqHearder);
   }
 
   register(name, email, password, phone, job): any{
@@ -100,7 +100,7 @@ export class GraphQueryService {
       console.info("Register", res.data);
       return res && res.data
     }, error => {
-      console.error(error)
+      // console.error(error)
       return error;
     })
   }

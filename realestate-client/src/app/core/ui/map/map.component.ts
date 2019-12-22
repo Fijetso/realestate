@@ -5,6 +5,7 @@ import { MarkerService } from './../../../services/map/marker.service';
 import { Component, AfterViewInit, Input, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-draw'
+import { FormBuilder } from '@angular/forms';
 // import * as LD from 'leaflet-draw'
 
 const iconRetinaUrl = 'assets/map/marker-icon-2x.png';
@@ -54,7 +55,8 @@ export class MapComponent implements AfterViewInit,OnInit {
   private markerData;
   @Input()
   private reList;
-  constructor(private markerService: MarkerService, private http: HttpClient, private api: ApiService) {
+  createPost: any;
+  constructor(private markerService: MarkerService, private http: HttpClient, private api: ApiService, private fb : FormBuilder) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(pos => {
         // console.info(pos.coords);
@@ -65,6 +67,15 @@ export class MapComponent implements AfterViewInit,OnInit {
         // console.info(this.curLat,this.curLong);
       })
     }
+
+    // this.createPost = this.fb.group({
+    //   purpose:0,
+    //   searchInput:[''],
+    //   reKind:0,
+    //   district:1,
+    //   ward:1,
+    //   orderBy:0
+    // })
     
   }
   ngOnInit(): void {
@@ -72,7 +83,6 @@ export class MapComponent implements AfterViewInit,OnInit {
       this.reList = res;
       console.info(res);
     });
-    
   }
 
   initMap() {

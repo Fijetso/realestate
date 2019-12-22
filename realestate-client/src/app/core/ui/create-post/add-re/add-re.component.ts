@@ -27,6 +27,7 @@ export class AddReComponent implements OnInit, AfterViewInit {
   protected curLat;
   protected curLong;
   markerHtmlStyles2: any;
+  userInfo: any;
   constructor(private api: ApiService, private fb: FormBuilder, private router: Router) {
     this.api.getAllUserKind().subscribe(res => {
       // console.info(res);
@@ -40,6 +41,8 @@ export class AddReComponent implements OnInit, AfterViewInit {
         this.madeMarkerFromLocation(this.curLat, this.curLong);
       })
     }
+    this.userInfo = JSON.parse(localStorage.getItem('loginGoogle'));
+    
   }
   ngOnInit() {
     this.height = 200;
@@ -48,11 +51,11 @@ export class AddReComponent implements OnInit, AfterViewInit {
       description: 'Mô tả',
       cost: 0,
       user: this.fb.group({
-        id: 0,
-        name: 'Name',
-        email: 'exampale@email.com',
+        id: this.userInfo.id,
+        name: this.userInfo.name,
+        email: this.userInfo.email,
         phone: '0985922740',
-        password: 'password',
+        password: '',
         birthdate: new Date("1995-19-11"),
         gender: true,
         userKind: this.fb.group({

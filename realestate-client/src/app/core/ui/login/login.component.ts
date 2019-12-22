@@ -3,7 +3,6 @@ import { User } from './../../../model/user/user';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
-import * as firebase from 'firebase';
 // import translate from 'google-translate-api';
 @Component({
   selector: 'app-login',
@@ -20,7 +19,7 @@ export class LoginComponent implements OnInit {
   user: User;
   login: any;
   allTrade: any[];
-  constructor(private authService: AuthenticationService, private graphql: GraphQueryService) {
+  constructor(private myAuthService: AuthenticationService, private graphql: GraphQueryService) {
     this.userInfo = {
       email: '',
       password: ''
@@ -37,15 +36,7 @@ export class LoginComponent implements OnInit {
   }
 
   getUserLogin() {
-    // firebase.auth().onAuthStateChanged(user => {
-    //   if (user) {
-    //     this.data = user.providerData[0];
-    //     this.isLogedIn = true;
-    //   } else {
-    //     this.data = null;
-    //     this.isLogedIn = false;
-    //   }
-    // });
+
   }
 
   onLogIn(email: string, password: string) {
@@ -61,44 +52,40 @@ export class LoginComponent implements OnInit {
     }
     this.allTrade = this.graphql.getAllTrade();
   }
-
-  getUserInfoSocial(datasource) {
-    if (datasource) {
-      this.data = datasource;
-      this.isLogedIn = true;
-    } else {
-      this.data = null;
-      this.isLogedIn = false;
-    }
-  }
   loginWithGoogle() {
-    this.authService.loginWithGoogle().then(data => {
-      this.isLogedIn = true;
-      this.authService.writeUserInfor();
-      this.getUserInfoSocial(data);
-      // this.getUserLogin();
-      // console.log(JSON.parse(localStorage.getItem('userInfor')));
-    });
+    this.myAuthService.loginWithGoogle().then(
+      user => {
+        console.info(user);
+        localStorage.setItem('loginGoogle',JSON.stringify(user));
+        this.isLogedIn = true;
+      }
+    )
   }
 
   loginWithFacebook() {
-    this.authService.loginWithFacebook().then(data => {
-      this.isLogedIn = true;
-      this.authService.writeUserInfor();
-      this.getUserLogin();
-      console.log(JSON.parse(localStorage.getItem('userInfor')));
-    });
+    this.myAuthService.loginWithGoogle().then(
+      user => {
+        console.info(user);
+      }
+    )
   }
   onLogOut() {
-    // this.authService.logOut();
-    // localStorage.setItem('userInfor', null);
-    // this.data = null;
-    // this.isLogedIn = false;
+    localStorage.setItem('userInfor', null);
+    this.data = null;
+    this.isLogedIn = false;
     this.graphql.logout().subscribe(res => {
       console.info('logout successful', res),
-        localStorage.clear();
+      localStorage.clear();
       this.isLogedIn = false;
     }, error => { console.error(error) });
+    this.myAuthService.logOut().then(
+      res => {
+        console.info(res);
+        localStorage.clear();
+      }
+    ).catch(err => {
+      console.error(err);
+    })
   }
   onSubmitLogin(formValue) {
     this.onLogIn(formValue.email, formValue.password);
