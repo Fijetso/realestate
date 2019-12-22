@@ -45,11 +45,6 @@ const routes: Routes = [
     data: { title: 'Trang bất động sản yêu thích' }
   },
   {
-    path: 'login',
-    component: RegisterComponent,
-    data: { title: 'Trang đăng ký' }
-  },
-  {
     path: 'nguoi-dung',
     component: UserComponent,
     data: { title: 'Trang người dùng' }
@@ -64,11 +59,6 @@ const routes: Routes = [
     component: UserDetailComponent,
     data: { title: 'Chi tiết người dùng' }
   },
-  // {
-  //   path: 'tim-kiem/:id',
-  //   component: SearchPageComponent,
-  //   data: { title: 'Tìm kiếm BĐS' }
-  // },
   {
     path: 'dang-tin',
     component: AddReComponent,
