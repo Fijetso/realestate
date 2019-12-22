@@ -23,12 +23,13 @@ export const environment = {
   },
   soicialProvider: {
     google : {
-      clientId: '522576343899-oacdhl7qnje56ml1kd4rcu7eass7g2c3.apps.googleusercontent.com',
-      clientSecret:'-Esx1txmVCiX7FZPoty-2WYp'
+      clientId: '522576343899-oacdhl7qnje56ml1kd4rcu7eass7g2c3.apps.googleusercontent.com'
     },
     facebook: {
-      appId:'1213363158870756',
-      secretKey: 'a4bc7656a045baa03a0f164663dabc6a'
+      appId:'1213363158870756'
+    },
+    zalo: {
+      appId: '3698477159127928270'
     }
   }
 };
