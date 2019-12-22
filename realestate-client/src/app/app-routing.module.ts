@@ -45,7 +45,7 @@ const routes: Routes = [
     data: { title: 'Trang bất động sản yêu thích' }
   },
   {
-    path: 'dang-ky',
+    path: 'login',
     component: RegisterComponent,
     data: { title: 'Trang đăng ký' }
   },
@@ -100,7 +100,7 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
 export const routingComponents = [
   RealestateListComponent,
   RealestateItemComponent
