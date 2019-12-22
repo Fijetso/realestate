@@ -51,6 +51,7 @@ public class GraphDetails {
 	}
 
 	public void setLength(Long length) {
+		if(length !=null)
 		this.length = length;
 	}
 
@@ -59,6 +60,7 @@ public class GraphDetails {
 	}
 
 	public void setWidth(Long width) {
+		if(width !=null)
 		this.width = width;
 	}
 
@@ -67,6 +69,7 @@ public class GraphDetails {
 	}
 
 	public void setSquare(Long square) {
+		if(square !=null)
 		this.square = square;
 	}
 
