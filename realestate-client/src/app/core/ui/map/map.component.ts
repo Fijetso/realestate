@@ -45,7 +45,7 @@ L.Marker.prototype.options.icon = iconDefault;
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements AfterViewInit,OnInit {
+export class MapComponent implements AfterViewInit, OnInit {
   protected map;
   protected geoData
   protected curLat;
@@ -57,7 +57,7 @@ export class MapComponent implements AfterViewInit,OnInit {
   private reList;
   createPost: any;
   private isFullMap;
-  constructor(private markerService: MarkerService, private http: HttpClient, private api: ApiService, private fb : FormBuilder) {
+  constructor(private markerService: MarkerService, private http: HttpClient, private api: ApiService, private fb: FormBuilder) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(pos => {
         // console.info(pos.coords);
@@ -71,7 +71,7 @@ export class MapComponent implements AfterViewInit,OnInit {
       this.reList = res;
       console.info(res);
     });
-    this.isFullMap=false;
+    this.isFullMap = false;
   }
 
   initMap() {
@@ -114,7 +114,7 @@ export class MapComponent implements AfterViewInit,OnInit {
         updateWhenZooming: true,
       });
     this.map = L.map('map', {
-      center: this.curLat?[this.curLat,this.curLong]:[10.823099, 106.629662],
+      center: this.curLat ? [this.curLat, this.curLong] : [10.823099, 106.629662],
       zoom: 12,
       drawControl: false,
       layers: [mapTile, streetTile]
@@ -136,14 +136,18 @@ export class MapComponent implements AfterViewInit,OnInit {
   loadGeoJsonData() {
     this.getGeoJsonFile();
   }
-  
+
   getGeoJsonFile(): any {
     return this.http.get('assets/map/vietnam-district.geojson').subscribe(geoData => {
       this.geoData = geoData;
       const feature = this.geoData.features.map(feature => feature);
       console.info(feature);
-      const pointArrays = feature.map(feature => feature.geometry.coordinates[0].map(array => L.latLng(array[0])));
-      L.geoJSON(this.geoData,{style : this.setStyle()}).addTo(this.map);
+      L.geoJSON(this.geoData, {
+        style: this.setStyle(),
+        onEachFeature: (feature, featureLayer) => {
+          featureLayer.bindTooltip(feature.properties.Ten)
+        }
+      }).addTo(this.map);
       const myCustomColour = 'turquoise'
       // console.info(pointArrays);
       const markerHtmlStyles = `
@@ -168,31 +172,28 @@ export class MapComponent implements AfterViewInit,OnInit {
       transform: rotate(45deg);
       text-align: center;
       border: 1px solid #FFFFFF`;
-      for(let i = 0; i<feature.length;i++){
-        const districtName = feature[i].properties.Ten;
-        const cap = feature[i].properties.Cap+' ';
-        if(feature[i].properties.Ten=='Quận 5'){
-          const quan5Geo = feature[i].geometry.coordinates[0][0];
-          const realquan5Geo = feature[i].geometry.coordinates[0][0];
-          let temp;
-          // realquan5Geo.forEach(lngLat => {
-          //   console.info(lngLat);
-          // });
-          const polygon = L.polygon(realquan5Geo,this.setPolyStyle()).addTo(this.map);
-          // console.info(polygon);
+      for (let i = 0; i < feature.length; i++) {
+        if (feature[i].properties.MaTP == '79') {
+          const districtName = feature[i].properties.Ten;
+          const cap = feature[i].properties.Cap + ' ';
+          if (feature[i].properties.Ten == 'Quận 5') {
+            const quan5Geo = console.info(i, feature[i].geometry.coordinates[0][0]);
+            const realquan5Geo = feature[i].geometry.coordinates[0][0];
+            const polygon = L.polygon(realquan5Geo, this.setPolyStyle()).addTo(this.map);
+          }
+          const coordinate = feature[i].geometry.coordinates[0].map(array => array);
+          // first array coordinate is reverted
+          const realCoordinate = Array.prototype.reverse.apply(coordinate[0][0]);
+          // console.info(realCoordinate);
+          const marker = L.marker(realCoordinate, {
+            icon: L.divIcon({
+              className: "my-custom-pin",
+              iconAnchor: [0, 24],
+              popupAnchor: [0, -36],
+              html: `<div style="${markerHtmlStyles}">${+districtName.replace(cap, '') > 0 ? 'Q. ' + districtName.replace(cap, '') : districtName.replace(cap, '')}</div>`
+            })
+          }).bindTooltip(districtName).bindPopup(districtName).addTo(this.map);
         }
-        const coordinate = feature[i].geometry.coordinates[0].map(array => array);
-        //coordinate is reverse in map coordinate
-        // console.info(L.polygon(coordinate[0]).getBounds());
-        // first array coordinate is reverted
-        const realCoordinate=Array.prototype.reverse.apply(coordinate[0][0]);
-        // console.info(realCoordinate);
-        const marker = L.marker(realCoordinate,{icon:L.divIcon({
-          className: "my-custom-pin",
-          iconAnchor: [0, 24],
-          popupAnchor: [0, -36],
-          html: `<div style="${markerHtmlStyles}">${+districtName.replace(cap,'')>0?'Q. '+districtName.replace(cap,''):districtName.replace(cap,'')}</div>`
-        })}).bindTooltip(districtName).bindPopup(districtName).addTo(this.map);
         // console.info(`Added marker ${i+1}`);
       }
     }, error => console.error(error));
@@ -204,7 +205,7 @@ export class MapComponent implements AfterViewInit,OnInit {
       color: 'orange',
       fillOpacity: 0.5,
       weight: 0.8,
-      stroke:true
+      stroke: true
     }
   }
   setStyle(): L.PathOptions | L.StyleFunction<any> {
@@ -227,7 +228,7 @@ export class MapComponent implements AfterViewInit,OnInit {
   }
 
 
-  mapFullScreen(event){
+  mapFullScreen(event) {
     this.isFullMap = !this.isFullMap;
   }
 }
