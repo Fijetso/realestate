@@ -1,3 +1,4 @@
+[![CircleCI](https://circleci.com/gh/Fijetso/realestate.svg?style=svg)](https://circleci.com/gh/Fijetso/realestate)
 # Real Estate Web Application
 
 ### Graduate Thesis
