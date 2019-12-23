@@ -22,7 +22,7 @@ jobs:
 
         steps:
             - checkout:
-                path: ~/
+                path: ~/realestate
 
             # Download and cache dependencies
             - restore_cache:
@@ -36,7 +36,7 @@ jobs:
             - save_cache:
                   paths:
                       - ~/.m2
-                  key: v1-dependencies-{{ checksum "realestate/pom.xml" }}
+                  key: v1-dependencies-{{ checksum "pom.xml" }}
 
             # run tests!
             - run: mvn integration-test
