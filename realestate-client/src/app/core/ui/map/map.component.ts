@@ -52,11 +52,11 @@ export class MapComponent implements AfterViewInit, OnInit {
   protected curLong;
   protected geoJsonData;
   protected layer;
-  private markerData;
+  protected markerData;
   @Input()
-  private reList;
-  createPost: any;
-  private isFullMap;
+  protected reList;
+  protected createPost: any;
+  public isFullMap;
   constructor(private markerService: MarkerService, private http: HttpClient, private api: ApiService, private fb: FormBuilder) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(pos => {

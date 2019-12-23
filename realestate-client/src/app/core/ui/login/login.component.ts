@@ -63,9 +63,11 @@ export class LoginComponent implements OnInit {
   }
 
   loginWithFacebook() {
-    this.myAuthService.loginWithGoogle().then(
+    this.myAuthService.loginWithFacebook().then(
       user => {
         console.info(user);
+        localStorage.setItem('loginFacebook',JSON.stringify(user));
+        this.isLogedIn = true;
       }
     )
   }
