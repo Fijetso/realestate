@@ -1,22 +1,16 @@
 @import '../../../../../my-theme.scss';
 .why-choose-wrapper {
-  margin: 1.5rem 0;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   align-content: center;
-  // background-color: #1da7e1;
-  // background-color: $primary;
   background-color: $bg-light-blue;
-  color: $primary;
+  // background-color:'#0E1D41';
+  // color: $primary;
   background-size: cover;
-  min-height: 455px;
-  padding-top: 5px;
   border-radius: 4px;
   width: 100%;
   background-position: center;
   padding-bottom: 3rem;
+  padding-top: 3rem;
+  margin-top: 3rem;
   mat-button-toggle {
     justify-content: center;
     align-items: center;
@@ -27,4 +21,8 @@
     background-color: white;
     color: #1da7e1;
   }
+}
+.cus-row{
+  width: 99%;
+  padding-top: 3rem;
 }

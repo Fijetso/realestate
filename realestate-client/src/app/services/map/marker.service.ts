@@ -25,6 +25,36 @@ export class MarkerService {
   constructor(private http: HttpClient, private popupService: PopupService, private apiService: ApiService) {
   }
 
+  markerHtmlStyles = `
+  background-color: #FD784F;
+  width: 3rem;
+  height: 3rem;
+  display: block;
+  position: relative;
+  border-radius: 3rem 3rem 0;
+  transform: rotate(45deg);
+  text-align: center;
+  border: 1px solid #FFFFFF`;
+  customIcon1 = L.divIcon({
+    className: "my-custom-pin",
+    iconAnchor: [0, 24],
+    popupAnchor: [0, -36],
+    html: `<div style="${this.markerHtmlStyles}">12</div>`
+  })
+
+  markerHtmlStyles2 = `
+                      background-color: #FD784F;
+                      width: 3rem;
+                      height: 3rem;
+                      display: block;
+                      position: relative;
+                      border-radius: 3rem 3rem 0;
+                      transform: rotate(45deg);
+                      text-align: center;
+                      padding:1.1rem;
+                      color:white;
+                      font-size:1.5em;
+                      border: 1px solid #FFFFFF`;
   getDataImage(trade) {
     return trade.realImages[0].imageLink
   }
@@ -35,35 +65,33 @@ export class MarkerService {
       for (const trade of trades) {
         const lat = trade.coordinate.latitude;
         const lon = trade.coordinate.longitude;
-        const popupData = {"description":trade.description, 
-        "cost":trade.cost, 
-        "kind":trade.realEstateKind.name,
-        "img":trade.realImages[0].imageLink,
-        "square":trade.details.square
-      };
-        console.log(popupData);
-        const marker = L.marker([lat, lon]).bindPopup(this.popupService.makeCapitalPopup(popupData))
+        const popupData = {
+          "description": trade.description,
+          "cost": trade.cost,
+          "kind": trade.realEstateKind.name,
+          "img": trade.realImages[0].imageLink,
+          "square": trade.details.square,
+          "id": trade.id
+        };
+        // console.log(popupData);
+        const marker = L.marker([lat, lon],
+          {
+            icon: L.divIcon({
+              className: "my-custom-pin",
+              iconAnchor: [0, 24],
+              popupAnchor: [0, -36],
+              html: `<div style="${this.markerHtmlStyles2}">${popupData.id}</div>`
+            })
+          })
+          .bindTooltip(popupData.description)
+          .bindPopup(this.popupService.makeCapitalPopup(popupData))
           .addTo(map);
-        // console.log(lat,lon);
       }
     });
     // const marker = L.marker([10.823099, 106.629662]).bindPopup(this.popupService.makeCapitalPopup(data))
     // .addTo(map);
   }
   makeCapitalCircleMarkers(map: L.Map): void {
-    // this.http.get(this.capitals).subscribe((res: any) => {
-
-    //   // Find the maximum population to scale the radii by.
-    //   const maxVal = Math.max(...res.features.map(x => x.properties.population), 0);
-
-    //   for (const c of res.features) {
-    //     const lat = c.geometry.coordinates[0];
-    //     const lon = c.geometry.coordinates[1];
-    //     const circle = L.circleMarker([lon, lat], {
-    //       radius: MarkerService.ScaledRadius(c.properties.population, maxVal)
-    //     }).addTo(map);
-    //   }
-    // });
     const circle = L.circleMarker([10.823099, 106.629662], { radius: 400 })
       // .bindPopup(this.popupService.makeCapitalPopup(data))
       .addTo(map);

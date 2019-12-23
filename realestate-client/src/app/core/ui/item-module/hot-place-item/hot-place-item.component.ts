@@ -22,11 +22,13 @@ export class HotPlaceItemComponent implements OnInit, OnDestroy {
   }
 
   getTradeByDistrict(districtId: any) {
-    this.api.getTradeFromDistrict(districtId).subscribe(tradeList => {
-        this.tradeFromDistrict = tradeList;
-        this.toastr.success('Lấy dữ liệu thành công');
-        console.log(this.tradeFromDistrict);
-    });
+    // this.api.getTradeFromDistrict(districtId).subscribe(tradeList => {
+    //     this.tradeFromDistrict = tradeList;
+    //     this.toastr.success('Lấy dữ liệu thành công');
+    //     console.log(this.tradeFromDistrict);
+    // });
+    // this.router.navigate(['/tim-kiem/'+districtId]);
+    this.router.navigate(['/tim-kiem'],{queryParams: {tinh:79,quan:districtId}});
   }
   onSelect(districtId: any) {
     this.getTradeByDistrict(districtId);

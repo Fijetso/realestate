@@ -1,13 +1,13 @@
+import { environment } from './../environments/environment.prod';
+import { GraphQueryService } from './services/graphql/graph-query.service';
 import { PopupService } from './services/map/popup.service';
 import { MarkerService } from './services/map/marker.service';
 import { MapComponent } from './core/ui/map/map.component';
 import { HttpErrorInterceptor } from './services/common/http-error.interceptor';
-import { environment } from './../environments/environment';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
-import { AgmCoreModule } from '@agm/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AppComponent } from './app.component';
 import { LayoutComponent } from './components/layout/layout.component';
@@ -39,7 +39,8 @@ import {
   MatSlideToggleModule,
   MatAutocompleteModule,
   MatButtonToggleModule,
-  MatFormFieldModule
+  MatFormFieldModule,
+  MatChipsModule
 } from '@angular/material';
 import { HttpClientModule, HttpClient,HTTP_INTERCEPTORS } from '@angular/common/http';
 import 'hammerjs';
@@ -52,7 +53,10 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ToastrModule } from 'ngx-toastr';
-import {} from 'googlemaps';
+import { ApolloModule } from 'apollo-angular';
+import { HttpLinkModule } from 'apollo-angular-link-http';
+import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
+import { GoogleLoginProvider, FacebookLoginProvider } from "angularx-social-login";
 
 import { RealEstateWrapperComponent } from './components/real-estate/real-estate-wrapper/real-estate-wrapper.component';
 import { AlertComponent } from './core/modal/alert/alert.component';
@@ -92,6 +96,28 @@ import { SearchPageComponent } from './core/ui/search-page/search-page.component
 import { AccountManagementComponent } from './core/ui/account-management/account-management.component';
 import {HereMapsModule } from 'ng2-heremaps';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { PopupRendererComponent } from './core/ui/map/popup-renderer/popup-renderer.component';
+import { AddReComponent } from './core/ui/create-post/add-re/add-re.component';
+import { UpdateReComponent } from './core/ui/create-post/update-re/update-re.component';
+import { DeleteReComponent } from './core/ui/create-post/delete-re/delete-re.component';
+import { NewsComponent } from './core/ui/news/news.component';
+import { ContactComponent } from './core/ui/contact/contact.component';
+import { NewsDetailComponent } from './core/ui/news-detail/news-detail.component';
+
+let config = new AuthServiceConfig([
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider(environment.soicialProvider.google.clientId)
+  },
+  {
+    id: FacebookLoginProvider.PROVIDER_ID,
+    provider: new FacebookLoginProvider(environment.soicialProvider.facebook.appId)
+  }
+]);
+ 
+export function provideConfig() {
+  return config;
+}
 
 @NgModule({
   declarations: [
@@ -136,7 +162,14 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     SearchPageComponent,
     AccountManagementComponent,
     MapModuleComponent,
-    MapComponent
+    MapComponent,
+    PopupRendererComponent,
+    AddReComponent,
+    UpdateReComponent,
+    DeleteReComponent,
+    NewsComponent,
+    ContactComponent,
+    NewsDetailComponent,
   ],
   imports: [
     OwlModule,
@@ -144,10 +177,6 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     AppRoutingModule,
     LazyLoadImageModule,
     BrowserAnimationsModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCTD49hV20zPTBjT7k643sBxjoXx6W7oEo',
-      libraries: ['places']
-    }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -190,7 +219,11 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
       libraries: ['core', 'service','ui','mapevents']
     }),
     LeafletModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    ApolloModule,
+    HttpLinkModule,
+    MatChipsModule,
+    SocialLoginModule
   ],
   providers: [
     AuthenticationService,
@@ -201,7 +234,13 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
       multi: true
     },
     MarkerService,
-    PopupService
+    PopupService,
+    GraphQueryService,
+    Title,
+    {
+      provide: AuthServiceConfig,
+      useFactory: provideConfig
+    }
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],

@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="rs-desc">
-        <p>{{dataItem.description}}</p>
+        <p [matTooltip]="dataItem.description">{{dataItem.description}}</p>
       </div>
       <div class="rs-follow-count my-1">
         <button mat-raised-button class="mat-button btn-block btn-bg-faded-blue">Có {{dataItem.viewCount}} lượt quan tâm</button>

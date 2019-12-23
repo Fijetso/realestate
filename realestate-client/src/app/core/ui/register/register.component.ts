@@ -1,3 +1,4 @@
+import { GraphQueryService } from './../../../services/graphql/graph-query.service';
 import { FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
@@ -8,7 +9,7 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  constructor(private afAuth: AuthenticationService) { }
+  constructor(private afAuth: AuthenticationService,private graphql:GraphQueryService ) { }
   fullName = new FormControl();
   username = new FormControl();
   phone = new FormControl();
@@ -22,8 +23,14 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    console.log(this.email.value, this.password.value);
-    this.afAuth.register(this.email.value, this.password.value).then(result => alert('Vui lòng kiểm tra email để kích hoạt đăng ký'));
+    // console.log(this.email.value, this.password.value);
+    // this.afAuth.register(this.email.value, this.password.value).then(result => alert('Vui lòng kiểm tra email để kích hoạt đăng ký'));
+    const registerResult = this.graphql.register(this.fullName.value,this.email.value,this.password.value,this.phone.value,null);
+    if(registerResult){
+        alert('Đăng ký thành công. Kiểm tra email để kích hoạt tài khoản');
+    }else {
+      alert('Đăng ký thất bại ');
+    }
   }
   onFullnameChange() {
     console.log(this.fullName.value);

@@ -9,11 +9,10 @@ export const environment = {
     messagingSenderId: '847678221489',
     appId: '1:847678221489:web:985d889d2d396930'
   },
-  ipapi: {
-    apiKey: 'e41bcfed8462dbd69772bdb4f6616a24'
-  },
   api: {
-    rootURL: 'http://localhost:4200'
+    rootURL: 'http://localhost:4200',
+    posFix:'api',
+    baseURL:'http://localhost:4200/api/'
   },
   heremap:{
     appId:'dmdRFi5x5pT0zuy09gle',
@@ -21,5 +20,16 @@ export const environment = {
     apiKey:'Rqsg3eYkotn3qt2GajbTQzc8CSA-4u3yZvLIdq8C7Kc',
     defaultLang:'vie',
     secondLang:'eng'
+  },
+  soicialProvider: {
+    google : {
+      clientId: '522576343899-oacdhl7qnje56ml1kd4rcu7eass7g2c3.apps.googleusercontent.com'
+    },
+    facebook: {
+      appId:'1213363158870756'
+    },
+    zalo: {
+      appId: '3698477159127928270'
+    }
   }
 };

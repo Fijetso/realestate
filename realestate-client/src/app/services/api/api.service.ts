@@ -1,10 +1,11 @@
+import { environment } from './../../../environments/environment.prod';
+import { UserKind } from './../../model/user-kind/user-kind';
+import { User } from './../../model/user/user';
+import { RealEstate } from './../../model/real-estate/real-estate';
 import { Address } from './../../model/address/address';
-import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from 'src/app/model/user/user';
-import { HttpClient } from '@angular/common/http';
-import { RealEstate } from 'src/app/model/real-estate/real-estate';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +17,77 @@ export class ApiService {
   userURL = this.baseURL + 'users';
   addressURL = this.baseURL + 'addresstree/provinces/';
   data = null;
+  private reList: RealEstate[];
+
+  
   constructor(private http: HttpClient) {
+    this.reList = [
+      { id: 1,
+        description: 'Mô tả 1',
+        cost: 90000000,
+        user: {id: 1,
+          name: 'Thang',
+          email: 'danhthanh418@gmail.com',
+          phone: '0975922740',
+          password: '1234',
+          birthdate:new Date('19/11/1995'),
+          gender: true,
+          userKind: null
+        },
+        tradeKind: null,
+        realEstateKind: null,
+        address: null,
+        details: null,
+        realImages: null,
+        bluePrints: null,
+        booking: null
+      },
+      { id: 2,
+        description: 'Mô tả 2',
+        cost: 100000000,
+        user: {id: 1,
+          name: 'Thanh',
+          email: 'danhthanh448@gmail.com',
+          phone: '',
+          password: '12345678',
+          birthdate:new Date('19/11/1995'),
+          gender: true,
+          userKind: null
+        },
+        tradeKind: null,
+        realEstateKind: null,
+        address: null,
+        details: null,
+        realImages: null,
+        bluePrints: null,
+        booking: null
+      },
+      { id: 3,
+        description: 'Mô tả 3',
+        cost: 75000000,
+        user: {id: 1,
+          name: 'Minh',
+          email: 'minh.minh.123@gmail.com',
+          phone: '0973476552',
+          password: '6789',
+          birthdate:new Date('19/03/1997'),
+          gender: true,
+          userKind: null
+        },
+        tradeKind: null,
+        realEstateKind: null,
+        address: null,
+        details: null,
+        realImages: null,
+        bluePrints: null,
+        booking: null
+      }
+    ]
   }
 
+  getAllUserKind() {
+    return this.http.get(this.baseURL+'userkinds');
+  }
   // User service
   createUser(user: User) {
     return this.http.post<User>(this.userURL, user);
@@ -64,7 +133,8 @@ export class ApiService {
   }
   // get Trade by District
   findTradeByDistrict(districtId: number) {
-    return this.http.get<RealEstate>(this.baseURL + 'district/' + districtId + '/trades');
+    // return this.http.get<RealEstate>(this.baseURL + 'district/' + districtId + '/trades');
+    return  this.http.get<RealEstate[]>(this.baseURL + 'trades');
   }
 
   // GetTradeById service
@@ -98,5 +168,49 @@ export class ApiService {
   }
   getData() {
     return this.data;
+  }
+
+  getAllRE(){
+    return this.reList;
+  }
+
+  getIndexRE(id: any){
+    for(let i =0; i < this.reList.length; i++){
+      if(this.reList[i].id==id){
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  getREById(id:any){
+    let index = this.getIndexRE(id);
+    return this.reList[index];
+  }
+
+  createRE(re: RealEstate){
+    this.reList.push(re);
+  }
+
+  deleteRE(id:any){
+    let index = this.getIndexRE(id);
+    const result = this.reList.splice(index,1);
+    console.info(result);
+  }
+
+  updateRE(re: RealEstate){
+    let index = this.getIndexRE(re.id);
+    this.reList[index].id = re.id;
+    this.reList[index].description = re.description;
+    this.reList[index].cost = re.cost;
+    this.reList[index].user = re.user;
+  }
+
+  uploadImages(selectedFile, desc){
+    let uploadData = new FormData();
+    uploadData.append('file', selectedFile, selectedFile?selectedFile.name:null);
+    uploadData.append('desc', desc);
+    console.log(uploadData);
+    return this.http.post<any>(this.baseURL+'image/upload',uploadData);
   }
 }

@@ -1,6 +1,6 @@
 import { ApiService } from './../../../../services/api/api.service';
 import { Component, OnInit, ViewChild, Output,EventEmitter  } from '@angular/core';
-import { FormControl  } from '@angular/forms';
+import { FormControl, FormBuilder } from '@angular/forms';
 import { Observable, Subject, merge } from 'rxjs';
 import {
   startWith,
@@ -23,7 +23,7 @@ export class MarkettingComponent implements OnInit {
   stateNameKey: string;
   @Output()
   receiveREKind: EventEmitter <string> = new EventEmitter <string>();
-  constructor(private api: ApiService) {
+  constructor(private api: ApiService, private fb: FormBuilder) {
 
   }
 

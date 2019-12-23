@@ -25,6 +25,8 @@ $bg-primary : #fff;
     background-position: center center;  
     background-blend-mode: overlay;
     padding-top:3rem;
+    position: sticky;
+    overflow: hidden;
     .re-footer-top{
         .ul-listing{
             list-style-type: none;

@@ -1,3 +1,5 @@
+import { AccountManagementComponent } from './core/ui/account-management/account-management.component';
+import { AddReComponent } from './core/ui/create-post/add-re/add-re.component';
 import { UserComponent } from './components/user/user.component';
 import { FavoriteComponent } from './components/favorite/favorite.component';
 import { LoginComponent } from './core/ui/login/login.component';
@@ -12,12 +14,15 @@ import { RegisterComponent } from './core/ui/register/register.component';
 import { CreatePostComponent } from './core/ui/create-post/create-post.component';
 import { UserDetailComponent } from './core/ui/user-detail/user-detail.component';
 import { SearchPageComponent } from './core/ui/search-page/search-page.component';
+import { NewsComponent } from './core/ui/news/news.component';
+import { ContactComponent } from './core/ui/contact/contact.component';
+import { NewsDetailComponent } from './core/ui/news-detail/news-detail.component';
 
 const routes: Routes = [
   {
     path: '',
     component: RealestateListComponent,
-    data: { title: 'Tiêu đề trang chủ' }
+    data: { title: 'Trang chủ' }
   },
   {
     path: 'mua/:slug',
@@ -25,9 +30,9 @@ const routes: Routes = [
     data: { title: 'Chi tiết bất động sản' }
   },
   {
-    path: 'ban-do',
+    path: 'tim-kiem',
     component: MapModuleComponent,
-    data: { title: 'Trang bản đồ' }
+    data: { title: 'Tìm kiếm chi tiết các bất dộng sản' }
   },
   {
     path: 'dang-nhap',
@@ -40,17 +45,12 @@ const routes: Routes = [
     data: { title: 'Trang bất động sản yêu thích' }
   },
   {
-    path: 'dang-ky',
-    component: RegisterComponent,
-    data: { title: 'Trang đăng ký' }
-  },
-  {
     path: 'nguoi-dung',
     component: UserComponent,
     data: { title: 'Trang người dùng' }
   },
   {
-    path: 'dang-tin',
+    path: 'tam',
     component: CreatePostComponent,
     data: { title: 'Trang bài đăng' }
   },
@@ -60,9 +60,24 @@ const routes: Routes = [
     data: { title: 'Chi tiết người dùng' }
   },
   {
-    path: 'tim-kiem/:id',
-    component: SearchPageComponent,
-    data: { title: 'Tìm kiếm BĐS' }
+    path: 'dang-tin',
+    component: AddReComponent,
+    data: { title: 'Tạo bài đăng bất động sản' }
+  },
+  {
+    path: 'tin-tuc',
+    component: NewsComponent,
+    data: { title: 'Tin tức bất động sản' }
+  },
+  {
+    path: 'tin-tuc/:id',
+    component: NewsDetailComponent,
+    data: { title: 'Chi tiết tin' }
+  },
+  {
+    path: 'lien-he',
+    component: ContactComponent,
+    data: { title: 'Thông tin liên hệ' }
   },
   {
     path: '**',
@@ -75,7 +90,7 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
 export const routingComponents = [
   RealestateListComponent,
   RealestateItemComponent

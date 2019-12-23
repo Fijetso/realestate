@@ -3,9 +3,6 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
-    "types": [
-      "googlemaps"
-    ],
     "sourceMap": true,
     "declaration": false,
     "module": "esnext",
@@ -21,5 +18,8 @@
       "es2018",
       "dom"
     ]
-  }
+  },
+  "angularCompilerOptions": {   
+    "enableIvy": false  
+  } 
 }

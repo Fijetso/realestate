@@ -168,8 +168,9 @@ public class GraphQLTradeService {
 
 		Trade trade = new Trade(description, cost, user.get(), realEstateKind.get(), tradeKind.get(), address, details,
 				coordinate);
+		trade = tradeRepository.save(trade);
 		GraphTrade graphTrade = modelMapper.convertTrade(trade);
 		graphTradeRepository.save(graphTrade);
-		return tradeRepository.save(trade);
+		return trade;
 	}
 }
