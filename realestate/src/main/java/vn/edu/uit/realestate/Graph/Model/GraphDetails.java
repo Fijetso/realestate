@@ -2,6 +2,7 @@ package vn.edu.uit.realestate.Graph.Model;
 
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
 
 @NodeEntity(label = "Details")
 public class GraphDetails {
@@ -16,7 +17,9 @@ public class GraphDetails {
 	private int bathrooms;
 	private int bedrooms;
 	private String utilities;
-	private String others;
+	private String others;	
+	@Relationship(type = "HAVE", direction = Relationship.INCOMING)
+	private GraphTrade trade;
 
 	public GraphDetails() {
 		super();
@@ -127,5 +130,13 @@ public class GraphDetails {
 
 	public void setOthers(String others) {
 		this.others = others;
+	}
+
+//	public GraphTrade getTrade() {
+//		return trade;
+//	}
+
+	public void setTrade(GraphTrade trade) {
+		this.trade = trade;
 	}
 }

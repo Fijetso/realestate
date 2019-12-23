@@ -12,6 +12,6 @@ import vn.edu.uit.realestate.Graph.Model.GraphTrade;
 
 @Repository
 public interface GraphAddressRepository extends Neo4jRepository<GraphAddress, Long>{
-	@Query("MATCH (t:Trade) MATCH (t)<--(a:Address) WHERE  a.district={districtId} RETURN *")
+	@Query("MATCH (w)-[W]-(t:Trade)-[h:HAVE]->(a:Address) WHERE  a.district={districtId} RETURN *")
 	public List<GraphTrade> findTradeByDistrictId(@Param("districtId") long districtId);
 }

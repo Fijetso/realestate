@@ -2,6 +2,7 @@ package vn.edu.uit.realestate.Graph.Model;
 
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
 
 @NodeEntity(label = "BluePrint")
 public class GraphBluePrint {
@@ -9,23 +10,25 @@ public class GraphBluePrint {
 	private long id;
 	private String imageLink;
 	private String description;
-
+	@Relationship(type = "ILLUSTRATE", direction = Relationship.OUTGOING)
+	private GraphTrade trade;
+	
 	public GraphBluePrint() {
 		super();
 	}
 
-	public GraphBluePrint(Long id, String imageLink, String description) {
+	public GraphBluePrint(long id, String imageLink, String description) {
 		super();
 		this.id = id;
 		this.imageLink = imageLink;
 		this.description = description;
 	}
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -43,5 +46,13 @@ public class GraphBluePrint {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+//	public GraphTrade getTrade() {
+//		return trade;
+//	}
+
+	public void setTrade(GraphTrade trade) {
+		this.trade = trade;
 	}
 }
