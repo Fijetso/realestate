@@ -2,6 +2,7 @@ package vn.edu.uit.realestate.Graph.Model;
 
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
 
 @NodeEntity(label = "RealImage")
 public class GraphRealImage {
@@ -9,6 +10,8 @@ public class GraphRealImage {
 	private long id;
 	private String imageLink;
 	private String description;
+	@Relationship(type = "ILLUSTRATE", direction = Relationship.OUTGOING)
+	private GraphTrade trade;
 	
 	public GraphRealImage() {
 		super();
@@ -43,5 +46,13 @@ public class GraphRealImage {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+//	public GraphTrade getTrade() {
+//		return trade;
+//	}
+
+	public void setTrade(GraphTrade trade) {
+		this.trade = trade;
 	}
 }

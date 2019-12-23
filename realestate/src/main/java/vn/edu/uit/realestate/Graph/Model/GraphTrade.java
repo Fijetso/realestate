@@ -1,8 +1,6 @@
 package vn.edu.uit.realestate.Graph.Model;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
@@ -28,10 +26,10 @@ public class GraphTrade {
 	private GraphCoordinate coordinate;
 
 	@Relationship(type = "ILLUSTRATE", direction = Relationship.INCOMING)
-	private List<GraphRealImage> realImages = new ArrayList<GraphRealImage>();
+	private List<GraphRealImage> realImages;
 
 	@Relationship(type = "ILLUSTRATE", direction = Relationship.INCOMING)
-	private List<GraphBluePrint> bluePrints = new ArrayList<GraphBluePrint>();
+	private List<GraphBluePrint> bluePrints;
 
 	@Relationship(type="CONTAIN", direction = Relationship.INCOMING)
 	private GraphTradeKind tradeKind;
@@ -44,9 +42,10 @@ public class GraphTrade {
 		super();
 	}
 
-	public GraphTrade(Long id, String description, Long cost, String tradeStatus, GraphAddress address,
+	public GraphTrade(long id, String description, long cost, String tradeStatus, GraphAddress address,
 			GraphDetails details, GraphCoordinate coordinate, List<GraphRealImage> realImages,
-			List<GraphBluePrint> bluePrints, GraphTradeKind tradeKind, GraphRealEstateKind realEstateKind, GraphUser user) {
+			List<GraphBluePrint> bluePrints, GraphTradeKind tradeKind, GraphRealEstateKind realEstateKind,
+			GraphUser user) {
 		super();
 		this.id = id;
 		this.description = description;
@@ -62,11 +61,11 @@ public class GraphTrade {
 		this.user = user;
 	}
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -78,11 +77,11 @@ public class GraphTrade {
 		this.description = description;
 	}
 
-	public Long getCost() {
+	public long getCost() {
 		return cost;
 	}
 
-	public void setCost(Long cost) {
+	public void setCost(long cost) {
 		this.cost = cost;
 	}
 
@@ -118,16 +117,8 @@ public class GraphTrade {
 		this.coordinate = coordinate;
 	}
 
-	public List<GraphRealImage> getRealImages() {
-		return realImages;
-	}
-
 	public void setRealImages(List<GraphRealImage> realImages) {
 		this.realImages = realImages;
-	}
-
-	public List<GraphBluePrint> getBluePrints() {
-		return bluePrints;
 	}
 
 	public void setBluePrints(List<GraphBluePrint> bluePrints) {
@@ -156,5 +147,13 @@ public class GraphTrade {
 
 	public void setUser(GraphUser user) {
 		this.user = user;
+	}
+
+	public List<GraphRealImage> getRealImages() {
+		return realImages;
+	}
+
+	public List<GraphBluePrint> getBluePrints() {
+		return bluePrints;
 	}
 }
