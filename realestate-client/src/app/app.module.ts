@@ -1,4 +1,4 @@
-import { environment } from './../environments/environment.prod';
+import { environment } from './../environments/environment';
 import { GraphQueryService } from './services/graphql/graph-query.service';
 import { PopupService } from './services/map/popup.service';
 import { MarkerService } from './services/map/marker.service';

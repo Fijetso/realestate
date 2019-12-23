@@ -1,5 +1,4 @@
-import { environment } from './../../../environments/environment.prod';
-import { Observable } from 'rxjs';
+import { environment } from './../../../environments/environment';
 import { RegisterMutationResponse, REGISTER_MUTATION } from './../../model/generated/graphql';
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';

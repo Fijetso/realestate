@@ -10,9 +10,9 @@ export const environment = {
     appId: '1:847678221489:web:985d889d2d396930'
   },
   api: {
-    rootURL: 'http://localhost:4200',
+    rootURL: 'https://real-estate-vn-241110.firebaseapp.com/',
     posFix:'api',
-    baseURL:'http://localhost:4200/api/'
+    baseURL:'https://real-estate-vn-241110.firebaseapp.com/api'
   },
   heremap:{
     appId:'dmdRFi5x5pT0zuy09gle',

@@ -1,4 +1,4 @@
-import { environment } from './../../../environments/environment.prod';
+import { environment } from './../../../environments/environment';
 import { UserKind } from './../../model/user-kind/user-kind';
 import { User } from './../../model/user/user';
 import { RealEstate } from './../../model/real-estate/real-estate';

@@ -6,7 +6,7 @@ import { RealEstate } from './../../../../model/real-estate/real-estate';
 import { ApiService } from 'src/app/services/api/api.service';
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import * as L from 'leaflet';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-add-re',
