@@ -146,6 +146,10 @@ export class MapComponent implements AfterViewInit, OnInit {
         style: this.setStyle(),
         onEachFeature: (feature, featureLayer) => {
           featureLayer.bindTooltip(feature.properties.Ten)
+          featureLayer.on({
+            mouseover: this.highLightStyle,
+            mouseout: this.normalStyle
+          })
         }
       }).addTo(this.map);
       const myCustomColour = 'turquoise'
@@ -179,7 +183,6 @@ export class MapComponent implements AfterViewInit, OnInit {
           if (feature[i].properties.Ten == 'Quận 5') {
             const quan5Geo = console.info(i, feature[i].geometry.coordinates[0][0]);
             const realquan5Geo = feature[i].geometry.coordinates[0][0];
-            const polygon = L.polygon(realquan5Geo, this.setPolyStyle()).addTo(this.map);
           }
           const coordinate = feature[i].geometry.coordinates[0].map(array => array);
           // first array coordinate is reverted
@@ -198,16 +201,37 @@ export class MapComponent implements AfterViewInit, OnInit {
       }
     }, error => console.error(error));
   }
-  setPolyStyle(): L.PolylineOptions {
-    return {
-      interactive: true,
-      fillColor: 'blue',
-      color: 'orange',
-      fillOpacity: 0.5,
-      weight: 0.8,
-      stroke: true
+  highLightStyle($event) {
+    let layer = $event.target;
+    layer.setStyle(
+      {
+        fillColor: 'blue',
+        color: 'orange',
+        fillOpacity: 0.5,
+        weight: 0.8,
+        stroke: true
+      }
+    );
+    if (!L.Browser.ie && !L.Browser.opera) {
+      layer.bringToFront();
     }
   }
+
+  normalStyle($event) {
+    let layer = $event.target;
+    layer.setStyle(
+      {
+        fillColor: 'white',
+        color: 'blue',
+        fillOpacity: 0.2,
+        weight: 0.8
+      }
+    );
+    if (!L.Browser.ie && !L.Browser.opera) {
+      layer.bringToFront();
+    }
+  }
+
   setStyle(): L.PathOptions | L.StyleFunction<any> {
     return {
       fillColor: 'white',
