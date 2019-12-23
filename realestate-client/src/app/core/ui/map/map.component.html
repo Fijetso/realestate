@@ -1,5 +1,5 @@
 <div class="map-wrapper row">
-    <div class="left-content col-md-7 col-sm">
+    <div class="left-content col-md-7 col-sm" *ngIf="!isFullMap">
         <div class=" p-2">
             <div class="search-section row">
                 <mat-form-field>
@@ -67,19 +67,31 @@
                     <button mat-icon-button aria-label="Bản đồ và bất động sản" routerLinkActive="mat-primary"  [routerLink]="['/tim-kiem']">
                         <mat-icon>view_module</mat-icon>
                     </button>
-                    <button mat-icon-button color="primary" aria-label="Bản đồ toàn màn hình">
+                    <button mat-icon-button color="primary" aria-label="Bản đồ toàn màn hình" (click)="mapFullScreen($event)">
                         <mat-icon>map</mat-icon>
                     </button>
                 </div>
             </div>
             <div class="re-list ">
-                <div class="re-container" *ngFor="let dataItem of reList; let i = index">
-                    <app-realestate-item [dataItem] ="dataItem"></app-realestate-item>
+                <div class="re-container row" *ngFor="let index of reList; let i = index">
+                    <app-realestate-item [dataItem] ="index" class="col-md-6 col-sm p-2"></app-realestate-item>
+                    <app-realestate-item [dataItem] ="reList[i+1]" class="col-md-6 col-sm p-2" *ngIf="i+1 < reList.length"></app-realestate-item>
               </div>
             </div>
         </div>
     </div>
-    <div class="map-container col-md-5 col-sm">
+    <div class="map-container col-md-5 col-sm" *ngIf="!isFullMap">
+        <div class="map-frame">
+            <div id="map"></div>
+        </div>
+    </div>
+    <div class="map-container col-md col-sm" *ngIf="isFullMap">
+        <button mat-icon-button aria-label="Bản đồ và bất động sản" routerLinkActive="mat-primary"  [routerLink]="['/tim-kiem']">
+            <mat-icon>view_module</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" aria-label="Bản đồ toàn màn hình" (click)="mapFullScreen($event)">
+            <mat-icon>map</mat-icon>
+        </button>
         <div class="map-frame">
             <div id="map"></div>
         </div>

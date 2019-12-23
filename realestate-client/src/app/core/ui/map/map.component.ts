@@ -56,33 +56,22 @@ export class MapComponent implements AfterViewInit,OnInit {
   @Input()
   private reList;
   createPost: any;
+  private isFullMap;
   constructor(private markerService: MarkerService, private http: HttpClient, private api: ApiService, private fb : FormBuilder) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(pos => {
         // console.info(pos.coords);
         this.curLat = pos.coords.latitude;
         this.curLong = pos.coords.longitude;
-        // this.browserLocation.lat = pos.coords.latitude;
-        // this.browserLocation.lng = pos.coords.longitude;
-        // console.info(this.curLat,this.curLong);
       })
     }
-
-    // this.createPost = this.fb.group({
-    //   purpose:0,
-    //   searchInput:[''],
-    //   reKind:0,
-    //   district:1,
-    //   ward:1,
-    //   orderBy:0
-    // })
-    
   }
   ngOnInit(): void {
     this.api.getAllRealEstate().subscribe(res => {
       this.reList = res;
       console.info(res);
     });
+    this.isFullMap=false;
   }
 
   initMap() {
@@ -126,7 +115,7 @@ export class MapComponent implements AfterViewInit,OnInit {
       });
     this.map = L.map('map', {
       center: this.curLat?[this.curLat,this.curLong]:[10.823099, 106.629662],
-      zoom: 10,
+      zoom: 12,
       drawControl: false,
       layers: [mapTile, streetTile]
     });
@@ -140,26 +129,23 @@ export class MapComponent implements AfterViewInit,OnInit {
 
   ngAfterViewInit(): void {
     this.initMap();
-    // this.loadGeoJsonData();
+    this.loadGeoJsonData();
     this.markerService.makeCapitalMarkers(this.map);
   }
+
   loadGeoJsonData() {
     this.getGeoJsonFile();
   }
+  
   getGeoJsonFile(): any {
-    return this.http.get('assets/map/vietnam-ward-map.geojson').subscribe(geoData => {
+    return this.http.get('assets/map/vietnam-district.geojson').subscribe(geoData => {
       this.geoData = geoData;
       const feature = this.geoData.features.map(feature => feature);
-      // console.info(feature);
-      const wardNameList = feature.map(feature =>feature.properties.Ten);
-      // wardNameList.forEach(ward => {
-      //   console.info(ward);
-      // });
+      console.info(feature);
       const pointArrays = feature.map(feature => feature.geometry.coordinates[0].map(array => L.latLng(array[0])));
-      // pointArrays.map(point =>console.info(point));
-      L.geoJSON(this.geoData,{style : this.setStyle()}).on('mouseover',(e)=>this.setStyleMouseOverWard(e)).addTo(this.map);
+      L.geoJSON(this.geoData,{style : this.setStyle()}).addTo(this.map);
       const myCustomColour = 'turquoise'
-
+      // console.info(pointArrays);
       const markerHtmlStyles = `
       background-color: ${myCustomColour};
       width: 3rem;
@@ -182,47 +168,51 @@ export class MapComponent implements AfterViewInit,OnInit {
       transform: rotate(45deg);
       text-align: center;
       border: 1px solid #FFFFFF`;
-      const icon = L.divIcon({
-        className: "my-custom-pin",
-        iconAnchor: [0, 24],
-        popupAnchor: [0, -36],
-        html: `<div style="${markerHtmlStyles}">12</div>`
-      })
-      // L.marker([this.curLat, this.curLong],{icon:icon}).bindPopup(`[${this.curLat},${this.curLong}]`).addTo(this.map);
-      // L.circleMarker([this.curLat, this.curLong], { radius: 5 }).bindPopup(`[${this.curLat},${this.curLong}]`).addTo(this.map);
-      // pointArrays.map(point => console.info(point[0]));
-      // pointArrays.forEach(point => {
-      //   // console.info(JSON.stringify(point[0]));
-      //   return L.marker([this.curLat, this.curLong]).bindPopup(`[${point[0].lat},${point[0].lng}]`).addTo(this.map);
-      // });
-      for(let i = 0; i<100;i++){
-        const wardName = feature[i].properties.Ten;
-        const coordinate = feature[i].geometry.coordinates[0].map(array => array[0]);
+      for(let i = 0; i<feature.length;i++){
+        const districtName = feature[i].properties.Ten;
+        const cap = feature[i].properties.Cap+' ';
+        if(feature[i].properties.Ten=='Quận 5'){
+          const quan5Geo = feature[i].geometry.coordinates[0][0];
+          const realquan5Geo = feature[i].geometry.coordinates[0][0];
+          let temp;
+          // realquan5Geo.forEach(lngLat => {
+          //   console.info(lngLat);
+          // });
+          const polygon = L.polygon(realquan5Geo,this.setPolyStyle()).addTo(this.map);
+          // console.info(polygon);
+        }
+        const coordinate = feature[i].geometry.coordinates[0].map(array => array);
         //coordinate is reverse in map coordinate
-        const realCoordinate=Array.prototype.reverse.apply(coordinate[0]);
+        // console.info(L.polygon(coordinate[0]).getBounds());
+        // first array coordinate is reverted
+        const realCoordinate=Array.prototype.reverse.apply(coordinate[0][0]);
         // console.info(realCoordinate);
-        const marker = L.marker(realCoordinate,{icon:icon}).bindTooltip(wardName).bindPopup(wardName).addTo(this.map);
-        console.info(`Added marker ${i+1}`);
+        const marker = L.marker(realCoordinate,{icon:L.divIcon({
+          className: "my-custom-pin",
+          iconAnchor: [0, 24],
+          popupAnchor: [0, -36],
+          html: `<div style="${markerHtmlStyles}">${+districtName.replace(cap,'')>0?'Q. '+districtName.replace(cap,''):districtName.replace(cap,'')}</div>`
+        })}).bindTooltip(districtName).bindPopup(districtName).addTo(this.map);
+        // console.info(`Added marker ${i+1}`);
       }
     }, error => console.error(error));
   }
-  setStyleMouseOverWard(e) {
+  setPolyStyle(): L.PolylineOptions {
     return {
-      fillColor: 'red',
-      color: 'blue',
-      fillOpacity: 0.8,
-      weight: 0.3
+      interactive: true,
+      fillColor: 'blue',
+      color: 'orange',
+      fillOpacity: 0.5,
+      weight: 0.8,
+      stroke:true
     }
-  }
-  pointTolayer(point): any {
-    return L.marker(point).addTo(this.map);
   }
   setStyle(): L.PathOptions | L.StyleFunction<any> {
     return {
-      fillColor: 'red',
+      fillColor: 'white',
       color: 'blue',
       fillOpacity: 0.2,
-      weight: 0.3
+      weight: 0.8
     }
   }
   addControls(map: L.Map) {
@@ -235,9 +225,9 @@ export class MapComponent implements AfterViewInit,OnInit {
     });
     map.addControl(drawControl);
   }
-  onEachFeature(feature, layer): any {
-    if (feature.properties) {
-      layer.bindPopup(feature.properties.QuanHuyen)
-    }
+
+
+  mapFullScreen(event){
+    this.isFullMap = !this.isFullMap;
   }
 }
