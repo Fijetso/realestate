@@ -148,7 +148,8 @@ export class MapComponent implements AfterViewInit, OnInit {
           featureLayer.bindTooltip(feature.properties.Ten)
           featureLayer.on({
             mouseover: this.highLightStyle,
-            mouseout: this.normalStyle
+            mouseout: this.normalStyle,
+            click: () => { console.info(feature)}
           })
         }
       }).addTo(this.map);
@@ -224,7 +225,7 @@ export class MapComponent implements AfterViewInit, OnInit {
         fillColor: 'white',
         color: 'blue',
         fillOpacity: 0.2,
-        weight: 0.8
+        weight: 0.2
       }
     );
     if (!L.Browser.ie && !L.Browser.opera) {
@@ -237,7 +238,7 @@ export class MapComponent implements AfterViewInit, OnInit {
       fillColor: 'white',
       color: 'blue',
       fillOpacity: 0.2,
-      weight: 0.8
+      weight: 0.2
     }
   }
   addControls(map: L.Map) {
