@@ -1,3 +1,4 @@
+import { AccountModule } from './core/ui/account/account.module';
 import { environment } from './../environments/environment';
 import { GraphQueryService } from './services/graphql/graph-query.service';
 import { PopupService } from './services/map/popup.service';
@@ -93,9 +94,6 @@ import { GetCityPipe } from './ultility/pipe/get-city.pipe';
 import { GetDistrictNameFromIdPipe } from './ultility/pipe/get-district-name-from-id.pipe';
 import { ThousandSuffixPipe } from './ultility/pipe/thousand-suffix.pipe';
 import { SearchPageComponent } from './core/ui/search-page/search-page.component';
-import { AccountManagementComponent } from './core/ui/account-management/account-management.component';
-import {HereMapsModule } from 'ng2-heremaps';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { PopupRendererComponent } from './core/ui/map/popup-renderer/popup-renderer.component';
 import { AddReComponent } from './core/ui/create-post/add-re/add-re.component';
 import { UpdateReComponent } from './core/ui/create-post/update-re/update-re.component';
@@ -160,7 +158,6 @@ export function provideConfig() {
     GetDistrictNameFromIdPipe,
     ThousandSuffixPipe,
     SearchPageComponent,
-    AccountManagementComponent,
     MapModuleComponent,
     MapComponent,
     PopupRendererComponent,
@@ -212,18 +209,12 @@ export function provideConfig() {
     AngularFireAuthModule,
     Ng2SearchPipeModule,
     ToastrModule.forRoot(),
-    HereMapsModule.forRoot({
-      apiKey: 'KLtdq3MAUJruxhiJ2GyAFQ',
-      appId: 'dmdRFi5x5pT0zuy09gle',
-      apiVersion: '3.0',
-      libraries: ['core', 'service','ui','mapevents']
-    }),
-    LeafletModule.forRoot(),
     HttpClientModule,
     ApolloModule,
     HttpLinkModule,
     MatChipsModule,
-    SocialLoginModule
+    SocialLoginModule,
+    AccountModule
   ],
   providers: [
     AuthenticationService,

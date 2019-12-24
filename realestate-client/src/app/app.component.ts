@@ -24,7 +24,10 @@ export class AppComponent implements OnInit {
       .events.pipe(
         filter(event => event instanceof NavigationEnd),
         map(() => {
-          const child = this.activatedRoute.firstChild;
+          let child = this.activatedRoute.firstChild;
+          while (child.firstChild) {
+            child = child.firstChild;
+          }
           if (child.snapshot.data['title']) {
             return child.snapshot.data['title'];
           }

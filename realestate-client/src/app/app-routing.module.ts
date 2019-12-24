@@ -1,4 +1,3 @@
-import { AccountManagementComponent } from './core/ui/account-management/account-management.component';
 import { AddReComponent } from './core/ui/create-post/add-re/add-re.component';
 import { UserComponent } from './components/user/user.component';
 import { FavoriteComponent } from './components/favorite/favorite.component';
@@ -10,10 +9,8 @@ import { RealestateItemComponent } from './core/ui/item-module/realestate-item/r
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { MapModuleComponent } from './core/ui/map-module/map-module.component';
 import { RealEstateDetailComponent } from './components/real-estate-detail/real-estate-detail.component';
-import { RegisterComponent } from './core/ui/register/register.component';
 import { CreatePostComponent } from './core/ui/create-post/create-post.component';
 import { UserDetailComponent } from './core/ui/user-detail/user-detail.component';
-import { SearchPageComponent } from './core/ui/search-page/search-page.component';
 import { NewsComponent } from './core/ui/news/news.component';
 import { ContactComponent } from './core/ui/contact/contact.component';
 import { NewsDetailComponent } from './core/ui/news-detail/news-detail.component';
@@ -78,6 +75,10 @@ const routes: Routes = [
     path: 'lien-he',
     component: ContactComponent,
     data: { title: 'Thông tin liên hệ' }
+  },
+  {
+    path: 'tai-khoan',
+    loadChildren: () => import("./core/ui/account/account.module").then(acc => acc.AccountModule)
   },
   {
     path: '**',
