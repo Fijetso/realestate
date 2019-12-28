@@ -1,9 +1,10 @@
+import { ToastrService } from 'ngx-toastr';
 import { GraphQueryService } from './../../../services/graphql/graph-query.service';
 import { User } from './../../../model/user/user';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
-// import translate from 'google-translate-api';
+import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -19,7 +20,10 @@ export class LoginComponent implements OnInit {
   user: User;
   login: any;
   allTrade: any[];
-  constructor(private myAuthService: AuthenticationService, private graphql: GraphQueryService) {
+  constructor(private myAuthService: AuthenticationService,
+              private graphql: GraphQueryService,
+              private cookie: CookieService,
+              private toastr: ToastrService ) {
     this.userInfo = {
       email: '',
       password: ''
@@ -43,51 +47,62 @@ export class LoginComponent implements OnInit {
     this.login = this.graphql.login(email, password);
     const token = localStorage.getItem('login');
     if (token) {
-      console.info('getToken', token)
+      // tslint:disable-next-line: no-console
+      console.info('getToken', token);
       this.graphql.getLoginInfo(token).subscribe((res) => {
         this.data = res;
         // console.info('login infor',res);
         this.isLogedIn = true;
-      })
+      });
     }
     this.allTrade = this.graphql.getAllTrade();
   }
   loginWithGoogle() {
     this.myAuthService.loginWithGoogle().then(
       user => {
+        // tslint:disable-next-line: no-console
         console.info(user);
-        localStorage.setItem('loginGoogle',JSON.stringify(user));
+        localStorage.setItem('loginGoogle', JSON.stringify(user));
         this.isLogedIn = true;
+        const loginGoogle = localStorage.getItem('loginGoogle');
+        this.cookie.set('loginGoogle', loginGoogle);
+        // tslint:disable-next-line: no-console
+        const cookieResult = this.cookie.get('loginGoogle');
+        // tslint:disable-next-line: no-console
+        console.info(cookieResult);
+        loginGoogle ? this.toastr.success(JSON.parse(cookieResult).name, 'Đăng nhập thành công') : this.toastr.error('Đăng nhập thất bại');
       }
-    )
+    );
   }
 
   loginWithFacebook() {
     this.myAuthService.loginWithFacebook().then(
       user => {
-        console.info(user);
-        localStorage.setItem('loginFacebook',JSON.stringify(user));
+        // console.info(user);
+        localStorage.setItem('loginFacebook', JSON.stringify(user));
         this.isLogedIn = true;
       }
-    )
+    );
   }
   onLogOut() {
     localStorage.setItem('userInfor', null);
     this.data = null;
     this.isLogedIn = false;
     this.graphql.logout().subscribe(res => {
+      // tslint:disable-next-line: no-console
       console.info('logout successful', res),
       localStorage.clear();
       this.isLogedIn = false;
-    }, error => { console.error(error) });
+    }, error => { console.error(error); });
     this.myAuthService.logOut().then(
       res => {
+        // tslint:disable-next-line: no-console
         console.info(res);
         localStorage.clear();
       }
     ).catch(err => {
       console.error(err);
-    })
+    });
   }
   onSubmitLogin(formValue) {
     this.onLogIn(formValue.email, formValue.password);
