@@ -10,23 +10,22 @@ export const environment = {
     appId: '1:847678221489:web:985d889d2d396930'
   },
   api: {
-    rootURL: 'http://localhost:4200',
-    posFix:'api',
-    baseURL:'http://localhost:4200/api/'
+    rootURL: 'https://localhost:4200',
+    baseURL: 'https://localhost:4200/api/'
   },
-  heremap:{
-    appId:'dmdRFi5x5pT0zuy09gle',
-    appCode:'KLtdq3MAUJruxhiJ2GyAFQ',
-    apiKey:'Rqsg3eYkotn3qt2GajbTQzc8CSA-4u3yZvLIdq8C7Kc',
-    defaultLang:'vie',
-    secondLang:'eng'
+  heremap: {
+    appId: 'dmdRFi5x5pT0zuy09gle',
+    appCode: 'KLtdq3MAUJruxhiJ2GyAFQ',
+    apiKey: 'Rqsg3eYkotn3qt2GajbTQzc8CSA-4u3yZvLIdq8C7Kc',
+    defaultLang: 'vie',
+    secondLang: 'eng'
   },
   soicialProvider: {
     google : {
-      clientId: '522576343899-oacdhl7qnje56ml1kd4rcu7eass7g2c3.apps.googleusercontent.com',
+      clientId: '522576343899-7kpul3pe29t81s1f9d3cek3umueojeu1.apps.googleusercontent.com',
     },
     facebook: {
-      appId:'1213363158870756',
+      appId: '1213363158870756',
     },
     zalo: {
       appId: '3698477159127928270'
