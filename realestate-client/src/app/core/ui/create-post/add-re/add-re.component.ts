@@ -39,10 +39,10 @@ export class AddReComponent implements OnInit, AfterViewInit {
         this.curLat = pos.coords.latitude;
         this.curLong = pos.coords.longitude;
         this.madeMarkerFromLocation(this.curLat, this.curLong);
-      })
+      });
     }
     this.userInfo = JSON.parse(localStorage.getItem('loginGoogle'));
-    
+
   }
   ngOnInit() {
     this.height = 200;
@@ -56,7 +56,7 @@ export class AddReComponent implements OnInit, AfterViewInit {
         email: this.userInfo.email,
         phone: '0985922740',
         password: '',
-        birthdate: new Date("1995-19-11"),
+        birthdate: new Date('1995-19-11'),
         gender: true,
         userKind: this.fb.group({
           id: 1
@@ -78,7 +78,7 @@ export class AddReComponent implements OnInit, AfterViewInit {
     });
   }
 
-  // Init map 
+  // Init map
   ngAfterViewInit(): void {
     this.initMap();
   }
@@ -97,14 +97,14 @@ export class AddReComponent implements OnInit, AfterViewInit {
       });
 
     this.map = L.map('map', {
-      center:  this.curLat?[this.curLat,this.curLong]:[10.823099, 106.629662],
+      center:  this.curLat ? [this.curLat, this.curLong] : [10.823099, 106.629662],
       zoom: 10,
       drawControl: false,
     });
     baseLayer.addTo(this.map);
   }
-  madeMarkerFromLocation(lat,lng) {
-    this.markerHtmlStyles2=`
+  madeMarkerFromLocation(lat, lng) {
+    this.markerHtmlStyles2 = `
                       background-color: #FD784F;
                       width: 3rem;
                       height: 3rem;
@@ -118,18 +118,19 @@ export class AddReComponent implements OnInit, AfterViewInit {
                       font-size:1.5em;
                       border: 1px solid #FFFFFF`;
 
-    console.info(lat,lng);
-    const marker = L.marker([lat,lng],
+    // tslint:disable-next-line: no-console
+    console.info(lat, lng);
+    const marker = L.marker([lat, lng],
       {
         icon: L.divIcon({
-          className: "my-custom-pin",
+          className: 'my-custom-pin',
           iconAnchor: [0, 24],
           popupAnchor: [0, -36],
           html: `<div style="${this.markerHtmlStyles2}">${1}</div>`
         })
       })
-      .bindTooltip(lat+','+lng)
-      .bindPopup(lat+','+lng)
+      .bindTooltip(lat + ',' + lng)
+      .bindPopup(lat + ',' + lng)
       .addTo(this.map);
   }
 
@@ -142,28 +143,32 @@ export class AddReComponent implements OnInit, AfterViewInit {
         return res;
       });
     }
+    // tslint:disable-next-line: no-console
     console.info(this.realEstate.value);
   }
 
   onChangeGender($event) {
+    // tslint:disable-next-line: no-console
     console.info($event.target.value);
   }
 
   onChangeUserKind($event) {
+    // tslint:disable-next-line: no-console
     console.info($event.target.value);
   }
   preview(event) {
-    this.selectedFile = event.target.files[0]
-    let reader = new FileReader();
+    this.selectedFile = event.target.files[0];
+    const reader = new FileReader();
     this.imagePath = event.target.files[0];
     reader.readAsDataURL(event.target.files[0]);
+    // tslint:disable-next-line: variable-name
     reader.onload = (_event) => {
       this.imgURL = reader.result;
-    }
+    };
   }
 
   onSelectFile() {
-    let element: HTMLElement = document.querySelector('input[type="file"]') as HTMLElement;
+    const element: HTMLElement = document.querySelector('input[type="file"]') as HTMLElement;
     element.click();
   }
 }

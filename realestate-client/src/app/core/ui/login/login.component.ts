@@ -64,12 +64,12 @@ export class LoginComponent implements OnInit {
     this.myAuthService.loginWithGoogle().then(user => {
       // tslint:disable-next-line: no-console
       console.info(user);
-      localStorage.setItem('loginGoogle', JSON.stringify(user));
+      localStorage.setItem('loginInfo', JSON.stringify(user));
       this.isLogedIn = true;
-      const loginGoogle = localStorage.getItem('loginGoogle');
-      this.cookie.set('loginGoogle', loginGoogle);
+      const loginGoogle = localStorage.getItem('loginInfo');
+      this.cookie.set('loginInfo', loginGoogle);
       // tslint:disable-next-line: no-console
-      const cookieResult = this.cookie.get('loginGoogle');
+      const cookieResult = this.cookie.get('loginInfo');
       // tslint:disable-next-line: no-console
       console.info(JSON.parse(cookieResult)); this.toastr.success(
           JSON.parse(cookieResult).name,
@@ -84,12 +84,12 @@ export class LoginComponent implements OnInit {
     this.myAuthService.loginWithFacebook().then(user => {
       // tslint:disable-next-line: no-console
       console.info(user);
-      localStorage.setItem('loginFacebook', JSON.stringify(user));
+      localStorage.setItem('loginInfo', JSON.stringify(user));
       this.isLogedIn = true;
-      const loginFacebook = localStorage.getItem('loginFacebook');
-      this.cookie.set('loginFacebook', loginFacebook);
+      const loginFacebook = localStorage.getItem('loginInfo');
+      this.cookie.set('loginInfo', loginFacebook);
       // tslint:disable-next-line: no-console
-      const cookieResult = this.cookie.get('loginFacebook');
+      const cookieResult = this.cookie.get('loginInfo');
       // tslint:disable-next-line: no-console
       console.info(JSON.parse(cookieResult));
       this.toastr.success(

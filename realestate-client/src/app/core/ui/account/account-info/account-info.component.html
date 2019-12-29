@@ -1,3 +1,83 @@
-<p>account-info works!</p>
-<a [routerLink]="['tin-dang']" routerLinkActive="router-link-active" >Tin đăng</a>
-<a [routerLink]="['bo-suu-tap']" routerLinkActive="router-link-active" >Bộ sưu tập</a>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 col-sm">
+            <div class="text-center">
+                <input type="file" class="hidden avatar-chooser" id="avatar-chooser">
+                <img [src]="avatar?avatar:'../../../../../assets/images/login.png'" alt="avatar" class="avatar" class="tab-head" (click)="changeAvatar()"
+                    style="width: 90px; height: 90px;max-width : 100%; border-radius: 50%;">
+            <p class="username">{{username}}</p> <span>Tài khoản {{provider}}</span>
+            <p>{{email}}</p>
+            </div>
+            <hr>
+            <div class="tab-head" (click)="onShowAccount()">Thông tin cá nhân</div>
+            <hr>
+            <div class="tab-head" (click)="onShowPostList()">Tin đăng của tôi</div>
+            <hr>
+            <div class="tab-head" (click)="onShowCollection()">Bộ sưu tập</div>
+            <hr>
+            <div>Đổi mật khẩu</div>
+            <hr>
+            <div>Đăng xuất</div>
+        </div>
+        <div class="col-md-9 col-sm">
+            <div *ngIf="isShowAccount"> 
+                <div>Thông tin cá nhân</div>
+                <form>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" [value]="email"
+                            placeholder="Enter email">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                            placeholder="Enter email">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                            placeholder="Enter email">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                            placeholder="Enter email">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+
+            <div *ngIf="isShowPost">
+                <div>Tin đăng của tôi</div>
+                <div class="list-post">
+                </div>
+            </div>
+
+            <div *ngIf="isShowCollections">
+                <div>Bộ sưu tập</div>
+                <div class="list-post">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
