@@ -22,6 +22,12 @@ public class Mutation implements GraphQLMutationResolver {
 		return userService.login(email, password);
 	}
 	
+	public User loginBySocial(final String name, final String email, final String authProvider, final String phone,
+			final String birthdate, final Boolean gender, final String job, final Long userKindId,
+			final String imageLink) {
+		return userService.loginBySocial(name, email, authProvider, phone, birthdate, gender, job, userKindId, imageLink);
+	}
+	
 	public User register(final String name, final String email, final String password, final String phone,
 			final String birthdate, final Boolean gender, final String job, final Long userKindId, final String imageLink) {
 		return userService.register(name, email, password, phone, birthdate, gender, job, userKindId, imageLink);

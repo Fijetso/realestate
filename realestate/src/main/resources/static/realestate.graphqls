@@ -6,6 +6,9 @@ type Query {
 type Mutation {
 	login(email: String!, password: String!): String
 	
+	loginBySocial(name: String!, email: String!, authProvider: String!, phone: String, birthdate: String, gender: Boolean, job: String,
+			userKindId: Long, imageLink: String): User
+	
 	register(name: String!, email: String!, password: String!, phone: String, birthdate: String, gender: Boolean, job: String,
 			userKindId: Long, imageLink: String): User
 	
