@@ -58,6 +58,8 @@ import { ApolloModule } from 'apollo-angular';
 import { HttpLinkModule } from 'apollo-angular-link-http';
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 
 import { RealEstateWrapperComponent } from './components/real-estate/real-estate-wrapper/real-estate-wrapper.component';
 import { AlertComponent } from './core/modal/alert/alert.component';
@@ -215,7 +217,8 @@ export function provideConfig() {
     HttpLinkModule,
     MatChipsModule,
     SocialLoginModule,
-    AccountModule
+    AccountModule,
+    NgbModule
   ],
   providers: [
     AuthenticationService,
