@@ -52,128 +52,133 @@ public class GraphQLTradeService {
 	private UserRepository userRepository;
 	@Autowired
 	ModelMapperService modelMapper;
-
-	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')")
-	public Trade updateTradeGraphQL(Long tradeId, String description, Long cost, Long realEstateKindId,
+	public Trade saveTradeGraphQL(Long tradeId, String description, Long cost, Long userId, Long realEstateKindId,
 			Long tradeKindId, String detailAddress, Long wardId, Long length, Long width, Long square, String direction,
 			String floors, String legalDocuments, int bathrooms, int bedrooms, String utilities, String others,
 			Float longitude, Float latitude) {
-		Optional<Trade> trade = tradeRepository.findById(tradeId);
-		trade.orElseThrow(() -> new CustomGraphQLException(400,
-				"Not Found Exception: Cannot find any Trade in MySQL with Id=" + tradeId));
-		Trade foundTrade = trade.get();
-
+		Trade trade = new Trade();
+		if (tradeId != null) {
+			Optional<Trade> foundTrade = tradeRepository.findById(tradeId);
+			if (foundTrade.isPresent()) {
+				trade = foundTrade.get();
+			} else {
+				trade.setId(tradeId);
+			}
+		}
+		if (userId != null) {
+			Optional<User> user = userRepository.findById(userId);
+			user.orElseThrow(
+					() -> new CustomGraphQLException(400, "Not Found Exception: Cannot find any User Id=" + userId));
+		}
 		if (description != null) {
-			foundTrade.setDescription(description);
+			trade.setDescription(description);
 		}
 
 		if (cost != null) {
-			foundTrade.setCost(cost);
+			trade.setCost(cost);
 		}
 
 		if (realEstateKindId != null) {
 			Optional<RealEstateKind> realEstateKind = realEstateKindRepository.findById(realEstateKindId);
 			realEstateKind.orElseThrow(() -> new CustomGraphQLException(400,
 					"Not Found Exception: Cannot find any Real Estate Kind Id=" + realEstateKindId));
-			foundTrade.setRealEstateKind(realEstateKind.get());
+			trade.setRealEstateKind(realEstateKind.get());
 		}
 
 		if (tradeKindId != null) {
 			Optional<TradeKind> tradeKind = tradeKindRepository.findById(tradeKindId);
 			tradeKind.orElseThrow(() -> new CustomGraphQLException(400,
 					"Not Found Exception: Cannot find any Trade Kind Id=" + tradeKindId));
-			foundTrade.setTradeKind(tradeKind.get());
+			trade.setTradeKind(tradeKind.get());
 		}
 
 		if (detailAddress != null || wardId != null) {
-			Optional<Address> address = addressRepository.findById(foundTrade.getAddress().getId());
-			address.orElseThrow(() -> new CustomGraphQLException(400,
-					"Not Found Exception: Cannot find any Address Kind Id=" + foundTrade.getAddress().getId()));
-			Address updatedAddress = address.get();
-
-			updatedAddress.setDetail(detailAddress != null ? detailAddress : updatedAddress.getDetail());
-
+			Address address = trade.getAddress() != null ? trade.getAddress() : new Address();
+			if (detailAddress != null) {
+				address.setDetail(detailAddress);
+			}
 			if (wardId != null) {
 				Optional<Ward> ward = wardRepository.findById(wardId);
-				ward.orElseThrow(() -> new NotFoundException("Cannot find any Ward Id=" + wardId));
-				updatedAddress.setWard(wardId);
-				updatedAddress.setDistrict(ward.get().getDistrict().getId());
-				updatedAddress.setCityOrProvince(ward.get().getDistrict().getProvince().getId());
+				ward.orElseThrow(() -> new CustomGraphQLException(400,"Not Found Exception: Cannot find any Ward Id=" + wardId));
+				address.setWard(wardId);
+				address.setDistrict(ward.get().getDistrict().getId());
+				address.setCityOrProvince(ward.get().getDistrict().getProvince().getId());
 			}
-			foundTrade.setAddress(updatedAddress);
-			addressRepository.save(updatedAddress);
+			trade.setAddress(address);
+			addressRepository.save(address);
 		}
 
 		if (length != null || width != null || square != null || direction != null || floors != null
 				|| legalDocuments != null || bathrooms >= 0 || bedrooms >= 0 || utilities != null || others != null) {
-			Optional<Details> details = detailsRepository.findById(foundTrade.getDetails().getId());
-			details.orElseThrow(() -> new CustomGraphQLException(400,
-					"Not Found Exception: Cannot find any Details Id=" + foundTrade.getDetails().getId()));
-			Details foundDetails = details.get();
-
-			foundDetails.setLength(length != null ? length : foundDetails.getLength());
-			foundDetails.setWidth(width != null ? width : foundDetails.getWidth());
-			foundDetails.setSquare(square != null ? square : foundDetails.getSquare());
-			foundDetails.setDirection(direction != null ? direction : foundDetails.getDirection());
-			foundDetails.setFloors(floors != null ? floors : foundDetails.getFloors());
-			foundDetails.setLegalDocuments(legalDocuments != null ? legalDocuments : foundDetails.getLegalDocuments());
-			foundDetails.setBathrooms(bathrooms >= 0 ? bathrooms : foundDetails.getBathrooms());
-			foundDetails.setBedrooms(bedrooms >= 0 ? bedrooms : foundDetails.getBedrooms());
-			foundDetails.setUtilities(utilities != null ? utilities : foundDetails.getUtilities());
-			foundDetails.setOthers(others != null ? others : foundDetails.getOthers());
-			foundTrade.setDetails(foundDetails);
-			detailsRepository.save(foundDetails);
+			Details details = trade.getDetails() != null ? trade.getDetails() : new Details();
+			if (length != null)
+				details.setLength(length);
+			if (width != null)
+				details.setWidth(width);
+			if (square != null)
+				details.setSquare(square);
+			if (direction != null)
+				details.setDirection(direction);
+			if (floors != null)
+				details.setFloors(floors);
+			if (legalDocuments != null)
+				details.setLegalDocuments(legalDocuments);
+			if (bathrooms >= 0)
+				details.setBathrooms(bathrooms);
+			if (bedrooms >= 0)
+				details.setBedrooms(bedrooms);
+			if (utilities != null)
+				details.setUtilities(utilities);
+			if (others != null)
+				details.setOthers(others);
+			trade.setDetails(details);
+			detailsRepository.save(details);
 		}
 
 		if (longitude != null && latitude != null) {
-			Optional<Coordinate> coordinate = coordinateRepository.findById(foundTrade.getCoordinate().getId());
-			coordinate.orElseThrow(() -> new CustomGraphQLException(400,
-					"Not Found Exception: Cannot find any Coordinate Id=" + foundTrade.getCoordinate().getId()));
-			Coordinate foundCoordinate = coordinate.get();
-			foundCoordinate.setLongitude(longitude != null ? longitude : foundCoordinate.getLongitude());
-			foundCoordinate.setLatitude(latitude != null ? latitude : foundCoordinate.getLatitude());
-
-			foundTrade.setCoordinate(foundCoordinate);
-			coordinateRepository.save(foundCoordinate);
+			Coordinate coordinate = trade.getCoordinate() != null ? trade.getCoordinate() : new Coordinate();
+			coordinate.setLongitude(longitude != null ? longitude : coordinate.getLongitude());
+			coordinate.setLatitude(latitude != null ? latitude : coordinate.getLatitude());
+			trade.setCoordinate(coordinate);
+			coordinateRepository.save(coordinate);
 		}
-
-		graphTradeRepository.save(modelMapper.convertTrade(foundTrade));
-		return tradeRepository.save(foundTrade);
+		graphTradeRepository.save(modelMapper.convertTrade(trade));
+		return tradeRepository.save(trade);
 	}
 
-	public Trade saveTradeGraphQL(final String description, final Long cost, final Long userId,
-			final Long realEstateKindId, final Long tradeKindId, final String detailAddress, final Long wardId,
-			final Long length, final Long width, final Long square, final String direction, final String floors,
-			final String legalDocuments, final int bathrooms, final int bedrooms, final String utilities,
-			final String others, final Long longitude, final Long latitude) {
-		Optional<User> user = userRepository.findById(userId);
-		user.orElseThrow(
-				() -> new CustomGraphQLException(400, "Not Found Exception: Cannot find any User Id=" + userId));
-
-		Optional<RealEstateKind> realEstateKind = realEstateKindRepository.findById(realEstateKindId);
-		realEstateKind.orElseThrow(() -> new CustomGraphQLException(400,
-				"Not Found Exception: Cannot find any Real Estate Kind Id=" + realEstateKindId));
-
-		Optional<TradeKind> tradeKind = tradeKindRepository.findById(tradeKindId);
-		tradeKind.orElseThrow(() -> new CustomGraphQLException(400,
-				"Not Found Exception: Cannot find any Trade Kind Id=" + tradeKindId));
-
-		Optional<Ward> ward = wardRepository.findById(wardId);
-		ward.orElseThrow(
-				() -> new CustomGraphQLException(400, "Not Found Exception: Cannot find any Ward Id=" + wardId));
-
-		Address address = new Address(detailAddress, ward.get().getId(), ward.get().getDistrict().getId(),
-				ward.get().getDistrict().getProvince().getId());
-
-		Details details = new Details(length, width, square, direction, floors, legalDocuments, bathrooms, bedrooms,
-				utilities, others);
-		Coordinate coordinate = new Coordinate(longitude, latitude);
-
-		Trade trade = new Trade(description, cost, user.get(), realEstateKind.get(), tradeKind.get(), address, details,
-				coordinate);
-		trade = tradeRepository.save(trade);
-		GraphTrade graphTrade = modelMapper.convertTrade(trade);
-		graphTradeRepository.save(graphTrade);
-		return trade;
-	}
+//	public Trade saveTradeGraphQL(final Long tradeId, final String description, final Long cost, final Long userId,
+//			final Long realEstateKindId, final Long tradeKindId, final String detailAddress, final Long wardId,
+//			final Long length, final Long width, final Long square, final String direction, final String floors,
+//			final String legalDocuments, final int bathrooms, final int bedrooms, final String utilities,
+//			final String others, final Long longitude, final Long latitude) {
+//
+//		Optional<RealEstateKind> realEstateKind = realEstateKindRepository.findById(realEstateKindId);
+//		realEstateKind.orElseThrow(() -> new CustomGraphQLException(400,
+//				"Not Found Exception: Cannot find any Real Estate Kind Id=" + realEstateKindId));
+//
+//		Optional<TradeKind> tradeKind = tradeKindRepository.findById(tradeKindId);
+//		tradeKind.orElseThrow(() -> new CustomGraphQLException(400,
+//				"Not Found Exception: Cannot find any Trade Kind Id=" + tradeKindId));
+//
+//		Optional<Ward> ward = wardRepository.findById(wardId);
+//		ward.orElseThrow(
+//				() -> new CustomGraphQLException(400, "Not Found Exception: Cannot find any Ward Id=" + wardId));
+//
+//		Address address = new Address(detailAddress, ward.get().getId(), ward.get().getDistrict().getId(),
+//				ward.get().getDistrict().getProvince().getId());
+//
+//		Details details = new Details(length, width, square, direction, floors, legalDocuments, bathrooms, bedrooms,
+//				utilities, others);
+//		Coordinate coordinate = new Coordinate(longitude, latitude);
+//
+//		Trade trade = new Trade(description, cost, user.get(), realEstateKind.get(), tradeKind.get(), address, details,
+//				coordinate);
+//		if (tradeId != null) {
+//			trade.setId(tradeId);
+//		}
+//		trade = tradeRepository.save(trade);
+//		GraphTrade graphTrade = modelMapper.convertTrade(trade);
+//		graphTradeRepository.save(graphTrade);
+//		return trade;
+//	}
 }

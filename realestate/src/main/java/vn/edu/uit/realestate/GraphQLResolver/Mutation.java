@@ -40,26 +40,17 @@ public class Mutation implements GraphQLMutationResolver {
 		return userService.updateUserGraphQL(userId, name, email, phone, birthdate, gender, job, userKindId);
 	}
 	
-	public Trade saveTrade(final String description, final Long cost, final Long userId, final Long realEstateKindId,
-			final Long tradeKindId, final String detailAddress, final Long wardId, final Long length, final Long width,
-			final Long square, final String direction, final String floors, final String legalDocuments,
-			final int bathrooms, final int bedrooms, final String utilities, final String others, final Long longitude,
-			final Long latitude) {
-		return tradeService.saveTradeGraphQL(description, cost, userId, realEstateKindId, tradeKindId, detailAddress,
-				wardId, length, width, square, direction, floors, legalDocuments, bathrooms, bedrooms, utilities,
-				others, longitude, latitude);
-	}
-
-	public Trade updateTrade(final Long tradeId, final String description, final Long cost, final Long realEstateKindId,
+	
+	public Trade saveTrade(final Long tradeId, final String description, final Long cost, final Long userId, final Long realEstateKindId,
 			final Long tradeKindId, final String detailAddress, final Long wardId, final Long length, final Long width,
 			final Long square, final String direction, final String floors, final String legalDocuments,
 			final int bathrooms, final int bedrooms, final String utilities, final String others, final Float longitude,
 			final Float latitude) {
-		return tradeService.updateTradeGraphQL(tradeId, description, cost, realEstateKindId, tradeKindId, detailAddress,
+		return tradeService.saveTradeGraphQL(tradeId, description, cost, userId, realEstateKindId, tradeKindId, detailAddress,
 				wardId, length, width, square, direction, floors, legalDocuments, bathrooms, bedrooms, utilities,
 				others, longitude, latitude);
 	}
-	
+
 	public News saveNews(final Long newsId, final String title, final String content, final Long categoryId, final String composeDate) {
 		return newsService.saveNews(newsId, title, content, categoryId, composeDate);
 	}
