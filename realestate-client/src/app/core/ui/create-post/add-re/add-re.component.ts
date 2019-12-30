@@ -28,6 +28,7 @@ export class AddReComponent implements OnInit, AfterViewInit {
   protected curLong;
   markerHtmlStyles2: any;
   userInfo: any;
+  startDate: any;
   constructor(private api: ApiService, private fb: FormBuilder, private router: Router) {
     this.api.getAllUserKind().subscribe(res => {
       // console.info(res);
@@ -41,27 +42,29 @@ export class AddReComponent implements OnInit, AfterViewInit {
         this.madeMarkerFromLocation(this.curLat, this.curLong);
       });
     }
-    this.userInfo = JSON.parse(localStorage.getItem('loginGoogle'));
-
+    this.userInfo = JSON.parse(localStorage.getItem('loginInfo'));
+    this.startDate = new Date(1997, 10, 19);
   }
   ngOnInit() {
-    this.height = 200;
+    this.height = 500;
     this.realEstate = this.fb.group({
       id: 1,
       description: 'Mô tả',
       cost: 0,
-      user: this.fb.group({
-        id: this.userInfo.id,
-        name: this.userInfo.name,
-        email: this.userInfo.email,
-        phone: '0985922740',
-        password: '',
-        birthdate: new Date('1995-19-11'),
-        gender: true,
-        userKind: this.fb.group({
-          id: 1
-        })
-      }),
+      dob: new Date(1997, 10, 19),
+      gender: 'true',
+      // user: this.fb.group({
+      //   id: this.userInfo.id,
+      //   name: this.userInfo.name,
+      //   email: this.userInfo.email,
+      //   phone: '0985922740',
+      //   password: '',
+      //   dob: new Date(1997, 10, 19),
+      //   gender: true,
+      //   userKind: this.fb.group({
+      //     id: 1
+      //   })
+      // }),
       tradeKind: null,
       realEstateKind: null,
       address: this.fb.group({

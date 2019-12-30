@@ -5,7 +5,13 @@ import { AccountRoutingModule } from './account-routing.module';
 import { AccountInfoComponent } from './account-info/account-info.component';
 import { PostGalleryComponent } from './post-gallery/post-gallery.component';
 import { CollectionsComponent } from './collections/collections.component';
-import { MatFormFieldModule, MatDatepickerModule, MatInputModule, MatSelectModule, MatButtonModule } from '@angular/material';
+import {
+  MatFormFieldModule, MatDatepickerModule,
+  MatInputModule,
+  MatSelectModule,
+  MatButtonModule,
+  MatCardModule
+} from '@angular/material';
 
 
 @NgModule({
@@ -19,7 +25,8 @@ import { MatFormFieldModule, MatDatepickerModule, MatInputModule, MatSelectModul
     MatSelectModule,
     MatButtonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatCardModule
   ],
   exports : [
     AccountInfoComponent, PostGalleryComponent, CollectionsComponent

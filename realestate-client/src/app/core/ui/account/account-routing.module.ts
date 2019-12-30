@@ -7,13 +7,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: '', component : AccountInfoComponent,data: { title: 'Thông tin tài khoản' }
+    path: '', component : AccountInfoComponent, data: { title: 'Thông tin tài khoản' }
   },
   {
-    path:'tin-dang', component: PostGalleryComponent,data: { title: 'Tin đăng' }
+    path: 'tin-dang', component: PostGalleryComponent, data: { title: 'Tin đăng' }
   },
   {
-    path:'bo-suu-tap', component: CollectionsComponent,data: { title: 'Bộ sưu tập' }
+    path: 'bo-suu-tap', component: CollectionsComponent, data: { title: 'Bộ sưu tập' }
   }
 ];
 

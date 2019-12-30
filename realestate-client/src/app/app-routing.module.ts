@@ -11,10 +11,7 @@ import { MapModuleComponent } from './core/ui/map-module/map-module.component';
 import { RealEstateDetailComponent } from './components/real-estate-detail/real-estate-detail.component';
 import { CreatePostComponent } from './core/ui/create-post/create-post.component';
 import { UserDetailComponent } from './core/ui/user-detail/user-detail.component';
-import { NewsComponent } from './core/ui/news/news.component';
 import { ContactComponent } from './core/ui/contact/contact.component';
-import { NewsDetailComponent } from './core/ui/news-detail/news-detail.component';
-
 const routes: Routes = [
   {
     path: '',
@@ -62,16 +59,6 @@ const routes: Routes = [
     data: { title: 'Tạo bài đăng bất động sản' }
   },
   {
-    path: 'tin-tuc',
-    component: NewsComponent,
-    data: { title: 'Tin tức bất động sản' }
-  },
-  {
-    path: 'tin-tuc/:id',
-    component: NewsDetailComponent,
-    data: { title: 'Chi tiết tin' }
-  },
-  {
     path: 'lien-he',
     component: ContactComponent,
     data: { title: 'Thông tin liên hệ' }
@@ -79,6 +66,10 @@ const routes: Routes = [
   {
     path: 'tai-khoan',
     loadChildren: () => import('./core/ui/account/account.module').then(acc => acc.AccountModule)
+  },
+  {
+    path: 'tin-tuc',
+    loadChildren: () => import('./core/ui/news-module/news-module.module').then(news => news.NewsModuleModule)
   },
   {
     path: '**',

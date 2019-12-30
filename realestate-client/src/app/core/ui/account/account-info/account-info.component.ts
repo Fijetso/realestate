@@ -20,7 +20,8 @@ export class AccountInfoComponent implements OnInit {
   gender: string;
   startDate: Date;
   userInfo: any;
-
+  listPost: { id: number; title: string; content: string; imgPath: string; }[];
+  collections: { id: number; title: string; content: string; imgPath: string; }[];
   constructor(private fb: FormBuilder) {
      const info = JSON.parse(localStorage.getItem('loginInfo'));
      this.avatar = info ? info.photoUrl : '../../../../../assets/images/login.png';
@@ -37,6 +38,48 @@ export class AccountInfoComponent implements OnInit {
       job: ['Software Enginier'],
       phone: ['0975922740']
      });
+
+     this.listPost = [
+      {
+        id: 1,
+        title: 'Eu voluptate adipisicing velit est sit deserunt ea ex.',
+        content: 'Ea nulla exercitation veniam sint magna consequat cupidatat amet mollit. Culpa ex est laborum irure in. Fugiat culpa commodo exercitation deserunt veniam tempor mollit aute duis culpa elit proident aliquip consectetur.',
+        imgPath: 'https://via.placeholder.com/300'
+      },
+      {
+        id: 2,
+        title: 'Officia officia Lorem esse fugiat minim minim consequat sint aliqua ullamco qui aute.',
+        content: 'Commodo dolor excepteur pariatur consectetur esse do deserunt magna reprehenderit sint qui voluptate. In et voluptate ex tempor velit non duis nostrud ipsum voluptate labore fugiat ullamco. Do dolor esse dolore do do. Voluptate ullamco consequat magna nostrud eiusmod.',
+        imgPath: 'https://via.placeholder.com/300'
+      },
+      {
+        id: 3,
+        title: 'Sunt laborum laboris nostrud mollit nulla dolore anim eu velit Lorem aute dolore minim aute.',
+        content: 'Pariatur eu et ipsum nisi. Anim esse incididunt irure reprehenderit sit. Sint elit laboris laborum laborum qui reprehenderit reprehenderit.',
+        imgPath: 'https://via.placeholder.com/300'
+      },
+      {
+        id: 4,
+        title: 'Labore eiusmod in deserunt Lorem minim eiusmod nisi pariatur excepteur.',
+        content: 'Ex exercitation deserunt in nulla incididunt incididunt aute ea enim qui nisi minim tempor esse. Officia consequat sint ad nulla esse minim cillum aliquip. Nostrud enim nostrud nulla exercitation. Nisi minim tempor veniam in incididunt anim. Occaecat duis esse velit excepteur. Minim occaecat ad pariatur ea sint elit culpa id qui cupidatat ipsum. Irure duis minim anim culpa irure fugiat et non.',
+        imgPath: 'https://via.placeholder.com/300'
+      }
+     ];
+
+     this.collections = [
+       {
+        id: 1,
+        title: 'Labore eiusmod in deserunt Lorem minim eiusmod nisi pariatur excepteur.',
+        content: 'Ex exercitation deserunt in nulla incididunt incididunt aute ea enim qui nisi minim tempor esse. Officia consequat sint ad nulla esse minim cillum aliquip. Nostrud enim nostrud nulla exercitation. Nisi minim tempor veniam in incididunt anim. Occaecat duis esse velit excepteur. Minim occaecat ad pariatur ea sint elit culpa id qui cupidatat ipsum. Irure duis minim anim culpa irure fugiat et non.',
+        imgPath: 'https://via.placeholder.com/300'
+       },
+       {
+        id: 2,
+        title: 'Cillum reprehenderit aliquip est aliquip commodo tempor.',
+        content: 'Aliqua ex irure adipisicing Lorem Lorem exercitation irure aliqua. Qui velit fugiat ea sint magna laboris officia occaecat ipsum duis velit reprehenderit consectetur. Minim excepteur ea veniam labore ea veniam. Nulla cillum officia adipisicing ut commodo tempor incididunt.',
+        imgPath: 'https://via.placeholder.com/300'
+       }
+     ];
   }
   ngOnInit() {
   }

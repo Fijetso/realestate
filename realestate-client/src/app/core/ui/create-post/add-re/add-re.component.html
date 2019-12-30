@@ -1,112 +1,35 @@
-<h3>Add RE</h3>
-<form [formGroup]="realEstate" (ngSubmit)="save($event)">
-    <table>
-        <div>
-            <tr>
-                <td>Id</td>
-                <td>
-                    <input type="number" formControlName="id">
-                </td>
-            </tr>
-            <tr>
-                <td>Description</td>
-                <td>
-                    <input type="text" formControlName="description">
-                </td>
-            </tr>
-            <tr>
-                <td>Cost</td>
-                <td>
-                    <input type="text" formControlName="cost">
-                </td>
-            </tr>
-        </div>
-        <div formGroupName="user">
-            <tr>
-                <td>User Id</td>
-                <td>
-                    <input type="text" formControlName="id">
-                </td>
-            </tr>
-            <tr>
-                <td>User Name</td>
-                <td>
-                    <input type="text" formControlName="name">
-                </td>
-            </tr>
-            <tr>
-                <td>User Email</td>
-                <td>
-                    <input type="text" formControlName="email">
-                </td>
-            </tr>
-            <tr>
-                <td>Password</td>
-                <td>
-                    <input type="password" formControlName="password">
-                </td>
-            </tr>
-            <tr>
-                <td>User Phone</td>
-                <td>
-                    <input type="text" formControlName="phone">
-                </td>
-            </tr>
-            <tr>
-                <td>Birth Day</td>
-                <td>
-                    <input type="date" formControlName="birthdate">
-                </td>
-            </tr>
-            <tr>
-                <td>Gender</td>
-                <td>
-                    <select formControlName="gender" (change)="onChangeGender($event)">
-                        <option value="true" selected="gender.value">Nam</option>
-                        <option value="false">Nữ</option>
-                    </select>
-                </td>
-            </tr>
-            <div formGroupName="userKind">
-                <tr>
-                    <td>User kind</td>
-                    <td>
-                        <select formControlName="id" (change)="onChangeUserKind($event)">
-                            <option [value]="userKind.id" *ngFor="let userKind of userKinds">{{userKind.name}}</option>
-                        </select>
-                    </td>
-                </tr>
-            </div>
-        </div>
-        <div>
-            <tr>
-                <td>Hình ảnh</td>
-                <td>
-                    <button mat-button (click)="onSelectFile()">Chọn ảnh</button>
-                    <img [src]="imgURL" [style.height.px]="height" *ngIf="imgURL">
-                    <input #file type="file" accept='image/*' (change)="preview($event)" formControlName="realImages" multiple class="hidden"/>
-                </td>
-            </tr>
-        </div>
-        <div>
-            <tr>
-                <td>Mô tả thêm</td>
-                <td>
-                    <textarea  type="text" formControlName="details"></textarea>
-                </td>
-            </tr>
-        </div>
-        <!-- Map view -->
-        <div class="map-container col-md-5 col-sm">
-            <div class="map-frame">
-                <div id="map"></div>
-            </div>
-        </div>
-        <!-- Button to submit -->
-        <tr>
-            <td>
-                <button mat-raised-button type="submit">Đăng bài</button>
-            </td>
-        </tr>
-    </table>
-</form>
+<div class="container">
+    <h3>Thêm mới bất động sản</h3>
+    <div>
+        <form [formGroup]="realEstate" (ngSubmit)="save($event)">
+            <mat-form-field>
+                <input matInput placeholder="Họ và tên" formControlName="username" #username>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput [matDatepicker]="dob" placeholder="Ngày sinh" formControlName="dob">
+                <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+                <mat-datepicker #dob  [startAt]="startDate"></mat-datepicker>
+              </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Email" type="email"  formControlName="email" #email>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Nghề nghiệp"  formControlName="job" #job>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Số điện thoại" formControlName="phone" #phone>
+            </mat-form-field>
+            <mat-form-field>
+                <button mat-button (click)="onSelectFile()">Chọn ảnh</button>
+            </mat-form-field>
+            <mat-form-field>
+                <img [src]="imgURL" [style.height.px]="height" *ngIf="imgURL">
+            </mat-form-field>
+            <input #file type="file" accept='image/*' (change)="preview($event)" formControlName="realImages" multiple
+                class="hidden" />
+            <mat-form-field>
+                <button mat-raised-button type="submit">Lưu lại</button>
+            </mat-form-field>
+        </form>
+    </div>
+</div>

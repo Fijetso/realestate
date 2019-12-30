@@ -58,7 +58,9 @@ import { ApolloModule } from 'apollo-angular';
 import { HttpLinkModule } from 'apollo-angular-link-http';
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+
 
 
 import { RealEstateWrapperComponent } from './components/real-estate/real-estate-wrapper/real-estate-wrapper.component';
@@ -100,10 +102,9 @@ import { PopupRendererComponent } from './core/ui/map/popup-renderer/popup-rende
 import { AddReComponent } from './core/ui/create-post/add-re/add-re.component';
 import { UpdateReComponent } from './core/ui/create-post/update-re/update-re.component';
 import { DeleteReComponent } from './core/ui/create-post/delete-re/delete-re.component';
-import { NewsComponent } from './core/ui/news/news.component';
 import { ContactComponent } from './core/ui/contact/contact.component';
-import { NewsDetailComponent } from './core/ui/news-detail/news-detail.component';
 import { CookieService } from 'ngx-cookie-service';
+import { NewsModuleModule } from './core/ui/news-module/news-module.module';
 
 const config = new AuthServiceConfig([
   {
@@ -167,9 +168,7 @@ export function provideConfig() {
     AddReComponent,
     UpdateReComponent,
     DeleteReComponent,
-    NewsComponent,
-    ContactComponent,
-    NewsDetailComponent,
+    ContactComponent
   ],
   imports: [
     OwlModule,
@@ -218,7 +217,9 @@ export function provideConfig() {
     MatChipsModule,
     SocialLoginModule,
     AccountModule,
-    NgbModule
+    NgbModule,
+    NewsModuleModule,
+    CKEditorModule
   ],
   providers: [
     AuthenticationService,
@@ -242,4 +243,4 @@ export function provideConfig() {
   schemas: [NO_ERRORS_SCHEMA],
   entryComponents: [AlertComponent]
 })
-export class AppModule {}
+export class AppModule { }
