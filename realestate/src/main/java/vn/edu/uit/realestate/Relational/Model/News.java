@@ -1,7 +1,10 @@
 package vn.edu.uit.realestate.Relational.Model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -9,20 +12,22 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import vn.edu.uit.realestate.Common.Common;
 
 @Entity
-@JsonIgnoreProperties("category")
 public class News {
 	@Id
 	@GeneratedValue
 	private Long id;
 	private String title;
 	private Date composeDate = new Date();
+	@Column(columnDefinition="LONGTEXT")
 	private String content;
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "categoryId", referencedColumnName = "id")
 	private Category category;
+
+	private transient SimpleDateFormat dateFormat = new SimpleDateFormat(Common.Constains.LOCAL_DATE_FORMAT);
 	
 	public News() {
 		super();
@@ -35,6 +40,12 @@ public class News {
 		this.composeDate = composeDate;
 		this.content = content;
 		this.category = category;
+	}
+	
+	public News(String title, String content) {
+		super();
+		this.title = title;
+		this.content = content;
 	}
 	
 	public Long getId() {
@@ -53,12 +64,21 @@ public class News {
 		this.title = title;
 	}
 
-	public Date getComposeDate() {
-		return composeDate;
+	public String getComposeDate() {
+		if (composeDate == null) {
+			return null;
+		}
+		return dateFormat.format(composeDate);
 	}
 
-	public void setComposeDate(Date composeDate) {
-		this.composeDate = composeDate;
+	public void setComposeDate(String composeDate) {
+		try {
+			this.composeDate = dateFormat.parse(composeDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			throw new IllegalArgumentException(
+					"The variable 'composeDate' is invalid");
+		}
 	}
 
 	public String getContent() {

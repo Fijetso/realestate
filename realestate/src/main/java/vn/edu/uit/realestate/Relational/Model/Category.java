@@ -24,6 +24,11 @@ public class Category {
 		super();
 	}
 	
+	public Category(Long id) {
+		super();
+		this.id = id;
+	}
+
 	public Category(Long id, String name, List<News> news) {
 		super();
 		this.id = id;
