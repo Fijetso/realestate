@@ -1,3 +1,4 @@
+import { FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -15,12 +16,27 @@ export class AccountInfoComponent implements OnInit {
   username: any;
   provider: any;
   email: any;
-  constructor() {
+  public files: any[];
+  gender: string;
+  startDate: Date;
+  userInfo: any;
+
+  constructor(private fb: FormBuilder) {
      const info = JSON.parse(localStorage.getItem('loginInfo'));
-     this.avatar = info.photoUrl;
+     this.avatar = info ? info.photoUrl : '../../../../../assets/images/login.png';
      this.username = info.name;
      this.provider = info.provider;
      this.email = info.email;
+     this.gender = 'true' ;
+     this.startDate = new Date(1997, 10, 19);
+     this.userInfo = this.fb.group({
+      username: [ info.name, Validators.required],
+      dob: [ this.startDate, Validators.required],
+      email: [info.email, Validators.required],
+      gender: ['true'],
+      job: ['Software Enginier'],
+      phone: ['0975922740']
+     });
   }
   ngOnInit() {
   }
@@ -49,5 +65,18 @@ export class AccountInfoComponent implements OnInit {
   }
 
   onChangePassword() {
+  }
+
+  onFileChanged($event) {
+    this.files = $event.target.files;
+    const reader = new FileReader();
+    reader.readAsDataURL(this.files[0]);
+    reader.onload = (event) => {
+      this.avatar = reader.result;
+    };
+  }
+
+  onSubmitUserInfo() {
+    console.info(this.userInfo.value);
   }
 }

@@ -78,7 +78,7 @@ const routes: Routes = [
   },
   {
     path: 'tai-khoan',
-    loadChildren: () => import("./core/ui/account/account.module").then(acc => acc.AccountModule)
+    loadChildren: () => import('./core/ui/account/account.module').then(acc => acc.AccountModule)
   },
   {
     path: '**',

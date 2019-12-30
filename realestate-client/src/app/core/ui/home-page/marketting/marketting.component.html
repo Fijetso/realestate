@@ -19,8 +19,8 @@
     </mat-button-toggle-group>
     <div class="example-selected-value">Đã chọn: {{ reKindGroup.value }}</div>
     <form class="searchForm">
-        <mat-form-field class="example-full-width">
-          <input type="text" placeholder="Nhập để tìm kiếm" aria-label="Assignee" matInput [matAutocomplete]="auto" >
+        <mat-form-field>
+          <input type="text" placeholder="Nhập để tìm kiếm" matInput [matAutocomplete]="auto" >
           <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let state of states | filter: stateNameKey" [value]="state.nameWithType">
               {{state.nameWithType}}

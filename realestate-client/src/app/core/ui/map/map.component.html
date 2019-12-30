@@ -2,51 +2,7 @@
     <div class="left-content col-md-7 col-sm" *ngIf="!isFullMap">
         <div class=" p-2">
             <div class="search-section row">
-                <mat-form-field>
-                    <mat-label>Mục đích</mat-label>
-                    <mat-select [(value)]="purpose">
-                        <mat-option value="option1">Mua</mat-option>
-                        <mat-option value="option2">Thuê</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-chip-list aria-label="Điều kiện tìm kiếm">
-                    <mat-chip>Tp Hồ Chí Minh</mat-chip>
-                    <mat-chip>Nhà riêng</mat-chip>
-                  </mat-chip-list>
-                <form class="example-form">
-                    <mat-form-field class="">
-                        <input matInput placeholder="Nhập từ khoá cần tìm kiếm" value="">
-                    </mat-form-field>
-                    <button mat-raised-button>Tìm kiếm</button>
-                </form>
-            </div>
-            <div class="filter-section">
-                <mat-form-field>
-                    <mat-label>Loại bất động sản</mat-label>
-                    <mat-select [(value)]="reKind">
-                        <mat-option value="option1">Chung cư</mat-option>
-                        <mat-option value="option2">Căn hộ</mat-option>
-                        <mat-option value="option3">Đất nền</mat-option>
-                        <mat-option value="option3">Đất nền dự án</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Quận/ Huyện</mat-label>
-                    <mat-select [(value)]="district">
-                        <mat-option value="option1">Tân Bình</mat-option>
-                        <mat-option value="option2">Thủ Đức</mat-option>
-                        <mat-option value="option3">Quận Nhất</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Phường / Xã</mat-label>
-                    <mat-select [(value)]="ward">
-                        <mat-option value="option1">Linh Trung</mat-option>
-                        <mat-option value="option2">Linh Xuân</mat-option>
-                        <mat-option value="option3">Linh Tây</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <button mat-raised-button>Thêm tiêu chí</button>
+               
             </div>
             <div class="sortby-section row">
                 <div class="sort-left col-md-6 col-sm">
@@ -54,22 +10,7 @@
                     <div class="result-count">Có 1024 nhà riêng bán tại quận Tân Bình</div>
                 </div>
                 <div class="sort-right col-md-6 col-sm">
-                    <mat-form-field>
-                        <mat-label>Sắp xếp theo</mat-label>
-                        <mat-select [(value)]="orderBy">
-                            <mat-option value="option1">Mới nhất</mat-option>
-                            <mat-option value="option1">Giá tăng dần</mat-option>
-                            <mat-option value="option2">Giá giảm dần</mat-option>
-                            <mat-option value="option3">Diện tích từ nhỏ đến lớn</mat-option>
-                            <mat-option value="option3">Diện tích từ lớn đến nhỏ</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <button mat-icon-button aria-label="Bản đồ và bất động sản" routerLinkActive="mat-primary"  [routerLink]="['/tim-kiem']">
-                        <mat-icon>view_module</mat-icon>
-                    </button>
-                    <button mat-icon-button color="primary" aria-label="Bản đồ toàn màn hình" (click)="mapFullScreen($event)">
-                        <mat-icon>map</mat-icon>
-                    </button>
+                   
                 </div>
             </div>
             <div class="re-list ">
