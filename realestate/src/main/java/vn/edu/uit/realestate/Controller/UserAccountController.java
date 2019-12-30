@@ -115,11 +115,12 @@ public class UserAccountController {
 	}
 	
 	@RequestMapping(value = "/logout/success", method = RequestMethod.GET)
-	public ResponseEntity<?> successfulLogout() {
+	public ResponseEntity<String> successfulLogout() {
 		return new ResponseEntity<>("Log out successfully", HttpStatus.OK);
-	}	
+	}
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ResponseEntity<?> successfulLogout(@RequestParam("token")String token) {
+	public ResponseEntity<?> successfulLogin(@RequestParam("token")String token) {
 		return new ResponseEntity<>(token, HttpStatus.OK);
 	}
 }
