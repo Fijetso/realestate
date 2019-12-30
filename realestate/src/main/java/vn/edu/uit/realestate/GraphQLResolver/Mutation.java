@@ -5,10 +5,8 @@ import org.springframework.stereotype.Component;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 
-import vn.edu.uit.realestate.GraphQLResolver.Service.GraphQLTradeService;
-import vn.edu.uit.realestate.GraphQLResolver.Service.GraphQLUserService;
-import vn.edu.uit.realestate.Relational.Model.Trade;
-import vn.edu.uit.realestate.Relational.Model.User;
+import vn.edu.uit.realestate.GraphQLResolver.Service.*;
+import vn.edu.uit.realestate.Relational.Model.*;
 
 @Component
 public class Mutation implements GraphQLMutationResolver {
@@ -17,6 +15,10 @@ public class Mutation implements GraphQLMutationResolver {
 	GraphQLTradeService tradeService;
 	@Autowired
 	GraphQLUserService userService;
+	@Autowired
+	GraphQLNewsService newsService;
+	@Autowired
+	GraphQLCategoryService categoryService;
 
 	public String login(final String email, final String password) {
 		return userService.login(email, password);
@@ -56,5 +58,13 @@ public class Mutation implements GraphQLMutationResolver {
 		return tradeService.updateTradeGraphQL(tradeId, description, cost, realEstateKindId, tradeKindId, detailAddress,
 				wardId, length, width, square, direction, floors, legalDocuments, bathrooms, bedrooms, utilities,
 				others, longitude, latitude);
+	}
+	
+	public News saveNews(final Long newsId, final String title, final String content, final Long categoryId, final String composeDate) {
+		return newsService.saveNews(newsId, title, content, categoryId, composeDate);
+	}
+	
+	public Category saveCategory(final Long categoryId, final String name) {
+		return categoryService.saveCategory(categoryId, name);
 	}
 }
