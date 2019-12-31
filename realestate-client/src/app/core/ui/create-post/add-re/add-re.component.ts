@@ -2,10 +2,8 @@ import { UserKind } from './../../../../model/user-kind/user-kind';
 import { Address } from './../../../../model/address/address';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { RealEstate } from './../../../../model/real-estate/real-estate';
 import { ApiService } from 'src/app/services/api/api.service';
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
-import * as L from 'leaflet';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -29,6 +27,7 @@ export class AddReComponent implements OnInit, AfterViewInit {
   markerHtmlStyles2: any;
   userInfo: any;
   startDate: any;
+  realImageLink: any;
   constructor(private api: ApiService, private fb: FormBuilder, private router: Router) {
     this.api.getAllUserKind().subscribe(res => {
       // console.info(res);
@@ -39,34 +38,31 @@ export class AddReComponent implements OnInit, AfterViewInit {
       navigator.geolocation.getCurrentPosition(pos => {
         this.curLat = pos.coords.latitude;
         this.curLong = pos.coords.longitude;
-        this.madeMarkerFromLocation(this.curLat, this.curLong);
       });
     }
     this.userInfo = JSON.parse(localStorage.getItem('loginInfo'));
     this.startDate = new Date(1997, 10, 19);
   }
+
+  ngAfterViewInit(): void {
+  }
   ngOnInit() {
     this.height = 500;
     this.realEstate = this.fb.group({
-      id: 1,
       description: 'Mô tả',
       cost: 0,
-      dob: new Date(1997, 10, 19),
-      gender: 'true',
-      // user: this.fb.group({
-      //   id: this.userInfo.id,
-      //   name: this.userInfo.name,
-      //   email: this.userInfo.email,
-      //   phone: '0985922740',
-      //   password: '',
-      //   dob: new Date(1997, 10, 19),
-      //   gender: true,
-      //   userKind: this.fb.group({
-      //     id: 1
-      //   })
-      // }),
-      tradeKind: null,
-      realEstateKind: null,
+      user: this.fb.group({
+        id: this.userInfo.id,
+        name: this.userInfo.name,
+        email: this.userInfo.email,
+        phone: '0985922740',
+        password: '',
+        dob: new Date(1997, 10, 19),
+        gender: 'true',
+        userKind: '1'
+      }),
+      tradeKind: '1',
+      realEstateKind: '3',
       address: this.fb.group({
         id: 0,
         detail: 'detail',
@@ -75,79 +71,28 @@ export class AddReComponent implements OnInit, AfterViewInit {
         cityOrProvince: 0
       }),
       details: 'Mô tả chi tiết',
-      realImages: null,
+      realImages: 'Mô tả hình ảnh',
       bluePrints: null,
       booking: null
     });
   }
 
   // Init map
-  ngAfterViewInit(): void {
-    this.initMap();
-  }
 
-
-  initMap() {
-    const baseLayer = L.tileLayer(
-      'https://1.base.maps.api.here.com' +
-      '/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/256/png' +
-      '?app_id=' + environment.heremap.appId + '&app_code=' + environment.heremap.appCode +
-      '&lg=' + environment.heremap.defaultLang
-      , {
-        maxZoom: 19,
-        attribution: '&copy; <a href="http://developer.here.com">HERE</a>',
-        updateWhenZooming: true,
-      });
-
-    this.map = L.map('map', {
-      center:  this.curLat ? [this.curLat, this.curLong] : [10.823099, 106.629662],
-      zoom: 10,
-      drawControl: false,
-    });
-    baseLayer.addTo(this.map);
-  }
-  madeMarkerFromLocation(lat, lng) {
-    this.markerHtmlStyles2 = `
-                      background-color: #FD784F;
-                      width: 3rem;
-                      height: 3rem;
-                      display: block;
-                      position: relative;
-                      border-radius: 3rem 3rem 0;
-                      transform: rotate(45deg);
-                      text-align: center;
-                      padding:1.1rem;
-                      color:white;
-                      font-size:1.5em;
-                      border: 1px solid #FFFFFF`;
-
-    // tslint:disable-next-line: no-console
-    console.info(lat, lng);
-    const marker = L.marker([lat, lng],
-      {
-        icon: L.divIcon({
-          className: 'my-custom-pin',
-          iconAnchor: [0, 24],
-          popupAnchor: [0, -36],
-          html: `<div style="${this.markerHtmlStyles2}">${1}</div>`
-        })
-      })
-      .bindTooltip(lat + ',' + lng)
-      .bindPopup(lat + ',' + lng)
-      .addTo(this.map);
-  }
 
   // Save to create post
   save($event) {
-    // this.api.createRE(this.realEstate.value);
     if (this.selectedFile) {
-      this.api.uploadImages(this.selectedFile, 'Mô tả').subscribe(res => {
-        // console.info(res);
-        return res;
+     const desc = this.realEstate.get('realImages').value;
+     this.api.uploadImages(this.selectedFile, desc ).subscribe(res => {
+        this.realImageLink = res;
+        this.realEstate.get('realImages').setValue(this.realImageLink);
+        // tslint:disable-next-line: no-console
+        console.info(this.realImageLink);
+        // tslint:disable-next-line: no-console
+        console.info(this.realEstate.value);
       });
     }
-    // tslint:disable-next-line: no-console
-    console.info(this.realEstate.value);
   }
 
   onChangeGender($event) {
