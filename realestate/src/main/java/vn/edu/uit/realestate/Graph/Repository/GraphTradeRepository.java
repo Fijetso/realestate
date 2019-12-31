@@ -17,10 +17,8 @@ public interface GraphTradeRepository extends Neo4jRepository<GraphTrade, Long> 
 	@Query("MATCH (t:Trade) WHERE t.Id=?<id> SET t.tradeStatus = ?<tradeStatus>")
 	public GraphTrade updateTradeStatus(long id, String tradeStatus);
 
-	@Query("MATCH (u:User)--(t:Trade)--(a:Address) WHERE CASE WHEN NOT {job} IS NULL THEN "
-			+ "u.job = {job} ELSE TRUE END OR CASE WHEN NOT {wardId} IS NULL THEN a.ward={wardId} "
-			+ "ELSE TRUE END OR CASE WHEN NOT  {districtId} IS NULL THEN a.district = {districtId} "
-			+ "ELSE TRUE END RETURN * LIMIT 5")
-	public List<GraphTrade> recommendTrades(@Param("job") String job, @Param("wardId") long wardId,
-			@Param("districtId") long districtId);
+	@Query("MATCH (u:User)-[p]-(t:Trade)-[h]-(a:Address) WHERE CASE WHEN NOT {job} IS NULL THEN "
+			+ "u.job = {job} ELSE TRUE END OR CASE WHEN NOT  {districtId} IS NULL THEN a.district = {districtId}"
+			+ " ELSE TRUE END WITH t LIMIT 5 OPTIONAL MATCH (t)-[W]-(w) RETURN *")
+	public List<GraphTrade> recommendTrades(@Param("job") String job, @Param("districtId") List<Long> districtId);
 }
