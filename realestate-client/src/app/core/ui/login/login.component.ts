@@ -50,9 +50,9 @@ export class LoginComponent implements OnInit {
       this.socialUser = user;
       // tslint:disable-next-line: no-console
       console.info(this.socialUser);
-      this.loggedIn =  (user != null);
+      this.isLogedIn = this.loggedIn =  (user != null);
       if (this.loggedIn) {
-        this.toastr.success(this.socialUser.name, 'Login successed with ' + this.socialUser.provider)
+        localStorage.setItem('loginInfo', JSON.stringify(user));
       }
     });
   }
@@ -124,15 +124,25 @@ export class LoginComponent implements OnInit {
     //     console.error(error);
     //   }
     // );
-    this.myAuthService
-      .logOut()
-      .then(res => {
+    this.authService.signOut().then(
+      res => {
+        this.toastr.success('Logout successed', 'Logout');
         localStorage.clear();
         this.cookie.deleteAll();
-      })
-      .catch(err => {
-        console.error(err);
-      });
+      }
+    )
+    .catch(error => {
+      this.toastr.error('Logout failed. ' + error, 'Logout');
+    });
+    // this.myAuthService
+    //   .logOut()
+    //   .then(res => {
+    //     localStorage.clear();
+    //     this.cookie.deleteAll();
+    //   })
+    //   .catch(err => {
+    //     console.error(err);
+    //   });
   }
   onSubmitLogin(formValue) {
     this.onLogIn(formValue.email, formValue.password);

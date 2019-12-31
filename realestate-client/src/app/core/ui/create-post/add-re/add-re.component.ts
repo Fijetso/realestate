@@ -52,9 +52,9 @@ export class AddReComponent implements OnInit, AfterViewInit {
       description: 'Amet tempor duis eiusmod laboris laboris mollit exercitation dolor ut consequat.',
       cost: 900000000,
       user: this.fb.group({
-        id: this.userInfo.id,
-        name: this.userInfo.name,
-        email: this.userInfo.email,
+        id: this.userInfo ? this.userInfo.id : null,
+        name: this.userInfo ? this.userInfo.name : null,
+        email: this.userInfo ? this.userInfo.email : null,
         phone: '0985922740',
         password: '',
         dob: new Date(1997, 10, 19),
