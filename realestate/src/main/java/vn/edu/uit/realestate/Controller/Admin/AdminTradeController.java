@@ -14,22 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 import vn.edu.uit.realestate.Service.EntityService.TradeService;
 
 @RestController
-@RequestMapping("/secured/admin")
 public class AdminTradeController {
 	@Autowired
 	private TradeService tradeService;
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping("/trades/{id}")
+	@GetMapping("/trades/{id}/status/{status}")
 	public ResponseEntity<MappingJacksonValue> updateTradeStatus(@PathVariable long id,
-			@RequestParam(value = "status", required = true) String status) {
+			@PathVariable String status) {
 		MappingJacksonValue updatedTrade = tradeService.updateTradeStatus(id, status);
 		return new ResponseEntity<>(updatedTrade, HttpStatus.OK);
-	}
-
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping("/trades")
-	public ResponseEntity<String> demo() {
-		return new ResponseEntity<>("Hello from AdminTradeController", HttpStatus.OK);
 	}
 }

@@ -12,16 +12,11 @@ type Mutation {
 	register(name: String!, email: String!, password: String!, phone: String, birthdate: String, gender: Boolean, job: String,
 			userKindId: Long, imageLink: String): User
 	
-	saveTrade(description: String!,cost: Long!, userId: Long!, realEstateKindId: Long!, tradeKindId: Long!,
-			detailAddress: String!, wardId: Long!, length: Long, width: Long, square: Long, direction: String,
-			floors: String, legalDocuments: String, bathrooms: Int, bedrooms: Int, utilities: String, 
-			others: String, longitude: Float, latitude: Float): Trade
-			
-	updateTrade(tradeId: Long!, description: String, cost: Long, realEstateKindId: Long, tradeKindId: Long,	
+	saveTrade(tradeId: Long, description: String, cost: Long, userId: Long, realEstateKindId: Long, tradeKindId: Long,
 			detailAddress: String, wardId: Long, length: Long, width: Long, square: Long, direction: String,
 			floors: String, legalDocuments: String, bathrooms: Int, bedrooms: Int, utilities: String, 
 			others: String, longitude: Float, latitude: Float): Trade
-	
+			
 	updateUser(userId: Long!, name: String, email: String, phone: String, birthdate: String, gender: Boolean,
 			job: String, userKindId: Long): User
 			
