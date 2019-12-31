@@ -5,6 +5,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { CookieService } from 'ngx-cookie-service';
+import { AuthService } from 'angularx-social-login';
+import { SocialUser } from 'angularx-social-login';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -20,11 +22,14 @@ export class LoginComponent implements OnInit {
   user: User;
   login: any;
   allTrade: any[];
+  private socialUser: SocialUser;
+  private loggedIn: boolean;
   constructor(
     private myAuthService: AuthenticationService,
     private graphql: GraphQueryService,
     private cookie: CookieService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private authService: AuthService
   ) {
     this.userInfo = {
       email: '',
@@ -41,11 +46,16 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getUserLogin();
+    this.authService.authState.subscribe(user => {
+      this.socialUser = user;
+      // tslint:disable-next-line: no-console
+      console.info(this.socialUser);
+      this.loggedIn =  (user != null);
+      if (this.loggedIn) {
+        this.toastr.success(this.socialUser.name, 'Login successed with ' + this.socialUser.provider)
+      }
+    });
   }
-
-  getUserLogin() { }
-
   onLogIn(email: string, password: string) {
     this.login = this.graphql.login(email, password);
     const token = localStorage.getItem('login');
@@ -104,16 +114,16 @@ export class LoginComponent implements OnInit {
     localStorage.setItem('userInfor', null);
     this.data = null;
     this.isLogedIn = false;
-    this.graphql.logout().subscribe(
-      res => {
-        // tslint:disable-next-line: no-console
-        console.info('logout successful', res), localStorage.clear();
-        this.isLogedIn = false;
-      },
-      error => {
-        console.error(error);
-      }
-    );
+    // this.graphql.logout().subscribe(
+    //   res => {
+    //     // tslint:disable-next-line: no-console
+    //     console.info('logout successful', res), localStorage.clear();
+    //     this.isLogedIn = false;
+    //   },
+    //   error => {
+    //     console.error(error);
+    //   }
+    // );
     this.myAuthService
       .logOut()
       .then(res => {
