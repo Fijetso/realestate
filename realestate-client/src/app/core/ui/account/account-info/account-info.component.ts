@@ -25,15 +25,15 @@ export class AccountInfoComponent implements OnInit {
   constructor(private fb: FormBuilder) {
      const info = JSON.parse(localStorage.getItem('loginInfo'));
      this.avatar = info ? info.photoUrl : '../../../../../assets/images/login.png';
-     this.username = info.name;
-     this.provider = info.provider;
-     this.email = info.email;
+     this.username = info ? info.name : null;
+     this.provider = info ? info.provider : null;
+     this.email = info ? info.email : null;
      this.gender = 'true' ;
      this.startDate = new Date(1997, 10, 19);
      this.userInfo = this.fb.group({
-      username: [ info.name, Validators.required],
+      username: [info ? info.name : null , Validators.required],
       dob: [ this.startDate, Validators.required],
-      email: [info.email, Validators.required],
+      email: [info ? info.email : null, Validators.required],
       gender: ['true'],
       job: ['Software Enginier'],
       phone: ['0975922740']

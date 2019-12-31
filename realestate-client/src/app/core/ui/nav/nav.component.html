@@ -82,7 +82,10 @@
         <a routerLink="dang-tin" routerLinkActive="active" mat-flat-button class="btn btn-sale curve px-4 align-self-center" color="accent">Đăng BĐS</a>
         <a routerLinkActive="active" (click)="openInfoModal()">
             <span class="align-items-center ustify-content-center align-self-center icon icon-lg icon-account"
-            matTooltip="Thông tin tài khoản"><i class="icon far fa-user-circle text-white"></i></span>
+            matTooltip="Thông tin tài khoản">
+            <i class="icon far fa-user-circle text-white" *ngIf="!isLoggedIn"></i>
+            <img src="{{avatar}}" alt=""  onError="this.src='../../../../assets/images/login.png'" *ngIf="isLoggedIn" style="width:1.5em; border-radius:50%">
+          </span>
         </a>
         <a routerLink="tai-khoan" routerLinkActive="active">
           <span class="align-items-center ustify-content-center align-self-center icon icon-lg icon-favorite"

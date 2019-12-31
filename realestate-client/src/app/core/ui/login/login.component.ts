@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { GraphQueryService } from './../../../services/graphql/graph-query.service';
 import { User } from './../../../model/user/user';
@@ -29,7 +30,8 @@ export class LoginComponent implements OnInit {
     private graphql: GraphQueryService,
     private cookie: CookieService,
     private toastr: ToastrService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
     this.userInfo = {
       email: '',
@@ -65,9 +67,13 @@ export class LoginComponent implements OnInit {
       this.graphql.getLoginInfo(token).subscribe(res => {
         this.data = res;
         // console.info('login infor',res);
+        this.toastr.success('Đăng nhập bằng email thành công', 'Đăng nhập');
         this.isLogedIn = true;
       });
+    } else {
+      this.toastr.error('Đăng nhập bằng email thất bại', 'Đăng nhập');
     }
+
     this.allTrade = this.graphql.getAllTrade();
   }
   loginWithGoogle() {
