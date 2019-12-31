@@ -14,7 +14,7 @@ public interface GraphTradeRepository extends Neo4jRepository<GraphTrade, Long> 
 	@Query("MATCH (n) DETACH DELETE n")
 	public void deleteEntireNeo4j();
 
-	@Query("MATCH (t:Trade) WHERE t.Id=?<id> SET t.tradeStatus = ?<tradeStatus>")
+	@Query("MATCH (t:Trade) WHERE t.Id={id} SET t.tradeStatus = {tradeStatus} RETURN t")
 	public GraphTrade updateTradeStatus(long id, String tradeStatus);
 
 	@Query("MATCH (u:User)-[p]-(t:Trade)-[h]-(a:Address) WHERE CASE WHEN NOT {job} IS NULL THEN "

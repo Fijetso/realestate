@@ -127,8 +127,8 @@ public class TradeService implements IEntityService {
 		} catch (Exception e) {
 			throw new IllegalArgumentException("Cannot find any Trade Status like " + newStatus);
 		}
-		foundTrade = tradeRepository.save(foundTrade);
 		graphTradeRepository.save(modelMapper.convertTrade(foundTrade));
+		foundTrade = tradeRepository.save(foundTrade);
 		
 		SimpleBeanPropertyFilter userFilter = SimpleBeanPropertyFilter.serializeAllExcept("trades", "password");
 		SimpleBeanPropertyFilter filterExceptTrade = SimpleBeanPropertyFilter.serializeAllExcept("trade");
