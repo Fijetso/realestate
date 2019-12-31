@@ -1,26 +1,22 @@
 <app-marketting></app-marketting>
-<div class="create-post-wrapper container">
-  <h3>Real Estate List</h3>
-  <table border="1">
-    <tr>
-      <th>Id</th>
-      <th>Description</th>
-      <th>Cost</th>
-      <th>UserId</th>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Phone</th>
-      <th>Action</th>
-    </tr>
-    <tr *ngFor='let re of reList'>
-      <td>{{re.id}}</td>
-      <td>{{re.description}}</td>
-      <td>{{re.cost}}</td>
-      <td>{{re.user.id}}</td>
-      <td>{{re.user.name}}</td>
-      <td>{{re.user.email}}</td>
-      <td>{{re.user.phone}}</td>
-      <td><a (click)="delete(re.id)">Delete</a></td>
-    </tr>
-  </table>
+<div class="row">
+  <div class="col-md-6 col-sm">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Biên tập nội dung</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form (ngSubmit)="onSubmit()">
+          <ck-editor name="editor1" [(ngModel)]="editorValue" skin="moono-lisa" language="vi" [fullPage]="true">
+          </ck-editor>
+          <button mat-raised-button>Lưu</button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="col-md-6 col-sm">
+    <mat-card class="w-100 h-100">
+      <div [innerHTML]="editorValue"></div>
+    </mat-card>
+  </div>
 </div>
