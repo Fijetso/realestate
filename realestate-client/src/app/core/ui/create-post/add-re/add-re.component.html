@@ -56,9 +56,86 @@
                 <mat-option value="4">Loại 4</mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field>
-            <input matInput placeholder="Chi tiết" formControlName="details">
-        </mat-form-field>
+
+        <div formGroupName="address">
+            <mat-form-field>
+                <mat-label>Tỉnh</mat-label>
+                <mat-select [value]="cityOrProvince" formControlName="cityOrProvince" #cityOrProvince>
+                    <mat-option value='79'>Tp Hồ Chí Minh</mat-option>
+                    <mat-option value='80'>Loại 2</mat-option>
+                    <mat-option value='81'>Loại 3</mat-option>
+                    <mat-option value='82'>Loại 4</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Quận/ Huyện</mat-label>
+                <mat-select [value]="district" formControlName="district" #district>
+                    <mat-option value='774'>Quận 5</mat-option>
+                    <mat-option value='80'>Loại 2</mat-option>
+                    <mat-option value='81'>Loại 3</mat-option>
+                    <mat-option value='82'>Loại 4</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Xã/ Phường</mat-label>
+                <mat-select [value]="ward" formControlName="ward" #ward>
+                    <mat-option value='27313'>Loại 1</mat-option>
+                    <mat-option value='80'>Loại 2</mat-option>
+                    <mat-option value='81'>Loại 3</mat-option>
+                    <mat-option value='82'>Loại 4</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Chi tiết" formControlName="detail">
+            </mat-form-field>
+        </div>
+        <div formGroupName="details">
+
+            <mat-form-field>
+                <input matInput placeholder="Chiều dài" formControlName="length" type="number">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Chiều rộng" formControlName="width" type="number">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Diện tích" formControlName="square" type="number">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Hướng</mat-label>
+                <mat-select [value]="direction" formControlName="direction" #direction>
+                    <mat-option value="1">Đông</mat-option>
+                    <mat-option value="2">Tây</mat-option>
+                    <mat-option value="3">Nam</mat-option>
+                    <mat-option value="4">Bắc</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Số tầng" formControlName="floors">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Sổ hồng riêng" formControlName="legalDocuments">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Số phòng tắm" formControlName="bathrooms" type="number">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Số phòng ngủ" formControlName="bedrooms" type="number">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Tiện ích" formControlName="utilities">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Thông tin khác" formControlName="others">
+            </mat-form-field>
+        </div>
+        <div formGroupName="coordinate">
+            <mat-form-field>
+                <input matInput placeholder="Vĩ độ" formControlName="latitude" type="number">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Kinh độ" formControlName="longitude" type="number">
+            </mat-form-field>
+        </div>
         <div>
             <button mat-button (click)="onSelectFile()" type="button">Chọn ảnh</button>
             <mat-form-field>

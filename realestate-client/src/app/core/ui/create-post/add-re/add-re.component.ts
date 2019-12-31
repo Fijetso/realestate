@@ -49,8 +49,8 @@ export class AddReComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.height = 500;
     this.realEstate = this.fb.group({
-      description: 'Mô tả',
-      cost: 0,
+      description: 'Amet tempor duis eiusmod laboris laboris mollit exercitation dolor ut consequat.',
+      cost: 900000000,
       user: this.fb.group({
         id: this.userInfo.id,
         name: this.userInfo.name,
@@ -64,13 +64,30 @@ export class AddReComponent implements OnInit, AfterViewInit {
       tradeKind: '1',
       realEstateKind: '3',
       address: this.fb.group({
-        id: 0,
-        detail: 'detail',
-        ward: 0,
-        district: 0,
-        cityOrProvince: 0
+        id: 5,
+        detail: 'Số nhà 94',
+        ward: '27313',
+        district: '774',
+        cityOrProvince: '79'
       }),
-      details: 'Mô tả chi tiết',
+      details: this.fb.group({
+        id: 5,
+        length: 9,
+        width: 4,
+        square: 37,
+        direction: '2',
+        floors: '1 trệt + 1 lầu',
+        legalDocuments: 'Sổ hồng riêng',
+        bathrooms: 1,
+        bedrooms: 2,
+        utilities: 'Gần chợ, siêu thị, gần trường học',
+        others: 'Bán nhà riêng quận 5, đang cho thuê 6tr/tháng sổ hồng chính chủ'
+      }),
+      coordinate: this.fb.group({
+        id: 5,
+        longitude: 106.681,
+        latitude: 10.7614
+      }),
       realImages: 'Mô tả hình ảnh',
       bluePrints: null,
       booking: null
@@ -82,17 +99,18 @@ export class AddReComponent implements OnInit, AfterViewInit {
 
   // Save to create post
   save($event) {
-    if (this.selectedFile) {
-     const desc = this.realEstate.get('realImages').value;
-     this.api.uploadImages(this.selectedFile, desc ).subscribe(res => {
-        this.realImageLink = res;
-        this.realEstate.get('realImages').setValue(this.realImageLink);
-        // tslint:disable-next-line: no-console
-        console.info(this.realImageLink);
-        // tslint:disable-next-line: no-console
-        console.info(this.realEstate.value);
-      });
-    }
+    // if (this.selectedFile) {
+    //   const desc = this.realEstate.get('realImages').value;
+    //   this.api.uploadImages(this.selectedFile, desc).subscribe(res => {
+    //     this.realImageLink = res;
+    //     this.realEstate.get('realImages').setValue(this.realImageLink);
+    //     // tslint:disable-next-line: no-console
+    //     console.info(this.realImageLink);
+    //     // tslint:disable-next-line: no-console
+    //     console.info(this.realEstate.value);
+    //   });
+    // }
+    console.info(this.realEstate.value);
   }
 
   onChangeGender($event) {
