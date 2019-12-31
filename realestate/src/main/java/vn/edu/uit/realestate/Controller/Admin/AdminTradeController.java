@@ -18,7 +18,7 @@ public class AdminTradeController {
 	@Autowired
 	private TradeService tradeService;
 
-	@GetMapping("/trades/{id}/updateTrade/{status}")
+	@GetMapping("/trades/{id}/status/{status}")
 	public ResponseEntity<MappingJacksonValue> updateTradeStatus(@PathVariable long id,
 			@PathVariable String status) {
 		MappingJacksonValue updatedTrade = tradeService.updateTradeStatus(id, status);
