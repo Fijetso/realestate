@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import vn.edu.uit.realestate.Relational.Model.Job;
 
 public interface JobRepository extends JpaRepository<Job, Long>{
-	Optional<Job> findByName(String name);
+	public Optional<Job> findByName(String name);
 }

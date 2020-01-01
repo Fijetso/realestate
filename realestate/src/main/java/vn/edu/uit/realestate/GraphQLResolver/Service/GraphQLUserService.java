@@ -210,7 +210,6 @@ public class GraphQLUserService {
 		return token;
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')")
 	public User updateUserGraphQL(final Long userId, final String name, final String email, final String phone,
 			final String birthdate, final Boolean gender, final String job, final Long userKindId) {
 		Optional<User> user = userRepository.findById(userId);

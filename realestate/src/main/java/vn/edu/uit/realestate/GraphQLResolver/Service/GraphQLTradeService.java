@@ -104,8 +104,8 @@ public class GraphQLTradeService {
 				address.setDistrict(ward.get().getDistrict().getId());
 				address.setCityOrProvince(ward.get().getDistrict().getProvince().getId());
 			}
+//			address = addressRepository.save(address);
 			trade.setAddress(address);
-			addressRepository.save(address);
 		}
 
 		if (length != null || width != null || square != null || direction != null || floors != null
@@ -131,19 +131,20 @@ public class GraphQLTradeService {
 				details.setUtilities(utilities);
 			if (others != null)
 				details.setOthers(others);
+//			details = detailsRepository.save(details);
 			trade.setDetails(details);
-			detailsRepository.save(details);
 		}
 
 		if (longitude != null && latitude != null) {
 			Coordinate coordinate = trade.getCoordinate() != null ? trade.getCoordinate() : new Coordinate();
 			coordinate.setLongitude(longitude != null ? longitude : coordinate.getLongitude());
 			coordinate.setLatitude(latitude != null ? latitude : coordinate.getLatitude());
+//			coordinate = coordinateRepository.save(coordinate);
 			trade.setCoordinate(coordinate);
-			coordinateRepository.save(coordinate);
 		}
+		trade = tradeRepository.save(trade);
 		graphTradeRepository.save(modelMapper.convertTrade(trade));
-		return tradeRepository.save(trade);
+		return trade;
 	}
 
 //	public Trade saveTradeGraphQL(final Long tradeId, final String description, final Long cost, final Long userId,
