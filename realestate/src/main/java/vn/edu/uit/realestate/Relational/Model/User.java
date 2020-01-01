@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -53,7 +54,7 @@ public class User {
 	@Past(message = "BirthDate must be in the past")
 	private Date birthdate;
 	private boolean gender;
-	@ManyToOne
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "jobId", referencedColumnName = "id")
 	private Job job;
 	private boolean active;
