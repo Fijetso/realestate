@@ -20,7 +20,7 @@ export class GraphQueryService {
 
   //  login by email password
   login = (emailInput, passwordInput): any => {
-    console.info(emailInput, passwordInput);
+    // console.info(emailInput, passwordInput);
     this.apollo.mutate<LoginMutationResponse>({
       mutation: LOGIN_MUTATION,
       variables: {
@@ -30,12 +30,12 @@ export class GraphQueryService {
     }).subscribe(response => {
       const data = response.data.login;
       if (data) {
-        console.log('SET-TOKEN', data);
+        // console.log('SET-TOKEN', data);
         localStorage.setItem('login', data);
         return response && data;
       }
     }, error => {
-      console.error('Login failed', error);
+      // console.error('Login failed', error);
       return error;
     });
   }
@@ -58,7 +58,7 @@ export class GraphQueryService {
     this.apollo.watchQuery<GetAllTradeResponse>({
       query: GET_ALL_TRADE_QUERY
     }).valueChanges.subscribe((response) => {
-      console.info(response && response.data);
+      // console.info(response && response.data);
       return response && response.data;
     }, error => {
       console.error('Get all trade grapql ' + error);
@@ -96,7 +96,7 @@ export class GraphQueryService {
         job
       }
     }).subscribe(res => {
-      console.info('Register', res.data);
+      // console.info('Register', res.data);
       return res && res.data;
     }, error => {
       // console.error(error)

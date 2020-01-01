@@ -101,6 +101,10 @@ const routes: Routes = [
     loadChildren: () => import('./core/ui/news-module/news-module.module').then(news => news.NewsModuleModule)
   },
   {
+    path: 'admin',
+    loadChildren: () => import('./core/ui/admin/admin.module').then(admin => admin.AdminModule)
+  },
+  {
     path: '**',
     component: PageNotFoundComponent,
     data: { title: 'Trang không tìm thấy' }
