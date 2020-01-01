@@ -110,6 +110,7 @@ export class AddReComponent implements OnInit, AfterViewInit {
     //     console.info(this.realEstate.value);
     //   });
     // }
+    // tslint:disable-next-line: no-console
     console.info(this.realEstate.value);
   }
 
