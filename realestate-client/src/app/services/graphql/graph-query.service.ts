@@ -15,7 +15,7 @@ export class GraphQueryService {
     this.apollo.create({
       link: this.httpLink.create({ uri: 'http://localhost:8081/graphql' }),
       cache: new InMemoryCache()
-    })
+    });
   }
 
   //  login by email password
@@ -28,16 +28,16 @@ export class GraphQueryService {
         password: passwordInput
       }
     }).subscribe(response => {
-      const data = response.data.login
+      const data = response.data.login;
       if (data) {
         console.log('SET-TOKEN', data);
-        localStorage.setItem("login", data);
+        localStorage.setItem('login', data);
         return response && data;
       }
-    },error => {
-      console.error('Login failed',error);
+    }, error => {
+      console.error('Login failed', error);
       return error;
-    })
+    });
   }
   // get infor login
   getLoginInfo(loginToken: any) {
@@ -45,7 +45,7 @@ export class GraphQueryService {
     const reqHearder = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + loginToken
+        Authorization: 'Bearer ' + loginToken
       }),
     };
     // console.info(reqHearder);
@@ -60,9 +60,9 @@ export class GraphQueryService {
     }).valueChanges.subscribe((response) => {
       console.info(response && response.data);
       return response && response.data;
-    },error => {
-      console.error('Get all trade grapql '+error)
-    })
+    }, error => {
+      console.error('Get all trade grapql ' + error);
+    });
   }
 
   // Update Trade
@@ -70,10 +70,10 @@ export class GraphQueryService {
     this.apollo.mutate<UpdateTradeResponse>({
       mutation: UPDATE_TRADE,
       variables: {
-        id: id,
-        cost: cost
+        id,
+        cost
       }
-    })
+    });
   }
 
   logout(): any {
@@ -85,22 +85,26 @@ export class GraphQueryService {
     return this.http.post<any>('http://localhost:8081/logout', reqHearder);
   }
 
-  register(name, email, password, phone, job): any{
+  register(name, email, password, phone, job): any {
     return this.apollo.mutate<RegisterMutationResponse>({
       mutation: REGISTER_MUTATION,
       variables: {
-        name: name,
-        email: email,
-        password: password,
-        phone: phone,
-        job: job
+        name,
+        email,
+        password,
+        phone,
+        job
       }
     }).subscribe(res => {
-      console.info("Register", res.data);
-      return res && res.data
+      console.info('Register', res.data);
+      return res && res.data;
     }, error => {
       // console.error(error)
       return error;
-    })
+    });
+  }
+
+  saveTrade() : any {
+    return this.apollo.mutate<SaveTradeMutationResponse>
   }
 }

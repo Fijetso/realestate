@@ -16,52 +16,81 @@ const routes: Routes = [
   {
     path: '',
     component: RealestateListComponent,
-    data: { title: 'Trang chủ' }
+    data: {
+      title: 'Trang chủ',
+      breadcrumb: 'Trang chủ'
+    }
   },
   {
     path: 'mua/:slug',
     component: RealEstateDetailComponent,
-    data: { title: 'Chi tiết bất động sản' }
+    data: {
+      title: 'Chi tiết bất động sản',
+      breadcrumb: 'Chi tiết bất động sản'
+    }
   },
   {
     path: 'tim-kiem',
     component: MapModuleComponent,
-    data: { title: 'Tìm kiếm chi tiết các bất dộng sản' }
+    data: {
+      title: 'Tìm kiếm chi tiết các bất dộng sản',
+      breadcrumb: 'Tìm kiếm chi tiết các bất dộng sản'
+    }
   },
   {
     path: 'dang-nhap',
     component: LoginComponent,
-    data: { title: 'Trang đăng nhập' }
+    data: {
+      title: 'Trang đăng nhập',
+      breadcrumb: 'Trang đăng nhập'
+    }
   },
   {
     path: 'yeu-thich',
     component: FavoriteComponent,
-    data: { title: 'Trang bất động sản yêu thích' }
+    data: {
+      title: 'Trang bất động sản yêu thích',
+      breadcrumb: 'Trang bất động sản yêu thích',
+    }
   },
   {
     path: 'nguoi-dung',
     component: UserComponent,
-    data: { title: 'Trang người dùng' }
+    data: {
+      title: 'Trang người dùng',
+      breadcrumb: 'Trang người dùng'
+    }
   },
   {
     path: 'tam',
     component: CreatePostComponent,
-    data: { title: 'Trang bài đăng' }
+    data: {
+      title: 'Trang bài đăng',
+      breadcrumb: 'Trang bài đăng'
+    }
   },
   {
     path: 'nguoi-dung/:id',
     component: UserDetailComponent,
-    data: { title: 'Chi tiết người dùng' }
+    data: {
+      title: 'Chi tiết người dùng',
+      breadcrumb: 'Chi tiết người dùng'
+    }
   },
   {
     path: 'dang-tin',
     component: AddReComponent,
-    data: { title: 'Tạo bài đăng bất động sản' }
+    data: {
+      title: 'Tạo bài đăng bất động sản',
+      breadcrumb: 'Tạo bài đăng bất động sản',
+    }
   },
   {
     path: 'lien-he',
     component: ContactComponent,
-    data: { title: 'Thông tin liên hệ' }
+    data: { title: 'Thông tin liên hệ',
+    breadcrumb: 'Thông tin liên hệ'
+  }
   },
   {
     path: 'tai-khoan',

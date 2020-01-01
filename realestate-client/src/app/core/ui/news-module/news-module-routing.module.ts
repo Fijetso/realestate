@@ -6,10 +6,10 @@ import { NewsDetailComponent } from './news-detail/news-detail.component';
 
 const routes: Routes = [
   {
-    path: '', component : NewsListComponent, data: { title: 'Tin tức bất động sản' }
+    path: '', component : NewsListComponent, data: { title: 'Tin tức bất động sản' , breadcrumb: 'Tin tức'}
   },
   {
-    path: 'chi-tiet/:slug', component: NewsDetailComponent, data: { title: 'Chi tiết bất động sản' }
+    path: 'chi-tiet/:slug', component: NewsDetailComponent, data: { title: 'Chi tiết bất động sản', breadcrumb: 'Chi tiết tin tức' }
   }
 ];
 
