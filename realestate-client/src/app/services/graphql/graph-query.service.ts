@@ -103,8 +103,4 @@ export class GraphQueryService {
       return error;
     });
   }
-
-  saveTrade() : any {
-    return this.apollo.mutate<SaveTradeMutationResponse>
-  }
 }
