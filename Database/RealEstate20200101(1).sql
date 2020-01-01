@@ -575,7 +575,7 @@ CREATE TABLE `trade` (
 
 LOCK TABLES `trade` WRITE;
 /*!40000 ALTER TABLE `trade` DISABLE KEYS */;
-INSERT INTO `trade` VALUES (1,40000000000,'Nhà mặt tiền quận 1 thuận tiện kinh doanh',2,1,1,3,1,1,NULL,1),(2,53000000000,'Nhà quận 1 rộng rãi thoáng mát',0,2,2,3,1,2,NULL,2),(3,3800000000,'Bán nhà hẻm xe hơi phường Hiệp Bình Phước, Quận Thủ Đức, hướng Tây',0,3,3,1,2,2,NULL,1),(4,5100000000,'Bán nhà hẻm xe hơi phường Hiệp Bình Phước, Quận Thủ Đức, hướng Tây',0,4,4,2,2,1,NULL,2),(5,3300000000,'Bán nhà riêng quận 5 đang cho thuê 6tr/tháng',0,5,5,3,2,2,NULL,1),(6,3700000000,'Bán nhà riêng quận 5',0,6,6,3,2,1,3,2);
+INSERT INTO `trade` VALUES (1,40000000000,'Nhà mặt tiền quận 1 thuận tiện kinh doanh',1,0,1,1,1,1,1,1),(2,53000000000,'Nhà quận 1 rộng rãi thoáng mát',1,0,2,2,2,2,1,2),(3,3800000000,'Bán nhà hẻm xe hơi phường Hiệp Bình Phước, Quận Thủ Đức, hướng Tây',1,0,3,3,3,2,2,1),(4,5100000000,'Bán nhà hẻm xe hơi phường Hiệp Bình Phước, Quận Thủ Đức, hướng Tây',1,0,4,4,4,1,2,2),(5,3300000000,'Bán nhà riêng quận 5 đang cho thuê 6tr/tháng',1,0,5,5,5,3,2,1),(6,3700000000,'Bán nhà riêng quận 5',1,0,6,6,6,3,1,2);
 /*!40000 ALTER TABLE `trade` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -727,4 +727,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-01-01 18:28:25
+-- Dump completed on 2020-01-01 21:56:43
