@@ -5,7 +5,7 @@ export const LOGIN_MUTATION = gql `mutation LoginMutation($email: String!, $pass
 }`;
 export interface LoginMutationResponse {
     login: string;
-} 
+}
 
 export const GET_ALL_TRADE_QUERY = gql `{trades(count:100){
     description,
@@ -34,7 +34,7 @@ export const GET_ALL_TRADE_QUERY = gql `{trades(count:100){
 }`;
 export interface GetAllTradeResponse {
     trades: any;
-} 
+}
 
 export const UPDATE_TRADE = gql `mutation UpdateTradeMutation($tradeId:Int!, $cost:Long!){
   updateTrade(tradeId:$tradeId, cost: $cost){
@@ -50,7 +50,7 @@ export const UPDATE_TRADE = gql `mutation UpdateTradeMutation($tradeId:Int!, $co
     }
   }
 }
-`
+`;
 export interface UpdateTradeResponse {
   updateTrade: any;
 }
@@ -63,7 +63,7 @@ export const REGISTER_MUTATION = gql `mutation register($name:String!,$email:Str
     job
   }
 }
-`
-export interface RegisterMutationResponse{
+`;
+export interface RegisterMutationResponse {
   register: any;
 }

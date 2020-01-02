@@ -2,6 +2,7 @@ import { GraphQueryService } from './../../../services/graphql/graph-query.servi
 import { RealEstate } from './../../../model/real-estate/real-estate';
 import { ApiService } from './../../../services/api/api.service';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 @Component({
   selector: 'app-create-post',
   templateUrl: './create-post.component.html',
@@ -10,8 +11,16 @@ import { Component, OnInit } from '@angular/core';
 export class CreatePostComponent implements OnInit {
   reList: RealEstate[];
   public editorValue = '';
-  constructor(private api: ApiService, private graphql: GraphQueryService) {
+  editNews: any;
+  startDate = new Date();
+  constructor(private api: ApiService, private graphql: GraphQueryService, private fb: FormBuilder) {
     // this.graphql.getAllTrade();
+    this.editNews = this.fb.group({
+      title: '',
+      composteDate: new Date(),
+      category: '1',
+      editorValue: 'Nội dung bài viết'
+    });
   }
 
   ngOnInit() {
@@ -26,6 +35,6 @@ export class CreatePostComponent implements OnInit {
   // }
 
   onSubmit() {
-    console.log(this.editorValue);
+    console.log(this.editNews.value);
   }
 }
