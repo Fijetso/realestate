@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,13 +19,13 @@ public class NewsController {
 	private NewsService newsService;
 
     @GetMapping("/news")
-    public ResponseEntity<List<News>> getNews() {
-    	List<News> newsList = (List<News>) newsService.findAll();
+    public ResponseEntity<MappingJacksonValue> getNews() {
+    	MappingJacksonValue newsList = newsService.findAll();
         return new ResponseEntity<>(newsList,HttpStatus.OK);
     }
     @GetMapping("/news/{id}")
-    public ResponseEntity<News> getNewsById(@PathVariable long id) {
-    	News foundNews = newsService.findById(id);
+    public ResponseEntity<MappingJacksonValue> getNewsById(@PathVariable long id) {
+    	MappingJacksonValue foundNews = newsService.findById(id);
         return new ResponseEntity<>(foundNews, HttpStatus.OK);
     }
     
@@ -33,8 +34,8 @@ public class NewsController {
     	newsService.deleteById(id);
     }
     
-    @GetMapping("category/{categoryId}/news")
-    public ResponseEntity<List<News>> findNewsByCategory(@PathVariable long categoryId){
+    @GetMapping("categories/{categoryId}/news")
+    public ResponseEntity<MappingJacksonValue> findNewsByCategory(@PathVariable long categoryId){
     	return new ResponseEntity<>(newsService.findByCategory(categoryId), HttpStatus.OK);
     }
 }

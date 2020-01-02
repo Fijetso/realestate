@@ -12,9 +12,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import vn.edu.uit.realestate.Common.Common;
 
 @Entity
+@JsonFilter("NewsFilter")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class News {
 	@Id
 	@GeneratedValue

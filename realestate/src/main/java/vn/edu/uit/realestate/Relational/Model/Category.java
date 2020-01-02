@@ -8,10 +8,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@JsonIgnoreProperties("news")
+@JsonFilter("CategoryFilter")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Category {
 	@Id
 	@GeneratedValue
