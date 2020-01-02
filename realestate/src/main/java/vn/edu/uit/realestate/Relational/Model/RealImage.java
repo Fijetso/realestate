@@ -19,16 +19,19 @@ public class RealImage {
 	private String imageLink;
 	private String description;
 	@ManyToOne
-	@JoinColumn(name="tradeId", referencedColumnName = "id")
+	@JoinColumn(name = "tradeId", referencedColumnName = "id")
 	private Trade trade;
 
 	public RealImage() {
 		super();
 	}
-	public RealImage(String imageLink) {
+
+	public RealImage(String imageLink, Trade trade) {
 		super();
 		this.imageLink = imageLink;
+		this.trade = trade;
 	}
+
 	public RealImage(Long id, String imageLink, String description, Trade trade) {
 		super();
 		this.id = id;
@@ -36,7 +39,7 @@ public class RealImage {
 		this.description = description;
 		this.trade = trade;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}

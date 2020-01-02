@@ -16,6 +16,14 @@ public class GraphRealImage {
 	public GraphRealImage() {
 		super();
 	}
+	
+	public GraphRealImage(long id, String imageLink, String description, GraphTrade trade) {
+		super();
+		this.id = id;
+		this.imageLink = imageLink;
+		this.description = description;
+		this.trade = trade;
+	}
 
 	public GraphRealImage(Long id, String imageLink, String description) {
 		super();

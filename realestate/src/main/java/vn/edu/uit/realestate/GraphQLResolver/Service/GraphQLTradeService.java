@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import vn.edu.uit.realestate.ExceptionHandler.CustomGraphQLException;
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.Graph.Model.GraphTrade;
+import vn.edu.uit.realestate.Graph.Repository.GraphBluePrintRepository;
+import vn.edu.uit.realestate.Graph.Repository.GraphRealImageRepository;
 import vn.edu.uit.realestate.Graph.Repository.GraphTradeRepository;
 import vn.edu.uit.realestate.Relational.Model.Address;
 import vn.edu.uit.realestate.Relational.Model.BluePrint;
@@ -24,10 +26,12 @@ import vn.edu.uit.realestate.Relational.Model.TradeKind;
 import vn.edu.uit.realestate.Relational.Model.User;
 import vn.edu.uit.realestate.Relational.Model.AddressTree.Ward;
 import vn.edu.uit.realestate.Relational.Repository.AddressRepository;
+import vn.edu.uit.realestate.Relational.Repository.BluePrintRepository;
 import vn.edu.uit.realestate.Relational.Repository.CategoryRepository;
 import vn.edu.uit.realestate.Relational.Repository.CoordinateRepository;
 import vn.edu.uit.realestate.Relational.Repository.DetailsRepository;
 import vn.edu.uit.realestate.Relational.Repository.RealEstateKindRepository;
+import vn.edu.uit.realestate.Relational.Repository.RealImageRepository;
 import vn.edu.uit.realestate.Relational.Repository.TradeKindRepository;
 import vn.edu.uit.realestate.Relational.Repository.TradeRepository;
 import vn.edu.uit.realestate.Relational.Repository.UserRepository;
@@ -54,6 +58,14 @@ public class GraphQLTradeService {
 	private WardRepository wardRepository;
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private RealImageRepository realImageRepository;
+	@Autowired
+	private BluePrintRepository bluePrintRepository;
+	@Autowired
+	private GraphRealImageRepository graphRealImageRepository;
+	@Autowired
+	private GraphBluePrintRepository graphBluePrintRepository;
 	@Autowired
 	ModelMapperService modelMapper;
 	public Trade saveTradeGraphQL(Long tradeId, String description, Long cost, Long userId, Long realEstateKindId,
@@ -146,22 +158,24 @@ public class GraphQLTradeService {
 //			coordinate = coordinateRepository.save(coordinate);
 			trade.setCoordinate(coordinate);
 		}
+		trade = tradeRepository.save(trade);
+		graphTradeRepository.save(modelMapper.convertTrade(trade));
 		if(realImages != null) {
 			List<RealImage> images = new ArrayList<>();
 			for(String element: realImages) {
-				images.add(new RealImage(element));
+				images.add(new RealImage(element, trade));
 			}
-			trade.setRealImages(images);
+			realImageRepository.saveAll(images);
+			graphRealImageRepository.saveAll(modelMapper.convertRealImages(images));
 		}
 		if(bluePrints != null) {
 			List<BluePrint> images = new ArrayList<>();
 			for(String element: bluePrints) {
-				images.add(new BluePrint(element));
+				images.add(new BluePrint(element, trade));
 			}
-			trade.setBluePrints(images);
+			bluePrintRepository.saveAll(images);
+			graphBluePrintRepository.saveAll(modelMapper.convertBluePrints(images));
 		}
-		trade = tradeRepository.save(trade);
-		graphTradeRepository.save(modelMapper.convertTrade(trade));
 		return trade;
 	}
 

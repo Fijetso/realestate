@@ -23,7 +23,13 @@ public class GraphBluePrint {
 		this.imageLink = imageLink;
 		this.description = description;
 	}
-
+	public GraphBluePrint(long id, String imageLink, String description, GraphTrade trade) {
+		super();
+		this.id = id;
+		this.imageLink = imageLink;
+		this.description = description;
+		this.trade = trade;
+	}
 	public long getId() {
 		return id;
 	}

@@ -29,7 +29,7 @@ public class Trade {
 	private Long cost;
 	private Long viewCount = (long) 0;
 	@Enumerated
-    @Column(columnDefinition = "smallint")
+	@Column(columnDefinition = "smallint")
 	private TradeStatus tradeStatus = TradeStatus.WAITING;
 	@ManyToOne
 	@JoinColumn(name = "userId", referencedColumnName = "id")
@@ -43,22 +43,22 @@ public class Trade {
 	@JoinColumn(name = "tradeKindId", referencedColumnName = "id")
 	private TradeKind tradeKind;
 
-	@OneToOne(cascade = { CascadeType.REMOVE, CascadeType.PERSIST })
+	@OneToOne(cascade = { CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "addressId", referencedColumnName = "id")
 	private Address address;
 
-	@OneToOne(cascade = { CascadeType.REMOVE, CascadeType.PERSIST })
+	@OneToOne(cascade = { CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "detailsId", referencedColumnName = "id")
 	private Details details;
 
-	@OneToOne(cascade = { CascadeType.REMOVE, CascadeType.PERSIST })
+	@OneToOne(cascade = { CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "coordinateId", referencedColumnName = "id")
 	private Coordinate coordinate;
 
-	@OneToMany(mappedBy = "trade", cascade = { CascadeType.REMOVE, CascadeType.PERSIST })
+	@OneToMany(mappedBy = "trade", cascade = { CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE })
 	private List<RealImage> realImages = new ArrayList<RealImage>();
 
-	@OneToMany(mappedBy = "trade", cascade = { CascadeType.REMOVE, CascadeType.PERSIST })
+	@OneToMany(mappedBy = "trade", cascade = { CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE })
 	private List<BluePrint> bluePrints = new ArrayList<BluePrint>();
 
 	@OneToMany(fetch = FetchType.LAZY)
