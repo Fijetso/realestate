@@ -2,7 +2,7 @@
   <mat-card class="real-estate-card-item md-card align-content-around" (click)="onSelect(dataItem.id)" [style.background]="'#edeff4'">
     <div class="img-hover-zoom">
         <!-- <img class="md-image card-img-top" [lazyLoad]="{{dataItem.realImages[0].imageLink}}" alt="picsum" [defaultImage]="defaultPic" [offset]=100> -->
-        <img *ngIf ="dataItem.realImages"class="card-img-top" src="{{dataItem.realImages[0].imageLink}}" alt="{{dataItem.realImages[0].description}}">
+        <img *ngIf ="dataItem.realImages" class="card-img-top" src="{{dataItem.realImages.length>0 ? dataItem.realImages[0].imageLink:''}}" alt="{{dataItem.realImages[0].description}}" onError="this.src='../../../../../assets/images/default.png'">
         <mat-icon class="icon icon-like"  matTooltip="Thêm vào danh sách yêu thích">favorite_border</mat-icon>
         <button class="btn-sm btn-checked" type="button" *ngIf="isAppraised">Đã thẩm định</button>
     </div>

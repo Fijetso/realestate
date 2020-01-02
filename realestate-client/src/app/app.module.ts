@@ -1,4 +1,5 @@
-import { environment } from './../environments/environment.prod';
+import { AccountModule } from './core/ui/account/account.module';
+import { environment } from './../environments/environment';
 import { GraphQueryService } from './services/graphql/graph-query.service';
 import { PopupService } from './services/map/popup.service';
 import { MarkerService } from './services/map/marker.service';
@@ -42,7 +43,7 @@ import {
   MatFormFieldModule,
   MatChipsModule
 } from '@angular/material';
-import { HttpClientModule, HttpClient,HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import 'hammerjs';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -55,8 +56,10 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ToastrModule } from 'ngx-toastr';
 import { ApolloModule } from 'apollo-angular';
 import { HttpLinkModule } from 'apollo-angular-link-http';
-import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
-import { GoogleLoginProvider, FacebookLoginProvider } from "angularx-social-login";
+import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
+import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {CKEditorModule} from 'ngx-ckeditor';
 
 import { RealEstateWrapperComponent } from './components/real-estate/real-estate-wrapper/real-estate-wrapper.component';
 import { AlertComponent } from './core/modal/alert/alert.component';
@@ -93,18 +96,15 @@ import { GetCityPipe } from './ultility/pipe/get-city.pipe';
 import { GetDistrictNameFromIdPipe } from './ultility/pipe/get-district-name-from-id.pipe';
 import { ThousandSuffixPipe } from './ultility/pipe/thousand-suffix.pipe';
 import { SearchPageComponent } from './core/ui/search-page/search-page.component';
-import { AccountManagementComponent } from './core/ui/account-management/account-management.component';
-import {HereMapsModule } from 'ng2-heremaps';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { PopupRendererComponent } from './core/ui/map/popup-renderer/popup-renderer.component';
 import { AddReComponent } from './core/ui/create-post/add-re/add-re.component';
 import { UpdateReComponent } from './core/ui/create-post/update-re/update-re.component';
 import { DeleteReComponent } from './core/ui/create-post/delete-re/delete-re.component';
-import { NewsComponent } from './core/ui/news/news.component';
 import { ContactComponent } from './core/ui/contact/contact.component';
-import { NewsDetailComponent } from './core/ui/news-detail/news-detail.component';
+import { CookieService } from 'ngx-cookie-service';
+import { NewsModuleModule } from './core/ui/news-module/news-module.module';
 
-let config = new AuthServiceConfig([
+const config = new AuthServiceConfig([
   {
     id: GoogleLoginProvider.PROVIDER_ID,
     provider: new GoogleLoginProvider(environment.soicialProvider.google.clientId)
@@ -114,7 +114,7 @@ let config = new AuthServiceConfig([
     provider: new FacebookLoginProvider(environment.soicialProvider.facebook.appId)
   }
 ]);
- 
+
 export function provideConfig() {
   return config;
 }
@@ -160,16 +160,13 @@ export function provideConfig() {
     GetDistrictNameFromIdPipe,
     ThousandSuffixPipe,
     SearchPageComponent,
-    AccountManagementComponent,
     MapModuleComponent,
     MapComponent,
     PopupRendererComponent,
     AddReComponent,
     UpdateReComponent,
     DeleteReComponent,
-    NewsComponent,
-    ContactComponent,
-    NewsDetailComponent,
+    ContactComponent
   ],
   imports: [
     OwlModule,
@@ -212,18 +209,15 @@ export function provideConfig() {
     AngularFireAuthModule,
     Ng2SearchPipeModule,
     ToastrModule.forRoot(),
-    HereMapsModule.forRoot({
-      apiKey: 'KLtdq3MAUJruxhiJ2GyAFQ',
-      appId: 'dmdRFi5x5pT0zuy09gle',
-      apiVersion: '3.0',
-      libraries: ['core', 'service','ui','mapevents']
-    }),
-    LeafletModule.forRoot(),
     HttpClientModule,
     ApolloModule,
     HttpLinkModule,
     MatChipsModule,
-    SocialLoginModule
+    SocialLoginModule,
+    AccountModule,
+    NgbModule,
+    NewsModuleModule,
+    CKEditorModule
   ],
   providers: [
     AuthenticationService,
@@ -240,10 +234,11 @@ export function provideConfig() {
     {
       provide: AuthServiceConfig,
       useFactory: provideConfig
-    }
+    },
+    CookieService
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],
   entryComponents: [AlertComponent]
 })
-export class AppModule {}
+export class AppModule { }

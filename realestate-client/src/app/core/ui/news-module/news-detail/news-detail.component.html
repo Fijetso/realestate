@@ -1,0 +1,19 @@
+<div class="news-detail">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-sm">
+                <div *ngFor="let news of newsData">
+                    <div class="newsItem">
+                        <div class="category">{{news.category.name.toUpperCase()}}</div>
+                        <h5 class="newsTitle">{{news.title}}</h5>
+                        <p class="newsComposeDate">{{news.composeDate}}</p>
+                        <div [innerHTML]="news.content"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm">
+
+            </div>
+        </div>
+    </div>
+</div>

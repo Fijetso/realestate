@@ -1,9 +1,13 @@
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { GraphQueryService } from './../../../services/graphql/graph-query.service';
 import { User } from './../../../model/user/user';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
-// import translate from 'google-translate-api';
+import { CookieService } from 'ngx-cookie-service';
+import { AuthService } from 'angularx-social-login';
+import { SocialUser } from 'angularx-social-login';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -19,7 +23,16 @@ export class LoginComponent implements OnInit {
   user: User;
   login: any;
   allTrade: any[];
-  constructor(private myAuthService: AuthenticationService, private graphql: GraphQueryService) {
+  private socialUser: SocialUser;
+  private loggedIn: boolean;
+  constructor(
+    private myAuthService: AuthenticationService,
+    private graphql: GraphQueryService,
+    private cookie: CookieService,
+    private toastr: ToastrService,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.userInfo = {
       email: '',
       password: ''
@@ -27,65 +40,115 @@ export class LoginComponent implements OnInit {
 
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required, Validators.minLength(6)])
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6)
+      ])
     });
   }
 
   ngOnInit(): void {
-    this.getUserLogin();
+    this.authService.authState.subscribe(user => {
+      this.socialUser = user;
+      // tslint:disable-next-line: no-console
+      console.info(this.socialUser);
+      this.isLogedIn = this.loggedIn =  (user != null);
+      if (this.loggedIn) {
+        localStorage.setItem('loginInfo', JSON.stringify(user));
+      }
+    });
   }
-
-  getUserLogin() {
-
-  }
-
   onLogIn(email: string, password: string) {
     this.login = this.graphql.login(email, password);
     const token = localStorage.getItem('login');
     if (token) {
-      console.info('getToken', token)
-      this.graphql.getLoginInfo(token).subscribe((res) => {
+      // tslint:disable-next-line: no-console
+      console.info('getToken', token);
+      this.graphql.getLoginInfo(token).subscribe(res => {
         this.data = res;
         // console.info('login infor',res);
+        this.toastr.success('Đăng nhập bằng email thành công', 'Đăng nhập');
         this.isLogedIn = true;
-      })
+      });
+    } else {
+      this.toastr.error('Đăng nhập bằng email thất bại', 'Đăng nhập');
     }
+
     this.allTrade = this.graphql.getAllTrade();
   }
   loginWithGoogle() {
-    this.myAuthService.loginWithGoogle().then(
-      user => {
-        console.info(user);
-        localStorage.setItem('loginGoogle',JSON.stringify(user));
-        this.isLogedIn = true;
-      }
-    )
+    this.myAuthService.loginWithGoogle().then(user => {
+      // tslint:disable-next-line: no-console
+      console.info(user);
+      localStorage.setItem('loginInfo', JSON.stringify(user));
+      this.isLogedIn = true;
+      const loginGoogle = localStorage.getItem('loginInfo');
+      this.cookie.set('loginInfo', loginGoogle);
+      // tslint:disable-next-line: no-console
+      const cookieResult = this.cookie.get('loginInfo');
+      // tslint:disable-next-line: no-console
+      console.info(JSON.parse(cookieResult)); this.toastr.success(
+          JSON.parse(cookieResult).name,
+          'Đăng nhập thành công'
+        );
+    }).catch(reason => {
+      this.toastr.error(reason, 'Đăng nhập thất bại');
+    });
   }
 
   loginWithFacebook() {
-    this.myAuthService.loginWithGoogle().then(
-      user => {
-        console.info(user);
-      }
-    )
+    this.myAuthService.loginWithFacebook().then(user => {
+      // tslint:disable-next-line: no-console
+      console.info(user);
+      localStorage.setItem('loginInfo', JSON.stringify(user));
+      this.isLogedIn = true;
+      const loginFacebook = localStorage.getItem('loginInfo');
+      this.cookie.set('loginInfo', loginFacebook);
+      // tslint:disable-next-line: no-console
+      const cookieResult = this.cookie.get('loginInfo');
+      // tslint:disable-next-line: no-console
+      console.info(JSON.parse(cookieResult));
+      this.toastr.success(
+        JSON.parse(cookieResult).name,
+        'Đăng nhập bằng Facebook thành công'
+      );
+    }).catch(reason => {
+      this.toastr.error(reason, 'Đăng nhập thất bại');
+    });
   }
   onLogOut() {
     localStorage.setItem('userInfor', null);
     this.data = null;
     this.isLogedIn = false;
-    this.graphql.logout().subscribe(res => {
-      console.info('logout successful', res),
-      localStorage.clear();
-      this.isLogedIn = false;
-    }, error => { console.error(error) });
-    this.myAuthService.logOut().then(
+    // this.graphql.logout().subscribe(
+    //   res => {
+    //     // tslint:disable-next-line: no-console
+    //     console.info('logout successful', res), localStorage.clear();
+    //     this.isLogedIn = false;
+    //   },
+    //   error => {
+    //     console.error(error);
+    //   }
+    // );
+    this.authService.signOut().then(
       res => {
-        console.info(res);
+        this.toastr.success('Logout successed', 'Logout');
         localStorage.clear();
+        this.cookie.deleteAll();
       }
-    ).catch(err => {
-      console.error(err);
-    })
+    )
+    .catch(error => {
+      this.toastr.error('Logout failed. ' + error, 'Logout');
+    });
+    // this.myAuthService
+    //   .logOut()
+    //   .then(res => {
+    //     localStorage.clear();
+    //     this.cookie.deleteAll();
+    //   })
+    //   .catch(err => {
+    //     console.error(err);
+    //   });
   }
   onSubmitLogin(formValue) {
     this.onLogIn(formValue.email, formValue.password);

@@ -26,6 +26,7 @@ public class News {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "categoryId", referencedColumnName = "id")
 	private Category category;
+	private String author;
 
 	private transient SimpleDateFormat dateFormat = new SimpleDateFormat(Common.Constains.LOCAL_DATE_FORMAT);
 	
@@ -96,5 +97,12 @@ public class News {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-	
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
 }

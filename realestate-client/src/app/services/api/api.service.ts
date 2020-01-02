@@ -1,4 +1,4 @@
-import { environment } from './../../../environments/environment.prod';
+import { environment } from './../../../environments/environment';
 import { UserKind } from './../../model/user-kind/user-kind';
 import { User } from './../../model/user/user';
 import { RealEstate } from './../../model/real-estate/real-estate';
@@ -19,7 +19,7 @@ export class ApiService {
   data = null;
   private reList: RealEstate[];
 
-  
+
   constructor(private http: HttpClient) {
     this.reList = [
       { id: 1,
@@ -30,7 +30,7 @@ export class ApiService {
           email: 'danhthanh418@gmail.com',
           phone: '0975922740',
           password: '1234',
-          birthdate:new Date('19/11/1995'),
+          birthdate: new Date('19/11/1995'),
           gender: true,
           userKind: null
         },
@@ -50,7 +50,7 @@ export class ApiService {
           email: 'danhthanh448@gmail.com',
           phone: '',
           password: '12345678',
-          birthdate:new Date('19/11/1995'),
+          birthdate: new Date('19/11/1995'),
           gender: true,
           userKind: null
         },
@@ -70,7 +70,7 @@ export class ApiService {
           email: 'minh.minh.123@gmail.com',
           phone: '0973476552',
           password: '6789',
-          birthdate:new Date('19/03/1997'),
+          birthdate: new Date('19/03/1997'),
           gender: true,
           userKind: null
         },
@@ -82,11 +82,11 @@ export class ApiService {
         bluePrints: null,
         booking: null
       }
-    ]
+    ];
   }
 
   getAllUserKind() {
-    return this.http.get(this.baseURL+'userkinds');
+    return this.http.get(this.baseURL + 'userkinds');
   }
   // User service
   createUser(user: User) {
@@ -163,54 +163,55 @@ export class ApiService {
   getTradeFromDistrict(districtId: any) {
     return this.http.get<any>(this.baseURL + 'districts/' + districtId + '/trades');
   }
-  setData(data: any){
+  setData(data: any) {
     this.data = data;
   }
   getData() {
     return this.data;
   }
 
-  getAllRE(){
+  getAllRE() {
     return this.reList;
   }
 
-  getIndexRE(id: any){
-    for(let i =0; i < this.reList.length; i++){
-      if(this.reList[i].id==id){
+  getIndexRE(id: any) {
+    for (let i = 0; i < this.reList.length; i++) {
+      // tslint:disable-next-line: triple-equals
+      if (this.reList[i].id == id) {
         return i;
       }
     }
     return -1;
   }
 
-  getREById(id:any){
-    let index = this.getIndexRE(id);
+  getREById(id: any) {
+    const index = this.getIndexRE(id);
     return this.reList[index];
   }
 
-  createRE(re: RealEstate){
+  createRE(re: RealEstate) {
     this.reList.push(re);
   }
 
-  deleteRE(id:any){
-    let index = this.getIndexRE(id);
-    const result = this.reList.splice(index,1);
+  deleteRE(id: any) {
+    const index = this.getIndexRE(id);
+    const result = this.reList.splice(index, 1);
+    // tslint:disable-next-line: no-console
     console.info(result);
   }
 
-  updateRE(re: RealEstate){
-    let index = this.getIndexRE(re.id);
+  updateRE(re: RealEstate) {
+    const index = this.getIndexRE(re.id);
     this.reList[index].id = re.id;
     this.reList[index].description = re.description;
     this.reList[index].cost = re.cost;
     this.reList[index].user = re.user;
   }
 
-  uploadImages(selectedFile, desc){
-    let uploadData = new FormData();
-    uploadData.append('file', selectedFile, selectedFile?selectedFile.name:null);
+  uploadImages(selectedFile, desc) {
+    const uploadData = new FormData();
+    uploadData.append('file', selectedFile, selectedFile ? selectedFile.name : null);
     uploadData.append('desc', desc);
-    console.log(uploadData);
-    return this.http.post<any>(this.baseURL+'image/upload',uploadData);
+    return this.http.post<any>(this.baseURL + 'image/upload', uploadData);
   }
 }

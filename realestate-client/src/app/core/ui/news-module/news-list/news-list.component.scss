@@ -1,0 +1,17 @@
+.line{
+    width: 100%;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border-bottom: 3px solid orange;
+}
+.social-title{
+   width: 100%; 
+   text-align: center; 
+   border-bottom: 1px solid #000; 
+   line-height: 0.1em;
+   margin: 1rem 0 2rem; 
+   span { 
+    background:#fff; 
+    padding:0 1rem; 
+}
+}

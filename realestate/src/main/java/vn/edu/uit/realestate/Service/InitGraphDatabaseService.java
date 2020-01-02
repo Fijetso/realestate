@@ -137,26 +137,28 @@ public class InitGraphDatabaseService {
 	private GraphDetails convertDetails(Details details) {
 		GraphDetails graphDetails = new GraphDetails();
 		if (details != null) {
+			if(details.getId() != null) {
 			graphDetails.setId(details.getId());
-			if (graphDetails.getLength() != 0) {
+			}
+			if (details.getLength() != 0) {
 				graphDetails.setLength(details.getLength());
 			}
-			if (graphDetails.getWidth() != 0) {
+			if (details.getWidth() != 0) {
 				graphDetails.setWidth(details.getWidth());
 			}
-			if (graphDetails.getSquare() != 0) {
+			if (details.getSquare() != 0) {
 				graphDetails.setSquare(details.getSquare());
 			}
-			if (graphDetails.getDirection() != null) {
+			if (details.getDirection() != null) {
 				graphDetails.setDirection(details.getDirection());
 			}
-			if (graphDetails.getFloors() != null) {
+			if (details.getFloors() != null) {
 				graphDetails.setFloors(details.getFloors());
 			}
-			if (graphDetails.getLegalDocuments() != null) {
+			if (details.getLegalDocuments() != null) {
 				graphDetails.setLegalDocuments(details.getLegalDocuments());
 			}
-			if (graphDetails.getOthers() != null) {
+			if (details.getOthers() != null) {
 				graphDetails.setOthers(details.getOthers());
 			}
 			graphDetails.setBathrooms(details.getBathrooms());
@@ -185,7 +187,6 @@ public class InitGraphDatabaseService {
 			graphTrade.setDetails(convertDetails(element.getDetails()));
 			Coordinate coordinate = element.getCoordinate();
 			if (coordinate != null) {
-
 				GraphCoordinate graphCoordinate = new GraphCoordinate(coordinate.getId(), coordinate.getLongitude(),
 						coordinate.getLatitude());
 				graphTrade.setCoordinate(graphCoordinate);

@@ -1,0 +1,96 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 col-sm">
+            <div class="text-center">
+                <input class="w-100" type="file" class="hidden avatar-chooser" id="avatar-chooser"
+                    (change)="onFileChanged($event)">
+                <img [src]="avatar" alt="avatar" class="avatar" class="tab-head" (click)="changeAvatar()"
+                    style="width: 5em; height: 5em;max-width : 100%; border-radius: 50%;">
+                <p class="username">{{username}}</p> <span>Tài khoản {{provider}}</span>
+                <p>{{email}}</p>
+            </div>
+            <hr>
+            <div class="tab-head" (click)="onShowAccount()">Thông tin cá nhân</div>
+            <hr>
+            <div class="tab-head" (click)="onShowPostList()">Tin đăng của tôi</div>
+            <hr>
+            <div class="tab-head" (click)="onShowCollection()">Bộ sưu tập</div>
+            <hr>
+            <div>Đổi mật khẩu</div>
+            <hr>
+            <div>Đăng xuất</div>
+        </div>
+        <div class="col-md-9 col-sm">
+            <div *ngIf="isShowAccount">
+                <div>Thông tin cá nhân</div>
+                <form [formGroup]="userInfo" (ngSubmit)="onSubmitUserInfo()">
+                    <mat-form-field>
+                        <input matInput placeholder="Họ và tên" formControlName="username" #username>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput [matDatepicker]="dob" placeholder="Ngày sinh" formControlName="dob">
+                        <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+                        <mat-datepicker #dob [startAt]="startDate"></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Giới tính</mat-label>
+                        <mat-select [value]="gender" formControlName="gender" #gender>
+                            <mat-option value="true">Nam</mat-option>
+                            <mat-option value="false">Nữ</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Email" type="email" formControlName="email" #email>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Nghề nghiệp" formControlName="job" #job>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Số điện thoại" formControlName="phone" #phone>
+                    </mat-form-field>
+                    <button mat-raised-button type="submit">Lưu lại</button>
+                </form>
+            </div>
+
+            <div *ngIf="isShowPost">
+                <h4>Tin đăng của tôi ({{listPost.length}})</h4>
+                <hr>
+                <div class="list-post">
+                    <div class="post-item" *ngFor="let item of listPost; let i=index">
+                        <div class="news-card p-2">
+                            <div class="row">
+                                <div class="col-md-3 col-sm">
+                                    <img [src]="item.imgPath" alt="" style="max-width: 100%;">
+                                </div>
+                                <div class="col-md-9 col-sm">
+                                    <h5 class="title">{{item.title}}</h5>
+                                    <div class="content">{{item.content}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="isShowCollections">
+                <h4>Bộ sưu tập</h4>
+                <hr>
+                <div class="collections">
+                    <div class="post-item" *ngFor="let collection of collections; let i=index">
+                        <div class="news-card p-2">
+                            <div class="row">
+                                <div class="col-md-3 col-sm">
+                                    <img [src]="collection.imgPath" alt="" style="max-width: 100%;">
+                                </div>
+                                <div class="col-md-9 col-sm">
+                                    <h5 class="title">{{collection.title}}</h5>
+                                    <div class="content">{{collection.content}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

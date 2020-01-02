@@ -1,5 +1,4 @@
-import { environment } from './../../../environments/environment.prod';
-import { Observable } from 'rxjs';
+import { environment } from './../../../environments/environment';
 import { RegisterMutationResponse, REGISTER_MUTATION } from './../../model/generated/graphql';
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
@@ -16,12 +15,12 @@ export class GraphQueryService {
     this.apollo.create({
       link: this.httpLink.create({ uri: 'http://localhost:8081/graphql' }),
       cache: new InMemoryCache()
-    })
+    });
   }
 
   //  login by email password
   login = (emailInput, passwordInput): any => {
-    console.info(emailInput, passwordInput);
+    // console.info(emailInput, passwordInput);
     this.apollo.mutate<LoginMutationResponse>({
       mutation: LOGIN_MUTATION,
       variables: {
@@ -29,16 +28,16 @@ export class GraphQueryService {
         password: passwordInput
       }
     }).subscribe(response => {
-      const data = response.data.login
+      const data = response.data.login;
       if (data) {
-        console.log('SET-TOKEN', data);
-        localStorage.setItem("login", data);
+        // console.log('SET-TOKEN', data);
+        localStorage.setItem('login', data);
         return response && data;
       }
-    },error => {
-      console.error('Login failed',error);
+    }, error => {
+      // console.error('Login failed', error);
       return error;
-    })
+    });
   }
   // get infor login
   getLoginInfo(loginToken: any) {
@@ -46,7 +45,7 @@ export class GraphQueryService {
     const reqHearder = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + loginToken
+        Authorization: 'Bearer ' + loginToken
       }),
     };
     // console.info(reqHearder);
@@ -59,11 +58,11 @@ export class GraphQueryService {
     this.apollo.watchQuery<GetAllTradeResponse>({
       query: GET_ALL_TRADE_QUERY
     }).valueChanges.subscribe((response) => {
-      console.info(response && response.data);
+      // console.info(response && response.data);
       return response && response.data;
-    },error => {
-      console.error('Get all trade grapql '+error)
-    })
+    }, error => {
+      console.error('Get all trade grapql ' + error);
+    });
   }
 
   // Update Trade
@@ -71,10 +70,10 @@ export class GraphQueryService {
     this.apollo.mutate<UpdateTradeResponse>({
       mutation: UPDATE_TRADE,
       variables: {
-        id: id,
-        cost: cost
+        id,
+        cost
       }
-    })
+    });
   }
 
   logout(): any {
@@ -86,22 +85,22 @@ export class GraphQueryService {
     return this.http.post<any>('http://localhost:8081/logout', reqHearder);
   }
 
-  register(name, email, password, phone, job): any{
+  register(name, email, password, phone, job): any {
     return this.apollo.mutate<RegisterMutationResponse>({
       mutation: REGISTER_MUTATION,
       variables: {
-        name: name,
-        email: email,
-        password: password,
-        phone: phone,
-        job: job
+        name,
+        email,
+        password,
+        phone,
+        job
       }
     }).subscribe(res => {
-      console.info("Register", res.data);
-      return res && res.data
+      // console.info('Register', res.data);
+      return res && res.data;
     }, error => {
       // console.error(error)
       return error;
-    })
+    });
   }
 }
