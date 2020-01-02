@@ -6,8 +6,27 @@
         <mat-card-title>Biên tập nội dung</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <form (ngSubmit)="onSubmit()">
-          <ck-editor name="editor1" [(ngModel)]="editorValue" skin="moono-lisa" language="vi" [fullPage]="true">
+        <form (ngSubmit)="onSubmit()" [formGroup]="editNews">
+          <mat-form-field>
+            <input matInput placeholder="Tiêu đề bài viết" formControlName="title">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput [matDatepicker]="composteDate" placeholder="Ngày viết bài" formControlName="composteDate">
+            <mat-datepicker-toggle matSuffix [for]="composteDate"></mat-datepicker-toggle>
+            <mat-datepicker #composteDate [startAt]="startDate"></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Phân loại</mat-label>
+            <mat-select [value]="category" formControlName="category" #category>
+              <mat-option value='1'>360 Bất động sản</mat-option>
+              <mat-option value='2'>Phong thuỷ</mat-option>
+              <mat-option value='3'>Kiến trúc</mat-option>
+              <mat-option value='4'>aaaaa</mat-option>
+              <mat-option value='5'>bbbbb</mat-option>
+              <mat-option value='6'>cccccc</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <ck-editor name="editor1" formControlName="editorValue" skin="moono-lisa" language="vi" [fullPage]="true">
           </ck-editor>
           <button mat-raised-button>Lưu</button>
         </form>
@@ -16,7 +35,7 @@
   </div>
   <div class="col-md-6 col-sm">
     <mat-card class="w-100 h-100">
-      <div [innerHTML]="editorValue"></div>
+      <div [innerHTML]="editNews.get('editorValue').value"></div>
     </mat-card>
   </div>
 </div>
