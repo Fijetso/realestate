@@ -50,6 +50,7 @@ type User {
 	gender: Boolean,
 	active: Boolean,
 	trades: [Trade],
+	roles: [Role],
 	job: String
 }
 	
@@ -106,6 +107,11 @@ type News {
 }
 
 type Category {
+	id: ID!,
+	name: String
+}
+
+type Role {
 	id: ID!,
 	name: String
 }
