@@ -43,10 +43,11 @@ public class News {
 		this.category = category;
 	}
 	
-	public News(String title, String content) {
+	public News(String title, String content, String author) {
 		super();
 		this.title = title;
 		this.content = content;
+		this.author = author;
 	}
 	
 	public Long getId() {

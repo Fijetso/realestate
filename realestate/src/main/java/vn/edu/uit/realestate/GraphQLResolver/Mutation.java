@@ -51,8 +51,8 @@ public class Mutation implements GraphQLMutationResolver {
 				others, longitude, latitude);
 	}
 
-	public News saveNews(final Long newsId, final String title, final String content, final Long categoryId, final String composeDate) {
-		return newsService.saveNews(newsId, title, content, categoryId, composeDate);
+	public News saveNews(final Long newsId, final String title, final String content, final Long categoryId, final String composeDate, final String author) {
+		return newsService.saveNews(newsId, title, content, categoryId, composeDate, author);
 	}
 	
 	public Category saveCategory(final Long categoryId, final String name) {
