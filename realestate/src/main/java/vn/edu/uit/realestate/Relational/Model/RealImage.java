@@ -1,5 +1,6 @@
 package vn.edu.uit.realestate.Relational.Model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -24,7 +25,10 @@ public class RealImage {
 	public RealImage() {
 		super();
 	}
-	
+	public RealImage(String imageLink) {
+		super();
+		this.imageLink = imageLink;
+	}
 	public RealImage(Long id, String imageLink, String description, Trade trade) {
 		super();
 		this.id = id;

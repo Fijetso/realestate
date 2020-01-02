@@ -1,5 +1,7 @@
 package vn.edu.uit.realestate.GraphQLResolver.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -10,11 +12,13 @@ import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.Graph.Model.GraphTrade;
 import vn.edu.uit.realestate.Graph.Repository.GraphTradeRepository;
 import vn.edu.uit.realestate.Relational.Model.Address;
+import vn.edu.uit.realestate.Relational.Model.BluePrint;
 import vn.edu.uit.realestate.Relational.Model.Category;
 import vn.edu.uit.realestate.Relational.Model.Coordinate;
 import vn.edu.uit.realestate.Relational.Model.Details;
 import vn.edu.uit.realestate.Relational.Model.News;
 import vn.edu.uit.realestate.Relational.Model.RealEstateKind;
+import vn.edu.uit.realestate.Relational.Model.RealImage;
 import vn.edu.uit.realestate.Relational.Model.Trade;
 import vn.edu.uit.realestate.Relational.Model.TradeKind;
 import vn.edu.uit.realestate.Relational.Model.User;
@@ -55,7 +59,7 @@ public class GraphQLTradeService {
 	public Trade saveTradeGraphQL(Long tradeId, String description, Long cost, Long userId, Long realEstateKindId,
 			Long tradeKindId, String detailAddress, Long wardId, Long length, Long width, Long square, String direction,
 			String floors, String legalDocuments, int bathrooms, int bedrooms, String utilities, String others,
-			Float longitude, Float latitude) {
+			Float longitude, Float latitude, ArrayList<String> realImages, ArrayList<String> bluePrints) {
 		Trade trade = new Trade();
 		if (tradeId != null) {
 			Optional<Trade> foundTrade = tradeRepository.findById(tradeId);
@@ -141,6 +145,20 @@ public class GraphQLTradeService {
 			coordinate.setLatitude(latitude != null ? latitude : coordinate.getLatitude());
 //			coordinate = coordinateRepository.save(coordinate);
 			trade.setCoordinate(coordinate);
+		}
+		if(realImages != null) {
+			List<RealImage> images = new ArrayList<>();
+			for(String element: realImages) {
+				images.add(new RealImage(element));
+			}
+			trade.setRealImages(images);
+		}
+		if(bluePrints != null) {
+			List<BluePrint> images = new ArrayList<>();
+			for(String element: bluePrints) {
+				images.add(new BluePrint(element));
+			}
+			trade.setBluePrints(images);
 		}
 		trade = tradeRepository.save(trade);
 		graphTradeRepository.save(modelMapper.convertTrade(trade));

@@ -55,10 +55,10 @@ public class Trade {
 	@JoinColumn(name = "coordinateId", referencedColumnName = "id")
 	private Coordinate coordinate;
 
-	@OneToMany(mappedBy = "trade")
+	@OneToMany(mappedBy = "trade", cascade = { CascadeType.REMOVE, CascadeType.PERSIST })
 	private List<RealImage> realImages = new ArrayList<RealImage>();
 
-	@OneToMany(mappedBy = "trade")
+	@OneToMany(mappedBy = "trade", cascade = { CascadeType.REMOVE, CascadeType.PERSIST })
 	private List<BluePrint> bluePrints = new ArrayList<BluePrint>();
 
 	@OneToMany(fetch = FetchType.LAZY)

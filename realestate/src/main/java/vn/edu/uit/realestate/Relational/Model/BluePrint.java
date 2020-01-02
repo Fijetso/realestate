@@ -1,5 +1,6 @@
 package vn.edu.uit.realestate.Relational.Model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -22,6 +23,11 @@ public class BluePrint {
 
 	public BluePrint() {
 		super();
+	}
+	
+	public BluePrint(String imageLink) {
+		super();
+		this.imageLink = imageLink;
 	}
 	
 	public BluePrint(Long id, String imageLink, String description, Trade trade) {
