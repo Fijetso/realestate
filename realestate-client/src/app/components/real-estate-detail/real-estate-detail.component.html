@@ -3,8 +3,8 @@
   <div class="re-detail-path-header">
     <span class="area-left">Trang chủ / {{provinceName}} / {{disctrictName}}</span>
     <div class="area-right">
-      <span class="mr-2">Mã tin đăng : {{tradeData.id}}</span>
-      <span class="mx-2"><i class="fas fa-eye icon"></i> {{tradeData.viewCount}}</span>
+      <span class="mr-2">Mã tin đăng : {{tradeData?.id}}</span>
+      <span class="mx-2"><i class="fas fa-eye icon"></i> {{tradeData?.viewCount}}</span>
       <span class="mx-2">
         Chia sẻ : <i class="fab fa-facebook icon icon-facebook"></i>
       </span>
@@ -20,17 +20,17 @@
           <owl-carousel
             #owlElement
             [options]="carouselOptions"
-            [items]="tradeData.realImages"
+            [items]="tradeData?.realImages"
             [carouselClasses]="['owl-theme', 'sliding']"
             class="carousel-container"
-            *ngIf="tradeData.realImages"
+            *ngIf="tradeData?.realImages"
           >
             <div
               class="carousel-wrapper"
-              *ngFor="let image of tradeData.realImages; let i = index"
+              *ngFor="let image of tradeData?.realImages; let i = index"
             >
               <div class="slide-item">
-                <img class="w-100 h-100" src="{{image.imageLink}}" alt="{{image.description}}"/>
+                <img class="w-100 h-100" src="{{image?.imageLink}}" alt="{{image?.description}}"/>
                 <div class="slide-caption">
                   <span>{{image.description}}</span>
                 </div>
@@ -49,14 +49,14 @@
           <div class="re-desc block-info block-info-1">
             <div class="re-desc-line-1 div-title-rose">
               <h3 class="re-inline" itemprop="name">
-                  {{ tradeData.description}}
+                  {{ tradeData?.description}}
               </h3>
             </div>
             <div class="re-desc-line-2">
               <div class=" re-inline re-price">
                 <div class="div-price price-left">
-                  <span class="span-price">{{ tradeData.cost | thousandSuffix : 1}}</span>
-                  <span class="span-acreage">{{ tradeData.details.square}}m<sup>2 </sup></span>
+                  <span class="span-price">{{ tradeData?.cost | thousandSuffix : 1}}</span>
+                  <span class="span-acreage">{{ tradeData?.details?.square}}m<sup>2 </sup></span>
                   <p class="re-inline p-district">
                     <a
                       href="/mua/ban-nha-rieng-quan-12?src=detail_district_list"
@@ -70,24 +70,24 @@
                 </div>
               </div>
               <div class="re-customer price-right">
-                  {{ tradeData.viewCount}} lượt đi xem
+                  {{ tradeData?.viewCount}} lượt đi xem
               </div>
             </div>
           </div>
           <div class="re-detail block-info block-info-2 11">
             <h4>Thông tin bất động sản:</h4>
             <ul class="re-elements">
-              <li class="elements length">Chiều dài: {{ tradeData.details.length}}m</li>
-              <li class="elements width">Chiều rộng: {{ tradeData.details.width}}m</li>
-              <li class="elements direction">Hướng: {{ tradeData.details.direction}}</li>
-              <li class="elements alley">{{ tradeData.details.utilities}}</li>
+              <li class="elements length">Chiều dài: {{ tradeData?.details?.length}}m</li>
+              <li class="elements width">Chiều rộng: {{ tradeData?.details?.width}}m</li>
+              <li class="elements direction">Hướng: {{ tradeData?.details?.direction}}</li>
+              <li class="elements alley">{{ tradeData?.details?.utilities}}</li>
               <li class="elements floors">
-                Tầng: {{ tradeData.details.floors}}
+                Tầng: {{ tradeData?.details?.floors}}
               </li>
-              <li class="elements ledger">Giấy tờ: {{ tradeData.details.legalDocuments}}</li>
-              <li class="elements bedroom">Phòng ngủ: {{ tradeData.details.bedrooms}}</li>
-              <li class="elements bathroom">Phòng tắm: {{ tradeData.details.bedrooms}}</li>
-              <li class="elements others">{{ tradeData.details.others}}</li>
+              <li class="elements ledger">Giấy tờ: {{ tradeData?.details?.legalDocuments}}</li>
+              <li class="elements bedroom">Phòng ngủ: {{ tradeData?.details?.bedrooms}}</li>
+              <li class="elements bathroom">Phòng tắm: {{ tradeData?.details?.bedrooms}}</li>
+              <li class="elements others">{{ tradeData?.details?.others}}</li>
             </ul>
           </div>
           <div class="re-detail block-info block-info-5 11">
@@ -99,17 +99,17 @@
           <div class="re-read-more lock-info block-info-6">
             <h4 class="h2-title">Chi tiết tin đăng:</h4>
             <ul class="re-elements">
-                <li class="elements length">Chiều dài: {{ tradeData.details.length}}m</li>
-                <li class="elements width">Chiều rộng: {{ tradeData.details.width}}m</li>
-                <li class="elements direction">Hướng: {{ tradeData.details.direction}}</li>
-                <li class="elements alley">{{ tradeData.details.utilities}}</li>
+                <li class="elements length">Chiều dài: {{ tradeData?.details?.length}}m</li>
+                <li class="elements width">Chiều rộng: {{ tradeData?.details?.width}}m</li>
+                <li class="elements direction">Hướng: {{ tradeData?.details?.direction}}</li>
+                <li class="elements alley">{{ tradeData?.details?.utilities}}</li>
                 <li class="elements floors">
-                  Tầng: {{ tradeData.details.floors}}
+                  Tầng: {{ tradeData?.details?.floors}}
                 </li>
-                <li class="elements ledger">Giấy tờ: {{ tradeData.details.legalDocuments}}</li>
-                <li class="elements bedroom">Phòng ngủ: {{ tradeData.details.bedrooms}}</li>
-                <li class="elements bathroom">Phòng tắm: {{ tradeData.details.bedrooms}}</li>
-                <li class="elements others">{{ tradeData.details.others}}</li>
+                <li class="elements ledger">Giấy tờ: {{ tradeData?.details?.legalDocuments}}</li>
+                <li class="elements bedroom">Phòng ngủ: {{ tradeData?.details?.bedrooms}}</li>
+                <li class="elements bathroom">Phòng tắm: {{ tradeData?.details?.bedrooms}}</li>
+                <li class="elements others">{{ tradeData?.details?.others}}</li>
               </ul>
           </div>
         </mat-card>
