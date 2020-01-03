@@ -4,9 +4,10 @@ import { environment } from './../../../../environments/environment';
 import { MarkerService } from './../../../services/map/marker.service';
 import { Component, AfterViewInit, Input, OnInit } from '@angular/core';
 import * as L from 'leaflet';
-import 'leaflet-draw'
+import 'leaflet-draw';
 import { FormBuilder } from '@angular/forms';
 // import * as LD from 'leaflet-draw'
+import { ActivatedRoute } from '@angular/router';
 
 const iconRetinaUrl = 'assets/map/marker-icon-2x.png';
 const iconUrl = 'assets/map/marker-icon.png';
@@ -47,7 +48,7 @@ L.Marker.prototype.options.icon = iconDefault;
 })
 export class MapComponent implements AfterViewInit, OnInit {
   protected map;
-  protected geoData
+  protected geoData;
   protected curLat;
   protected curLong;
   protected geoJsonData;
@@ -57,17 +58,22 @@ export class MapComponent implements AfterViewInit, OnInit {
   protected reList;
   protected createPost: any;
   public isFullMap;
-  constructor(private markerService: MarkerService, private http: HttpClient, private api: ApiService, private fb: FormBuilder) {
+  constructor(private markerService: MarkerService,
+              private http: HttpClient,
+              private api: ApiService,
+              private fb: FormBuilder,
+              private route: ActivatedRoute) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(pos => {
         // console.info(pos.coords);
         this.curLat = pos.coords.latitude;
         this.curLong = pos.coords.longitude;
-      })
+      });
     }
   }
   ngOnInit(): void {
-    this.api.getAllRealEstate().subscribe(res => {
+    const quan = this.route.snapshot.queryParamMap.get('quan');
+    this.api.getTradeFromDistrict(quan).subscribe(res => {
       this.reList = res;
       console.info(res);
     });
@@ -120,8 +126,8 @@ export class MapComponent implements AfterViewInit, OnInit {
       layers: [mapTile, streetTile]
     });
     const baseMaps = {
-      "Default": mapTile,
-      "Streets": streetTile,
+      'Default': mapTile,
+      'Streets': streetTile,
     };
     L.control.layers(baseMaps).addTo(this.map);
     // mapTile.addTo(this.map);
@@ -145,15 +151,15 @@ export class MapComponent implements AfterViewInit, OnInit {
       L.geoJSON(this.geoData, {
         style: this.setStyle(),
         onEachFeature: (feature, featureLayer) => {
-          featureLayer.bindTooltip(feature.properties.Ten)
+          featureLayer.bindTooltip(feature.properties.Ten);
           featureLayer.on({
             mouseover: this.highLightStyle,
             mouseout: this.normalStyle,
-            click: () => { console.info(feature)}
-          })
+            click: () => { console.info(feature);}
+          });
         }
       }).addTo(this.map);
-      const myCustomColour = 'turquoise'
+      const myCustomColour = 'turquoise';
       // console.info(pointArrays);
       const markerHtmlStyles = `
       background-color: ${myCustomColour};
@@ -191,7 +197,7 @@ export class MapComponent implements AfterViewInit, OnInit {
           // console.info(realCoordinate);
           const marker = L.marker(realCoordinate, {
             icon: L.divIcon({
-              className: "my-custom-pin",
+              className: 'my-custom-pin',
               iconAnchor: [0, 24],
               popupAnchor: [0, -36],
               html: `<div style="${markerHtmlStyles}">${+districtName.replace(cap, '') > 0 ? 'Q. ' + districtName.replace(cap, '') : districtName.replace(cap, '')}</div>`
@@ -203,7 +209,7 @@ export class MapComponent implements AfterViewInit, OnInit {
     }, error => console.error(error));
   }
   highLightStyle($event) {
-    let layer = $event.target;
+    const layer = $event.target;
     layer.setStyle(
       {
         fillColor: 'blue',
@@ -219,7 +225,7 @@ export class MapComponent implements AfterViewInit, OnInit {
   }
 
   normalStyle($event) {
-    let layer = $event.target;
+    const layer = $event.target;
     layer.setStyle(
       {
         fillColor: 'white',
@@ -239,7 +245,7 @@ export class MapComponent implements AfterViewInit, OnInit {
       color: 'blue',
       fillOpacity: 0.2,
       weight: 0.2
-    }
+    };
   }
   addControls(map: L.Map) {
     const drawnItems = L.featureGroup();

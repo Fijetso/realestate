@@ -9,6 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./realestate-item.component.scss']
 })
 export class RealestateItemComponent implements OnInit {
+  realImages: any;
   constructor(private router: Router, private api: ApiService, private route: ActivatedRoute) {
     this.getDistrictFromProvinceId();
   }
