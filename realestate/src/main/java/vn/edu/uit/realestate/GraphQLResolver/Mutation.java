@@ -1,5 +1,8 @@
 package vn.edu.uit.realestate.GraphQLResolver;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -45,14 +48,14 @@ public class Mutation implements GraphQLMutationResolver {
 			final Long tradeKindId, final String detailAddress, final Long wardId, final Long length, final Long width,
 			final Long square, final String direction, final String floors, final String legalDocuments,
 			final int bathrooms, final int bedrooms, final String utilities, final String others, final Float longitude,
-			final Float latitude) {
+			final Float latitude, final ArrayList<String> realImages, final ArrayList<String> bluePrints) {
 		return tradeService.saveTradeGraphQL(tradeId, description, cost, userId, realEstateKindId, tradeKindId, detailAddress,
 				wardId, length, width, square, direction, floors, legalDocuments, bathrooms, bedrooms, utilities,
-				others, longitude, latitude);
+				others, longitude, latitude, realImages, bluePrints);
 	}
 
-	public News saveNews(final Long newsId, final String title, final String content, final Long categoryId, final String composeDate) {
-		return newsService.saveNews(newsId, title, content, categoryId, composeDate);
+	public News saveNews(final Long newsId, final String title, final String content, final Long categoryId, final String composeDate, final String author) {
+		return newsService.saveNews(newsId, title, content, categoryId, composeDate, author);
 	}
 	
 	public Category saveCategory(final Long categoryId, final String name) {

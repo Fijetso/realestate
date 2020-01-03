@@ -16,6 +16,7 @@ import vn.edu.uit.realestate.Graph.Model.GraphTrade;
 import vn.edu.uit.realestate.Graph.Repository.GraphAddressRepository;
 import vn.edu.uit.realestate.Graph.Repository.GraphTradeRepository;
 import vn.edu.uit.realestate.Relational.Model.ModelMapper.SuggestModel;
+import vn.edu.uit.realestate.Service.EntityService.TradeService;
 
 @RestController
 public class RecommenderSystemController {
@@ -23,14 +24,22 @@ public class RecommenderSystemController {
 	private GraphAddressRepository graphAddressRepository;
 	@Autowired
 	private GraphTradeRepository graphTradeRepository;
+	@Autowired 
+	private TradeService tradeService;
 	@PostMapping("trades/recommend")
-    public ResponseEntity<List<GraphTrade>> findTradeByProvince(@RequestBody SuggestModel suggestModel) {
+    public ResponseEntity<List<GraphTrade>> recommendTradeByProvince(@RequestBody SuggestModel suggestModel) {
     	List<GraphTrade> foundTrade = graphTradeRepository.recommendTrades(suggestModel.getUserJob(), suggestModel.getDistrictIdList());
         return new ResponseEntity<>(foundTrade,HttpStatus.OK);
     }
-	@GetMapping("trades/suggest/{districtId}")
-    public ResponseEntity<List<GraphTrade>> findTradeByDistrict(@PathVariable long districtId) {
-    	List<GraphTrade> foundTrade = graphAddressRepository.findTradeByDistrictId(districtId);
+	@GetMapping("trades/recommend/fengshui")
+    public ResponseEntity<List<GraphTrade>> recommendTradeByUserAge(@RequestParam(value="birthdate") String birthdate, @RequestParam(value="isFemale") boolean isFemale) {
+    	List<GraphTrade> foundTrade = tradeService.recommendTradesByUserAge(birthdate, isFemale);
+        return new ResponseEntity<>(foundTrade,HttpStatus.OK);
+    }
+	
+	@GetMapping("trades/direction")
+    public ResponseEntity<List<GraphTrade>> demoRecommend(@RequestParam String direction) {
+    	List<GraphTrade> foundTrade = graphTradeRepository.recommendTradesByUserAge2(direction);
         return new ResponseEntity<>(foundTrade,HttpStatus.OK);
     }
 }

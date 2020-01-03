@@ -48,17 +48,17 @@ public class CategoryController {
     	}
         return new ResponseEntity<>(foundCategory.get(), HttpStatus.OK);
     }
-    @GetMapping("/categories/{categoryId}/news")
-    public ResponseEntity<List<News>> getNewsListByCategoryId(@PathVariable Long categoryId) {
-    	Optional<Category> foundCategory = categoryRepository.findById(categoryId);
-    	if (foundCategory.isPresent()==false) {
-    		throw new NotFoundException("Cannot find any Category with id="+categoryId);
-    	}
-    	List<News> newsList = foundCategory.get().getNews();
-    	if(newsList.isEmpty() == true)
-    		throw new NotFoundException("Cannot find any News with Category Id="+categoryId);
-        return new ResponseEntity<>(newsList, HttpStatus.OK);
-    }
+//    @GetMapping("/categories/{categoryId}/news")
+//    public ResponseEntity<List<News>> getNewsListByCategoryId(@PathVariable Long categoryId) {
+//    	Optional<Category> foundCategory = categoryRepository.findById(categoryId);
+//    	if (foundCategory.isPresent()==false) {
+//    		throw new NotFoundException("Cannot find any Category with id="+categoryId);
+//    	}
+//    	List<News> newsList = foundCategory.get().getNews();
+//    	if(newsList.isEmpty() == true)
+//    		throw new NotFoundException("Cannot find any News with Category Id="+categoryId);
+//        return new ResponseEntity<>(newsList, HttpStatus.OK);
+//    }
     @PostMapping("/categories")
     public ResponseEntity<Category> postCategory(@RequestBody Category category) {
     	categoryRepository.save(category);
