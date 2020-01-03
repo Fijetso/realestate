@@ -1,5 +1,5 @@
 import { environment } from './../../../environments/environment';
-import { RegisterMutationResponse, REGISTER_MUTATION } from './../../model/generated/graphql';
+import { RegisterMutationResponse, REGISTER_MUTATION, SAVENEWS_MUTATION, SaveNewsMutationResponse } from './../../model/generated/graphql';
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular-link-http';
@@ -101,6 +101,20 @@ export class GraphQueryService {
     }, error => {
       // console.error(error)
       return error;
+    });
+  }
+
+
+  saveNews(title, composeDate, content, author): any {
+    return this.apollo.mutate<SaveNewsMutationResponse>({
+      mutation: SAVENEWS_MUTATION,
+      variables: {
+        title,
+        composeDate,
+        content,
+        // category,
+        author
+      }
     });
   }
 }

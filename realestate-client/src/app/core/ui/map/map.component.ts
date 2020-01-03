@@ -332,4 +332,8 @@ export class MapComponent implements AfterViewInit, OnInit {
     const district = this.searchDetail.get('district').value;
     this.getAllWardFromDistrict(this.tinh, district);
   }
+
+  onSubmitSearch(){
+    console.info(this.searchDetail.value);
+  }
 }

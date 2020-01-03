@@ -1,6 +1,6 @@
 <div class="map-wrapper row">
     <div class="left-content col-md-7 col-sm" *ngIf="!isFullMap">
-        <form [formGroup]='searchDetail' class="">
+        <form [formGroup]='searchDetail' class="" (ngSubmit)="onSubmitSearch()">
             <div class="search-section row">
                 <mat-form-field>
                     <mat-select placeholder="Mục đích sử dụng" formControlName="purpose">
@@ -49,6 +49,7 @@
                     <app-realestate-item [dataItem]="item" class="col-md-6 col-sm"></app-realestate-item>
                 </div>
             </div>
+            <button mat-raised-button type="submit">Tìm kiếm</button>
         </form>
     </div>
     <div class="map-container col-md-5 col-sm" *ngIf="!isFullMap">

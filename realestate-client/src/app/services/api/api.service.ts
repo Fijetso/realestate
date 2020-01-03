@@ -214,4 +214,12 @@ export class ApiService {
     uploadData.append('desc', desc);
     return this.http.post<any>(this.baseURL + 'image/upload', uploadData);
   }
+
+  getNewsById(newsId: any) {
+    return this.http.get<any>(this.baseURL + 'news/' + newsId);
+  }
+
+  getAllNews() {
+    return this.http.get<any>(this.baseURL + 'news');
+  }
 }

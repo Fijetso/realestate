@@ -2,12 +2,12 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-sm">
-                <div *ngFor="let news of newsData">
+                <div>
                     <div class="newsItem">
-                        <div class="category">{{news.category.name.toUpperCase()}}</div>
-                        <h5 class="newsTitle">{{news.title}}</h5>
-                        <p class="newsComposeDate">{{news.composeDate}}</p>
-                        <div [innerHTML]="news.content"></div>
+                        <div class="category">{{newsData?.category?.name?.toUpperCase()}}</div>
+                        <h3 class="newsTitle">{{newsData?.title}}</h3>
+                        <p class="newsComposeDate font-italic">{{newsData?.composeDate}}</p>
+                        <div [innerHTML]="newsData?.content"></div>
                     </div>
                 </div>
             </div>

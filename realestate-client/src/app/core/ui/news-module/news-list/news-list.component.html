@@ -8,10 +8,21 @@
             <div class="row">
                 <div class="col-md-6 col-sm main-news" style="border: orange 1px solid">
                 </div>
-                <div class="col-md-6 col-sm list-news-container" style="height: 80vh; border: orangered 1px dashed">
-                    <div class="list-news">
-                        <div class="news-item" style="height: 5rem; border: lightseagreen 1px double"
-                            *ngFor="let item of numbers">{{item}}</div>
+                <div class="col-md-6 col-sm list-news-container">
+                    <div class="news-item" *ngFor="let item of newsList; let i=index">
+                        <div class="p-2 newsCard">
+                            <mat-card>
+                                <mat-card-content>
+                                <mat-card-title>{{item?.title}}</mat-card-title>
+                                <div class="font-italic">Ngày tạo: {{item?.composeDate}}</div>
+                                <div class="font-italic">Tác giả: {{item?.author}}</div>
+                                <div class="font-italic">Danh mục: {{item?.category?.name?item?.category?.name:'Chưa phân loại'}}</div>
+                                </mat-card-content>
+                                <mat-card-actions>
+                                   <button mat-raised-button  (click)="goToDetail(item?.id)">Chi tiết</button>
+                                </mat-card-actions>
+                            </mat-card>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -23,9 +34,21 @@
                         </span>
                         <div class="line"></div>
                     </h4>
-                    <div class="news-item" style="height: 15rem; border: springgreen 1px double">HEAD NEWS</div>
-                    <div class="news-item" style="height: 5rem; border: teal 1px double" *ngFor="let item of numbers">
-                        {{item}}
+                    <!-- <div class="news-item">HEAD NEWS</div> -->
+                    <div class="news-item" *ngFor="let item of newsList; let i=index">
+                        <div class="p-2 newsCard">
+                            <mat-card>
+                                <mat-card-content>
+                                <mat-card-title>{{item?.title}}</mat-card-title>
+                                <div class="font-italic">Ngày tạo: {{item?.composeDate}}</div>
+                                <div class="font-italic">Tác giả: {{item?.author}}</div>
+                                <div class="font-italic">Danh mục: {{item?.category?.name?item?.category?.name:'Chưa phân loại'}}</div>
+                                </mat-card-content>
+                                <mat-card-actions>
+                                   <button mat-raised-button  (click)="goToDetail(item?.id)">Chi tiết</button>
+                                </mat-card-actions>
+                            </mat-card>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm list-news-container" style="width: 100%; border: palevioletred 1px dashed">
