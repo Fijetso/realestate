@@ -1,18 +1,25 @@
 package vn.edu.uit.realestate.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import vn.edu.uit.realestate.Graph.Model.GraphAddress;
+import vn.edu.uit.realestate.Graph.Model.GraphBluePrint;
 import vn.edu.uit.realestate.Graph.Model.GraphCoordinate;
 import vn.edu.uit.realestate.Graph.Model.GraphDetails;
 import vn.edu.uit.realestate.Graph.Model.GraphRealEstateKind;
+import vn.edu.uit.realestate.Graph.Model.GraphRealImage;
 import vn.edu.uit.realestate.Graph.Model.GraphTrade;
 import vn.edu.uit.realestate.Graph.Model.GraphTradeKind;
 import vn.edu.uit.realestate.Graph.Model.GraphUser;
 import vn.edu.uit.realestate.Relational.Model.Address;
+import vn.edu.uit.realestate.Relational.Model.BluePrint;
 import vn.edu.uit.realestate.Relational.Model.Coordinate;
 import vn.edu.uit.realestate.Relational.Model.Details;
 import vn.edu.uit.realestate.Relational.Model.RealEstateKind;
+import vn.edu.uit.realestate.Relational.Model.RealImage;
 import vn.edu.uit.realestate.Relational.Model.Trade;
 import vn.edu.uit.realestate.Relational.Model.TradeKind;
 import vn.edu.uit.realestate.Relational.Model.User;
@@ -105,5 +112,31 @@ public class ModelMapperService {
 			return null;
 		}
 		return new GraphTradeKind(tradeKind.getId(), tradeKind.getName());
+	}
+
+	public List<GraphBluePrint> convertBluePrints(List<BluePrint> bluePrints) {
+		if (bluePrints == null) {
+			return null;
+		}
+		List<GraphBluePrint> convertedGraphBluePrints = new ArrayList<>();
+		for (BluePrint element : bluePrints) {
+			GraphBluePrint convertedElement = new GraphBluePrint(element.getId(), element.getImageLink(),
+					element.getDescription(), new GraphTrade(element.getTrade().getId()));
+			convertedGraphBluePrints.add(convertedElement);
+		}
+		return convertedGraphBluePrints;
+	}
+	
+	public List<GraphRealImage> convertRealImages(List<RealImage> realImages) {
+		if (realImages == null) {
+			return null;
+		}
+		List<GraphRealImage> convertedGraphRealImages = new ArrayList<>();
+		for (RealImage element : realImages) {
+			GraphRealImage convertedElement = new GraphRealImage(element.getId(), element.getImageLink(),
+					element.getDescription(), new GraphTrade(element.getTrade().getId()));
+			convertedGraphRealImages.add(convertedElement);
+		}
+		return convertedGraphRealImages;
 	}
 }

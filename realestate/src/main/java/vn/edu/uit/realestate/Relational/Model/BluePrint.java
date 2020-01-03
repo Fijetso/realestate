@@ -1,5 +1,6 @@
 package vn.edu.uit.realestate.Relational.Model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,13 +18,19 @@ public class BluePrint {
 	private String imageLink;
 	private String description;
 	@ManyToOne
-	@JoinColumn(name="tradeId", referencedColumnName = "id")
+	@JoinColumn(name = "tradeId", referencedColumnName = "id")
 	private Trade trade;
 
 	public BluePrint() {
 		super();
 	}
-	
+
+	public BluePrint(String imageLink, Trade trade) {
+		super();
+		this.imageLink = imageLink;
+		this.trade = trade;
+	}
+
 	public BluePrint(Long id, String imageLink, String description, Trade trade) {
 		super();
 		this.id = id;
@@ -31,7 +38,7 @@ public class BluePrint {
 		this.description = description;
 		this.trade = trade;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}

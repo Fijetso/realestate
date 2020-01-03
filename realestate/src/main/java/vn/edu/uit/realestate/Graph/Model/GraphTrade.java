@@ -41,6 +41,11 @@ public class GraphTrade {
 	public GraphTrade() {
 		super();
 	}
+	
+	public GraphTrade(long id) {
+		super();
+		this.id = id;
+	}
 
 	public GraphTrade(long id, String description, long cost, String tradeStatus, GraphAddress address,
 			GraphDetails details, GraphCoordinate coordinate, List<GraphRealImage> realImages,

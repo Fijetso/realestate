@@ -1,5 +1,9 @@
 package vn.edu.uit.realestate.Service.EntityService;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -13,9 +17,12 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
+import vn.edu.uit.realestate.Common.Common;
+import vn.edu.uit.realestate.ExceptionHandler.BadRequestException;
 import vn.edu.uit.realestate.ExceptionHandler.ExistContentException;
 import vn.edu.uit.realestate.ExceptionHandler.IllegalArgumentException;
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
+import vn.edu.uit.realestate.Graph.Model.GraphTrade;
 import vn.edu.uit.realestate.Graph.Repository.GraphTradeRepository;
 import vn.edu.uit.realestate.Relational.Model.BluePrint;
 import vn.edu.uit.realestate.Relational.Model.Booking;
@@ -114,7 +121,61 @@ public class TradeService implements IEntityService {
 		tradeRepository.deleteById(id);
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public List<GraphTrade> recommendTradesByUserAge(String birthdate, Boolean isFemale) {
+		if (birthdate == null) {
+			throw new BadRequestException("We cannot recommend trade without birthdate. Please add your birthdate");
+		}
+		String birthYear;
+		try {
+			DateFormat dateFormat = new SimpleDateFormat(Common.Constains.LOCAL_DATE_FORMAT);
+			Date parsedBirthdate = dateFormat.parse(birthdate);
+			birthYear = Integer.toString(parsedBirthdate.getYear() + 1900);
+		} catch (ParseException e) {
+			throw new IllegalArgumentException(
+					"Something went wrong with 'birthdate' variable. Be sure the date format is "
+							+ Common.Constains.LOCAL_DATE_FORMAT);
+		}
+		int birthYearSum = 0;
+		while (birthYear.length() > 1) {
+			for (int i = 0; i < birthYear.length(); i++) {
+				birthYearSum = birthYearSum + Character.getNumericValue(birthYear.charAt(i));
+			}
+			birthYear = Integer.toString(birthYearSum);
+		}
+		birthYearSum = 11 - birthYearSum;
+		if (isFemale) {
+			birthYearSum = 15 - birthYearSum;
+		}
+		while (birthYear.length() > 1) {
+			for (int i = 0; i < birthYear.length(); i++) {
+				birthYearSum = birthYearSum + Character.getNumericValue(birthYear.charAt(i));
+			}
+			birthYear = Integer.toString(birthYearSum);
+		}
+		switch (birthYearSum) {
+		case 1:
+			return graphTradeRepository.recommendTradesByUserAge2(".*ắc");
+		case 2:
+			return graphTradeRepository.recommendTradesByUserAge(".*ây.*am");
+		case 3:
+			return graphTradeRepository.recommendTradesByUserAge(".*ông");
+		case 4:
+			return graphTradeRepository.recommendTradesByUserAge(".*ông.*am");
+		case 5:
+			return graphTradeRepository.recommendTradesByUserAge(".*");
+		case 6:
+			return graphTradeRepository.recommendTradesByUserAge(".*ây.*ắc");
+		case 7:
+			return graphTradeRepository.recommendTradesByUserAge(".*ây");
+		case 8:
+			return graphTradeRepository.recommendTradesByUserAge(".*ông.*ắc");
+		case 9:
+			return graphTradeRepository.recommendTradesByUserAge2(".*am");
+		default:
+		}
+		return null;
+	}
+
 	public MappingJacksonValue updateTradeStatus(Long id, String newStatus) {
 		Optional<Trade> trade = tradeRepository.findById(id);
 		if (trade.isPresent() == false) {
@@ -129,7 +190,7 @@ public class TradeService implements IEntityService {
 		}
 		graphTradeRepository.save(modelMapper.convertTrade(foundTrade));
 		foundTrade = tradeRepository.save(foundTrade);
-		
+
 		SimpleBeanPropertyFilter userFilter = SimpleBeanPropertyFilter.serializeAllExcept("trades", "password");
 		SimpleBeanPropertyFilter filterExceptTrade = SimpleBeanPropertyFilter.serializeAllExcept("trade");
 		SimpleBeanPropertyFilter filterTrade = SimpleBeanPropertyFilter.serializeAllExcept("favoriteTrades");

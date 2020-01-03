@@ -1,5 +1,7 @@
 package vn.edu.uit.realestate.GraphQLResolver.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -8,22 +10,28 @@ import org.springframework.stereotype.Service;
 import vn.edu.uit.realestate.ExceptionHandler.CustomGraphQLException;
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
 import vn.edu.uit.realestate.Graph.Model.GraphTrade;
+import vn.edu.uit.realestate.Graph.Repository.GraphBluePrintRepository;
+import vn.edu.uit.realestate.Graph.Repository.GraphRealImageRepository;
 import vn.edu.uit.realestate.Graph.Repository.GraphTradeRepository;
 import vn.edu.uit.realestate.Relational.Model.Address;
+import vn.edu.uit.realestate.Relational.Model.BluePrint;
 import vn.edu.uit.realestate.Relational.Model.Category;
 import vn.edu.uit.realestate.Relational.Model.Coordinate;
 import vn.edu.uit.realestate.Relational.Model.Details;
 import vn.edu.uit.realestate.Relational.Model.News;
 import vn.edu.uit.realestate.Relational.Model.RealEstateKind;
+import vn.edu.uit.realestate.Relational.Model.RealImage;
 import vn.edu.uit.realestate.Relational.Model.Trade;
 import vn.edu.uit.realestate.Relational.Model.TradeKind;
 import vn.edu.uit.realestate.Relational.Model.User;
 import vn.edu.uit.realestate.Relational.Model.AddressTree.Ward;
 import vn.edu.uit.realestate.Relational.Repository.AddressRepository;
+import vn.edu.uit.realestate.Relational.Repository.BluePrintRepository;
 import vn.edu.uit.realestate.Relational.Repository.CategoryRepository;
 import vn.edu.uit.realestate.Relational.Repository.CoordinateRepository;
 import vn.edu.uit.realestate.Relational.Repository.DetailsRepository;
 import vn.edu.uit.realestate.Relational.Repository.RealEstateKindRepository;
+import vn.edu.uit.realestate.Relational.Repository.RealImageRepository;
 import vn.edu.uit.realestate.Relational.Repository.TradeKindRepository;
 import vn.edu.uit.realestate.Relational.Repository.TradeRepository;
 import vn.edu.uit.realestate.Relational.Repository.UserRepository;
@@ -51,11 +59,19 @@ public class GraphQLTradeService {
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
+	private RealImageRepository realImageRepository;
+	@Autowired
+	private BluePrintRepository bluePrintRepository;
+	@Autowired
+	private GraphRealImageRepository graphRealImageRepository;
+	@Autowired
+	private GraphBluePrintRepository graphBluePrintRepository;
+	@Autowired
 	ModelMapperService modelMapper;
 	public Trade saveTradeGraphQL(Long tradeId, String description, Long cost, Long userId, Long realEstateKindId,
 			Long tradeKindId, String detailAddress, Long wardId, Long length, Long width, Long square, String direction,
 			String floors, String legalDocuments, int bathrooms, int bedrooms, String utilities, String others,
-			Float longitude, Float latitude) {
+			Float longitude, Float latitude, ArrayList<String> realImages, ArrayList<String> bluePrints) {
 		Trade trade = new Trade();
 		if (tradeId != null) {
 			Optional<Trade> foundTrade = tradeRepository.findById(tradeId);
@@ -144,6 +160,22 @@ public class GraphQLTradeService {
 		}
 		trade = tradeRepository.save(trade);
 		graphTradeRepository.save(modelMapper.convertTrade(trade));
+		if(realImages != null) {
+			List<RealImage> images = new ArrayList<>();
+			for(String element: realImages) {
+				images.add(new RealImage(element, trade));
+			}
+			realImageRepository.saveAll(images);
+			graphRealImageRepository.saveAll(modelMapper.convertRealImages(images));
+		}
+		if(bluePrints != null) {
+			List<BluePrint> images = new ArrayList<>();
+			for(String element: bluePrints) {
+				images.add(new BluePrint(element, trade));
+			}
+			bluePrintRepository.saveAll(images);
+			graphBluePrintRepository.saveAll(modelMapper.convertBluePrints(images));
+		}
 		return trade;
 	}
 

@@ -21,4 +21,11 @@ public interface GraphTradeRepository extends Neo4jRepository<GraphTrade, Long> 
 			+ "u.job = {job} ELSE TRUE END OR CASE WHEN NOT  {districtId} IS NULL THEN a.district = {districtId}"
 			+ " ELSE TRUE END WITH t LIMIT 5 OPTIONAL MATCH (t)-[W]-(w) RETURN *")
 	public List<GraphTrade> recommendTrades(@Param("job") String job, @Param("districtId") List<Long> districtId);
+
+	@Query("MATCH (d:Details)--(t:Trade) WHERE d.direction=~{direction} OPTIONAL MATCH (w)-[W]-(t) RETURN *")
+	public List<GraphTrade> recommendTradesByUserAge(@Param("direction") String directionWithRegex);
+
+	@Query("MATCH (d:Details)--(t:Trade) WHERE d.direction=~{direction} AND NOT d.direction=~'.*ông.*' "
+			+ "AND NOT d.direction=~'.*ây.*' OPTIONAL MATCH (w)-[W]-(t) RETURN *")
+	public List<GraphTrade> recommendTradesByUserAge2(@Param("direction") String directionWithRegex);
 }
