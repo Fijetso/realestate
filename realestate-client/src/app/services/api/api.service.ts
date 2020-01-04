@@ -6,6 +6,8 @@ import { Address } from './../../model/address/address';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { TradeKind } from '../../model/trade-kind/trade-kind';
+import { RealEstateKind } from '../../model/real-estate-kind/real-estate-kind';
 
 @Injectable({
   providedIn: 'root'
@@ -221,5 +223,13 @@ export class ApiService {
 
   getAllNews() {
     return this.http.get<any>(this.baseURL + 'news');
+  }
+
+  getTradeKind() {
+    return this.http.get<TradeKind>(this.baseURL + 'tradekinds');
+  }
+
+  getREKind() {
+    return this.http.get<RealEstateKind>(this.baseURL + 'realestatekinds');
   }
 }
