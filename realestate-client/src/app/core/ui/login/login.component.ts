@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
     this.authService.authState.subscribe(user => {
       this.socialUser = user;
       // tslint:disable-next-line: no-console
-      console.info(this.socialUser);
+      console.log(this.socialUser);
       this.isLogedIn = this.loggedIn =  (user != null);
       if (this.loggedIn) {
         localStorage.setItem('loginInfo', JSON.stringify(user));
@@ -63,10 +63,10 @@ export class LoginComponent implements OnInit {
     const token = localStorage.getItem('login');
     if (token) {
       // tslint:disable-next-line: no-console
-      console.info('getToken', token);
+      console.log('getToken', token);
       this.graphql.getLoginInfo(token).subscribe(res => {
         this.data = res;
-        // console.info('login infor',res);
+        // console.log('login infor',res);
         this.toastr.success('Đăng nhập bằng email thành công', 'Đăng nhập');
         this.isLogedIn = true;
       });
@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit {
   loginWithGoogle() {
     this.myAuthService.loginWithGoogle().then(user => {
       // tslint:disable-next-line: no-console
-      console.info(user);
+      console.log(user);
       localStorage.setItem('loginInfo', JSON.stringify(user));
       this.isLogedIn = true;
       const loginGoogle = localStorage.getItem('loginInfo');
@@ -87,7 +87,7 @@ export class LoginComponent implements OnInit {
       // tslint:disable-next-line: no-console
       const cookieResult = this.cookie.get('loginInfo');
       // tslint:disable-next-line: no-console
-      console.info(JSON.parse(cookieResult)); this.toastr.success(
+      console.log(JSON.parse(cookieResult)); this.toastr.success(
           JSON.parse(cookieResult).name,
           'Đăng nhập thành công'
         );
@@ -99,7 +99,7 @@ export class LoginComponent implements OnInit {
   loginWithFacebook() {
     this.myAuthService.loginWithFacebook().then(user => {
       // tslint:disable-next-line: no-console
-      console.info(user);
+      console.log(user);
       localStorage.setItem('loginInfo', JSON.stringify(user));
       this.isLogedIn = true;
       const loginFacebook = localStorage.getItem('loginInfo');
@@ -107,7 +107,7 @@ export class LoginComponent implements OnInit {
       // tslint:disable-next-line: no-console
       const cookieResult = this.cookie.get('loginInfo');
       // tslint:disable-next-line: no-console
-      console.info(JSON.parse(cookieResult));
+      console.log(JSON.parse(cookieResult));
       this.toastr.success(
         JSON.parse(cookieResult).name,
         'Đăng nhập bằng Facebook thành công'
@@ -123,7 +123,7 @@ export class LoginComponent implements OnInit {
     // this.graphql.logout().subscribe(
     //   res => {
     //     // tslint:disable-next-line: no-console
-    //     console.info('logout successful', res), localStorage.clear();
+    //     console.log('logout successful', res), localStorage.clear();
     //     this.isLogedIn = false;
     //   },
     //   error => {

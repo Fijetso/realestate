@@ -125,32 +125,29 @@ public class TradeService implements IEntityService {
 		if (birthdate == null) {
 			throw new BadRequestException("We cannot recommend trade without birthdate. Please add your birthdate");
 		}
-		String birthYear;
+		int birthYear;
 		try {
 			DateFormat dateFormat = new SimpleDateFormat(Common.Constains.LOCAL_DATE_FORMAT);
 			Date parsedBirthdate = dateFormat.parse(birthdate);
-			birthYear = Integer.toString(parsedBirthdate.getYear() + 1900);
+			birthYear = parsedBirthdate.getYear() + 1900;
 		} catch (ParseException e) {
 			throw new IllegalArgumentException(
 					"Something went wrong with 'birthdate' variable. Be sure the date format is "
 							+ Common.Constains.LOCAL_DATE_FORMAT);
 		}
 		int birthYearSum = 0;
-		while (birthYear.length() > 1) {
-			for (int i = 0; i < birthYear.length(); i++) {
-				birthYearSum = birthYearSum + Character.getNumericValue(birthYear.charAt(i));
-			}
-			birthYear = Integer.toString(birthYearSum);
+		while (birthYear >=10) {
+			birthYearSum = birthYear%10;
+			birthYear /=10;
 		}
 		birthYearSum = 11 - birthYearSum;
 		if (isFemale) {
 			birthYearSum = 15 - birthYearSum;
 		}
-		while (birthYear.length() > 1) {
-			for (int i = 0; i < birthYear.length(); i++) {
-				birthYearSum = birthYearSum + Character.getNumericValue(birthYear.charAt(i));
-			}
-			birthYear = Integer.toString(birthYearSum);
+		birthYear = birthYearSum;
+		while (birthYear >=10) {
+			birthYearSum = birthYear%10;
+			birthYear /=10;
 		}
 		switch (birthYearSum) {
 		case 1:

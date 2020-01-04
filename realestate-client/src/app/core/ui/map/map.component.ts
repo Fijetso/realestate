@@ -85,7 +85,7 @@ export class MapComponent implements AfterViewInit, OnInit {
   purpose: { id: number; name: string; }[];
   reKinds: { id: number; name: string; }[];
   districtList: any;
-  wardList: import("d:/KLTN/realestate/realestate-client/src/app/model/address/address").Address;
+  wardList: any;
   constructor(private markerService: MarkerService,
               private http: HttpClient,
               private api: ApiService,
@@ -93,7 +93,7 @@ export class MapComponent implements AfterViewInit, OnInit {
               private route: ActivatedRoute) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(pos => {
-        // console.info(pos.coords);
+        // console.log(pos.coords);
         this.curLat = pos.coords.latitude;
         this.curLong = pos.coords.longitude;
       });
@@ -104,7 +104,7 @@ export class MapComponent implements AfterViewInit, OnInit {
     this.tinh = this.route.snapshot.queryParamMap.get('tinh');
     this.api.getTradeFromDistrict(this.quan).subscribe(res => {
       this.reList = res;
-      // console.info(res);
+      // console.log(res);
     });
     this.getDistrictName(this.tinh , this.quan);
     this.getAllDistrict(this.tinh);
@@ -167,8 +167,8 @@ export class MapComponent implements AfterViewInit, OnInit {
       layers: [mapTile, streetTile]
     });
     const baseMaps = {
-      'Default': mapTile,
-      'Streets': streetTile,
+      Default: mapTile,
+      Streets: streetTile,
     };
     L.control.layers(baseMaps).addTo(this.map);
     // mapTile.addTo(this.map);
@@ -187,23 +187,25 @@ export class MapComponent implements AfterViewInit, OnInit {
   getGeoJsonFile(): any {
     return this.http.get('assets/map/vietnam-district.geojson').subscribe(geoData => {
       this.geoData = geoData;
-      const feature = this.geoData.features.map(feature => feature);
-      // console.info(feature);
+      // tslint:disable-next-line: no-shadowed-variable
+      const feature = this.geoData.features.map((feature: any) => feature);
+      // console.log(feature);
       L.geoJSON(this.geoData, {
         style: this.setStyle(),
+        // tslint:disable-next-line: no-shadowed-variable
         onEachFeature: (feature, featureLayer) => {
           featureLayer.bindTooltip(feature.properties.Ten);
           featureLayer.on({
             mouseover: this.highLightStyle,
             mouseout: this.normalStyle,
-            click: () => { 
-              console.info(feature);
+            click: () => {
+              console.log(feature);
             }
           });
         }
       }).addTo(this.map);
       const myCustomColour = 'turquoise';
-      // console.info(pointArrays);
+      // console.log(pointArrays);
       const markerHtmlStyles = `
       background-color: ${myCustomColour};
       width: 3rem;
@@ -231,25 +233,25 @@ export class MapComponent implements AfterViewInit, OnInit {
       //     const districtName = feature[i].properties.Ten;
       //     const cap = feature[i].properties.Cap + ' ';
       //     if (feature[i].properties.Ten === 'Quận 5') {
-      //       const quan5Geo = console.info(i, feature[i].geometry.coordinates[0][0]);
+      //       const quan5Geo = console.log(i, feature[i].geometry.coordinates[0][0]);
       //       const realquan5Geo = feature[i].geometry.coordinates[0][0];
       //     }
       //     const coordinate = feature[i].geometry.coordinates[0].map(array => array);
       //     // first array coordinate is reverted
       //     const realCoordinate = Array.prototype.reverse.apply(coordinate[0][0]);
-      //     // console.info(realCoordinate);
+      //     // console.log(realCoordinate);
       //     const marker = L.marker(realCoordinate, {
       //       icon: L.divIcon({
       //         className: 'my-custom-pin',
       //         iconAnchor: [0, 24],
       //         popupAnchor: [0, -36],
       //         html: `<div style="${markerHtmlStyles}">${+districtName.replace(cap, '') > 0
-      //         ? 'Q. ' + districtName.replace(cap, '') : 
+      //         ? 'Q. ' + districtName.replace(cap, '') :
       //         districtName.replace(cap, '')}</div>`
       //       })
       //     }).bindTooltip(districtName).bindPopup(districtName).addTo(this.map);
       //   }
-      //   // console.info(`Added marker ${i+1}`);
+      //   // console.log(`Added marker ${i+1}`);
       // }
     }, error => console.error(error));
   }
@@ -311,11 +313,11 @@ export class MapComponent implements AfterViewInit, OnInit {
   getDistrictName(provinceId, districtId) {
     this.api.getDistrictNameById(provinceId, districtId).subscribe(district => {
       this.districtInfo = district;
-      // console.info(this.districtInfo);
+      // console.log(this.districtInfo);
     });
   }
 
-  getAllDistrict(provinceId){
+  getAllDistrict(provinceId) {
     this.api.getDistrictFromProvinceId(provinceId).subscribe(districtList => {
       this.districtList = districtList;
     });
@@ -323,7 +325,7 @@ export class MapComponent implements AfterViewInit, OnInit {
 
   getAllWardFromDistrict(provinceId, districtId) {
     this.api.getWardFromDistrictId(provinceId, districtId).subscribe(wardList => {
-      console.info(wardList);
+      console.log(wardList);
       this.wardList = wardList;
     });
   }
@@ -333,7 +335,7 @@ export class MapComponent implements AfterViewInit, OnInit {
     this.getAllWardFromDistrict(this.tinh, district);
   }
 
-  onSubmitSearch(){
-    console.info(this.searchDetail.value);
+  onSubmitSearch() {
+    console.log(this.searchDetail.value);
   }
 }

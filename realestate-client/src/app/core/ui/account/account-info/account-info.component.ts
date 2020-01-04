@@ -121,6 +121,6 @@ export class AccountInfoComponent implements OnInit {
 
   onSubmitUserInfo() {
     // tslint:disable-next-line: no-console
-    console.info(this.userInfo.value);
+    console.log(this.userInfo.value);
   }
 }

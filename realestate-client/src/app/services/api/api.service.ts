@@ -113,15 +113,15 @@ export class ApiService {
   }
   // Address service
   getProvinces() {
-    return this.http.get<Address>(this.addressURL);
+    return this.http.get<any>(this.addressURL);
   }
 
   getDistrictFromProvinceId(provinceId: number) {
-    return this.http.get<Address>(this.addressURL + provinceId + '/districts' );
+    return this.http.get<any>(this.addressURL + provinceId + '/districts' );
   }
 
   getWardFromDistrictId(provinceId: number, districtId: number) {
-    return this.http.get<Address>(this.addressURL + provinceId + '/districts/' + districtId + '/wards');
+    return this.http.get<any>(this.addressURL + provinceId + '/districts/' + districtId + '/wards');
   }
   // get Favorite trade order by fav count
   getFavRealEstate() {
@@ -197,7 +197,7 @@ export class ApiService {
     const index = this.getIndexRE(id);
     const result = this.reList.splice(index, 1);
     // tslint:disable-next-line: no-console
-    console.info(result);
+    console.log(result);
   }
 
   updateRE(re: RealEstate) {
