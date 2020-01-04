@@ -105,7 +105,8 @@ type News {
 	title: String,
 	content: String,
 	composeDate: String,
-	category: Category
+	category: Category,
+	author: String
 }
 
 type Category {
