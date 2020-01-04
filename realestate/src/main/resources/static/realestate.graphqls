@@ -23,6 +23,8 @@ type Mutation {
 	saveNews(newsId: Long, title: String, content: String, categoryId: Long, composeDate: String, author: String): News
 	
 	saveCategory(categoryId: Long, name: String!): Category
+	
+	saveBooking(name: String, phone: String!, email: String!, timeStart: String, timeEnd: String, tradeId: Long!): Booking
 }
 
 type Trade {
@@ -116,3 +118,12 @@ type Role {
 	name: String
 }
 
+type Booking {
+	id: ID,
+	name: String,
+	phone: String,
+	email: String,
+	timeStart: String,
+	timeEnd: String,
+	trade: Trade
+}
