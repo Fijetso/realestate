@@ -197,7 +197,7 @@ export class ApiService {
     const index = this.getIndexRE(id);
     const result = this.reList.splice(index, 1);
     // tslint:disable-next-line: no-console
-    console.info(result);
+    console.log(result);
   }
 
   updateRE(re: RealEstate) {

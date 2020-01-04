@@ -20,7 +20,7 @@ export class GraphQueryService {
 
   //  login by email password
   login = (emailInput, passwordInput): any => {
-    // console.info(emailInput, passwordInput);
+    // console.log(emailInput, passwordInput);
     this.apollo.mutate<LoginMutationResponse>({
       mutation: LOGIN_MUTATION,
       variables: {
@@ -48,7 +48,7 @@ export class GraphQueryService {
         Authorization: 'Bearer ' + loginToken
       }),
     };
-    // console.info(reqHearder);
+    // console.log(reqHearder);
     const result = this.http.get<any>('http://localhost:8081/secured/user/me', reqHearder);
     return result;
   }
@@ -58,7 +58,7 @@ export class GraphQueryService {
     this.apollo.watchQuery<GetAllTradeResponse>({
       query: GET_ALL_TRADE_QUERY
     }).valueChanges.subscribe((response) => {
-      // console.info(response && response.data);
+      // console.log(response && response.data);
       return response && response.data;
     }, error => {
       console.error('Get all trade grapql ' + error);
@@ -96,7 +96,7 @@ export class GraphQueryService {
         job
       }
     }).subscribe(res => {
-      // console.info('Register', res.data);
+      // console.log('Register', res.data);
       return res && res.data;
     }, error => {
       // console.error(error)

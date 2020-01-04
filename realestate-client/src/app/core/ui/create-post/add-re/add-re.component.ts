@@ -30,7 +30,7 @@ export class AddReComponent implements OnInit, AfterViewInit {
   realImageLink: any;
   constructor(private api: ApiService, private fb: FormBuilder, private router: Router) {
     this.api.getAllUserKind().subscribe(res => {
-      // console.info(res);
+      // console.log(res);
       this.userKinds = res as UserKind[];
     });
 
@@ -105,23 +105,23 @@ export class AddReComponent implements OnInit, AfterViewInit {
     //     this.realImageLink = res;
     //     this.realEstate.get('realImages').setValue(this.realImageLink);
     //     // tslint:disable-next-line: no-console
-    //     console.info(this.realImageLink);
+    //     console.log(this.realImageLink);
     //     // tslint:disable-next-line: no-console
-    //     console.info(this.realEstate.value);
+    //     console.log(this.realEstate.value);
     //   });
     // }
     // tslint:disable-next-line: no-console
-    console.info(this.realEstate.value);
+    console.log(this.realEstate.value);
   }
 
   onChangeGender($event) {
     // tslint:disable-next-line: no-console
-    console.info($event.target.value);
+    console.log($event.target.value);
   }
 
   onChangeUserKind($event) {
     // tslint:disable-next-line: no-console
-    console.info($event.target.value);
+    console.log($event.target.value);
   }
   preview(event) {
     this.selectedFile = event.target.files[0];

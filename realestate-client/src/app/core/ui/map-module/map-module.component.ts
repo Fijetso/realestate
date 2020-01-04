@@ -19,7 +19,7 @@ export class MapModuleComponent implements OnInit {
   ngOnInit(): void {
     //  this.activatedRoute.params.subscribe((params)=> {
     //     this.reId = +params['id'];
-    //     console.info(this.reId);
+    //     console.log(this.reId);
     //   })
     this.activatedRoute.queryParams.subscribe(params => {
       this.provinceId = params.tinh;

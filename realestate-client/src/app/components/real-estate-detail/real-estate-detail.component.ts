@@ -28,15 +28,15 @@ export class RealEstateDetailComponent implements OnInit {
     private api: ApiService,
     private common: CommonService,
     private fb: FormBuilder) {
-      this.requestInfo = this.fb.group({
-        name:'Danh Thanh',
-        phone:'0975922740',
-        email:'',
-        date:new Date(),
-        programCode:''
-      });
+    this.requestInfo = this.fb.group({
+      name: 'Danh Thanh',
+      phone: '0975922740',
+      email: '',
+      date: new Date(),
+      programCode: ''
+    });
   }
-  @ViewChild('owlElement', {static:true}) owlElement: OwlCarousel;
+  @ViewChild('owlElement', { static: true }) owlElement: OwlCarousel;
   carouselOptions = {
     margin: 14,
     responsiveClass: true,
@@ -133,14 +133,14 @@ export class RealEstateDetailComponent implements OnInit {
   getCurrentREClass(square: number): number {
     if (square >= 70) {
       return 1;
-    } else if ( square >= 60) {
+    } else if (square >= 60) {
       return 2;
     } else if (square >= 50) {
       return 3;
     } else { return 4; }
   }
 
-  onSubmitRequest(){
+  onSubmitRequest() {
     console.log(this.requestInfo.value);
   }
 }
