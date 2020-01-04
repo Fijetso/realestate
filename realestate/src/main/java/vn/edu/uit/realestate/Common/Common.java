@@ -10,6 +10,8 @@ public class Common {
 		
 		public static String LOCAL_DATE_FORMAT = "dd/MM/yyyy";
 
+		public static String LOCAL_DATE_TIME_FORMAT = "dd/MM/yyyy hh:mm";
+
 //		@Value("${local.server.port}")
 		private static String port="8081";
 		

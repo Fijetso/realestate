@@ -4,9 +4,10 @@ import { environment } from './../../../../environments/environment';
 import { MarkerService } from './../../../services/map/marker.service';
 import { Component, AfterViewInit, Input, OnInit } from '@angular/core';
 import * as L from 'leaflet';
-import 'leaflet-draw'
+import 'leaflet-draw';
 import { FormBuilder } from '@angular/forms';
 // import * as LD from 'leaflet-draw'
+import { ActivatedRoute } from '@angular/router';
 
 const iconRetinaUrl = 'assets/map/marker-icon-2x.png';
 const iconUrl = 'assets/map/marker-icon.png';
@@ -39,7 +40,27 @@ const iconDefault = L.icon({
 //   html: `<div style="${markerHtmlStyles}">12</div>`
 // })
 L.Marker.prototype.options.icon = iconDefault;
+const purpose = [
+  {
+    id: 1,
+    name: 'Mua'
+  },
+  {
+    id: 2,
+    name: 'Thuê'
+  },
+];
 
+const reKinds = [
+  {
+    id: 1,
+    name: 'Chung cư/Căn hộ'
+  },
+  {
+    id: 2,
+    name: 'Nhà riêng'
+  },
+];
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -47,7 +68,7 @@ L.Marker.prototype.options.icon = iconDefault;
 })
 export class MapComponent implements AfterViewInit, OnInit {
   protected map;
-  protected geoData
+  protected geoData;
   protected curLat;
   protected curLong;
   protected geoJsonData;
@@ -57,20 +78,46 @@ export class MapComponent implements AfterViewInit, OnInit {
   protected reList;
   protected createPost: any;
   public isFullMap;
-  constructor(private markerService: MarkerService, private http: HttpClient, private api: ApiService, private fb: FormBuilder) {
+  quan: string;
+  tinh: string;
+  districtInfo: any;
+  searchDetail: any;
+  purpose: { id: number; name: string; }[];
+  reKinds: { id: number; name: string; }[];
+  districtList: any;
+  wardList: import("d:/KLTN/realestate/realestate-client/src/app/model/address/address").Address;
+  constructor(private markerService: MarkerService,
+              private http: HttpClient,
+              private api: ApiService,
+              private fb: FormBuilder,
+              private route: ActivatedRoute) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(pos => {
         // console.info(pos.coords);
         this.curLat = pos.coords.latitude;
         this.curLong = pos.coords.longitude;
-      })
+      });
     }
+    this.purpose = purpose;
+    this.reKinds = reKinds;
+    this.quan = this.route.snapshot.queryParamMap.get('quan');
+    this.tinh = this.route.snapshot.queryParamMap.get('tinh');
+    this.api.getTradeFromDistrict(this.quan).subscribe(res => {
+      this.reList = res;
+      // console.info(res);
+    });
+    this.getDistrictName(this.tinh , this.quan);
+    this.getAllDistrict(this.tinh);
+    this.getAllWardFromDistrict(this.tinh , this.quan);
+    this.searchDetail = this.fb.group({
+      purpose: 1,
+      query: '',
+      reKind: 1,
+      district: +this.quan,
+      ward: ''
+    });
   }
   ngOnInit(): void {
-    this.api.getAllRealEstate().subscribe(res => {
-      this.reList = res;
-      console.info(res);
-    });
     this.isFullMap = false;
   }
 
@@ -120,8 +167,8 @@ export class MapComponent implements AfterViewInit, OnInit {
       layers: [mapTile, streetTile]
     });
     const baseMaps = {
-      "Default": mapTile,
-      "Streets": streetTile,
+      'Default': mapTile,
+      'Streets': streetTile,
     };
     L.control.layers(baseMaps).addTo(this.map);
     // mapTile.addTo(this.map);
@@ -141,19 +188,21 @@ export class MapComponent implements AfterViewInit, OnInit {
     return this.http.get('assets/map/vietnam-district.geojson').subscribe(geoData => {
       this.geoData = geoData;
       const feature = this.geoData.features.map(feature => feature);
-      console.info(feature);
+      // console.info(feature);
       L.geoJSON(this.geoData, {
         style: this.setStyle(),
         onEachFeature: (feature, featureLayer) => {
-          featureLayer.bindTooltip(feature.properties.Ten)
+          featureLayer.bindTooltip(feature.properties.Ten);
           featureLayer.on({
             mouseover: this.highLightStyle,
             mouseout: this.normalStyle,
-            click: () => { console.info(feature)}
-          })
+            click: () => { 
+              console.info(feature);
+            }
+          });
         }
       }).addTo(this.map);
-      const myCustomColour = 'turquoise'
+      const myCustomColour = 'turquoise';
       // console.info(pointArrays);
       const markerHtmlStyles = `
       background-color: ${myCustomColour};
@@ -177,33 +226,35 @@ export class MapComponent implements AfterViewInit, OnInit {
       transform: rotate(45deg);
       text-align: center;
       border: 1px solid #FFFFFF`;
-      for (let i = 0; i < feature.length; i++) {
-        if (feature[i].properties.MaTP == '79') {
-          const districtName = feature[i].properties.Ten;
-          const cap = feature[i].properties.Cap + ' ';
-          if (feature[i].properties.Ten == 'Quận 5') {
-            const quan5Geo = console.info(i, feature[i].geometry.coordinates[0][0]);
-            const realquan5Geo = feature[i].geometry.coordinates[0][0];
-          }
-          const coordinate = feature[i].geometry.coordinates[0].map(array => array);
-          // first array coordinate is reverted
-          const realCoordinate = Array.prototype.reverse.apply(coordinate[0][0]);
-          // console.info(realCoordinate);
-          const marker = L.marker(realCoordinate, {
-            icon: L.divIcon({
-              className: "my-custom-pin",
-              iconAnchor: [0, 24],
-              popupAnchor: [0, -36],
-              html: `<div style="${markerHtmlStyles}">${+districtName.replace(cap, '') > 0 ? 'Q. ' + districtName.replace(cap, '') : districtName.replace(cap, '')}</div>`
-            })
-          }).bindTooltip(districtName).bindPopup(districtName).addTo(this.map);
-        }
-        // console.info(`Added marker ${i+1}`);
-      }
+      // for (let i = 0; i < feature.length; i++) {
+      //   if (feature[i].properties.MaTP === '79') {
+      //     const districtName = feature[i].properties.Ten;
+      //     const cap = feature[i].properties.Cap + ' ';
+      //     if (feature[i].properties.Ten === 'Quận 5') {
+      //       const quan5Geo = console.info(i, feature[i].geometry.coordinates[0][0]);
+      //       const realquan5Geo = feature[i].geometry.coordinates[0][0];
+      //     }
+      //     const coordinate = feature[i].geometry.coordinates[0].map(array => array);
+      //     // first array coordinate is reverted
+      //     const realCoordinate = Array.prototype.reverse.apply(coordinate[0][0]);
+      //     // console.info(realCoordinate);
+      //     const marker = L.marker(realCoordinate, {
+      //       icon: L.divIcon({
+      //         className: 'my-custom-pin',
+      //         iconAnchor: [0, 24],
+      //         popupAnchor: [0, -36],
+      //         html: `<div style="${markerHtmlStyles}">${+districtName.replace(cap, '') > 0
+      //         ? 'Q. ' + districtName.replace(cap, '') : 
+      //         districtName.replace(cap, '')}</div>`
+      //       })
+      //     }).bindTooltip(districtName).bindPopup(districtName).addTo(this.map);
+      //   }
+      //   // console.info(`Added marker ${i+1}`);
+      // }
     }, error => console.error(error));
   }
   highLightStyle($event) {
-    let layer = $event.target;
+    const layer = $event.target;
     layer.setStyle(
       {
         fillColor: 'blue',
@@ -219,7 +270,7 @@ export class MapComponent implements AfterViewInit, OnInit {
   }
 
   normalStyle($event) {
-    let layer = $event.target;
+    const layer = $event.target;
     layer.setStyle(
       {
         fillColor: 'white',
@@ -239,7 +290,7 @@ export class MapComponent implements AfterViewInit, OnInit {
       color: 'blue',
       fillOpacity: 0.2,
       weight: 0.2
-    }
+    };
   }
   addControls(map: L.Map) {
     const drawnItems = L.featureGroup();
@@ -255,5 +306,34 @@ export class MapComponent implements AfterViewInit, OnInit {
 
   mapFullScreen(event) {
     this.isFullMap = !this.isFullMap;
+  }
+
+  getDistrictName(provinceId, districtId) {
+    this.api.getDistrictNameById(provinceId, districtId).subscribe(district => {
+      this.districtInfo = district;
+      // console.info(this.districtInfo);
+    });
+  }
+
+  getAllDistrict(provinceId){
+    this.api.getDistrictFromProvinceId(provinceId).subscribe(districtList => {
+      this.districtList = districtList;
+    });
+  }
+
+  getAllWardFromDistrict(provinceId, districtId) {
+    this.api.getWardFromDistrictId(provinceId, districtId).subscribe(wardList => {
+      console.info(wardList);
+      this.wardList = wardList;
+    });
+  }
+
+  onChangeDistrict() {
+    const district = this.searchDetail.get('district').value;
+    this.getAllWardFromDistrict(this.tinh, district);
+  }
+
+  onSubmitSearch(){
+    console.info(this.searchDetail.value);
   }
 }
