@@ -105,14 +105,14 @@ export class GraphQueryService {
   }
 
 
-  saveNews(title, composeDate, content, author): any {
+  saveNews(title, composeDate, content, categoryId,author): any {
     return this.apollo.mutate<SaveNewsMutationResponse>({
       mutation: SAVENEWS_MUTATION,
       variables: {
         title,
         composeDate,
         content,
-        // category,
+        categoryId,
         author
       }
     });

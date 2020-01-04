@@ -69,8 +69,8 @@ export interface RegisterMutationResponse {
 }
 
 
-export const SAVENEWS_MUTATION = gql `mutation saveNews($title:String!,$composeDate:String!,$content:String!,$author:String){
-  saveNews(title:$title, composeDate:$composeDate, content:$content, author:$author){
+export const SAVENEWS_MUTATION = gql `mutation saveNews($title:String!,$composeDate:String!,$content:String!,$categoryId:Long,$author:String){
+  saveNews(title:$title, composeDate:$composeDate, content:$content, categoryId:$categoryId,author:$author){
     id,
     title,
     content,

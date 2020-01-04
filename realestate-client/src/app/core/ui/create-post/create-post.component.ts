@@ -66,11 +66,11 @@ export class CreatePostComponent implements OnInit {
     const title = this.editNews.get('title').value;
     const composeDate = this.editNews.get('composeDate').value.toLocaleString();
     const content = this.editNews.get('editorValue').value;
-    const category = this.categoryList.map( c => c.id === this.editNews.get('category').value);
+    const categoryId = this.editNews.get('category').value;
     const author = this.editNews.get('author').value;
 
     console.log(this.editNews.get('composeDate').value.toLocaleString());
-    this.graphql.saveNews(title, composeDate, content, author).subscribe(res => {
+    this.graphql.saveNews(title, composeDate, content, categoryId, author).subscribe(res => {
       console.log(res);
       this.toastr.success(res.data.saveNews.title, 'Tạo bài đăng thành công');
       return res && res.data;
