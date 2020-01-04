@@ -1,25 +1,56 @@
 <div class="map-wrapper row">
     <div class="left-content col-md-7 col-sm" *ngIf="!isFullMap">
-        <div class=" p-2">
+        <form [formGroup]='searchDetail' class="" (ngSubmit)="onSubmitSearch()">
             <div class="search-section row">
-               
+                <mat-form-field>
+                    <mat-select placeholder="Mục đích sử dụng" formControlName="purpose">
+                        <mat-option *ngFor="let purpose of purpose" [value]="purpose.id">
+                            {{purpose.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="Nhập từ khoá tìm kiếm" formControlName="query">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-select placeholder="Loại bất động sản" formControlName="reKind">
+                        <mat-option *ngFor="let reKind of reKinds" [value]="reKind.id">
+                            {{reKind.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-select placeholder="Quận /Huyện" formControlName="district" (selectionChange)="onChangeDistrict()">
+                        <mat-option *ngFor="let district of districtList" [value]="district.id">
+                            {{district.nameWithType}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-select placeholder="Xã Phường /Huyện" formControlName="ward">
+                        <mat-option *ngFor="let ward of wardList" [value]="ward.id">
+                            {{ward.nameWithType}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
             </div>
             <div class="sortby-section row">
                 <div class="sort-left col-md-6 col-sm">
-                    <div class="title">Mua bán nhà riêng quận Tân Bình</div>
-                    <div class="result-count">Có 1024 nhà riêng bán tại quận Tân Bình</div>
+                    <div class="title">Mua bán nhà riêng quận {{districtInfo?.pathWithType}}</div>
+                    <div class="result-count">Có {{reList?.length > 0?reList?.length : 0}} nhà riêng bán tại quận
+                        {{districtInfo?.nameWithType}}</div>
                 </div>
                 <div class="sort-right col-md-6 col-sm">
-                   
+
                 </div>
             </div>
             <div class="re-list ">
-                <div class="re-container row" *ngFor="let index of reList; let i = index">
-                    <app-realestate-item [dataItem] ="index" class="col-md-6 col-sm p-2"></app-realestate-item>
-                    <app-realestate-item [dataItem] ="reList[i+1]" class="col-md-6 col-sm p-2" *ngIf="i+1 < reList.length"></app-realestate-item>
-              </div>
+                <div class="re-container row" *ngFor="let item of reList; let i = index">
+                    <app-realestate-item [dataItem]="item" class="col-md-6 col-sm"></app-realestate-item>
+                </div>
             </div>
-        </div>
+            <button mat-raised-button type="submit">Tìm kiếm</button>
+        </form>
     </div>
     <div class="map-container col-md-5 col-sm" *ngIf="!isFullMap">
         <div class="map-frame">
@@ -27,7 +58,8 @@
         </div>
     </div>
     <div class="map-container col-md col-sm" *ngIf="isFullMap">
-        <button mat-icon-button aria-label="Bản đồ và bất động sản" routerLinkActive="mat-primary"  [routerLink]="['/tim-kiem']">
+        <button mat-icon-button aria-label="Bản đồ và bất động sản" routerLinkActive="mat-primary"
+            [routerLink]="['/tim-kiem']">
             <mat-icon>view_module</mat-icon>
         </button>
         <button mat-icon-button color="primary" aria-label="Bản đồ toàn màn hình" (click)="mapFullScreen($event)">
