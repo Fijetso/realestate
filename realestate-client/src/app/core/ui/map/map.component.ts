@@ -85,7 +85,7 @@ export class MapComponent implements AfterViewInit, OnInit {
   purpose: { id: number; name: string; }[];
   reKinds: { id: number; name: string; }[];
   districtList: any;
-  wardList: import("d:/KLTN/realestate/realestate-client/src/app/model/address/address").Address;
+  wardList: any;
   constructor(private markerService: MarkerService,
               private http: HttpClient,
               private api: ApiService,

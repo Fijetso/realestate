@@ -4,6 +4,7 @@ import { CommonService } from './../../services/common/common.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { OwlCarousel } from 'ngx-owl-carousel';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-real-estate-detail',
@@ -21,15 +22,21 @@ export class RealEstateDetailComponent implements OnInit {
   recentData = null;
   reSamePlace = null;
   reSameClass = null;
-  constructor(private route: ActivatedRoute, private api: ApiService, private common: CommonService) {
+  requestInfo: any;
+  constructor(
+    private route: ActivatedRoute,
+    private api: ApiService,
+    private common: CommonService,
+    private fb: FormBuilder) {
+      this.requestInfo = this.fb.group({
+        name:'Danh Thanh',
+        phone:'0975922740',
+        email:'',
+        date:new Date(),
+        programCode:''
+      });
   }
-  @ViewChild('owlElement',{static:true}) owlElement: OwlCarousel;
-  // myCarouselImages = [
-  //   1,
-  //   2,
-  //   3,
-  //   4,
-  // ].map(i => `https://picsum.photos/id/${i}/800/400`);
+  @ViewChild('owlElement', {static:true}) owlElement: OwlCarousel;
   carouselOptions = {
     margin: 14,
     responsiveClass: true,
@@ -131,5 +138,9 @@ export class RealEstateDetailComponent implements OnInit {
     } else if (square >= 50) {
       return 3;
     } else { return 4; }
+  }
+
+  onSubmitRequest(){
+    console.log(this.requestInfo.value);
   }
 }

@@ -32,7 +32,7 @@
               <div class="slide-item">
                 <img class="w-100 h-100" src="{{image?.imageLink}}" alt="{{image?.description}}"/>
                 <div class="slide-caption">
-                  <span>{{image.description}}</span>
+                  <span>{{image?.description}}</span>
                 </div>
               </div>
               <div class="nav-button">
@@ -118,21 +118,21 @@
       <div class="col-md-4 col-lg-4 content-right pl-3">
         <mat-card class="request-infor">
           <h5 class="text-center">Yêu cầu thông tin</h5>
-          <form>
+          <form [formGroup]="requestInfo" (ngSubmit)="onSubmitRequest()">
             <mat-form-field appearance="outline">
               <mat-label>Họ và Tên</mat-label>
               <mat-icon matPrefix>perm_identity</mat-icon>
-              <input matInput placeholder="Nguyễn Văn A" required name="name" />
+              <input matInput placeholder="Nguyễn Văn A" required name="name" formControlName="name"/>
             </mat-form-field>
             <mat-form-field appearance="outline">
               <mat-label>Số điện thoại</mat-label>
               <mat-icon matPrefix>phone</mat-icon>
-              <input matInput placeholder="09xxxxxxxx" required name="phone" />
+              <input matInput placeholder="09xxxxxxxx" required name="phone" formControlName="phone"/>
             </mat-form-field>
             <mat-form-field appearance="outline">
               <mat-label>Email</mat-label>
               <mat-icon matPrefix>mail_outline</mat-icon>
-              <input matInput placeholder="email@example.com" name="emails" />
+              <input matInput placeholder="email@example.com" name="emails"  formControlName="email"/>
             </mat-form-field>
             <mat-form-field appearance="outline">
               <mat-label>Thời gian</mat-label>
@@ -141,6 +141,7 @@
                 [matDatepicker]="picker"
                 placeholder="dd/MM/yyyy"
                 name="date"
+                formControlName="date"
               />
               <mat-datepicker-toggle
                 matPrefix
@@ -151,7 +152,7 @@
             <mat-form-field appearance="outline">
               <mat-label>Mã chương trình</mat-label>
               <mat-icon matPrefix>sentiment_very_satisfied</mat-icon>
-              <input matInput placeholder="ABC123456" name="programCode" />
+              <input matInput placeholder="ABC123456" name="programCode" formControlName="programCode"/>
             </mat-form-field>
             <div class="footer-form d-flex justify-content-around flex-wrap">
               <button
