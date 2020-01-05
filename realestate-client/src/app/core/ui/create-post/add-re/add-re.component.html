@@ -27,16 +27,15 @@
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Giới tính</mat-label>
-                <mat-select [value]="gender" formControlName="gender" #gender>
-                    <mat-option value=true>Nam</mat-option>
-                    <mat-option value=false>Nữ</mat-option>
+                <mat-select formControlName="gender">
+                    <mat-option [value]=true>Nam</mat-option>
+                    <mat-option [value]=false>Nữ</mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Loại người dùng</mat-label>
-                <mat-select [value]="userKind" formControlName="userKind" #userKind>
-                    <mat-option value='1'>Người bán</mat-option>
-                    <mat-option value='2'>Môi giới</mat-option>
+                <mat-select formControlName="userKind">
+                <mat-option *ngFor="let userKind of userKinds; let i=index" [value]="userKind.id">{{userKind.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>

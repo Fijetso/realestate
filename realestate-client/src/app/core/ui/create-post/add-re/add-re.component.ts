@@ -32,6 +32,7 @@ export class AddReComponent implements OnInit, AfterViewInit {
   tradeKinds: any;
   districtList: any;
   wardList: any;
+
   constructor(private api: ApiService, private fb: FormBuilder, private router: Router) {
     this.api.getAllUserKind().subscribe(res => {
       // console.log(res);
@@ -48,6 +49,7 @@ export class AddReComponent implements OnInit, AfterViewInit {
     this.getTradeKinds();
     this.getAllDistrict(79);
     this.getAllWardFromDistrict(79 , 774);
+    this.getUserKinds();
     this.userInfo = JSON.parse(localStorage.getItem('loginInfo'));
     this.startDate = new Date(1997, 10, 19);
   }
@@ -66,20 +68,18 @@ export class AddReComponent implements OnInit, AfterViewInit {
         phone: '0975922740',
         password: '',
         dob: new Date(1997, 10, 19),
-        gender: 'true',
-        userKind: '1'
+        gender: true,
+        userKind: 1
       }),
       tradeKind: 1,
       realEstateKind: 1,
       address: this.fb.group({
-        id: 5,
         detail: 'Số nhà 94',
         ward: 27313,
         district: 774,
         cityOrProvince: 79
       }),
       details: this.fb.group({
-        id: 5,
         length: 9,
         width: 4,
         square: 37,
@@ -92,7 +92,6 @@ export class AddReComponent implements OnInit, AfterViewInit {
         others: 'Bán nhà riêng quận 5, đang cho thuê 6tr/tháng sổ hồng chính chủ'
       }),
       coordinate: this.fb.group({
-        id: 5,
         longitude: 106.681,
         latitude: 10.7614
       }),
@@ -149,14 +148,14 @@ export class AddReComponent implements OnInit, AfterViewInit {
   getREKind() {
     this.api.getREKind().subscribe(reKinds => {
       this.reKinds = reKinds;
-      console.log(this.reKinds);
+      // console.log(this.reKinds);
     });
   }
 
   getTradeKinds() {
     this.api.getTradeKind().subscribe(tradeKinds => {
       this.tradeKinds = tradeKinds;
-      console.log(this.tradeKinds);
+      // console.log(this.tradeKinds);
     });
   }
 
@@ -176,5 +175,11 @@ export class AddReComponent implements OnInit, AfterViewInit {
   onChangeDistrict() {
     const district = this.realEstate.get('address').get('district').value;
     this.getAllWardFromDistrict(79, district);
+  }
+
+  getUserKinds(){
+    this.api.getAllUserKind().subscribe(userKinds => {
+      this.userKinds = userKinds as UserKind[];
+    });
   }
 }
