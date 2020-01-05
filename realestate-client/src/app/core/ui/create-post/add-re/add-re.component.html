@@ -94,11 +94,11 @@
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Hướng</mat-label>
-                <mat-select [value]="direction" formControlName="direction" #direction>
-                    <mat-option value="1">Đông</mat-option>
-                    <mat-option value="2">Tây</mat-option>
-                    <mat-option value="3">Nam</mat-option>
-                    <mat-option value="4">Bắc</mat-option>
+                <mat-select formControlName="direction">
+                    <mat-option [value]=1>Đông</mat-option>
+                    <mat-option [value]=2>Tây</mat-option>
+                    <mat-option [value]=3>Nam</mat-option>
+                    <mat-option [value]=4>Bắc</mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field>

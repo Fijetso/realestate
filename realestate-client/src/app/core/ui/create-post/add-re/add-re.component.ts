@@ -83,7 +83,7 @@ export class AddReComponent implements OnInit, AfterViewInit {
         length: 9,
         width: 4,
         square: 37,
-        direction: '2',
+        direction: 2,
         floors: '1 trệt + 1 lầu',
         legalDocuments: 'Sổ hồng riêng',
         bathrooms: 1,
