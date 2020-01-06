@@ -1,13 +1,11 @@
 package vn.edu.uit.realestate.GraphQLResolver.Service;
 
-import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
-import vn.edu.uit.realestate.Common.Common;
 import vn.edu.uit.realestate.ExceptionHandler.CustomGraphQLException;
 import vn.edu.uit.realestate.Relational.Model.Booking;
 import vn.edu.uit.realestate.Relational.Model.Trade;
