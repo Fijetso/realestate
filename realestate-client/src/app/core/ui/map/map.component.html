@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="re-list ">
-                <div class="re-container row" *ngFor="let item of reList; let i = index">
+                <div class="re-container row" *ngFor="let item of reList | search:query; let i = index">
                     <app-realestate-item [dataItem]="item" class="col-md-6 col-sm"></app-realestate-item>
                 </div>
             </div>

@@ -68,6 +68,7 @@ export class MapComponent implements AfterViewInit, OnInit {
   reKinds: any;
   districtList: any;
   wardList: any;
+  query: any;
   constructor(private markerService: MarkerService,
               private http: HttpClient,
               private api: ApiService,
@@ -323,6 +324,7 @@ export class MapComponent implements AfterViewInit, OnInit {
 
   onKey($event) {
     console.log(nonAccentVietnamese($event.target.value) );
+    this.query = $event.target.value;
   }
 
   getTradeKind() {
