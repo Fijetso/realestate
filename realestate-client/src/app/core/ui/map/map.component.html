@@ -13,7 +13,7 @@
                     <input matInput placeholder="Nhập từ khoá tìm kiếm" formControlName="query" (keyup) = "onKey($event)">
                 </mat-form-field>
                 <mat-form-field>
-                    <mat-select placeholder="Loại bất động sản" formControlName="reKind">
+                    <mat-select placeholder="Loại bất động sản" formControlName="reKind" (selectionChange) = "onChangeREKind()">
                         <mat-option *ngFor="let reKind of reKinds" [value]="reKind.id">
                             {{reKind.name}}
                         </mat-option>
@@ -37,15 +37,16 @@
             <div class="sortby-section row">
                 <div class="sort-left col-md-6 col-sm">
                     <div class="title">Mua bán nhà riêng quận {{districtInfo?.pathWithType}}</div>
-                    <div class="result-count">Có {{(reList | search:query)?.length > 0?(reList | search:query)?.length : 0}} nhà riêng bán tại quận
-                        {{districtInfo?.nameWithType}}</div>
+                    <div class="result-count">Có {{(reList | search:[query, newREKind])?.length > 0?(reList | search:[query,newREKind])?.length : 0}} kết quả với từ khoá 
+                    <span class="font-italic font-weight-bold"> {{query}}</span>
+                    </div>
                 </div>
                 <div class="sort-right col-md-6 col-sm">
 
                 </div>
             </div>
             <div class="re-list ">
-                <div class="re-container row" *ngFor="let item of reList | search:query; let i = index">
+                <div class="re-container row" *ngFor="let item of reList | search:[query, newREKind]; let i = index">
                     <app-realestate-item [dataItem]="item" class="col-md-6 col-sm"></app-realestate-item>
                 </div>
             </div>

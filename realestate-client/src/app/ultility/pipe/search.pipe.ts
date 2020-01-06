@@ -7,12 +7,17 @@ import { nonAccentVietnamese } from '../functions/remove-sign';
 export class SearchPipe implements PipeTransform {
 
   transform(value: any, ...args: any[]): any {
-    if (args[0] === undefined || value === null) {
+    // console.log(args);
+    if (args[0][0] === undefined || args[0][0] == null) {
       return value;
     } else {
       return value.filter( elem => {
         if (elem != null) {
-          return nonAccentVietnamese(elem.description.toLowerCase()).indexOf(nonAccentVietnamese(args[0])) > -1;
+          console.log(args);
+          const result = nonAccentVietnamese(elem.description).indexOf(nonAccentVietnamese(args[0][0])) > -1
+          && elem.realEstateKind.id === args[0][1];
+          console.log(result);
+          return result;
         }
       });
     }

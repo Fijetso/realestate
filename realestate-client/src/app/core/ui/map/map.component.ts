@@ -69,6 +69,7 @@ export class MapComponent implements AfterViewInit, OnInit {
   districtList: any;
   wardList: any;
   query: any;
+  newREKind: any;
   constructor(private markerService: MarkerService,
               private http: HttpClient,
               private api: ApiService,
@@ -92,6 +93,7 @@ export class MapComponent implements AfterViewInit, OnInit {
     this.getDistrictName(this.tinh , this.quan);
     this.getAllDistrict(this.tinh);
     this.getAllWardFromDistrict(this.tinh , this.quan);
+    this.newREKind = 1;
     this.searchDetail = this.fb.group({
       tradeKind: 1,
       query: '',
@@ -308,7 +310,7 @@ export class MapComponent implements AfterViewInit, OnInit {
 
   getAllWardFromDistrict(provinceId, districtId) {
     this.api.getWardFromDistrictId(provinceId, districtId).subscribe(wardList => {
-      console.log(wardList);
+      // console.log(wardList);
       this.wardList = wardList;
     });
   }
@@ -316,6 +318,12 @@ export class MapComponent implements AfterViewInit, OnInit {
   onChangeDistrict() {
     const district = this.searchDetail.get('district').value;
     this.getAllWardFromDistrict(this.tinh, district);
+    this.reList = [];
+    this.api.getTradeFromDistrict(district).subscribe(res => {
+      this.reList = res;
+      // console.log(res);
+    });
+    this.getDistrictName(this.tinh, district);
   }
 
   onSubmitSearch() {
@@ -323,23 +331,27 @@ export class MapComponent implements AfterViewInit, OnInit {
   }
 
   onKey($event) {
-    console.log(nonAccentVietnamese($event.target.value) );
+    // console.log(nonAccentVietnamese($event.target.value) );
     this.query = $event.target.value;
   }
 
   getTradeKind() {
     this.api.getTradeKind().subscribe(tradeKinds => {
-      // this.tradeKind.concat(tradeKind);
-      console.log( tradeKinds);
+      // console.log( tradeKinds);
       this.tradeKinds = tradeKinds;
     });
   }
 
   getREKind() {
     this.api.getREKind().subscribe(reKinds => {
-      // this.reKinds.concat(reKinds);
-      console.log(reKinds);
+      // console.log(reKinds);
       this.reKinds = reKinds;
     });
+  }
+
+  onChangeREKind() {
+    const reKind = this.searchDetail.get('reKind').value;
+    this.newREKind = reKind;
+    // console.log(reKind);
   }
 }
