@@ -7,11 +7,13 @@ import { nonAccentVietnamese } from '../functions/remove-sign';
 export class SearchPipe implements PipeTransform {
 
   transform(value: any, ...args: any[]): any {
-    if (args[0] === undefined) {
+    if (args[0] === undefined || value === null) {
       return value;
     } else {
       return value.filter( elem => {
-        return nonAccentVietnamese(elem.description.toLowerCase()).indexOf(nonAccentVietnamese(args[0])) > -1;
+        if (elem != null) {
+          return nonAccentVietnamese(elem.description.toLowerCase()).indexOf(nonAccentVietnamese(args[0])) > -1;
+        }
       });
     }
   }

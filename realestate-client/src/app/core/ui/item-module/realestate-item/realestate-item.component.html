@@ -1,39 +1,39 @@
 <section *ngIf="dataLoaded; else skeleton">
-  <mat-card class="real-estate-card-item md-card align-content-around" (click)="onSelect(dataItem.id)" [style.background]="'#edeff4'">
+  <mat-card class="real-estate-card-item md-card align-content-around" (click)="onSelect(dataItem?.id)" [style.background]="'#edeff4'" *ngIf="dataItem!==null">
     <div class="img-hover-zoom">
         <!-- <img class="md-image card-img-top" [lazyLoad]="{{dataItem.realImages[0].imageLink}}" alt="picsum" [defaultImage]="defaultPic" [offset]=100> -->
-        <img *ngIf ="dataItem.realImages" class="card-img-top" src="{{dataItem.realImages[0].imageLink}}" alt="{{dataItem.realImages[0].description}}" onError="this.src='../../../../../assets/images/default.png'">
+        <img *ngIf ="dataItem?.realImages" class="card-img-top" src="{{dataItem?.realImages[0].imageLink}}" alt="" onError="this.src='../../../../../assets/images/default.png'">
         <mat-icon class="icon icon-like"  matTooltip="Thêm vào danh sách yêu thích">favorite_border</mat-icon>
         <button class="btn-sm btn-checked" type="button" *ngIf="isAppraised">Đã thẩm định</button>
     </div>
     <div class="md-card-body mt-2">
       <div class="price-address d-flex flex-row justify-content-between">
         <div class="text-left font-weight-bold">
-          <span class="rs-price">{{dataItem.cost | thousandSuffix: 1}}</span>
+          <span class="rs-price">{{dataItem?.cost | thousandSuffix: 1}}</span>
           <span>  |  </span>
-          <span class="span-acreage">{{dataItem.details.square}}m<sup>2</sup></span>
+          <span class="span-acreage">{{dataItem?.details?.square}}m<sup>2</sup></span>
         </div>
         <div class="text-right">
-          <p class="rs-location">{{ districtList | getDistrictNameFromId : dataItem.address.district}}</p>
+          <p class="rs-location">{{ districtList | getDistrictNameFromId : dataItem?.address?.district}}</p>
         </div>
       </div>
       <div class="rs-desc">
-        <p [matTooltip]="dataItem.description">{{dataItem.description}}</p>
+        <p [matTooltip]="dataItem.description">{{dataItem?.description}}</p>
       </div>
       <div class="rs-follow-count my-1">
-        <button mat-raised-button class="mat-button btn-block btn-bg-faded-blue">Có {{dataItem.viewCount}} lượt quan tâm</button>
+        <button mat-raised-button class="mat-button btn-block btn-bg-faded-blue">Có {{dataItem?.viewCount}} lượt quan tâm</button>
       </div>
     </div>
     <div class="md-card-footer d-flex justify-content-between">
-      <span class="rs-bed-room"><i class="fas fa-bed primary" matTooltip="Số lượng phòng ngủ"></i>{{dataItem.details.bedrooms}}</span>
-      <span class="rs-bath-room"><i class="fas fa-bath primary" matTooltip="Số lượng phòng tắm"></i>{{dataItem.details.bathrooms}}</span>
-      <span class="rs-location-direct"><i class="fas fa-location-arrow primary" matTooltip="Hướng"></i>{{dataItem.details.direction}}</span>
+      <span class="rs-bed-room"><i class="fas fa-bed primary" matTooltip="Số lượng phòng ngủ"></i>{{dataItem?.details?.bedrooms}}</span>
+      <span class="rs-bath-room"><i class="fas fa-bath primary" matTooltip="Số lượng phòng tắm"></i>{{dataItem?.details?.bathrooms}}</span>
+      <span class="rs-location-direct"><i class="fas fa-location-arrow primary" matTooltip="Hướng"></i>{{dataItem?.details?.direction}}</span>
     </div>
   </mat-card>
 </section>
 
 <ng-template #skeleton>
-  <mat-card class="real-estate-card-item md-card align-content-around" (click)="onSelect(dataItem.id)">
+  <mat-card class="real-estate-card-item md-card align-content-around" (click)="onSelect(dataItem?.id)">
     <div class="img-hover-zoom">
         <img class="md-image card-img-top" alt="">
         <!-- <mat-icon class="icon icon-like"  matTooltip="Thêm vào danh sách yêu thích">favorite_border</mat-icon> -->

@@ -37,7 +37,7 @@
             <div class="sortby-section row">
                 <div class="sort-left col-md-6 col-sm">
                     <div class="title">Mua bán nhà riêng quận {{districtInfo?.pathWithType}}</div>
-                    <div class="result-count">Có {{reList?.length > 0?reList?.length : 0}} nhà riêng bán tại quận
+                    <div class="result-count">Có {{(reList | search:query)?.length > 0?(reList | search:query)?.length : 0}} nhà riêng bán tại quận
                         {{districtInfo?.nameWithType}}</div>
                 </div>
                 <div class="sort-right col-md-6 col-sm">
