@@ -8,16 +8,16 @@ import org.neo4j.ogm.annotation.Relationship;
 public class GraphDetails {
 	@Id
 	private long id;
-	private long length;
-	private long width;
-	private long square;
+	private float length;
+	private float width;
+	private float square;
 	private String direction;
 	private String floors;
 	private String legalDocuments;
 	private int bathrooms;
 	private int bedrooms;
 	private String utilities;
-	private String others;	
+	private String others;
 	@Relationship(type = "HAVE", direction = Relationship.INCOMING)
 	private GraphTrade trade;
 
@@ -49,31 +49,47 @@ public class GraphDetails {
 		this.id = id;
 	}
 
-	public Long getLength() {
-		return length;
-	}
-
 	public void setLength(Long length) {
-		if(length !=null)
-		this.length = length;
-	}
-
-	public Long getWidth() {
-		return width;
+		if (length != null)
+			this.length = length;
 	}
 
 	public void setWidth(Long width) {
-		if(width !=null)
+		if (width != null)
+			this.width = width;
+	}
+
+	public float getLength() {
+		return length;
+	}
+
+	public void setLength(float length) {
+		this.length = length;
+	}
+
+	public float getWidth() {
+		return width;
+	}
+
+	public void setWidth(float width) {
 		this.width = width;
 	}
 
-	public Long getSquare() {
+	public float getSquare() {
 		return square;
 	}
 
-	public void setSquare(Long square) {
-		if(square !=null)
+	public void setSquare(float square) {
 		this.square = square;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public void setSquare(Long square) {
+		if (square != null)
+			this.square = square;
 	}
 
 	public String getDirection() {
