@@ -104,6 +104,7 @@ import { ContactComponent } from './core/ui/contact/contact.component';
 import { CookieService } from 'ngx-cookie-service';
 import { NewsModuleModule } from './core/ui/news-module/news-module.module';
 import { SearchPipe } from './ultility/pipe/search.pipe';
+import { SortPipe } from './ultility/pipe/sort.pipe';
 
 const config = new AuthServiceConfig([
   {
@@ -168,7 +169,8 @@ export function provideConfig() {
     UpdateReComponent,
     DeleteReComponent,
     ContactComponent,
-    SearchPipe
+    SearchPipe,
+    SortPipe
   ],
   imports: [
     OwlModule,

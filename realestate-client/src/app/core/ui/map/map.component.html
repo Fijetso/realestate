@@ -21,14 +21,14 @@
                 </mat-form-field>
                 <mat-form-field>
                     <mat-select placeholder="Quận /Huyện" formControlName="district" (selectionChange)="onChangeDistrict()">
-                        <mat-option *ngFor="let district of districtList" [value]="district.id">
+                        <mat-option *ngFor="let district of districtList | sort" [value]="district.id">
                             {{district.nameWithType}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field>
                     <mat-select placeholder="Xã Phường /Huyện" formControlName="ward">
-                        <mat-option *ngFor="let ward of wardList; let i=index" [value]="ward.id">
+                        <mat-option *ngFor="let ward of wardList |sort; let i=index" [value]="ward.id">
                             {{ward.nameWithType}}
                         </mat-option>
                     </mat-select>
@@ -37,7 +37,7 @@
             <div class="sortby-section row">
                 <div class="sort-left col-md-6 col-sm">
                     <div class="title">Mua bán nhà riêng quận {{districtInfo?.pathWithType}}</div>
-                    <div class="result-count">Có {{(reList | search:[query, newREKind])?.length > 0?(reList | search:[query,newREKind])?.length : 0}} kết quả với từ khoá 
+                    <div class="result-count" *ngIf="reList">Có {{(reList | search:[query, newREKind])?.length > 0?(reList | search:[query,newREKind])?.length : 0}} kết quả với từ khoá 
                     <span class="font-italic font-weight-bold"> {{query}}</span>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
 
                 </div>
             </div>
-            <div class="re-list ">
+            <div class="re-list" *ngIf="reList">
                 <div class="re-container row" *ngFor="let item of reList | search:[query, newREKind]; let i = index">
                     <app-realestate-item [dataItem]="item" class="col-md-6 col-sm"></app-realestate-item>
                 </div>
