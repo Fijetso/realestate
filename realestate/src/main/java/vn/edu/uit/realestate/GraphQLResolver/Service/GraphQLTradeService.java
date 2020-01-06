@@ -69,7 +69,7 @@ public class GraphQLTradeService {
 	@Autowired
 	ModelMapperService modelMapper;
 	public Trade saveTradeGraphQL(Long tradeId, String description, Long cost, Long userId, Long realEstateKindId,
-			Long tradeKindId, String detailAddress, Long wardId, Long length, Long width, Long square, String direction,
+			Long tradeKindId, String detailAddress, Long wardId, Float length, Float width, Float square, String direction,
 			String floors, String legalDocuments, int bathrooms, int bedrooms, String utilities, String others,
 			Float longitude, Float latitude, ArrayList<String> realImages, ArrayList<String> bluePrints) {
 		Trade trade = new Trade();

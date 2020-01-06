@@ -13,9 +13,9 @@ type Mutation {
 			userKindId: Long, imageLink: String): User
 	
 	saveTrade(tradeId: Long, description: String, cost: Long, userId: Long, realEstateKindId: Long, tradeKindId: Long,
-			detailAddress: String, wardId: Long, length: Long, width: Long, square: Long, direction: String,
+			detailAddress: String, wardId: Long, length: Float, width: Float, square: Float, direction: String,
 			floors: String, legalDocuments: String, bathrooms: Int, bedrooms: Int, utilities: String, 
-			others: String, longitude: Float, latitude: Float, realImages: [String]!, bluePrints: [String]): Trade
+			others: String, longitude: Float, latitude: Float, realImages: [String], bluePrints: [String]): Trade
 			
 	updateUser(userId: Long!, name: String, email: String, phone: String, birthdate: String, gender: Boolean,
 			job: String, userKindId: Long): User

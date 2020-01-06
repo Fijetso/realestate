@@ -47,8 +47,8 @@ public class Mutation implements GraphQLMutationResolver {
 	
 	
 	public Trade saveTrade(final Long tradeId, final String description, final Long cost, final Long userId, final Long realEstateKindId,
-			final Long tradeKindId, final String detailAddress, final Long wardId, final Long length, final Long width,
-			final Long square, final String direction, final String floors, final String legalDocuments,
+			final Long tradeKindId, final String detailAddress, final Long wardId, final Float length, final Float width,
+			final Float square, final String direction, final String floors, final String legalDocuments,
 			final int bathrooms, final int bedrooms, final String utilities, final String others, final Float longitude,
 			final Float latitude, final ArrayList<String> realImages, final ArrayList<String> bluePrints) {
 		return tradeService.saveTradeGraphQL(tradeId, description, cost, userId, realEstateKindId, tradeKindId, detailAddress,
