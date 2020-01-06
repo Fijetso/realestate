@@ -15,9 +15,9 @@ public class Details {
 	@Id
 	@GeneratedValue
 	private Long id;
-	private Long length;
-	private Long width;
-	private Long square;
+	private float length;
+	private float width;
+	private float square;
 	private String direction;
 	private String floors;
 	private String legalDocuments;
@@ -27,11 +27,13 @@ public class Details {
 	private String others;
 	@OneToOne(mappedBy = "details", fetch = FetchType.LAZY)
 	private Trade trade;
+
 	public Details() {
 		super();
 	}
-	public Details(Long length, Long width, Long square, String direction, String floors,
-			String legalDocuments, int bathrooms, int bedrooms, String utilities, String others) {
+
+	public Details(Long length, Long width, Long square, String direction, String floors, String legalDocuments,
+			int bathrooms, int bedrooms, String utilities, String others) {
 		super();
 		this.length = length;
 		this.width = width;
@@ -48,73 +50,108 @@ public class Details {
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Long getLength() {
+
+	public float getLength() {
 		return length;
 	}
+
+	public void setLength(float length) {
+		this.length = length;
+	}
+
+	public float getWidth() {
+		return width;
+	}
+
+	public void setWidth(float width) {
+		this.width = width;
+	}
+
+	public float getSquare() {
+		return square;
+	}
+
+	public void setSquare(float square) {
+		this.square = square;
+	}
+
 	public void setLength(Long length) {
 		this.length = length;
 	}
-	public Long getWidth() {
-		return width;
-	}
+
 	public void setWidth(Long width) {
 		this.width = width;
 	}
-	public Long getSquare() {
-		return square;
-	}
+
 	public void setSquare(Long square) {
 		this.square = square;
 	}
+
 	public String getDirection() {
 		return direction;
 	}
+
 	public void setDirection(String direction) {
 		this.direction = direction;
 	}
+
 	public String getFloors() {
 		return floors;
 	}
+
 	public void setFloors(String floors) {
 		this.floors = floors;
 	}
+
 	public String getLegalDocuments() {
 		return legalDocuments;
 	}
+
 	public void setLegalDocuments(String legalDocuments) {
 		this.legalDocuments = legalDocuments;
 	}
+
 	public int getBathrooms() {
 		return bathrooms;
 	}
+
 	public void setBathrooms(int bathrooms) {
 		this.bathrooms = bathrooms;
 	}
+
 	public int getBedrooms() {
 		return bedrooms;
 	}
+
 	public void setBedrooms(int bedrooms) {
 		this.bedrooms = bedrooms;
 	}
+
 	public String getUtilities() {
 		return utilities;
 	}
+
 	public void setUtilities(String utilities) {
 		this.utilities = utilities;
 	}
+
 	public String getOthers() {
 		return others;
 	}
+
 	public void setOthers(String others) {
 		this.others = others;
 	}
+
 	public Trade getTrade() {
 		return trade;
 	}
+
 	public void setTrade(Trade trade) {
 		this.trade = trade;
-	} 
 	}
+}

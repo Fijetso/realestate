@@ -31,6 +31,7 @@ public class RecommenderSystemController {
     	List<GraphTrade> foundTrade = graphTradeRepository.recommendTrades(suggestModel.getUserJob(), suggestModel.getDistrictIdList());
         return new ResponseEntity<>(foundTrade,HttpStatus.OK);
     }
+	
 	@GetMapping("trades/recommend/fengshui")
     public ResponseEntity<List<GraphTrade>> recommendTradeByUserAge(@RequestParam(value="birthdate") String birthdate, @RequestParam(value="isFemale") boolean isFemale) {
     	List<GraphTrade> foundTrade = tradeService.recommendTradesByUserAge(birthdate, isFemale);
