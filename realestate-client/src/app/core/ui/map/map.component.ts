@@ -1,3 +1,5 @@
+import { TradeKind } from 'src/app/model/trade-kind/trade-kind';
+import { RealEstateKind } from './../../../model/real-estate-kind/real-estate-kind';
 import { ApiService } from 'src/app/services/api/api.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../../environments/environment';
@@ -8,6 +10,7 @@ import 'leaflet-draw';
 import { FormBuilder } from '@angular/forms';
 // import * as LD from 'leaflet-draw'
 import { ActivatedRoute } from '@angular/router';
+import { nonAccentVietnamese } from './../../../ultility/functions/remove-sign';
 
 const iconRetinaUrl = 'assets/map/marker-icon-2x.png';
 const iconUrl = 'assets/map/marker-icon.png';
@@ -40,27 +43,6 @@ const iconDefault = L.icon({
 //   html: `<div style="${markerHtmlStyles}">12</div>`
 // })
 L.Marker.prototype.options.icon = iconDefault;
-const purpose = [
-  {
-    id: 1,
-    name: 'Mua'
-  },
-  {
-    id: 2,
-    name: 'Thuê'
-  },
-];
-
-const reKinds = [
-  {
-    id: 1,
-    name: 'Chung cư/Căn hộ'
-  },
-  {
-    id: 2,
-    name: 'Nhà riêng'
-  },
-];
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -82,10 +64,11 @@ export class MapComponent implements AfterViewInit, OnInit {
   tinh: string;
   districtInfo: any;
   searchDetail: any;
-  purpose: { id: number; name: string; }[];
-  reKinds: { id: number; name: string; }[];
+  tradeKinds: any;
+  reKinds: any;
   districtList: any;
   wardList: any;
+  query: any;
   constructor(private markerService: MarkerService,
               private http: HttpClient,
               private api: ApiService,
@@ -98,19 +81,19 @@ export class MapComponent implements AfterViewInit, OnInit {
         this.curLong = pos.coords.longitude;
       });
     }
-    this.purpose = purpose;
-    this.reKinds = reKinds;
+    this.getTradeKind();
+    this.getREKind();
     this.quan = this.route.snapshot.queryParamMap.get('quan');
     this.tinh = this.route.snapshot.queryParamMap.get('tinh');
     this.api.getTradeFromDistrict(this.quan).subscribe(res => {
       this.reList = res;
-      // console.log(res);
+      console.log(res);
     });
     this.getDistrictName(this.tinh , this.quan);
     this.getAllDistrict(this.tinh);
     this.getAllWardFromDistrict(this.tinh , this.quan);
     this.searchDetail = this.fb.group({
-      purpose: 1,
+      tradeKind: 1,
       query: '',
       reKind: 1,
       district: +this.quan,
@@ -337,5 +320,26 @@ export class MapComponent implements AfterViewInit, OnInit {
 
   onSubmitSearch() {
     console.log(this.searchDetail.value);
+  }
+
+  onKey($event) {
+    console.log(nonAccentVietnamese($event.target.value) );
+    this.query = $event.target.value;
+  }
+
+  getTradeKind() {
+    this.api.getTradeKind().subscribe(tradeKinds => {
+      // this.tradeKind.concat(tradeKind);
+      console.log( tradeKinds);
+      this.tradeKinds = tradeKinds;
+    });
+  }
+
+  getREKind() {
+    this.api.getREKind().subscribe(reKinds => {
+      // this.reKinds.concat(reKinds);
+      console.log(reKinds);
+      this.reKinds = reKinds;
+    });
   }
 }

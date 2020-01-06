@@ -3,14 +3,14 @@
         <form [formGroup]='searchDetail' class="" (ngSubmit)="onSubmitSearch()">
             <div class="search-section row">
                 <mat-form-field>
-                    <mat-select placeholder="Mục đích sử dụng" formControlName="purpose">
-                        <mat-option *ngFor="let purpose of purpose" [value]="purpose.id">
-                            {{purpose.name}}
+                    <mat-select placeholder="Mục đích sử dụng" formControlName="tradeKind">
+                        <mat-option *ngFor="let tradeKind of tradeKinds" [value]="tradeKind.id">
+                            {{tradeKind.name}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field>
-                    <input matInput placeholder="Nhập từ khoá tìm kiếm" formControlName="query">
+                    <input matInput placeholder="Nhập từ khoá tìm kiếm" formControlName="query" (keyup) = "onKey($event)">
                 </mat-form-field>
                 <mat-form-field>
                     <mat-select placeholder="Loại bất động sản" formControlName="reKind">
@@ -28,7 +28,7 @@
                 </mat-form-field>
                 <mat-form-field>
                     <mat-select placeholder="Xã Phường /Huyện" formControlName="ward">
-                        <mat-option *ngFor="let ward of wardList" [value]="ward.id">
+                        <mat-option *ngFor="let ward of wardList; let i=index" [value]="ward.id">
                             {{ward.nameWithType}}
                         </mat-option>
                     </mat-select>
@@ -37,7 +37,7 @@
             <div class="sortby-section row">
                 <div class="sort-left col-md-6 col-sm">
                     <div class="title">Mua bán nhà riêng quận {{districtInfo?.pathWithType}}</div>
-                    <div class="result-count">Có {{reList?.length > 0?reList?.length : 0}} nhà riêng bán tại quận
+                    <div class="result-count">Có {{(reList | search:query)?.length > 0?(reList | search:query)?.length : 0}} nhà riêng bán tại quận
                         {{districtInfo?.nameWithType}}</div>
                 </div>
                 <div class="sort-right col-md-6 col-sm">
@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="re-list ">
-                <div class="re-container row" *ngFor="let item of reList; let i = index">
+                <div class="re-container row" *ngFor="let item of reList | search:query; let i = index">
                     <app-realestate-item [dataItem]="item" class="col-md-6 col-sm"></app-realestate-item>
                 </div>
             </div>

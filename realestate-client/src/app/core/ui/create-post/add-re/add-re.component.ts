@@ -28,6 +28,11 @@ export class AddReComponent implements OnInit, AfterViewInit {
   userInfo: any;
   startDate: any;
   realImageLink: any;
+  reKinds: any;
+  tradeKinds: any;
+  districtList: any;
+  wardList: any;
+
   constructor(private api: ApiService, private fb: FormBuilder, private router: Router) {
     this.api.getAllUserKind().subscribe(res => {
       // console.log(res);
@@ -40,6 +45,11 @@ export class AddReComponent implements OnInit, AfterViewInit {
         this.curLong = pos.coords.longitude;
       });
     }
+    this.getREKind();
+    this.getTradeKinds();
+    this.getAllDistrict(79);
+    this.getAllWardFromDistrict(79 , 774);
+    this.getUserKinds();
     this.userInfo = JSON.parse(localStorage.getItem('loginInfo'));
     this.startDate = new Date(1997, 10, 19);
   }
@@ -55,27 +65,25 @@ export class AddReComponent implements OnInit, AfterViewInit {
         id: this.userInfo ? this.userInfo.id : null,
         name: this.userInfo ? this.userInfo.name : null,
         email: this.userInfo ? this.userInfo.email : null,
-        phone: '0985922740',
+        phone: '0975922740',
         password: '',
         dob: new Date(1997, 10, 19),
-        gender: 'true',
-        userKind: '1'
+        gender: true,
+        userKind: 1
       }),
-      tradeKind: '1',
-      realEstateKind: '3',
+      tradeKind: 1,
+      realEstateKind: 1,
       address: this.fb.group({
-        id: 5,
         detail: 'Số nhà 94',
-        ward: '27313',
-        district: '774',
-        cityOrProvince: '79'
+        ward: 27313,
+        district: 774,
+        cityOrProvince: 79
       }),
       details: this.fb.group({
-        id: 5,
         length: 9,
         width: 4,
         square: 37,
-        direction: '2',
+        direction: 2,
         floors: '1 trệt + 1 lầu',
         legalDocuments: 'Sổ hồng riêng',
         bathrooms: 1,
@@ -84,7 +92,6 @@ export class AddReComponent implements OnInit, AfterViewInit {
         others: 'Bán nhà riêng quận 5, đang cho thuê 6tr/tháng sổ hồng chính chủ'
       }),
       coordinate: this.fb.group({
-        id: 5,
         longitude: 106.681,
         latitude: 10.7614
       }),
@@ -110,7 +117,6 @@ export class AddReComponent implements OnInit, AfterViewInit {
     //     console.log(this.realEstate.value);
     //   });
     // }
-    // tslint:disable-next-line: no-console
     console.log(this.realEstate.value);
   }
 
@@ -137,5 +143,43 @@ export class AddReComponent implements OnInit, AfterViewInit {
   onSelectFile() {
     const element: HTMLElement = document.querySelector('input[type="file"]') as HTMLElement;
     element.click();
+  }
+
+  getREKind() {
+    this.api.getREKind().subscribe(reKinds => {
+      this.reKinds = reKinds;
+      // console.log(this.reKinds);
+    });
+  }
+
+  getTradeKinds() {
+    this.api.getTradeKind().subscribe(tradeKinds => {
+      this.tradeKinds = tradeKinds;
+      // console.log(this.tradeKinds);
+    });
+  }
+
+  getAllDistrict(provinceId) {
+    this.api.getDistrictFromProvinceId(provinceId).subscribe(districtList => {
+      this.districtList = districtList;
+    });
+  }
+
+  getAllWardFromDistrict(provinceId, districtId) {
+    this.api.getWardFromDistrictId(provinceId, districtId).subscribe(wardList => {
+      console.log(wardList);
+      this.wardList = wardList;
+    });
+  }
+
+  onChangeDistrict() {
+    const district = this.realEstate.get('address').get('district').value;
+    this.getAllWardFromDistrict(79, district);
+  }
+
+  getUserKinds(){
+    this.api.getAllUserKind().subscribe(userKinds => {
+      this.userKinds = userKinds as UserKind[];
+    });
   }
 }
