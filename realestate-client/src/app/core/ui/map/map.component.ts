@@ -162,7 +162,7 @@ export class MapComponent implements AfterViewInit, OnInit {
   ngAfterViewInit(): void {
     this.initMap();
     this.loadGeoJsonData();
-    this.markerService.makeCapitalMarkers(this.map);
+    this.markerService.makeCapitalMarkers(this.searchDetail.get('district').value, this.map);
   }
 
   loadGeoJsonData() {

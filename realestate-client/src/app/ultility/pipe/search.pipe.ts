@@ -8,9 +8,11 @@ export class SearchPipe implements PipeTransform {
 
   transform(value: any, ...args: any[]): any {
     // console.log(args);
-    if (args[0][0] === undefined || args[0][0] == null) {
+    if (args[0][0] === undefined) {
       return value.filter(elem => {
-        return elem.realEstateKind.id === args[0][1];
+        if ( elem !== null && elem !== undefined) {
+          return elem.realEstateKind.id === args[0][1];
+        }
       });
     } else {
       return value.filter( elem => {
