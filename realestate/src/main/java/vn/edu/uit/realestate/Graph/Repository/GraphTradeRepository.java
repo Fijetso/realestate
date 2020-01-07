@@ -17,10 +17,16 @@ public interface GraphTradeRepository extends Neo4jRepository<GraphTrade, Long> 
 	@Query("MATCH (t:Trade) WHERE t.Id={id} SET t.tradeStatus = {tradeStatus} RETURN t")
 	public GraphTrade updateTradeStatus(long id, String tradeStatus);
 
-	@Query("MATCH (u:User)-[p]-(t:Trade)-[h]-(a:Address) WHERE CASE WHEN NOT {job} IS NULL THEN "
-			+ "u.job = {job} ELSE TRUE END OR CASE WHEN NOT  {districtId} IS NULL THEN a.district = {districtId}"
-			+ " ELSE TRUE END WITH t LIMIT 5 OPTIONAL MATCH (t)-[W]-(w) RETURN *")
-	public List<GraphTrade> recommendTrades(@Param("job") String job, @Param("districtId") List<Long> districtId);
+//	@Query("MATCH (u:User)-[p]-(t:Trade)-[h]-(a:Address) WHERE CASE WHEN NOT {job} IS NULL THEN "
+//			+ "u.job = {job} ELSE TRUE END OR CASE WHEN NOT  {districtId} IS NULL THEN a.district = {districtId}"
+//			+ " ELSE TRUE END WITH t LIMIT 4 OPTIONAL MATCH (t)-[W]-(w) RETURN *")
+	@Query("MATCH (d:Details)-[:HAVE]-(t:Trade)-[:HAVE]-(a:Address), (t)-[:POST]-(u:User) "
+			+ "WHERE CASE WHEN NOT {districtId} IS NULL THEN a.district IN {districtId} ELSE TRUE END "
+			+ "OR CASE WHEN NOT {job} IS NULL THEN u.job = {job} ELSE TRUE END "
+			+ "WITH t, abs(t.cost-{priceBillion}*1000000000) AS priceDist, abs(d.square-{metterSquare}) AS squareDist ORDER BY priceDist, squareDist "
+			+ "WITH t LIMIT 4 OPTIONAL MATCH  (t)-[W]-(w) RETURN *")
+	public List<GraphTrade> recommendTrades(@Param("job") String job, @Param("districtId") List<Long> districtId,
+			@Param("priceBillion") Integer priceBillion, @Param("metterSquare") Float metterSquare);
 
 	@Query("MATCH (d:Details)--(t:Trade) WHERE d.direction=~{direction} OPTIONAL MATCH (w)-[W]-(t) RETURN *")
 	public List<GraphTrade> recommendTradesByUserAge(@Param("direction") String directionWithRegex);
