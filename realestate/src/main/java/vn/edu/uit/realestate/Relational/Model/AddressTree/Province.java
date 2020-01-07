@@ -24,7 +24,7 @@ public class Province {
 	}
 	public Province(Long id, String name, String slug, String nameWithType, List<District> district) {
 		super();
-		id = id;
+		this.id = id;
 		this.name = name;
 		this.slug = slug;
 		this.nameWithType = nameWithType;

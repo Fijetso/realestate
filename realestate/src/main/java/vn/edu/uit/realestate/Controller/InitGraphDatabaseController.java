@@ -7,10 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import vn.edu.uit.realestate.Graph.Model.GraphRealEstateKind;
 import vn.edu.uit.realestate.Graph.Model.GraphTrade;
-import vn.edu.uit.realestate.Graph.Model.GraphTradeKind;
-import vn.edu.uit.realestate.Graph.Model.GraphUser;
 import vn.edu.uit.realestate.Service.InitGraphDatabaseService;
 
 @RestController

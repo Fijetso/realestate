@@ -18,7 +18,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import lombok.extern.slf4j.Slf4j;
-import vn.edu.uit.realestate.ExceptionHandler.JwtTokenMissingException;
 
 @Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
