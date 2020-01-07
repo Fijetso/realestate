@@ -22,7 +22,7 @@ export class HotPlaceItemComponent implements OnInit, OnDestroy {
   }
 
   getTradeByDistrict(districtId: any) {
-    this.router.navigate(['/tim-kiem'],{queryParams: {tinh: 79,quan: districtId}});
+    this.router.navigate(['/tim-kiem'],{queryParams: {tinh: 79, quan: districtId}});
   }
   onSelect(districtId: any) {
     this.getTradeByDistrict(districtId);

@@ -22,14 +22,18 @@
               "src/assets"
             ],
             "styles": [
-              {"input": "src/my-theme.scss"},
+              {
+                "input": "src/my-theme.scss"
+              },
               "src/styles.scss",
               "node_modules/font-awesome/scss/font-awesome.scss",
               "node_modules/owl.carousel/dist/assets/owl.carousel.min.css",
               "node_modules/owl.carousel/dist/assets/owl.theme.default.min.css",
               "node_modules/animate.css/animate.min.css",
               "node_modules/leaflet/dist/leaflet.css",
-              "node_modules/leaflet-draw/dist/leaflet.draw.css"
+              "node_modules/leaflet-draw/dist/leaflet.draw.css",
+              "node_modules/mapbox-gl/dist/mapbox-gl.css",
+              "node_modules/@mapbox/mapbox-gl-geocoder/lib/mapbox-gl-geocoder.css"
             ],
             "scripts": [
               "node_modules/chart.js/dist/Chart.js",
@@ -72,7 +76,7 @@
           "options": {
             "browserTarget": "realestate-client:build",
             "proxyConfig": "proxy.conf.json",
-            "ssl":true,
+            "ssl": true,
             "sslCert": "./ssl/server.crt",
             "sslKey": "./ssl/server.key"
           },
@@ -124,9 +128,10 @@
         }
       },
       "schematics": {
-  "@schematics/angular:component": {
-    "styleext": "scss"
-  }}
+        "@schematics/angular:component": {
+          "styleext": "scss"
+        }
+      }
     },
     "realestate-client-e2e": {
       "root": "e2e/",

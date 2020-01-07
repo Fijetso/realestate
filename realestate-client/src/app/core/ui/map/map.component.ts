@@ -1,5 +1,3 @@
-import { TradeKind } from 'src/app/model/trade-kind/trade-kind';
-import { RealEstateKind } from './../../../model/real-estate-kind/real-estate-kind';
 import { ApiService } from 'src/app/services/api/api.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../../environments/environment';
@@ -8,9 +6,7 @@ import { Component, AfterViewInit, Input, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-draw';
 import { FormBuilder } from '@angular/forms';
-// import * as LD from 'leaflet-draw'
 import { ActivatedRoute } from '@angular/router';
-import { nonAccentVietnamese } from './../../../ultility/functions/remove-sign';
 
 const iconRetinaUrl = 'assets/map/marker-icon-2x.png';
 const iconUrl = 'assets/map/marker-icon.png';
@@ -25,23 +21,6 @@ const iconDefault = L.icon({
   tooltipAnchor: [16, -28],
   shadowSize: [41, 41]
 });
-
-// const markerHtmlStyles = `
-// background-color: #FD784F;
-// width: 3rem;
-// height: 3rem;
-// display: block;
-// position: relative;
-// border-radius: 3rem 3rem 0;
-// transform: rotate(45deg);
-// text-align: center;
-// border: 1px solid #FFFFFF`;
-// const customIcon = L.divIcon({
-//   className: "my-custom-pin",
-//   iconAnchor: [0, 24],
-//   popupAnchor: [0, -36],
-//   html: `<div style="${markerHtmlStyles}">12</div>`
-// })
 L.Marker.prototype.options.icon = iconDefault;
 @Component({
   selector: 'app-map',
@@ -69,6 +48,7 @@ export class MapComponent implements AfterViewInit, OnInit {
   districtList: any;
   wardList: any;
   query: any;
+  newREKind: any;
   constructor(private markerService: MarkerService,
               private http: HttpClient,
               private api: ApiService,
@@ -92,6 +72,7 @@ export class MapComponent implements AfterViewInit, OnInit {
     this.getDistrictName(this.tinh , this.quan);
     this.getAllDistrict(this.tinh);
     this.getAllWardFromDistrict(this.tinh , this.quan);
+    this.newREKind = 1;
     this.searchDetail = this.fb.group({
       tradeKind: 1,
       query: '',
@@ -119,27 +100,12 @@ export class MapComponent implements AfterViewInit, OnInit {
       });
     this.layer = mapTile;
     const streetTile = L.tileLayer(
-      // 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
       'https://1.base.maps.api.here.com' +
       '/maptile/2.1/streettile/newest/normal.day/{z}/{x}/{y}/256/png' +
       '?app_id=' + environment.heremap.appId + '&app_code=' + environment.heremap.appCode +
       '&lg=' + environment.heremap.defaultLang
       , {
         maxZoom: 19,
-        // attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-        attribution: '&copy; <a href="http://developer.here.com">HERE</a>',
-        updateWhenZooming: true,
-      });
-
-    const aLabelTile = L.tileLayer(
-      // 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-      'https://1.base.maps.api.here.com' +
-      '/maptile/2.1/alabeltile/newest/normal.day/{z}/{x}/{y}/256/png' +
-      '?app_id=' + environment.heremap.appId + '&app_code=' + environment.heremap.appCode +
-      '&lg=' + environment.heremap.defaultLang
-      , {
-        maxZoom: 19,
-        // attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         attribution: '&copy; <a href="http://developer.here.com">HERE</a>',
         updateWhenZooming: true,
       });
@@ -154,13 +120,12 @@ export class MapComponent implements AfterViewInit, OnInit {
       Streets: streetTile,
     };
     L.control.layers(baseMaps).addTo(this.map);
-    // mapTile.addTo(this.map);
   }
 
   ngAfterViewInit(): void {
     this.initMap();
     this.loadGeoJsonData();
-    this.markerService.makeCapitalMarkers(this.map);
+    this.markerService.makeCapitalMarkers(this.searchDetail.get('district').value, this.map);
   }
 
   loadGeoJsonData() {
@@ -308,7 +273,7 @@ export class MapComponent implements AfterViewInit, OnInit {
 
   getAllWardFromDistrict(provinceId, districtId) {
     this.api.getWardFromDistrictId(provinceId, districtId).subscribe(wardList => {
-      console.log(wardList);
+      // console.log(wardList);
       this.wardList = wardList;
     });
   }
@@ -316,6 +281,13 @@ export class MapComponent implements AfterViewInit, OnInit {
   onChangeDistrict() {
     const district = this.searchDetail.get('district').value;
     this.getAllWardFromDistrict(this.tinh, district);
+    this.reList = [];
+    this.api.getTradeFromDistrict(district).subscribe(res => {
+      this.reList = res;
+      // console.log(res);
+    });
+    this.getDistrictName(this.tinh, district);
+    this.markerService.makeCapitalMarkers(district, this.map);
   }
 
   onSubmitSearch() {
@@ -323,23 +295,27 @@ export class MapComponent implements AfterViewInit, OnInit {
   }
 
   onKey($event) {
-    console.log(nonAccentVietnamese($event.target.value) );
+    // console.log(nonAccentVietnamese($event.target.value) );
     this.query = $event.target.value;
   }
 
   getTradeKind() {
     this.api.getTradeKind().subscribe(tradeKinds => {
-      // this.tradeKind.concat(tradeKind);
-      console.log( tradeKinds);
+      // console.log( tradeKinds);
       this.tradeKinds = tradeKinds;
     });
   }
 
   getREKind() {
     this.api.getREKind().subscribe(reKinds => {
-      // this.reKinds.concat(reKinds);
-      console.log(reKinds);
+      // console.log(reKinds);
       this.reKinds = reKinds;
     });
+  }
+
+  onChangeREKind() {
+    const reKind = this.searchDetail.get('reKind').value;
+    this.newREKind = reKind;
+    // console.log(reKind);
   }
 }

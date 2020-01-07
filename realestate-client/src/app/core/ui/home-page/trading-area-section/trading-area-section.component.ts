@@ -14,6 +14,7 @@ export class TradingAreaSectionComponent implements OnInit {
   ngOnInit() {
     this.api.getDistrictFromProvinceId(79).subscribe(distList => {
       this.hotPlaceList = distList;
+      // console.log(distList);
     });
   }
 

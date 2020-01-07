@@ -60,6 +60,8 @@ import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {CKEditorModule} from 'ngx-ckeditor';
+import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
+
 
 import { RealEstateWrapperComponent } from './components/real-estate/real-estate-wrapper/real-estate-wrapper.component';
 import { AlertComponent } from './core/modal/alert/alert.component';
@@ -96,7 +98,6 @@ import { GetCityPipe } from './ultility/pipe/get-city.pipe';
 import { GetDistrictNameFromIdPipe } from './ultility/pipe/get-district-name-from-id.pipe';
 import { ThousandSuffixPipe } from './ultility/pipe/thousand-suffix.pipe';
 import { SearchPageComponent } from './core/ui/search-page/search-page.component';
-import { PopupRendererComponent } from './core/ui/map/popup-renderer/popup-renderer.component';
 import { AddReComponent } from './core/ui/create-post/add-re/add-re.component';
 import { UpdateReComponent } from './core/ui/create-post/update-re/update-re.component';
 import { DeleteReComponent } from './core/ui/create-post/delete-re/delete-re.component';
@@ -104,6 +105,8 @@ import { ContactComponent } from './core/ui/contact/contact.component';
 import { CookieService } from 'ngx-cookie-service';
 import { NewsModuleModule } from './core/ui/news-module/news-module.module';
 import { SearchPipe } from './ultility/pipe/search.pipe';
+import { SortPipe } from './ultility/pipe/sort.pipe';
+import { DisplayMapComponent } from './core/ui/map-box/display-map/display-map.component';
 
 const config = new AuthServiceConfig([
   {
@@ -163,12 +166,13 @@ export function provideConfig() {
     SearchPageComponent,
     MapModuleComponent,
     MapComponent,
-    PopupRendererComponent,
     AddReComponent,
     UpdateReComponent,
     DeleteReComponent,
     ContactComponent,
-    SearchPipe
+    SearchPipe,
+    SortPipe,
+    DisplayMapComponent
   ],
   imports: [
     OwlModule,
@@ -219,7 +223,11 @@ export function provideConfig() {
     AccountModule,
     NgbModule,
     NewsModuleModule,
-    CKEditorModule
+    CKEditorModule,
+    NgxMapboxGLModule.withConfig({
+      accessToken: environment.mapbox.accessToken,
+      geocoderAccessToken: environment.mapbox.geocoderAccessToken
+    })
   ],
   providers: [
     AuthenticationService,

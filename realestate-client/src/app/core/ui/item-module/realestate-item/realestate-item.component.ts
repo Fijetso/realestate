@@ -10,6 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class RealestateItemComponent implements OnInit {
   realImages: any;
+  mailText: string;
   constructor(private router: Router, private api: ApiService, private route: ActivatedRoute) {
     this.getDistrictFromProvinceId();
   }
@@ -20,6 +21,7 @@ export class RealestateItemComponent implements OnInit {
   selectedItem: null;
   offset = 100;
   ngOnInit() {
+    console.log(this.dataItem);
   }
   getDistrictFromProvinceId() {
    this.api.getDistrictFromProvinceId(79).subscribe(res => {
@@ -32,5 +34,9 @@ export class RealestateItemComponent implements OnInit {
   }
   onSelect(slug: any) {
     this.router.navigate(['mua', slug]);
+  }
+  mailTo(email) {
+    this.mailText = 'mailto:' + email;
+    window.location.href = this.mailText;
   }
 }
