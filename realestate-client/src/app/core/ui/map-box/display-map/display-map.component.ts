@@ -38,6 +38,7 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
   cursorStyle: string;
   selectedElement: GeoJsonProperties;
   selectedLngLat: LngLat;
+  selectedMarker: LngLat;
   constructor(private markerService: MarkerService,
               private http: HttpClient,
               private api: ApiService,

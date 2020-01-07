@@ -78,27 +78,33 @@
                 <mgl-control mglNavigation position="top-right"></mgl-control>
 
                 <!-- geojson -->
-                <mgl-layer
-      id="states-layer"
-      type="fill"
-      [source]="{
-        'type': 'geojson',
-        'data': 'assets/map/vietnam-district.geojson'
-      }"
-      [paint]="{
-        'fill-color': 'rgba(200, 100, 240, 0.4)',
-        'fill-outline-color': 'rgba(200, 100, 240, 1)'
-      }"
-      (mouseEnter)="cursorStyle = 'pointer'"
-      (mouseLeave)="cursorStyle = ''"
-      (click)="onClick($event)"
-    ></mgl-layer>
-    <mgl-popup
-      *ngIf="selectedLngLat"
-      [lngLat]="selectedLngLat"
-    >
-      <span [innerHTML]="selectedElement?.Ten"></span>
-    </mgl-popup>
+                <mgl-layer id="states-layer" type="fill" [source]="{
+                                    'type': 'geojson',
+                                    'data': 'assets/map/vietnam-district.geojson'
+                                }" [paint]="{
+                                'fill-color': 'rgba(200, 100, 240, 0.1)',
+                                'fill-outline-color': 'rgba(200, 100, 240, 1)'
+                                }" (mouseEnter)="cursorStyle = 'pointer'" (mouseLeave)="cursorStyle = ''"
+                    (click)="onClick($event)">
+                </mgl-layer>
+                <mgl-popup *ngIf="selectedLngLat" [lngLat]="selectedLngLat">
+                    <p class="text-center font-weight-bold" [innerHTML]="selectedElement?.Ten"></p>
+                    <img src="assets/images/default.png" alt="Mặc định">
+                </mgl-popup>
+                <!-- render marker -->
+                <mgl-marker #myMarker *ngFor="let item of reList; let i=index"
+                    [lngLat]=[item?.coordinate?.longitude,item?.coordinate?.latitude]
+                    >
+                    <div [ngStyle]="{
+                                'background-image': 'url(https://www.mapbox.com/mapbox-gl-js/assets/washington-monument.jpg)',
+                                'background-size': 'cover',
+                                width: '30px',
+                                height: '30px',
+                                'border-radius': '50%',
+                                cursor: 'pointer'
+                                }">
+                    </div>
+                </mgl-marker>
             </mgl-map>
         </div>
     </div>
