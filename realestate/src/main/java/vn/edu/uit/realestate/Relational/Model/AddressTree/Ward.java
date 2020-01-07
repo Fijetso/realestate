@@ -1,6 +1,5 @@
 package vn.edu.uit.realestate.Relational.Model.AddressTree;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -12,7 +11,6 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import vn.edu.uit.realestate.Relational.Model.Address;
-import vn.edu.uit.realestate.Relational.Model.RealImage;
 
 /**
  * @author HUYEN

@@ -32,7 +32,7 @@ public class District {
 	public District(Long id, String name, String slug, String nameWithType, String pathWithType, Province province,
 			List<Ward> ward) {
 		super();
-		id = id;
+		this.id = id;
 		this.name = name;
 		this.slug = slug;
 		this.nameWithType = nameWithType;
@@ -44,7 +44,7 @@ public class District {
 		return id;
 	}
 	public void setId(Long id) {
-		id = id;
+		this.id = id;
 	}
 	public String getName() {
 		return name;
