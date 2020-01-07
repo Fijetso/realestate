@@ -1,34 +1,18 @@
 import { ApiService } from 'src/app/services/api/api.service';
 import { HttpClient } from '@angular/common/http';
-import { Component, AfterViewInit, Input, OnInit } from '@angular/core';
-import * as L from 'leaflet';
-import 'leaflet-draw';
+import { Component, AfterViewInit, Input, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { MarkerService } from '../../../../services/map/marker.service';
-import { Map } from 'mapbox-gl';
+import { LngLat, MapMouseEvent, MapLayerMouseEvent } from 'mapbox-gl';
+import { GeoJsonProperties } from 'geojson';
 
-const iconRetinaUrl = 'assets/map/marker-icon-2x.png';
-const iconUrl = 'assets/map/marker-icon.png';
-const shadowUrl = 'assets/map/marker-shadow.png';
-const iconDefault = L.icon({
-  iconRetinaUrl,
-  iconUrl,
-  shadowUrl,
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  tooltipAnchor: [16, -28],
-  shadowSize: [41, 41]
-});
-L.Marker.prototype.options.icon = iconDefault;
 @Component({
   selector: 'app-display-map',
   templateUrl: './display-map.component.html',
   styleUrls: ['./display-map.component.scss']
 })
 export class DisplayMapComponent implements AfterViewInit, OnInit {
-  protected mapGL: Map;
   protected geoData;
   protected curLat;
   protected curLong;
@@ -51,11 +35,16 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
   newREKind: any;
   layerId = 'streets';
   style: string;
+  cursorStyle: string;
+  selectedElement: GeoJsonProperties;
+  selectedLngLat: LngLat;
   constructor(private markerService: MarkerService,
               private http: HttpClient,
               private api: ApiService,
               private fb: FormBuilder,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private changeDetectorRef: ChangeDetectorRef
+              ) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(pos => {
         // console.log(pos.coords);
@@ -157,5 +146,10 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
     const reKind = this.searchDetail.get('reKind').value;
     this.newREKind = reKind;
     // console.log(reKind);
+  }
+
+  onClick(evt: MapLayerMouseEvent) {
+    this.selectedLngLat = evt.lngLat;
+    this.selectedElement = evt.features[0].properties;
   }
 }
