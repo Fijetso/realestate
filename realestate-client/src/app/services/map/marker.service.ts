@@ -74,13 +74,5 @@ export class MarkerService {
         }
       }
     });
-    // const marker = L.marker([10.823099, 106.629662]).bindPopup(this.popupService.makeCapitalPopup(data))
-    // .addTo(map);
-  }
-  makeCapitalCircleMarkers(map: L.Map): void {
-    const circle = L.circleMarker([10.823099, 106.629662], { radius: 400 })
-      // .bindPopup(this.popupService.makeCapitalPopup(data))
-      .addTo(map);
-    console.log(circle);
   }
 }

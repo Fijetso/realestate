@@ -30,5 +30,9 @@ export const environment = {
     zalo: {
       appId: '3698477159127928270'
     }
+  },
+  mapbox: {
+    accessToken: 'pk.eyJ1IjoiZGFuaHRoYW5oNDE4IiwiYSI6ImNrNDNwangwNjBhZHQzbHJ1NzVkcDRqMzMifQ.xo0_loggxzreh2IHVCPQHg',
+    geocoderAccessToken: 'sk.eyJ1IjoiZGFuaHRoYW5oNDE4IiwiYSI6ImNrNTNsMGN3YTA1MGszbnBieTRwbmY0ZHUifQ.Mdx8Igop1_KOl7kgiN4ung'
   }
 };

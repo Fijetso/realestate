@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PopupRendererComponent } from './popup-renderer.component';
+import { DisplayMapComponent } from './display-map.component';
 
-describe('PopupRendererComponent', () => {
-  let component: PopupRendererComponent;
-  let fixture: ComponentFixture<PopupRendererComponent>;
+describe('DisplayMapComponent', () => {
+  let component: DisplayMapComponent;
+  let fixture: ComponentFixture<DisplayMapComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PopupRendererComponent ]
+      declarations: [ DisplayMapComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PopupRendererComponent);
+    fixture = TestBed.createComponent(DisplayMapComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
