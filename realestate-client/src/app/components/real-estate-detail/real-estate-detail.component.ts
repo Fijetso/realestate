@@ -28,6 +28,7 @@ export class RealEstateDetailComponent implements OnInit {
   reSameClass = null;
   requestInfo: any;
   user = JSON.parse(localStorage.getItem('loginInfo'));
+  districtId: any;
   constructor(
     private route: ActivatedRoute,
     private api: ApiService,
@@ -102,6 +103,7 @@ export class RealEstateDetailComponent implements OnInit {
         localStorage.setItem('viewedList', JSON.stringify(this.viewedList));
         this.recentData = JSON.parse(localStorage.getItem('viewedList'));
       }
+      this.districtId = this.tradeData.address.district;
       this.getProvinceName(this.tradeData.address.cityOrProvince);
       this.getDistrictName(this.tradeData.address.cityOrProvince, this.tradeData.address.district);
       this.getWardName(this.tradeData.address.cityOrProvince, this.tradeData.address.district, this.tradeData.address.ward);

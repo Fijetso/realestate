@@ -59,11 +59,11 @@
                   <span class="span-acreage">{{ tradeData?.details?.square}}m<sup>2 </sup></span>
                   <p class="re-inline p-district">
                     <a
-                      href="/mua/ban-nha-rieng-quan-12?src=detail_district_list"
+                      [routerLink]="['../../','tim-kiem']" [queryParams] = "{tinh:79,quan:districtId}"
                       ><span>{{disctrictName}}</span></a
                     >
                     <a
-                      href="/mua/ban-nha-rieng-quan-12-phuong-tan-chanh-hiep?src=detail_ward_list"
+                    [routerLink]="['../../','tim-kiem']" [queryParams] = "{tinh:79,quan:districtId}"
                       ><span>{{wardName}}</span></a
                     >
                   </p>
