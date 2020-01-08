@@ -21,10 +21,10 @@
       </div>
       <div class="user-post" style="line-height: normal; font-size: small;">
         <p class="font-italic">{{dataItem?.user?.name}} </p>
-        <p class="font-italic">{{dataItem?.user?.email}}</p>
+        <a class="font-italic" [href]="'mailto:'+dataItem?.user?.email+'&subject='+dataItem?.description">{{dataItem?.user?.email}}</a>
       </div>
       <div class="rs-desc">
-        <p [matTooltip]="dataItem.description">{{dataItem?.description}}</p>
+        <p [matTooltip]="dataItem?.description">{{dataItem?.description}}</p>
       </div>
       <div class="rs-follow-count my-1">
         <button mat-raised-button class="mat-button btn-block btn-bg-faded-blue">Có {{dataItem?.viewCount}} lượt quan
