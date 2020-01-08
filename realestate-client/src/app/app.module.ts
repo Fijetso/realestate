@@ -108,6 +108,7 @@ import { NewsModuleModule } from './core/ui/news-module/news-module.module';
 import { SearchPipe } from './ultility/pipe/search.pipe';
 import { SortPipe } from './ultility/pipe/sort.pipe';
 import { DisplayMapComponent } from './core/ui/map-box/display-map/display-map.component';
+import { FengShuiComponent } from './core/ui/feng-shui/feng-shui.component';
 
 const config = new AuthServiceConfig([
   {
@@ -173,7 +174,8 @@ export function provideConfig() {
     ContactComponent,
     SearchPipe,
     SortPipe,
-    DisplayMapComponent
+    DisplayMapComponent,
+    FengShuiComponent
   ],
   imports: [
     OwlModule,

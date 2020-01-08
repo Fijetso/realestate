@@ -12,6 +12,7 @@ import { RealEstateDetailComponent } from './components/real-estate-detail/real-
 import { CreatePostComponent } from './core/ui/create-post/create-post.component';
 import { UserDetailComponent } from './core/ui/user-detail/user-detail.component';
 import { ContactComponent } from './core/ui/contact/contact.component';
+import { FengShuiComponent } from './core/ui/feng-shui/feng-shui.component';
 const routes: Routes = [
   {
     path: '',
@@ -90,7 +91,14 @@ const routes: Routes = [
     component: ContactComponent,
     data: { title: 'Thông tin liên hệ',
     breadcrumb: 'Thông tin liên hệ'
-  }
+    }
+  },
+  {
+    path: 'tim-kiem/nha-phong-thuy',
+    component: FengShuiComponent,
+    data: { title: 'Tìm nhà theo phong thuỷ',
+    breadcrumb: 'Tìm nhà theo phong thuỷ'
+    }
   },
   {
     path: 'tai-khoan',
