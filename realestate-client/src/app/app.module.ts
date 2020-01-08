@@ -61,6 +61,7 @@ import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-logi
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {CKEditorModule} from 'ngx-ckeditor';
 import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 
 import { RealEstateWrapperComponent } from './components/real-estate/real-estate-wrapper/real-estate-wrapper.component';
@@ -227,7 +228,8 @@ export function provideConfig() {
     NgxMapboxGLModule.withConfig({
       accessToken: environment.mapbox.accessToken,
       geocoderAccessToken: environment.mapbox.geocoderAccessToken
-    })
+    }),
+    NgxMatSelectSearchModule
   ],
   providers: [
     AuthenticationService,

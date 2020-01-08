@@ -21,7 +21,7 @@ export class RealestateItemComponent implements OnInit {
   selectedItem: null;
   offset = 100;
   ngOnInit() {
-    console.log(this.dataItem);
+    // console.log(this.dataItem);
   }
   getDistrictFromProvinceId() {
    this.api.getDistrictFromProvinceId(79).subscribe(res => {
