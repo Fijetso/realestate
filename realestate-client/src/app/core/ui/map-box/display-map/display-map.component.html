@@ -1,7 +1,7 @@
 <div class="map-wrapper row">
     <div class="left-content col-md-7 col-sm" *ngIf="!isFullMap">
         <form [formGroup]='searchDetail' class="container-fluid" (ngSubmit)="onSubmitSearch()">
-            <div class="search-section row">
+            <div class="search-section row mx-2 px-2">
                 <mat-form-field>
                     <mat-select placeholder="Mục đích sử dụng" formControlName="tradeKind">
                         <mat-option *ngFor="let tradeKind of tradeKinds" [value]="tradeKind.id">
@@ -15,6 +15,9 @@
                 <mat-form-field>
                     <mat-select placeholder="Loại bất động sản" formControlName="reKind"
                         (selectionChange)="onChangeREKind()">
+                        <!-- <mat-option [value]=0>
+                           Tất cả
+                        </mat-option> -->
                         <mat-option *ngFor="let reKind of reKinds" [value]="reKind.id">
                             {{reKind.name}}
                         </mat-option>
@@ -29,12 +32,156 @@
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field>
-                    <mat-select placeholder="Xã Phường /Huyện" formControlName="ward">
+                    <mat-select placeholder="Xã Phường /Xã" formControlName="ward">
+                        <!-- <mat-option [value]=0>
+                            Chọn một phường xã
+                        </mat-option> -->
                         <mat-option *ngFor="let ward of wardList |sort; let i=index" [value]="ward.id">
                             {{ward.nameWithType}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
+            </div>
+            <div class="more-condition">
+                <mat-accordion>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Thêm tiêu chí
+                            </mat-panel-title>
+                            <!-- <mat-panel-description>
+                               Thêm tiêu chí tìm kiếm
+                              </mat-panel-description> -->
+                        </mat-expansion-panel-header>
+                        <!-- content -->
+                        <div class="content-expansion">
+                            <mat-card>
+                                <mat-card-content>
+                                    <div class="row">
+                                        <div class="price col-md-6 col-sm">
+                                            <mat-label>
+                                                Giá bán:
+                                            </mat-label>
+                                            <mat-radio-group formControlName="priceOption"
+                                                (change)="handleChange('priceOption')">
+                                                <mat-radio-button [value]=0>Kéo chọn</mat-radio-button>
+                                                <mat-radio-button [value]=1>Nhập</mat-radio-button>
+                                            </mat-radio-group>
+                                            <div *ngIf="priceOption===0">
+                                                <span>{{min}}</span>
+                                                <mat-slider [max]="max" [min]="min" [step]="step"
+                                                    [thumbLabel]="thumbLabel" formControlName="price"></mat-slider>
+                                                <span>{{max}} tỷ</span>
+                                            </div>
+                                            <mat-select *ngIf="priceOption===1" placeholder="Giá bán"
+                                                formControlName="price" name="price">
+                                                <mat-option *ngFor="let price of prices" [value]="price.value">
+                                                    {{price.label}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </div>
+                                        <div class="price col-md-6 col-sm">
+                                            <mat-label>
+                                                Diện tích:
+                                            </mat-label>
+                                            <mat-radio-group formControlName="squareOption"
+                                                (change)="handleChange('squareOption')">
+                                                <mat-radio-button [value]=0>Kéo chọn</mat-radio-button>
+                                                <mat-radio-button [value]=1>Nhập</mat-radio-button>
+                                            </mat-radio-group>
+                                            <div *ngIf="squareOption===0">
+                                                <span>100 m <sup>2</sup></span>
+                                                <mat-slider [max]=1000 [min]=100 [step]=100
+                                                    [thumbLabel]="thumbLabel" formControlName="square"></mat-slider>
+                                                <span>1000 m <sup>2</sup></span>
+                                            </div>
+                                            <mat-select *ngIf="squareOption===1" placeholder="Diện tích"
+                                                formControlName="square" name="square">
+                                                <mat-option *ngFor="let square of squares" [value]="square.value">
+                                                    {{square.label}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </div>
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+                            <br>
+                            <mat-card>
+                                <mat-card-content>
+                                    <mat-label>
+                                        Vị trí:
+                                    </mat-label>
+                                    <mat-radio-group formControlName="position">
+                                        <mat-radio-button [value]=0>Mặt tiền</mat-radio-button>
+                                        <mat-radio-button [value]=1>Hẻm</mat-radio-button>
+                                    </mat-radio-group>
+                                </mat-card-content>
+                            </mat-card>
+                            <br>
+                            <mat-card>
+                                <mat-card-content>
+                                    <section class="row">
+                                        <div class="col-md-4">
+                                            <div class="bedroom">
+                                                <mat-label>
+                                                    Phòng ngủ:
+                                                </mat-label>
+                                                <mat-button-toggle-group #bedroom formControlName="bedroom">
+                                                    <mat-button-toggle [value]=0>-</mat-button-toggle>
+                                                    <mat-button-toggle [value]=0>0</mat-button-toggle>
+                                                    <mat-button-toggle [value]=0>+</mat-button-toggle>
+                                                </mat-button-toggle-group>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="bedroom">
+                                                <mat-label>
+                                                    Phòng tắm:
+                                                </mat-label>
+                                                <mat-button-toggle-group #bedroom formControlName="bathroom">
+                                                    <mat-button-toggle [value]=0>-</mat-button-toggle>
+                                                    <mat-button-toggle [value]=0>0</mat-button-toggle>
+                                                    <mat-button-toggle [value]=0>+</mat-button-toggle>
+                                                </mat-button-toggle-group>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="bedroom">
+                                                <mat-label>
+                                                    Số tầng:
+                                                </mat-label>
+                                                <mat-button-toggle-group #bedroom formControlName="floors">
+                                                    <mat-button-toggle [value]=0>-</mat-button-toggle>
+                                                    <mat-button-toggle [value]=0>0</mat-button-toggle>
+                                                    <mat-button-toggle [value]=0>+</mat-button-toggle>
+                                                </mat-button-toggle-group>
+
+                                            </div>
+                                        </div>
+                                    </section>
+                                </mat-card-content>
+                            </mat-card>
+                            <br>
+                            <mat-card>
+                                <mat-card-content>
+                                    <mat-label>
+                                        Hướng:
+                                    </mat-label>
+                                    <mat-checkbox [value]=1>Đông</mat-checkbox>
+                                    <mat-checkbox [value]=2>Tây</mat-checkbox>
+                                    <mat-checkbox [value]=3>Nam</mat-checkbox>
+                                    <mat-checkbox [value]=4>Bắc</mat-checkbox>
+                                    <mat-checkbox [value]=5>Đông Bắc</mat-checkbox>
+                                    <mat-checkbox [value]=6>Tây Bắc</mat-checkbox>
+                                    <mat-checkbox [value]=7>Đông Nam</mat-checkbox>
+                                    <mat-checkbox [value]=8>Tây Nam</mat-checkbox>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
             </div>
             <div class="sortby-section row">
                 <div class="sort-left col-md-6 col-sm">
@@ -46,7 +193,6 @@
                     </div>
                 </div>
                 <div class="sort-right col-md-6 col-sm">
-
                 </div>
             </div>
             <div class="re-list" *ngIf="reList">
@@ -58,7 +204,7 @@
         </form>
     </div>
     <div class="map-container col-md-5 col-sm" *ngIf="!isFullMap">
-        <div class="map-frame">
+        <div class="map-frame mx-2 px-2">
             <mgl-map id="map-box" [style]="style" [zoom]="[9]" [center]="[106.629662, 10.823099]"
                 [cursorStyle]="cursorStyle">
                 <mgl-control mglGeolocate [positionOptions]="{enableHighAccuracy: true}" [trackUserLocation]="true">
@@ -78,20 +224,14 @@
                 <mgl-control mglNavigation position="top-right"></mgl-control>
 
                 <!-- geojson -->
-                <mgl-layer id="states-layer" 
-                            type="fill" 
-                            [source]="{
+                <mgl-layer id="states-layer" type="fill" [source]="{
                                 'type': 'geojson',
                                 'data': 'assets/map/vietnam-district.geojson'
-                            }" 
-                            [paint]="{
+                            }" [paint]="{
                             'fill-color': 'rgba(200, 100, 240, 0.1)',
                             'fill-outline-color': 'rgba(200, 100, 240, 1)'
-                            }" 
-                            (mouseEnter)="cursorStyle = 'pointer'" 
-                            (mouseLeave)="cursorStyle = ''"
-                            (click)="onClick($event)"
-                            >
+                            }" (mouseEnter)="cursorStyle = 'pointer'" (mouseLeave)="cursorStyle = ''"
+                    (click)="onClick($event)">
                 </mgl-layer>
                 <mgl-popup *ngIf="selectedLngLat" [lngLat]="selectedLngLat">
                     <p class="text-center font-weight-bold" [innerHTML]="selectedElement?.Ten"></p>
@@ -99,8 +239,7 @@
                 </mgl-popup>
                 <!-- render marker -->
                 <mgl-marker #myMarker *ngFor="let item of reList; let i=index"
-                    [lngLat]=[item?.coordinate?.longitude,item?.coordinate?.latitude]
-                    >
+                    [lngLat]=[item?.coordinate?.longitude,item?.coordinate?.latitude]>
                     <div [ngStyle]="{
                                 'background-image': 'url(https://www.mapbox.com/mapbox-gl-js/assets/washington-monument.jpg)',
                                 'background-size': 'cover',

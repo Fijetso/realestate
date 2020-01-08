@@ -39,6 +39,56 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
   selectedElement: GeoJsonProperties;
   selectedLngLat: LngLat;
   selectedMarker: LngLat;
+  // slider
+  autoTicks = false;
+  disabled = false;
+  invert = false;
+  max = 10;
+  min = 0;
+  showTicks = true;
+  step = 0.5;
+  thumbLabel = true;
+  vertical = false;
+  prices = [
+    {value: 0 , label:  '0 tỷ '},
+    {value: 0.5 , label:  '0.5 tỷ '},
+    {value: 1 , label:  '1 tỷ '},
+    {value: 1.5 , label:  '1.5 tỷ '},
+    {value: 2 , label:  '3 tỷ '},
+    {value: 2.5 , label:  '2.5 tỷ '},
+    {value: 3 , label:  '3 tỷ '},
+    {value: 3.5 , label:  '3.5 tỷ '},
+    {value: 4 , label:  '4 tỷ '},
+    {value: 4.5 , label:  '4.5 tỷ '},
+    {value: 5 , label:  '5 tỷ '},
+    {value: 5.5 , label:  '5.5 tỷ '},
+    {value: 6 , label:  '6 tỷ '},
+    {value:  6.5, label:  '6.5 tỷ'},
+    {value: 7 , label:  '7 tỷ '},
+    {value: 7.5 , label:  '7.5 tỷ '},
+    {value: 8 , label:  '8 tỷ '},
+    {value: 8.5 , label:  '8.5 tỷ '},
+    {value: 9 , label:  '9 tỷ '},
+    {value: 9.5 , label:  '9.5 tỷ '},
+    {value: 10 , label:  '10 tỷ '}
+  ];
+
+  squares = [
+    {value: 100 , label:  '100 m2'},
+    {value: 200 , label:  '200 m2'},
+    {value: 300 , label:  '300 m2'},
+    {value: 400, label:  '400 m2'},
+    {value: 500 , label:  '500 m2'},
+    {value: 600, label:  '600 m2'},
+    {value: 700, label:  '700 m2'},
+    {value: 800, label:  '800 m2'},
+    {value: 900, label:  '900 m2'},
+    {value: 1000, label:  '1000 m2'},
+  ];
+  priceOption: any = 0 ;
+  positionOption: any;
+  bedroomValue = 0;
+  squareOption: any;
   constructor(private markerService: MarkerService,
               private http: HttpClient,
               private api: ApiService,
@@ -70,12 +120,21 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
       query: '',
       reKind: 1,
       district: +this.quan,
-      ward: ''
+      ward: '',
+      priceOption: 0,
+      price: 0,
+      squareOption: 0,
+      square: 100,
+      position: 0,
+      bedroom: 0,
+      bathroom: 0,
+      floors: 0,
     });
   }
   ngOnInit(): void {
     this.isFullMap = false;
     this.changeStyle(this.layerId);
+    console.log(this.priceOption);
   }
 
   changeStyle(layerId: string) {
@@ -152,5 +211,14 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
   onClick(evt: MapLayerMouseEvent) {
     this.selectedLngLat = evt.lngLat;
     this.selectedElement = evt.features[0].properties;
+  }
+
+  handleChange(name) {
+    if (name === 'priceOption') {
+      this.priceOption = this.searchDetail.get(name).value;
+    }
+    if (name === 'squareOption') {
+      this.squareOption = this.searchDetail.get(name).value;
+    }
   }
 }

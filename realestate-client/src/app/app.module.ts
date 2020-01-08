@@ -41,7 +41,10 @@ import {
   MatAutocompleteModule,
   MatButtonToggleModule,
   MatFormFieldModule,
-  MatChipsModule
+  MatChipsModule,
+  MatExpansionModule,
+  MatSliderModule,
+  MatCheckboxModule
 } from '@angular/material';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import 'hammerjs';
@@ -231,7 +234,10 @@ export function provideConfig() {
       geocoderAccessToken: environment.mapbox.geocoderAccessToken
     }),
     OwlDateTimeModule,
-    OwlNativeDateTimeModule
+    OwlNativeDateTimeModule,
+    MatExpansionModule,
+    MatSliderModule,
+    MatCheckboxModule
   ],
   providers: [
     AuthenticationService,
