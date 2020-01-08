@@ -37,7 +37,15 @@ export class RealEstateDetailComponent implements OnInit {
     private fb: FormBuilder,
     private graphql: GraphQueryService,
     private toastr: ToastrService,
-    ) {
+  ) {
+    this.requestInfo = this.fb.group({
+      name: this.user ? this.user.name : '',
+      phone: '',
+      email: '',
+      dateStart: new Date(),
+      dateEnd: new Date(),
+      programCode: ''
+    });
   }
   @ViewChild('owlElement', { static: true }) owlElement: OwlCarousel;
   carouselOptions = {
@@ -92,14 +100,6 @@ export class RealEstateDetailComponent implements OnInit {
       }
     });
     this.recentData = JSON.parse(localStorage.getItem('viewedList'));
-    this.requestInfo = this.fb.group({
-      name: this.user ? this.user.name : '',
-      phone: '',
-      email: '',
-      dateStart: new Date(),
-      dateEnd: new Date(),
-      programCode: ''
-    });
   }
 
   onPrevious() {
@@ -161,7 +161,7 @@ export class RealEstateDetailComponent implements OnInit {
     const timeStart = moment(new Date(this.requestInfo.get('dateStart').value)).format('DD/MM/YYYY HH:mm:ss').toString();
     const timeEnd = moment(new Date(this.requestInfo.get('dateEnd').value)).format('DD/MM/YYYY HH:mm:ss').toString();
     const tradeId = +this.slug;
-    this.graphql.saveBooking(name, phone, email, timeStart, timeEnd, tradeId ).subscribe(res => {
+    this.graphql.saveBooking(name, phone, email, timeStart, timeEnd, tradeId).subscribe(res => {
       console.log(res.data.saveBooking);
       this.toastr.success('Thông tin đã được gửi đến người đăng', 'Đặt lịch thành công');
       return res && res.data;
