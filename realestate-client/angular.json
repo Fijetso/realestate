@@ -33,7 +33,8 @@
               "node_modules/leaflet/dist/leaflet.css",
               "node_modules/leaflet-draw/dist/leaflet.draw.css",
               "node_modules/mapbox-gl/dist/mapbox-gl.css",
-              "node_modules/@mapbox/mapbox-gl-geocoder/lib/mapbox-gl-geocoder.css"
+              "node_modules/@mapbox/mapbox-gl-geocoder/lib/mapbox-gl-geocoder.css",
+              "node_modules/ng-pick-datetime/assets/style/picker.min.css"
             ],
             "scripts": [
               "node_modules/chart.js/dist/Chart.js",

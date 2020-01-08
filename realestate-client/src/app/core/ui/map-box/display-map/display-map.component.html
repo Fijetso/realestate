@@ -63,13 +63,13 @@
                 [cursorStyle]="cursorStyle">
                 <mgl-control mglGeolocate [positionOptions]="{enableHighAccuracy: true}" [trackUserLocation]="true">
                 </mgl-control>
-                <mgl-control>
+                <mgl-control position="top-right">
                     <mat-radio-group [ngModel]="layerId" (ngModelChange)="changeStyle($event)" #select>
-                        <mat-radio-button value="basic">basic</mat-radio-button>
-                        <mat-radio-button value="streets">streets</mat-radio-button>
-                        <mat-radio-button value="light">light</mat-radio-button>
-                        <mat-radio-button value="dark">dark</mat-radio-button>
-                        <mat-radio-button value="satellite">satellite</mat-radio-button>
+                        <mat-radio-button value="basic">Cơ bản </mat-radio-button>
+                        <mat-radio-button value="streets">Đường phố </mat-radio-button>
+                        <!-- <mat-radio-button value="light">Nền sáng </mat-radio-button>
+                        <mat-radio-button value="dark">Nền tối </mat-radio-button> -->
+                        <mat-radio-button value="satellite">Vệ tinh </mat-radio-button>
                     </mat-radio-group>
                 </mgl-control>
                 <mgl-control mglGeocoder [searchInput]="'Hồ Chí Minh'"></mgl-control>
@@ -78,14 +78,20 @@
                 <mgl-control mglNavigation position="top-right"></mgl-control>
 
                 <!-- geojson -->
-                <mgl-layer id="states-layer" type="fill" [source]="{
-                                    'type': 'geojson',
-                                    'data': 'assets/map/vietnam-district.geojson'
-                                }" [paint]="{
-                                'fill-color': 'rgba(200, 100, 240, 0.1)',
-                                'fill-outline-color': 'rgba(200, 100, 240, 1)'
-                                }" (mouseEnter)="cursorStyle = 'pointer'" (mouseLeave)="cursorStyle = ''"
-                    (click)="onClick($event)">
+                <mgl-layer id="states-layer" 
+                            type="fill" 
+                            [source]="{
+                                'type': 'geojson',
+                                'data': 'assets/map/vietnam-district.geojson'
+                            }" 
+                            [paint]="{
+                            'fill-color': 'rgba(200, 100, 240, 0.1)',
+                            'fill-outline-color': 'rgba(200, 100, 240, 1)'
+                            }" 
+                            (mouseEnter)="cursorStyle = 'pointer'" 
+                            (mouseLeave)="cursorStyle = ''"
+                            (click)="onClick($event)"
+                            >
                 </mgl-layer>
                 <mgl-popup *ngIf="selectedLngLat" [lngLat]="selectedLngLat">
                     <p class="text-center font-weight-bold" [innerHTML]="selectedElement?.Ten"></p>

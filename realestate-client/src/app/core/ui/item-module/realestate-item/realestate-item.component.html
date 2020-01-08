@@ -21,7 +21,7 @@
       </div>
       <div class="user-post" style="line-height: normal; font-size: small;">
         <p class="font-italic">{{dataItem?.user?.name}} </p>
-        <a class="font-italic" [href]="'mailto:'+dataItem?.user?.email+'&subject='+dataItem?.description">{{dataItem?.user?.email}}</a>
+        <a class="font-italic" [href]="'mailto:'+dataItem?.user?.email+'?subject='+dataItem?.description">{{dataItem?.user?.email}}</a>
       </div>
       <div class="rs-desc">
         <p [matTooltip]="dataItem?.description">{{dataItem?.description}}</p>

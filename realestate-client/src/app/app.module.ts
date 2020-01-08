@@ -61,7 +61,7 @@ import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-logi
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {CKEditorModule} from 'ngx-ckeditor';
 import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
-import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 
 import { RealEstateWrapperComponent } from './components/real-estate/real-estate-wrapper/real-estate-wrapper.component';
@@ -229,7 +229,8 @@ export function provideConfig() {
       accessToken: environment.mapbox.accessToken,
       geocoderAccessToken: environment.mapbox.geocoderAccessToken
     }),
-    NgxMatSelectSearchModule
+    OwlDateTimeModule, 
+    OwlNativeDateTimeModule,
   ],
   providers: [
     AuthenticationService,

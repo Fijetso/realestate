@@ -5,6 +5,10 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { OwlCarousel } from 'ngx-owl-carousel';
 import { FormBuilder } from '@angular/forms';
+import { GraphQueryService } from '../../services/graphql/graph-query.service';
+import { ToastrService } from 'ngx-toastr';
+import * as moment from 'moment';
+import { AuthService, SocialUser } from 'angularx-social-login';
 
 @Component({
   selector: 'app-real-estate-detail',
@@ -23,16 +27,22 @@ export class RealEstateDetailComponent implements OnInit {
   reSamePlace = null;
   reSameClass = null;
   requestInfo: any;
+  user = JSON.parse(localStorage.getItem('loginInfo'));
   constructor(
     private route: ActivatedRoute,
     private api: ApiService,
     private common: CommonService,
-    private fb: FormBuilder) {
-    this.requestInfo = this.fb.group({
-      name: 'Danh Thanh',
-      phone: '0975922740',
-      email: '',
-      date: new Date(),
+    private fb: FormBuilder,
+    private graphql: GraphQueryService,
+    private toastr: ToastrService,
+    private authService: AuthService,
+    ) {
+     this.requestInfo = this.fb.group({
+      name: this.user ? this.user.name : '',
+      phone: '',
+      email: this.user ? this.user.email : '',
+      dateStart: new Date(),
+      dateEnd: new Date(),
       programCode: ''
     });
   }
@@ -142,5 +152,20 @@ export class RealEstateDetailComponent implements OnInit {
 
   onSubmitRequest() {
     console.log(this.requestInfo.value);
+    const name = this.requestInfo.get('name').value;
+    const phone = this.requestInfo.get('phone').value;
+    const email = this.requestInfo.get('email').value;
+    const timeStart = moment(new Date(this.requestInfo.get('dateStart').value)).format('DD/MM/YYYY HH:mm:ss').toString();
+    const timeEnd = moment(new Date(this.requestInfo.get('dateEnd').value)).format('DD/MM/YYYY HH:mm:ss').toString();
+    const tradeId = +this.slug;
+    this.graphql.saveBooking(name, phone, email, timeStart, timeEnd, tradeId ).subscribe(res => {
+      console.log(res.data.saveBooking);
+      this.toastr.success('Thông tin đã được gửi đến người đăng', 'Đặt lịch thành công');
+      return res && res.data;
+    }, error => {
+      this.toastr.error(error, 'Đặt lịch thất bại');
+      console.error(error);
+      return error;
+    });
   }
 }
