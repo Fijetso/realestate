@@ -35,8 +35,4 @@ export class RealestateItemComponent implements OnInit {
   onSelect(slug: any) {
     this.router.navigate(['mua', slug]);
   }
-  mailTo(email) {
-    this.mailText = 'mailto:' + email;
-    window.location.href = this.mailText;
-  }
 }

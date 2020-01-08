@@ -29,6 +29,7 @@ export class RealEstateDetailComponent implements OnInit {
   requestInfo: any;
   user = JSON.parse(localStorage.getItem('loginInfo'));
   districtId: any;
+  email: any;
   constructor(
     private route: ActivatedRoute,
     private api: ApiService,
@@ -36,16 +37,7 @@ export class RealEstateDetailComponent implements OnInit {
     private fb: FormBuilder,
     private graphql: GraphQueryService,
     private toastr: ToastrService,
-    private authService: AuthService,
     ) {
-     this.requestInfo = this.fb.group({
-      name: this.user ? this.user.name : '',
-      phone: '',
-      email: this.user ? this.user.email : '',
-      dateStart: new Date(),
-      dateEnd: new Date(),
-      programCode: ''
-    });
   }
   @ViewChild('owlElement', { static: true }) owlElement: OwlCarousel;
   carouselOptions = {
@@ -82,10 +74,32 @@ export class RealEstateDetailComponent implements OnInit {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.slug = params.get('slug');
       if (this.slug) {
-        this.getTradeById(this.slug);
+        this.getTradeById(this.slug).subscribe(trade => {
+          this.tradeData = trade;
+          console.log(this.tradeData);
+          if (!this.viewedList.find(item => item.id === this.slug)) {
+            this.viewedList.push(trade);
+            localStorage.setItem('viewedList', JSON.stringify(this.viewedList));
+            this.recentData = JSON.parse(localStorage.getItem('viewedList'));
+          }
+          this.districtId = this.tradeData.address.district;
+          this.getProvinceName(this.tradeData.address.cityOrProvince);
+          this.getDistrictName(this.tradeData.address.cityOrProvince, this.tradeData.address.district);
+          this.getWardName(this.tradeData.address.cityOrProvince, this.tradeData.address.district, this.tradeData.address.ward);
+          this.getRealEstateSamePlace(this.tradeData.address.district);
+          this.getAllRealEstateSameClass(this.tradeData.details.square);
+        });
       }
     });
     this.recentData = JSON.parse(localStorage.getItem('viewedList'));
+    this.requestInfo = this.fb.group({
+      name: this.user ? this.user.name : '',
+      phone: '',
+      email: '',
+      dateStart: new Date(),
+      dateEnd: new Date(),
+      programCode: ''
+    });
   }
 
   onPrevious() {
@@ -96,20 +110,7 @@ export class RealEstateDetailComponent implements OnInit {
   }
 
   getTradeById(tradeId: number) {
-    this.api.getTradeById(tradeId).subscribe(trade => {
-      this.tradeData = trade;
-      if (!this.viewedList.find(item => item.id === tradeId)) {
-        this.viewedList.push(trade);
-        localStorage.setItem('viewedList', JSON.stringify(this.viewedList));
-        this.recentData = JSON.parse(localStorage.getItem('viewedList'));
-      }
-      this.districtId = this.tradeData.address.district;
-      this.getProvinceName(this.tradeData.address.cityOrProvince);
-      this.getDistrictName(this.tradeData.address.cityOrProvince, this.tradeData.address.district);
-      this.getWardName(this.tradeData.address.cityOrProvince, this.tradeData.address.district, this.tradeData.address.ward);
-      this.getRealEstateSamePlace(this.tradeData.address.district);
-      this.getAllRealEstateSameClass(this.tradeData.details.square);
-    });
+    return this.api.getTradeById(tradeId);
   }
   getDistrictName(provinceId: number, districtId: number) {
     this.api.getDistrictNameById(provinceId, districtId).subscribe(district => {

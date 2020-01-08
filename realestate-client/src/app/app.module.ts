@@ -63,7 +63,6 @@ import {CKEditorModule} from 'ngx-ckeditor';
 import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
-
 import { RealEstateWrapperComponent } from './components/real-estate/real-estate-wrapper/real-estate-wrapper.component';
 import { AlertComponent } from './core/modal/alert/alert.component';
 import { FavoriteComponent } from './components/favorite/favorite.component';
@@ -231,8 +230,8 @@ export function provideConfig() {
       accessToken: environment.mapbox.accessToken,
       geocoderAccessToken: environment.mapbox.geocoderAccessToken
     }),
-    OwlDateTimeModule, 
-    OwlNativeDateTimeModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule
   ],
   providers: [
     AuthenticationService,
