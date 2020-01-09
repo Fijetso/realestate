@@ -209,20 +209,28 @@ public class TradeService implements IEntityService {
 					"Something went wrong with 'birthdate' variable. Be sure the date format is "
 							+ Common.Constains.LOCAL_DATE_FORMAT);
 		}
-		int birthYearSum = 0;
-		while (birthYear >= 10) {
-			birthYearSum = birthYear % 10;
-			birthYear /= 10;
-		}
+		int birthYearSum;
+		do {
+			birthYearSum =0;
+			while (birthYear >= 1) {
+				birthYearSum += birthYear % 10;
+				birthYear /= 10;
+			}
+			birthYear = birthYearSum;
+		} while (birthYearSum / 10 >= 1);
 		birthYearSum = 11 - birthYearSum;
 		if (isFemale) {
 			birthYearSum = 15 - birthYearSum;
 		}
 		birthYear = birthYearSum;
-		while (birthYear >= 10) {
-			birthYearSum = birthYear % 10;
-			birthYear /= 10;
-		}
+		do {
+			birthYearSum =0;
+			while (birthYear >= 1) {
+				birthYearSum += birthYear % 10;
+				birthYear /= 10;
+			}
+			birthYear = birthYearSum;
+		} while (birthYearSum / 10 >= 1);
 		switch (birthYearSum) {
 		case 1:
 			return graphTradeRepository.recommendTradesByUserAge2(".*ắc");
