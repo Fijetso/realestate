@@ -1,1 +1,32 @@
-<p>feng-shui works!</p>
+<mat-progress-bar [mode]="'indeterminate'" [color]="'accent'" [hidden]='!isLoading' class="my-3">
+</mat-progress-bar>
+<section class="feng-shui container-fluid" (ngSubmit)="submitFengShui()">
+    <form [formGroup]="fengShui" class="row">
+        <mat-form-field class="col-md-6 col-sm">
+            <input matInput [matDatepicker]="dob" placeholder="Chọn ngày sinh của bạn" formControlName="dob"
+                (dateChange)="onChangeDate()">
+            <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+            <button matSuffix [matDatepickerToggle]="dob"></button>
+            <mat-datepicker #dob></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-sm">
+            <mat-select placeholder="Chọn giới tính của bạn" formControlName="gender" name="gender"
+                (selectionChange)="onSelectChange()">
+                <mat-option [value]=false>Nam</mat-option>
+                <mat-option [value]=true>Nữ</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button mat-raised-button type="submit">Tìm</button>
+    </form>
+    <section>
+        <h4>Các căn phà phù hợp với mệnh của bạn</h4>
+        <div class="row" *ngIf="fengShuiTradeList; else noResult">
+            <div class="re-container col-md-3 col-sm" *ngFor="let item of fengShuiTradeList; let i = index">
+                <app-realestate-item [dataItem]="item"></app-realestate-item>
+            </div>
+        </div>
+        <ng-template #noResult>
+            <div>Không có kết quả phù hợp</div>
+        </ng-template>
+    </section>
+</section>

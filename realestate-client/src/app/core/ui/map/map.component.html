@@ -49,9 +49,9 @@
 
                 </div>
             </div>
-            <div class="re-list" *ngIf="reList">
-                <div class="re-container row" *ngFor="let item of reList | search:[query, newREKind]; let i = index">
-                    <app-realestate-item [dataItem]="item" class="col-md-6 col-sm"></app-realestate-item>
+            <div class="re-list row" *ngIf="reList">
+                <div class="re-container col-md-6 col-sm" *ngFor="let item of reList | search:[query, newREKind]; let i = index">
+                    <app-realestate-item [dataItem]="item"></app-realestate-item>
                 </div>
             </div>
             <button mat-raised-button type="submit">Tìm kiếm</button>

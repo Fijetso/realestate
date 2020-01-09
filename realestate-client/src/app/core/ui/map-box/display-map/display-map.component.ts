@@ -89,6 +89,7 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
   positionOption: any;
   bedroomValue = 0;
   squareOption: any;
+  isLoading;
   constructor(private markerService: MarkerService,
               private http: HttpClient,
               private api: ApiService,
@@ -130,11 +131,13 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
       bathroom: 0,
       floors: 0,
     });
+    this.isLoading = true;
   }
   ngOnInit(): void {
     this.isFullMap = false;
     this.changeStyle(this.layerId);
     console.log(this.priceOption);
+    this.isLoading = true;
   }
 
   changeStyle(layerId: string) {
@@ -151,30 +154,35 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
   getDistrictName(provinceId, districtId) {
     this.api.getDistrictNameById(provinceId, districtId).subscribe(district => {
       this.districtInfo = district;
-      // console.log(this.districtInfo);
     });
   }
 
   getAllDistrict(provinceId) {
+    this.isLoading = true;
     this.api.getDistrictFromProvinceId(provinceId).subscribe(districtList => {
       this.districtList = districtList;
+      this.isLoading = false;
     });
   }
 
   getAllWardFromDistrict(provinceId, districtId) {
+    this.isLoading = true;
     this.api.getWardFromDistrictId(provinceId, districtId).subscribe(wardList => {
       // console.log(wardList);
       this.wardList = wardList;
+      this.isLoading = false;
     });
   }
 
   onChangeDistrict() {
+    this.isLoading = true;
     const district = this.searchDetail.get('district').value;
     this.getAllWardFromDistrict(this.tinh, district);
     this.reList = [];
     this.api.getTradeFromDistrict(district).subscribe(res => {
       this.reList = res;
       // console.log(res);
+      this.isLoading = false;
     });
     this.getDistrictName(this.tinh, district);
   }

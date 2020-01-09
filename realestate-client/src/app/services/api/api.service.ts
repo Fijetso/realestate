@@ -5,7 +5,7 @@ import { RealEstate } from './../../model/real-estate/real-estate';
 import { Address } from './../../model/address/address';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { TradeKind } from '../../model/trade-kind/trade-kind';
 import { RealEstateKind } from '../../model/real-estate-kind/real-estate-kind';
 
@@ -231,5 +231,13 @@ export class ApiService {
 
   getREKind() {
     return this.http.get<RealEstateKind>(this.baseURL + 'realestatekinds');
+  }
+
+  // Fengshui
+  getRecommendFengshui(birthdate: string, isFemale: string) {
+    let params = new HttpParams();
+    params = params.append('birthdate', birthdate);
+    params = params.append('isFemale', isFemale);
+    return this.http.get<any>(this.baseURL + 'trades/recommend/fengshui', {params});
   }
 }

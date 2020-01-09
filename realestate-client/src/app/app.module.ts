@@ -44,7 +44,8 @@ import {
   MatChipsModule,
   MatExpansionModule,
   MatSliderModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatProgressBarModule
 } from '@angular/material';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import 'hammerjs';
@@ -206,7 +207,6 @@ export function provideConfig() {
     MatRadioModule,
     MatSlideToggleModule,
     MatAutocompleteModule,
-    MatProgressSpinnerModule,
     MatTabsModule,
     MatCardModule,
     MatButtonToggleModule,
@@ -237,7 +237,8 @@ export function provideConfig() {
     OwlNativeDateTimeModule,
     MatExpansionModule,
     MatSliderModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatProgressBarModule,
   ],
   providers: [
     AuthenticationService,
