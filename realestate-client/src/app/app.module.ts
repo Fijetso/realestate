@@ -112,6 +112,7 @@ import { SearchPipe } from './ultility/pipe/search.pipe';
 import { SortPipe } from './ultility/pipe/sort.pipe';
 import { DisplayMapComponent } from './core/ui/map-box/display-map/display-map.component';
 import { FengShuiComponent } from './core/ui/feng-shui/feng-shui.component';
+import { RecommendTradeComponent } from './core/ui/recommend-trade/recommend-trade.component';
 
 const config = new AuthServiceConfig([
   {
@@ -178,7 +179,8 @@ export function provideConfig() {
     SearchPipe,
     SortPipe,
     DisplayMapComponent,
-    FengShuiComponent
+    FengShuiComponent,
+    RecommendTradeComponent
   ],
   imports: [
     OwlModule,

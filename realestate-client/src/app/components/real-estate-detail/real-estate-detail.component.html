@@ -207,14 +207,14 @@
   <app-favorite></app-favorite>
   <div class="viewed-section" *ngIf="recentData">
     <app-section-header [catTitle]="'Đã xem gần đây'" class="p-0"></app-section-header>
-    <app-carousel   [dataRecentRE] = "recentData" isRecentRE="isRecentRE"></app-carousel>
+    <app-carousel   [dataItems] = "recentData" isRecentRE="isRecentRE"></app-carousel>
   </div>
   <div class="viewed-section" *ngIf="reSamePlace">
     <app-section-header [catTitle]="'Cùng địa điểm'" class="p-0"></app-section-header>
-    <app-carousel   [dataRecentRE] = "reSamePlace" isRecentRE="isRecentRE"></app-carousel>
+    <app-carousel   [dataItems] = "reSamePlace" isRecentRE="isRecentRE"></app-carousel>
   </div>
   <div class="viewed-section" *ngIf="reSameClass">
     <app-section-header [catTitle]="'Cùng loại'" class="p-0"></app-section-header>
-    <app-carousel   [dataRecentRE] = "reSameClass" isRecentRE="isRecentRE"></app-carousel>
+    <app-carousel   [dataItems] = "reSameClass" isRecentRE="isRecentRE"></app-carousel>
   </div>
 </div>
