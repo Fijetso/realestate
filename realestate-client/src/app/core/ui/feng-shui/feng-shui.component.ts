@@ -10,7 +10,7 @@ import * as moment from 'moment';
 export class FengShuiComponent implements OnInit {
   fengShui: any;
   fengShuiTradeList: any;
-  isLoading= true;
+  isLoading = true;
   constructor(private fb: FormBuilder, private api: ApiService) {
     this.fengShui = this.fb.group({
       dob: new Date(1989, 5, 1),
