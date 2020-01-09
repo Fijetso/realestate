@@ -240,4 +240,15 @@ export class ApiService {
     params = params.append('isFemale', isFemale);
     return this.http.get<any>(this.baseURL + 'trades/recommend/fengshui', {params});
   }
+
+  // Recommend
+  getTradeRecommend(userJob: string, districtIdList: number[], squareList: number[], priceList: number[]) {
+    const dataRaw = {
+      userJob,
+      districtIdList,
+      squareList,
+      priceList
+    };
+    return this.http.post<any>(this.baseURL + '/trades/recommend', dataRaw);
+  }
 }
