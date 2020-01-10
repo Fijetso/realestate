@@ -95,6 +95,46 @@ export const SAVEBOOKING_MUTATION = gql`mutation saveBooking($name: String, $pho
   }
 }
 `;
+export interface SaveTradeMutationRespone {
+  saveTrade: any;
+}
+export const SAVETRADE_MUTATION = gql`mutation saveTrade($description: String, $cost: Long, $userId: Long, $realEstateKindId: Long, $tradeKindId: Long,
+  $detailAddress: String, $wardId: Long, $length: Float, $width: Float, $square: Float, $direction: String,
+  $floors: String, $legalDocuments: String, $bathrooms: Int, $bedrooms: Int, $utilities: String,
+  $others: String, $longitude: Float, $latitude: Float, $realImages: [String]){
+  saveTrade(description: $description, cost: $cost,userId: $userId, realEstateKindId: $realEstateKindId, tradeKindId: $tradeKindId,
+    detailAddress: $detailAddress, wardId: $wardId, length: $length, width: $width, square :$square, direction: $direction,
+    floors :$floors, legalDocuments : $legalDocuments,bathrooms: $bathrooms, bedrooms :$bedrooms, utilities : $utilities,
+    others : $others, longitude : $longitude,latitude : $latitude,realImages :$realImages){
+    id,
+    description,
+    tradeStatus,
+    coordinate{
+      longitude,
+      latitude
+    }
+  }
+}
+`;
 export interface SaveBookingMutationResponse {
   saveBooking: any;
 }
+
+export const UPDATEUSER_MUTATION = gql`mutation updateUser($userId: Long!,$job: String,$phone: String, $gender: Boolean){
+  updateUser(userId:$userId,job: $job, phone :$phone, gender : $gender){
+    id,
+    name,
+    job,
+    phone,
+    gender,
+    roles {
+        id,
+        name
+    }
+  }
+}
+`;
+export interface UpdateUserMutationResponse {
+  updateUser: any;
+}
+

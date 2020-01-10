@@ -251,4 +251,8 @@ export class ApiService {
     };
     return this.http.post<any>(this.baseURL + '/trades/recommend', dataRaw);
   }
+
+  getAllJob() {
+    return this.http.get<any>(this.baseURL + 'jobs');
+  }
 }

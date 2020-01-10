@@ -1,9 +1,14 @@
-import { RegisterMutationResponse,
+import {
+  RegisterMutationResponse,
   REGISTER_MUTATION,
   SAVENEWS_MUTATION,
   SaveNewsMutationResponse,
   SaveBookingMutationResponse,
-  SAVEBOOKING_MUTATION
+  SAVEBOOKING_MUTATION,
+  SaveTradeMutationRespone,
+  SAVETRADE_MUTATION,
+  UpdateUserMutationResponse,
+  UPDATEUSER_MUTATION
 } from './../../model/generated/graphql';
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
@@ -46,7 +51,7 @@ export class GraphQueryService {
   }
   // get infor login
   getLoginInfo(loginToken: any) {
-    console.log('GET-TOKEN', loginToken);
+    // console.log('GET-TOKEN', loginToken);
     const reqHearder = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -59,16 +64,16 @@ export class GraphQueryService {
   }
 
   // Get All Trade
-  getAllTrade(): any {
-    this.apollo.watchQuery<GetAllTradeResponse>({
-      query: GET_ALL_TRADE_QUERY
-    }).valueChanges.subscribe((response) => {
-      // console.log(response && response.data);
-      return response && response.data;
-    }, error => {
-      console.error('Get all trade grapql ' + error);
-    });
-  }
+  // getAllTrade(): any {
+  //   this.apollo.watchQuery<GetAllTradeResponse>({
+  //     query: GET_ALL_TRADE_QUERY
+  //   }).valueChanges.subscribe((response) => {
+  //     // console.log(response && response.data);
+  //     return response && response.data;
+  //   }, error => {
+  //     console.error('Get all trade grapql ' + error);
+  //   });
+  // }
 
   // Update Trade
   updateTrade(id, cost): any {
@@ -133,6 +138,35 @@ export class GraphQueryService {
         timeStart,
         timeEnd,
         tradeId
+      }
+    });
+  }
+
+  saveTrade(
+    description, cost, userId, realEstateKindId, tradeKindId,
+    detailAddress, wardId, length, width, square, direction,
+    floors, legalDocuments, bathrooms, bedrooms, utilities,
+    others, longitude, latitude, realImages
+  ): any {
+    return this.apollo.mutate<SaveTradeMutationRespone>({
+      mutation: SAVETRADE_MUTATION,
+      variables: {
+        description, cost, userId, realEstateKindId, tradeKindId,
+        detailAddress, wardId, length, width, square, direction,
+        floors, legalDocuments, bathrooms, bedrooms, utilities,
+        others, longitude, latitude, realImages
+      }
+    });
+  }
+
+  updateUser(userId, job, phone ,gender): any {
+    return this.apollo.mutate<UpdateUserMutationResponse>({
+      mutation: UPDATEUSER_MUTATION,
+      variables: {
+        userId,
+        job,
+        phone,
+        gender
       }
     });
   }

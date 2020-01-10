@@ -56,6 +56,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('loginInfo', JSON.stringify(user));
       }
     });
+    this.isLogedIn  = this.loggedIn = JSON.parse(localStorage.getItem('loginInfo')) != null;
   }
   onLogIn(email: string, password: string) {
     this.login = this.graphql.login(email, password);
@@ -67,12 +68,11 @@ export class LoginComponent implements OnInit {
         // console.log('login infor',res);
         this.toastr.success('Đăng nhập bằng email thành công', 'Đăng nhập');
         this.isLogedIn = true;
+        localStorage.setItem('loginInfo', JSON.stringify(res));
       });
     } else {
       this.toastr.error('Đăng nhập bằng email thất bại', 'Đăng nhập');
     }
-
-    this.allTrade = this.graphql.getAllTrade();
   }
   loginWithGoogle() {
     this.myAuthService.loginWithGoogle().then(user => {
@@ -111,29 +111,26 @@ export class LoginComponent implements OnInit {
     });
   }
   onLogOut() {
-    localStorage.setItem('userInfor', null);
+    localStorage.setItem('loginInfo', null);
     this.data = null;
     this.isLogedIn = false;
-    // this.graphql.logout().subscribe(
-    //   res => {
-    //     // tslint:disable-next-line: no-console
-    //     console.log('logout successful', res), localStorage.clear();
-    //     this.isLogedIn = false;
-    //   },
-    //   error => {
-    //     console.error(error);
-    //   }
-    // );
+    this.graphql.logout().subscribe(
+      res => {
+        // tslint:disable-next-line: no-console
+        console.log('logout successful', res), localStorage.clear();
+        this.isLogedIn = false;
+      },
+      error => {
+        console.error(error);
+      }
+    );
     this.authService.signOut().then(
       res => {
-        this.toastr.success('Logout successed', 'Logout');
+        this.toastr.success('Đăng xuất thành công', 'Đăng xuất');
         localStorage.clear();
         this.cookie.deleteAll();
       }
-    )
-    .catch(error => {
-      this.toastr.error('Logout failed. ' + error, 'Logout');
-    });
+    );
     // this.myAuthService
     //   .logOut()
     //   .then(res => {

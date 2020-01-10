@@ -34,16 +34,21 @@
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Giới tính</mat-label>
-                        <mat-select [value]="gender" formControlName="gender" #gender>
-                            <mat-option value="true">Nam</mat-option>
-                            <mat-option value="false">Nữ</mat-option>
+                        <mat-select formControlName="gender" #gender>
+                            <mat-option [value]=false>Nam</mat-option>
+                            <mat-option [value]=true>Nữ</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field>
                         <input matInput placeholder="Email" type="email" formControlName="email" #email>
                     </mat-form-field>
                     <mat-form-field>
-                        <input matInput placeholder="Nghề nghiệp" formControlName="job" #job>
+                        <mat-label>Nghề nghiệp</mat-label>
+                        <mat-select placeholder="Nghề nghiệp" formControlName="job" >
+                            <mat-option *ngFor="let job of jobs" [value]="job?.name">
+                                {{job?.name}}
+                            </mat-option>
+                        </mat-select>
                     </mat-form-field>
                     <mat-form-field>
                         <input matInput placeholder="Số điện thoại" formControlName="phone" #phone>

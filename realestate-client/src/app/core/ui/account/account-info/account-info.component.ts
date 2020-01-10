@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from './../../../../services/data/data.service';
 import { ApiService } from 'src/app/services/api/api.service';
 import { Router } from '@angular/router';
+import { GraphQueryService } from './../../../../services/graphql/graph-query.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-account-info',
@@ -28,9 +30,17 @@ export class AccountInfoComponent implements OnInit {
 
   listPost: any;
   collections: any;
-  constructor(private fb: FormBuilder, private data: DataService,private api : ApiService, private router : Router) {
+  jobs: any;
+  constructor(private fb: FormBuilder,
+              private data: DataService,
+              private api: ApiService,
+              private router: Router,
+              private graphql: GraphQueryService,
+              private toastr: ToastrService
+              ) {
      const info = JSON.parse(localStorage.getItem('loginInfo'));
      console.log(info);
+     this.getAllJob();
      this.avatar = info ? info.photoUrl : '../../../../../assets/images/login.png';
      this.username = info ? info.name : null;
      this.provider = info ? info.provider : null;
@@ -41,9 +51,9 @@ export class AccountInfoComponent implements OnInit {
       username: [info ? info.name : null , Validators.required],
       dob: [ this.startDate, Validators.required],
       email: [info ? info.email : null, Validators.required],
-      gender: ['true'],
-      job: ['Software Enginier'],
-      phone: ['0975922740']
+      gender: true,
+      job: info ? info.job : null,
+      phone: ['']
      });
   }
   ngOnInit() {
@@ -52,8 +62,9 @@ export class AccountInfoComponent implements OnInit {
     });
     this.api.getAllRealEstate().subscribe(reList => {
       const info = JSON.parse(localStorage.getItem('loginInfo'));
+      console.log(info);
       if (info) {
-        this.listPost = reList.filter(src => src.user.email.indexOf(info.email) > -1);
+        this.listPost = [];
       } else {
         this.listPost = [];
       }
@@ -97,10 +108,31 @@ export class AccountInfoComponent implements OnInit {
 
   onSubmitUserInfo() {
     // tslint:disable-next-line: no-console
-    console.log(this.userInfo.value);
+    const user = JSON.parse(localStorage.getItem('loginInfo'));
+    // console.log(this.userInfo.value, user, this.userInfo.get('job').value);
+    const job = this.userInfo.get('job').value;
+    const phone = this.userInfo.get('phone').value;
+    const gender = this.userInfo.get('gender').value;
+    this.updateUser(user.id, job, phone , gender).subscribe( res => {
+      console.log(res);
+      this.toastr.success('Cập nhật thông tin thành công', 'Cập nhật người dùng');
+    }, error => {
+      this.toastr.error('Cập nhật thông tin thất bại', 'Cập nhật người dùng');
+      console.error(error);
+    });
+  }
+  updateUser(userId, job,phone , gender) {
+    return this.graphql.updateUser(userId, job, phone ,gender);
   }
 
   onSelect(slug: any) {
     this.router.navigate(['mua', slug]);
   }
+
+  getAllJob() {
+    this.api.getAllJob().subscribe(
+      jobs => this.jobs = jobs
+    );
+  }
+
 }

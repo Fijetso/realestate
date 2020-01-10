@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { RealEstate } from './../../model/real-estate/real-estate';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class DataService {
   JSON.parse(localStorage.getItem('favS')) :
    []);
   currentFavList = this.favList.asObservable();
-  constructor() {
+  constructor(private toasrt: ToastrService) {
   }
 
   changeLoginState(loginState: boolean) {
@@ -28,6 +29,7 @@ export class DataService {
   }
   addFavList(favItem: RealEstate) {
     const currentValue = this.favList.value;
+    this.toasrt.success('Đã thêm vào danh sách yêu thích', 'Thêm vào danh sách yêu thích');
     const updatedValue  = [...currentValue, favItem];
     this.favList.next(updatedValue);
     this.currentFavList.subscribe(newValue => {
