@@ -33,6 +33,8 @@ public class GraphUser {
 	private String job;
 	@Relationship(type = "POST", direction = Relationship.OUTGOING)
 	private List<GraphTrade> trade;
+	@Relationship(type = "BROWSE", direction = Relationship.OUTGOING)
+	private List<GraphHistory> history;
 	private transient SimpleDateFormat dateFormat = new SimpleDateFormat(Common.Constains.LOCAL_DATE_FORMAT);
 
 	public GraphUser() {
@@ -142,5 +144,17 @@ public class GraphUser {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public List<GraphHistory> getHistory() {
+		return history;
+	}
+
+	public void setHistory(List<GraphHistory> history) {
+		this.history = history;
+	}
+
+	public List<GraphTrade> getTrade() {
+		return trade;
 	}
 }
