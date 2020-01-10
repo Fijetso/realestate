@@ -25,6 +25,8 @@ type Mutation {
 	saveCategory(categoryId: Long, name: String!): Category
 	
 	saveBooking(name: String, phone: String!, email: String!, timeStart: String, timeEnd: String, tradeId: Long!): Booking
+	
+	saveHistory(userId: Long!, district:Long, price: Int, square: Float): String
 }
 
 type Trade {

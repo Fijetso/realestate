@@ -6,18 +6,18 @@ public class SuggestModel {
 	private List<Long> districtIdList;
 	private List<Integer> priceList;
 	private List<Float> squareList;
-	private String userJob;
+	private Long userId;
 	
 	public SuggestModel() {
 		super();
 	}
-
-	public SuggestModel(List<Long> districtIdList, List<Integer> priceList, List<Float> squareList, String userJob) {
+	
+	public SuggestModel(List<Long> districtIdList, List<Integer> priceList, List<Float> squareList, Long userId) {
 		super();
 		this.districtIdList = districtIdList;
 		this.priceList = priceList;
 		this.squareList = squareList;
-		this.userJob = userJob;
+		this.userId = userId;
 	}
 
 	public List<Integer> getPriceList() {
@@ -44,11 +44,11 @@ public class SuggestModel {
 		this.districtIdList = districtIdList;
 	}
 
-	public String getUserJob() {
-		return userJob;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setUserJob(String userJob) {
-		this.userJob = userJob;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 }
