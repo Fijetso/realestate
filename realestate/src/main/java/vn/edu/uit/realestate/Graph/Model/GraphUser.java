@@ -146,15 +146,15 @@ public class GraphUser {
 		this.id = id;
 	}
 
-	public List<GraphHistory> getHistory() {
-		return history;
-	}
+//	public List<GraphHistory> getHistory() {
+//		return history;
+//	}
 
 	public void setHistory(List<GraphHistory> history) {
 		this.history = history;
 	}
 
-	public List<GraphTrade> getTrade() {
-		return trade;
-	}
+//	public List<GraphTrade> getTrade() {
+//		return trade;
+//	}
 }

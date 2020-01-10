@@ -33,9 +33,13 @@ import vn.edu.uit.realestate.Service.ModelMapperService;
 public class RecommenderService {
 	@Autowired
 	private GraphTradeRepository graphTradeRepository;
+	@Autowired
+	private GraphHistoryRepository graphHistoryRepository;
+	@Autowired
+	private GraphUserRepository graphUserRepository;
 
 	private Float mostFrequentMetterSquare(List<Float> array) {
-		if (array == null) {
+		if (array == null || array.size() ==0) {
 			return null;
 		}
 		// Sort the array
@@ -67,7 +71,7 @@ public class RecommenderService {
 	}
 
 	private Integer mostFrequentPriceBillion(List<Integer> array) {
-		if (array == null) {
+		if (array == null || array.size() ==0) {
 			return null;
 		}
 		// Sort the array
@@ -97,11 +101,6 @@ public class RecommenderService {
 		}
 		return res;
 	}
-
-	@Autowired
-	private GraphHistoryRepository graphHistoryRepository;
-	@Autowired
-	private GraphUserRepository graphUserRepository;
 
 	public List<GraphTrade> recommendTradesWithContentBased(SuggestModel suggestModel) {
 		List<Integer> priceList = new ArrayList<>();

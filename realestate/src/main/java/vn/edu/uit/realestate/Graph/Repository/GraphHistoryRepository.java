@@ -11,6 +11,6 @@ import vn.edu.uit.realestate.Graph.Model.GraphHistory;
 
 @Repository
 public interface GraphHistoryRepository  extends Neo4jRepository<GraphHistory, Long>{
-	@Query("MATCH (h:History {userId:) 20 DES by id")
+	@Query("MATCH (n:History)-[:BROWSE]-(u:User {id:{userId}}) RETURN n ORDER BY ID(n) DESC LIMIT 10")
 	public List<GraphHistory> getHistoryByUserId(@Param(value="userId")Long userId);
 }

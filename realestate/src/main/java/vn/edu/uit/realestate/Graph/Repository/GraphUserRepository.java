@@ -17,7 +17,7 @@ public interface GraphUserRepository extends Neo4jRepository<GraphUser, Long>{
 	public List<GraphUser> getAllUser();
 	@Query("CREATE (BillyC:User {name:'Billy Crystal'}) RETURN BillyC")
 	public GraphUser saveNewUser();
-	@Query("MATCH (u:User { id:{userId} }) RETURN user.job")
+	@Query("MATCH (u:User { id:{userId} }) RETURN u.job")
 	public String getUserJob(@Param(value="userId")Long userId);
 	@Query("MATCH (n:User{id:{userId}}) RETURN *")
 	public Optional<GraphUser> findUserById(Long userId);
