@@ -8,6 +8,7 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from 'angularx-social-login';
 import { SocialUser } from 'angularx-social-login';
+import { DataService } from './../../../services/data/data.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -18,7 +19,6 @@ export class LoginComponent implements OnInit {
   userInfo: any;
   loginInfo: any;
   loginForm: FormGroup;
-  data: any;
   loginError: any;
   user: User;
   login: any;
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
     private cookie: CookieService,
     private toastr: ToastrService,
     private authService: AuthService,
-    private router: Router
+    private data: DataService
   ) {
     this.userInfo = {
       email: '',
@@ -50,8 +50,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.authService.authState.subscribe(user => {
       this.socialUser = user;
-      // tslint:disable-next-line: no-console
-      console.log(this.socialUser);
+      // console.log(this.socialUser);
       this.isLogedIn = this.loggedIn =  (user != null);
       if (this.loggedIn) {
         localStorage.setItem('loginInfo', JSON.stringify(user));
@@ -62,8 +61,7 @@ export class LoginComponent implements OnInit {
     this.login = this.graphql.login(email, password);
     const token = localStorage.getItem('login');
     if (token) {
-      // tslint:disable-next-line: no-console
-      console.log('getToken', token);
+      // console.log('getToken', token);
       this.graphql.getLoginInfo(token).subscribe(res => {
         this.data = res;
         // console.log('login infor',res);
@@ -78,15 +76,13 @@ export class LoginComponent implements OnInit {
   }
   loginWithGoogle() {
     this.myAuthService.loginWithGoogle().then(user => {
-      // tslint:disable-next-line: no-console
+
       console.log(user);
       localStorage.setItem('loginInfo', JSON.stringify(user));
       this.isLogedIn = true;
       const loginGoogle = localStorage.getItem('loginInfo');
       this.cookie.set('loginInfo', loginGoogle);
-      // tslint:disable-next-line: no-console
       const cookieResult = this.cookie.get('loginInfo');
-      // tslint:disable-next-line: no-console
       console.log(JSON.parse(cookieResult)); this.toastr.success(
           JSON.parse(cookieResult).name,
           'Đăng nhập thành công'
@@ -98,15 +94,13 @@ export class LoginComponent implements OnInit {
 
   loginWithFacebook() {
     this.myAuthService.loginWithFacebook().then(user => {
-      // tslint:disable-next-line: no-console
       console.log(user);
       localStorage.setItem('loginInfo', JSON.stringify(user));
       this.isLogedIn = true;
       const loginFacebook = localStorage.getItem('loginInfo');
       this.cookie.set('loginInfo', loginFacebook);
-      // tslint:disable-next-line: no-console
+
       const cookieResult = this.cookie.get('loginInfo');
-      // tslint:disable-next-line: no-console
       console.log(JSON.parse(cookieResult));
       this.toastr.success(
         JSON.parse(cookieResult).name,

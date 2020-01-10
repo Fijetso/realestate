@@ -49,12 +49,5 @@
       </button>
       </div>
     </form>
-    <div class="display-data" *ngIf="data">
-      <div class="uid">{{data?.uid}}</div>
-      <img src={{data?.photoURL}} alt={{data?.uid}}/>
-      <div class="email">{{data?.email}}</div>
-      <div class="display-name">{{data?.displayName}}</div>
-      <pre>{{data |json}}</pre>
-    </div>
   </div>
 </div>

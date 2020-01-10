@@ -13,7 +13,7 @@ export class RecommendTradeComponent implements OnInit {
     this.getTradeRecommend('Kinh doanh', [760, 774], [50, 75, 50, 100, 50, 50], [1, 2, 3, 3, 3]).subscribe(res => {
       this.tradeRecommendList = res;
       console.log(this.tradeRecommendList);
-    })
+    });
    }
 
   ngOnInit() {
