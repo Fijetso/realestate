@@ -1,218 +1,41 @@
 <app-marketting></app-marketting>
-<div class="create-post-wrapper container">
-  <h3>Chủ nhà đăng tin</h3>
-  <form
-    #formPost="ngForm"
-    novalidate
-    (ngSubmit)="onSubmit(formPost.value)"
-    class="row justify-content-md-center"
-  >
-    <div class="col-md-10">
-      <div class="form-group row">
-        <label for="text-input" class="col-md-2 col-form-label">Họ Tên:</label>
-        <div class="col-md-10">
-          <input
-            class="form-control"
-            type="text"
-            id="text-input"
-            [(ngModel)]="post.name"
-            name="name"
-            required
-            autofocus
-          />
-        </div>
-      </div>
-      <div
-        class="col alert alert-danger"
-        role="alert"
-        *ngIf="formPost.controls.name?.errors?.required"
-      >
-        Tên là bắt buộc
-      </div>
-      <div class="form-group row">
-        <label for="email-input" class="col-md-2 col-form-label"
-          >Thư điện tử:</label
-        >
-        <div class="col-md-10">
-          <input
-            class="form-control"
-            type="email"
-            id="email-input"
-            [(ngModel)]="post.email"
-            name="email"
-            required
-          />
-        </div>
-      </div>
-      <div
-        class="col alert alert-danger"
-        role="alert"
-        *ngIf="formPost.controls.email?.errors?.required"
-      >
-        Thư điện tử là bắt buộc
-      </div>
-      <div class="form-group row">
-        <label for="tel-input" class="col-md-2 col-form-label"
-          >Số điện thoại:</label
-        >
-        <div class="col-md-10">
-          <input
-            class="form-control"
-            type="tel"
-            id="tel-input"
-            [(ngModel)]="post.phone"
-            name="phone"
-          />
-        </div>
-      </div>
-      <label id="radio-group-label">Chọn loại BĐS</label>
-      <mat-radio-group
-        aria-labelledby="radio-group-label"
-        class="radio-group"
-        [(ngModel)]="post.reKind"
-        name="reKind"
-      >
-        <mat-radio-button
-          class="radio-button-reKind"
-          *ngFor="let reKind of reKinds"
-          [value]="reKind"
-          name="reKindItem"
-        >
-          {{ reKind }}
-        </mat-radio-button>
-      </mat-radio-group>
-      <h5>Loại hình giao dịch</h5>
-      <mat-radio-group
-        aria-labelledby="radio-group-label"
-        class="radio-group"
-        [(ngModel)]="post.reTradeKind"
-        name="reTradeKind"
-      >
-        <mat-radio-button
-          class="radio-button-sale"
-          value="Bán"
-          name="reTradeKindItem"
-        >
-          Bán
-        </mat-radio-button>
-      </mat-radio-group>
-      <h5>Địa chỉ đăng tin</h5>
-      <fieldset class="dia-chi row" ngModelGroup="address">
-        <mat-form-field>
-          <mat-label>Tỉnh/Tp</mat-label>
-          <mat-select [(ngModel)]="post.address.province" name="province" (ngModelChange)="getDistrictFromProvince(province.id)">
-            <mat-option [value]="0">
-                  Chọn Tỉnh
+<div class="row">
+  <div class="col-md-6 col-sm">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Biên tập nội dung</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form (ngSubmit)="onSubmit()" [formGroup]="editNews">
+          <mat-form-field>
+            <input matInput placeholder="Tiêu đề bài viết" formControlName="title">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Tác giả" formControlName="author">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput [matDatepicker]="composeDate" placeholder="Ngày viết bài" formControlName="composeDate">
+            <mat-datepicker-toggle matSuffix [for]="composeDate"></mat-datepicker-toggle>
+            <mat-datepicker #composeDate [startAt]="startDate"></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Phân loại</mat-label>
+            <mat-select formControlName="category" #category>
+              <mat-option *ngFor="let category of categoryList" [value]="category.id">
+                {{category.name}}
             </mat-option>
-            <mat-option [value]="province.id" name="provinceItem">
-              {{province.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Quận/Huyện</mat-label>
-          <!-- districtId not receive -->
-          <mat-select [(ngModel)]="post.address.district" name="district" (ngModelChange)="getWardFromDisctrictId(province.id,762)">
-            <mat-option [value]="0">
-                  Chọn quận/ huyện
-            </mat-option>
-            <mat-option *ngFor="let district of districtList" [value]="district.id" name="districtItem">
-              {{ district.nameWithType }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Phường xã</mat-label>
-          <mat-select [(ngModel)]="post.address.ward" name="ward">
-              <mat-option [value]="0">
-                  Chọn phường xã
-            </mat-option>
-            <mat-option *ngFor="let ward of wardList" [value]="ward.id">
-              {{ ward.nameWithType }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </fieldset>
-      <div class="form-group row">
-        <label for="price-input" class="col-md-2 col-form-label"
-          >Gía đề xuất:</label
-        >
-        <div class="col-md-10">
-          <div class="row">
-            <input
-              class="form-control col-md-9"
-              type="number"
-              id="price-input"
-              [(ngModel)]="post.price"
-              name="price"
-              required
-            />
-            <mat-form-field class="col-md-3">
-              <mat-label>Đơn vị</mat-label>
-              <mat-select [(ngModel)]="post.currency" name="currency">
-                <mat-option value="VND">
-                  VNĐ
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </div>
-      </div>
-      <div
-        class="col alert alert-danger"
-        role="alert"
-        *ngIf="formPost.controls.price?.errors?.required"
-      >
-        Gía là bắt buộc
-      </div>
-      <div class="form-group row">
-        <div class="col-md-12">
-          <div class="row address">
-            <input
-              class="form-control col-md-8"
-              type="text"
-              id="house-address-input"
-              [(ngModel)]="post.houseAddress"
-              name="houseAddress"
-              placeholder="Số nhà"
-            />
-            <input
-              class="form-control col-md-4"
-              type="tel"
-              id="house-phone-input"
-              [(ngModel)]="post.housePhone"
-              name="housePhone"
-              placeholder="Số điện thoại"
-            />
-          </div>
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-md-10 offset-md-5">
-          <button
-            class="btn btn-primary"
-            type="submit"
-            [disabled]="!formPost.valid"
-          >
-            Gửi thông tin
-          </button>
-        </div>
-      </div>
-    </div>
-  </form>
-  <form #imageForm=ngForm (ngSubmit)="OnSubmit(Caption,Image)" *ngIf="false"> 
-      <div class="row">
-        <div class="input-field col s12">
-          <input type="text" #Caption ngModel name="Caption" id="Caption" required placeholder="Mô tả hình ảnh">
-        </div>
-      </div>
-      <img [src]="imageUrl"  style="width:250px;height:200px">
-      <input type="file" #Image accept="image/*" (change)="handleFileInput($event.target.files)">
-      <button type="submit" class="btn-large btn-submit" [disabled]="Image.value=='' || !imageForm.valid">Submit</button>
-    </form>
-  <!-- <pre>{{ formPost.value | json }}</pre>
-  <p>Control Name errors:</p>
-  <pre>{{ formPost.controls.name?.errors | json }}</pre>
-  <p>Control Email errors:</p>
-  <pre>{{ formPost.controls.email?.errors | json }}</pre> -->
+            </mat-select>
+          </mat-form-field>
+          <ck-editor name="editor1" formControlName="editorValue" skin="moono-lisa" language="vi" [fullPage]="true">
+          </ck-editor>
+          <button mat-raised-button>Lưu</button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="col-md-6 col-sm">
+    <mat-card class="w-100 h-100">
+      <div [innerHTML]="editNews.get('editorValue').value"></div>
+    </mat-card>
+  </div>
 </div>

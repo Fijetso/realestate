@@ -20,10 +20,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import vn.edu.uit.realestate.ExceptionHandler.ExistContentException;
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
-import vn.edu.uit.realestate.DataAccess.CategoryRepository;
-import vn.edu.uit.realestate.DataAccess.NewsRepository;
-import vn.edu.uit.realestate.Model.Category;
-import vn.edu.uit.realestate.Model.News;
+import vn.edu.uit.realestate.Relational.Model.Category;
+import vn.edu.uit.realestate.Relational.Model.News;
+import vn.edu.uit.realestate.Relational.Repository.CategoryRepository;
+import vn.edu.uit.realestate.Relational.Repository.NewsRepository;
 
 @RestController
 public class CategoryController {
@@ -48,17 +48,17 @@ public class CategoryController {
     	}
         return new ResponseEntity<>(foundCategory.get(), HttpStatus.OK);
     }
-    @GetMapping("/categories/{categoryId}/news")
-    public ResponseEntity<List<News>> getNewsListByCategoryId(@PathVariable Long categoryId) {
-    	Optional<Category> foundCategory = categoryRepository.findById(categoryId);
-    	if (foundCategory.isPresent()==false) {
-    		throw new NotFoundException("Cannot find any Category with id="+categoryId);
-    	}
-    	List<News> newsList = foundCategory.get().getNews();
-    	if(newsList.isEmpty() == true)
-    		throw new NotFoundException("Cannot find any News with Category Id="+categoryId);
-        return new ResponseEntity<>(newsList, HttpStatus.OK);
-    }
+//    @GetMapping("/categories/{categoryId}/news")
+//    public ResponseEntity<List<News>> getNewsListByCategoryId(@PathVariable Long categoryId) {
+//    	Optional<Category> foundCategory = categoryRepository.findById(categoryId);
+//    	if (foundCategory.isPresent()==false) {
+//    		throw new NotFoundException("Cannot find any Category with id="+categoryId);
+//    	}
+//    	List<News> newsList = foundCategory.get().getNews();
+//    	if(newsList.isEmpty() == true)
+//    		throw new NotFoundException("Cannot find any News with Category Id="+categoryId);
+//        return new ResponseEntity<>(newsList, HttpStatus.OK);
+//    }
     @PostMapping("/categories")
     public ResponseEntity<Category> postCategory(@RequestBody Category category) {
     	categoryRepository.save(category);

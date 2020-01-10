@@ -9,10 +9,30 @@ export const environment = {
     messagingSenderId: '847678221489',
     appId: '1:847678221489:web:985d889d2d396930'
   },
-  ipapi: {
-    apiKey: 'e41bcfed8462dbd69772bdb4f6616a24'
-  },
   api: {
-    rootURL: 'http://localhost:4200'
+    rootURL: 'https://real-estate-vn-241110.firebaseapp.com/',
+    baseURL: 'https://real-estate-vn-241110.firebaseapp.com/api'
+  },
+  heremap: {
+    appId: 'dmdRFi5x5pT0zuy09gle',
+    appCode: 'KLtdq3MAUJruxhiJ2GyAFQ',
+    apiKey: 'Rqsg3eYkotn3qt2GajbTQzc8CSA-4u3yZvLIdq8C7Kc',
+    defaultLang: 'vie',
+    secondLang: 'eng'
+  },
+  soicialProvider: {
+    google : {
+      clientId: '522576343899-7kpul3pe29t81s1f9d3cek3umueojeu1.apps.googleusercontent.com'
+    },
+    facebook: {
+      appId: '1213363158870756'
+    },
+    zalo: {
+      appId: '3698477159127928270'
+    }
+  },
+  mapbox: {
+    accessToken: 'pk.eyJ1IjoiZGFuaHRoYW5oNDE4IiwiYSI6ImNrNDNwangwNjBhZHQzbHJ1NzVkcDRqMzMifQ.xo0_loggxzreh2IHVCPQHg',
+    geocoderAccessToken: 'sk.eyJ1IjoiZGFuaHRoYW5oNDE4IiwiYSI6ImNrNTNsMGN3YTA1MGszbnBieTRwbmY0ZHUifQ.Mdx8Igop1_KOl7kgiN4ung'
   }
 };

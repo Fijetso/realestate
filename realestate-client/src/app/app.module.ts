@@ -1,11 +1,14 @@
-import { HttpErrorInterceptor } from './services/common/http-error.interceptor';
+import { AccountModule } from './core/ui/account/account.module';
 import { environment } from './../environments/environment';
-import { BrowserModule } from '@angular/platform-browser';
+import { GraphQueryService } from './services/graphql/graph-query.service';
+import { PopupService } from './services/map/popup.service';
+import { MarkerService } from './services/map/marker.service';
+import { MapComponent } from './core/ui/map/map.component';
+import { HttpErrorInterceptor } from './services/common/http-error.interceptor';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
-import { AgmCoreModule } from '@agm/core';
-import { AgmDirectionModule } from 'agm-direction'; // agm-direction
 import { MatDialogModule } from '@angular/material/dialog';
 import { AppComponent } from './app.component';
 import { LayoutComponent } from './components/layout/layout.component';
@@ -22,48 +25,47 @@ import { LayoutModule } from '@angular/cdk/layout';
 import {
   MatButtonModule,
   MatCardModule,
-  MatMenuModule,
   MatToolbarModule,
   MatIconModule,
   MatInputModule,
   MatDatepickerModule,
   MatNativeDateModule,
   MatProgressSpinnerModule,
-  MatTableModule,
-  MatExpansionModule,
   MatSelectModule,
-  MatSnackBarModule,
   MatTooltipModule,
-  MatChipsModule,
   MatListModule,
   MatSidenavModule,
   MatTabsModule,
-  MatProgressBarModule,
   MatRadioModule,
   MatSlideToggleModule,
   MatAutocompleteModule,
-  MatBottomSheet,
-  MatBottomSheetRef,
   MatButtonToggleModule,
   MatFormFieldModule,
-  MatBadgeModule
+  MatChipsModule,
+  MatExpansionModule,
+  MatSliderModule,
+  MatCheckboxModule,
+  MatProgressBarModule
 } from '@angular/material';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
-import { HttpClientModule, HttpClient,HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import 'hammerjs';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { OwlModule } from 'ngx-owl-carousel';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ToastrModule } from 'ngx-toastr';
-import { CKEditorModule } from 'ng2-ckeditor';
-import {} from 'googlemaps';
-import { AngularFireMessagingModule } from '@angular/fire/messaging';
+import { ApolloModule } from 'apollo-angular';
+import { HttpLinkModule } from 'apollo-angular-link-http';
+import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
+import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {CKEditorModule} from 'ngx-ckeditor';
+import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 import { RealEstateWrapperComponent } from './components/real-estate/real-estate-wrapper/real-estate-wrapper.component';
 import { AlertComponent } from './core/modal/alert/alert.component';
@@ -100,9 +102,32 @@ import { GetCityPipe } from './ultility/pipe/get-city.pipe';
 import { GetDistrictNameFromIdPipe } from './ultility/pipe/get-district-name-from-id.pipe';
 import { ThousandSuffixPipe } from './ultility/pipe/thousand-suffix.pipe';
 import { SearchPageComponent } from './core/ui/search-page/search-page.component';
-import { AccountManagementComponent } from './core/ui/account-management/account-management.component';
-import { GetIdFromNamePipe } from './ultility/pipe/get-id-from-name.pipe';
-import { UserManagerComponent } from './components/user-manager/user-manager.component';
+import { AddReComponent } from './core/ui/create-post/add-re/add-re.component';
+import { UpdateReComponent } from './core/ui/create-post/update-re/update-re.component';
+import { DeleteReComponent } from './core/ui/create-post/delete-re/delete-re.component';
+import { ContactComponent } from './core/ui/contact/contact.component';
+import { CookieService } from 'ngx-cookie-service';
+import { NewsModuleModule } from './core/ui/news-module/news-module.module';
+import { SearchPipe } from './ultility/pipe/search.pipe';
+import { SortPipe } from './ultility/pipe/sort.pipe';
+import { DisplayMapComponent } from './core/ui/map-box/display-map/display-map.component';
+import { FengShuiComponent } from './core/ui/feng-shui/feng-shui.component';
+import { RecommendTradeComponent } from './core/ui/recommend-trade/recommend-trade.component';
+
+const config = new AuthServiceConfig([
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider(environment.soicialProvider.google.clientId)
+  },
+  {
+    id: FacebookLoginProvider.PROVIDER_ID,
+    provider: new FacebookLoginProvider(environment.soicialProvider.facebook.appId)
+  }
+]);
+
+export function provideConfig() {
+  return config;
+}
 
 @NgModule({
   declarations: [
@@ -145,21 +170,24 @@ import { UserManagerComponent } from './components/user-manager/user-manager.com
     GetDistrictNameFromIdPipe,
     ThousandSuffixPipe,
     SearchPageComponent,
-    AccountManagementComponent,
-    GetIdFromNamePipe,
-    UserManagerComponent
+    MapModuleComponent,
+    MapComponent,
+    AddReComponent,
+    UpdateReComponent,
+    DeleteReComponent,
+    ContactComponent,
+    SearchPipe,
+    SortPipe,
+    DisplayMapComponent,
+    FengShuiComponent,
+    RecommendTradeComponent
   ],
   imports: [
     OwlModule,
-    NgbModule,
     BrowserModule,
     AppRoutingModule,
     LazyLoadImageModule,
     BrowserAnimationsModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCTD49hV20zPTBjT7k643sBxjoXx6W7oEo',
-      libraries: ['places']
-    }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -167,7 +195,6 @@ import { UserManagerComponent } from './components/user-manager/user-manager.com
         deps: [HttpClient]
       }
     }),
-    AgmDirectionModule,
     MatFormFieldModule,
     MatDialogModule,
     LayoutModule,
@@ -182,7 +209,6 @@ import { UserManagerComponent } from './components/user-manager/user-manager.com
     MatRadioModule,
     MatSlideToggleModule,
     MatAutocompleteModule,
-    MatProgressSpinnerModule,
     MatTabsModule,
     MatCardModule,
     MatButtonToggleModule,
@@ -195,13 +221,26 @@ import { UserManagerComponent } from './components/user-manager/user-manager.com
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     Ng2SearchPipeModule,
-    ToastrModule.forRoot({
-      timeOut: 1000,
-    }),
+    ToastrModule.forRoot(),
+    HttpClientModule,
+    ApolloModule,
+    HttpLinkModule,
+    MatChipsModule,
+    SocialLoginModule,
+    AccountModule,
+    NgbModule,
+    NewsModuleModule,
     CKEditorModule,
-    AngularFireMessagingModule,
-    MatMenuModule,
-    MatBadgeModule
+    NgxMapboxGLModule.withConfig({
+      accessToken: environment.mapbox.accessToken,
+      geocoderAccessToken: environment.mapbox.geocoderAccessToken
+    }),
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
+    MatExpansionModule,
+    MatSliderModule,
+    MatCheckboxModule,
+    MatProgressBarModule,
   ],
   providers: [
     AuthenticationService,
@@ -211,10 +250,18 @@ import { UserManagerComponent } from './components/user-manager/user-manager.com
       useClass: HttpErrorInterceptor,
       multi: true
     },
-    GetIdFromNamePipe
+    MarkerService,
+    PopupService,
+    GraphQueryService,
+    Title,
+    {
+      provide: AuthServiceConfig,
+      useFactory: provideConfig
+    },
+    CookieService
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],
   entryComponents: [AlertComponent]
 })
-export class AppModule {}
+export class AppModule { }

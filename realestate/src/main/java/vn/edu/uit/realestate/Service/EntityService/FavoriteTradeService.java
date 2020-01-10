@@ -13,20 +13,18 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import vn.edu.uit.realestate.ExceptionHandler.ExistContentException;
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
-import vn.edu.uit.realestate.DataAccess.AddressRepository;
-import vn.edu.uit.realestate.DataAccess.BluePrintRepository;
-import vn.edu.uit.realestate.DataAccess.BookingRepository;
-import vn.edu.uit.realestate.DataAccess.DetailsRepository;
-import vn.edu.uit.realestate.DataAccess.FavoriteTradeRepository;
-import vn.edu.uit.realestate.DataAccess.RealImageRepository;
-import vn.edu.uit.realestate.DataAccess.TradeRepository;
-import vn.edu.uit.realestate.DataAccess.UserRepository;
-import vn.edu.uit.realestate.Model.BluePrint;
-import vn.edu.uit.realestate.Model.Booking;
-import vn.edu.uit.realestate.Model.FavoriteTrade;
-import vn.edu.uit.realestate.Model.RealImage;
-import vn.edu.uit.realestate.Model.Trade;
-import vn.edu.uit.realestate.Model.User;
+import vn.edu.uit.realestate.Relational.Model.BluePrint;
+import vn.edu.uit.realestate.Relational.Model.FavoriteTrade;
+import vn.edu.uit.realestate.Relational.Model.RealImage;
+import vn.edu.uit.realestate.Relational.Model.Trade;
+import vn.edu.uit.realestate.Relational.Model.User;
+import vn.edu.uit.realestate.Relational.Repository.AddressRepository;
+import vn.edu.uit.realestate.Relational.Repository.BluePrintRepository;
+import vn.edu.uit.realestate.Relational.Repository.DetailsRepository;
+import vn.edu.uit.realestate.Relational.Repository.FavoriteTradeRepository;
+import vn.edu.uit.realestate.Relational.Repository.RealImageRepository;
+import vn.edu.uit.realestate.Relational.Repository.TradeRepository;
+import vn.edu.uit.realestate.Relational.Repository.UserRepository;
 import vn.edu.uit.realestate.Service.IEntityService;
 
 @Service
@@ -41,8 +39,6 @@ public class FavoriteTradeService implements IEntityService {
 	private RealImageRepository realImageRepository;
 	@Autowired
 	private BluePrintRepository bluePrintRepository;
-	@Autowired
-	private BookingRepository bookingRepository;
 	@Autowired
 	private AddressRepository addressRepository;
 	@Autowired

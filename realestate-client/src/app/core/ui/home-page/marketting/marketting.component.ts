@@ -1,12 +1,9 @@
 import { CommonService } from './../../../../services/common/common.service';
 import { GetIdFromNamePipe } from './../../../../ultility/pipe/get-id-from-name.pipe';
 import { ApiService } from './../../../../services/api/api.service';
-import { Component, OnInit, ViewChild, Output,EventEmitter  } from '@angular/core';
-import { FormControl  } from '@angular/forms';
-import { NavigationExtras, Router } from '@angular/router';
-export interface State {
-  name: string;
-}
+import { Component, OnInit, Output, EventEmitter  } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-marketting',
   templateUrl: './marketting.component.html',
@@ -18,14 +15,13 @@ export class MarkettingComponent implements OnInit {
   stateId: number;
   @Output()
   receiveREKind: EventEmitter <string> = new EventEmitter <string>();
-  tradeFromDistrict: any;
-  constructor(private api: ApiService, private getIdFromName: GetIdFromNamePipe, private common : CommonService,private router: Router) {
-
+  searchForm: any;
+  districtList: any;
+  constructor(private api: ApiService, private fb: FormBuilder, private router: Router) {
+    this.searchForm = this.fb.group({
+      district: 760
+    });
   }
-
-  myControl = new FormControl();
-  states: any;
-
   ngOnInit() {
     this.reKindValue = 'mua';
     this.getDistrictList();
@@ -38,25 +34,16 @@ export class MarkettingComponent implements OnInit {
   }
   getDistrictList() {
     this.api.getDistrictFromProvinceId(79).subscribe(districtList => {
-      this.states = districtList;
+      this.districtList = districtList;
     });
   }
-  onSubmitSearch( value) {
-    this.stateId = this.getIdFromName.transform(this.states, value);
-    this.api.getTradeFromDistrict(this.stateId).subscribe(tradeList => {
-      this.tradeFromDistrict = tradeList;
-      this.api.setData(this.tradeFromDistrict);
-      // this.toastr.warning('Chức năng chưa hoàn thiện');
-      const navExtras: NavigationExtras = {
-        queryParams: {
-          quan: this.common.changeToSlug(value),
-          gia: this.common.changeToSlug('Giá thấp nhất'),
-          loai: this.common.changeToSlug('Nhà ở chung cư')
-        },
-        state: { data:  tradeList, title: value}
-      };
-      this.router.navigate(['tim-kiem'], navExtras);
-    });
 
+  getTradeByDistrict(districtId: any) {
+    this.router.navigate(['/tim-kiem'], {queryParams: {tinh: 79, quan: districtId}});
+  }
+  onChangeDistrict() {
+    const district = this.searchForm.get('district').value;
+    console.log(district);
+    this.getTradeByDistrict(district);
   }
 }

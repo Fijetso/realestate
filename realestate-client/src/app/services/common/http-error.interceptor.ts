@@ -29,7 +29,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
               errorMessage = `Lỗi server mã: ${error.status} \r\nNội dung: ${error.message}`;
             }
             // this.toastr.error(errorMessage);
-            this.toastr.error(errorMessage, 'Lỗi');
             return throwError(errorMessage);
           })
         );

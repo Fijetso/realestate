@@ -3,8 +3,8 @@
   <div class="re-detail-path-header">
     <span class="area-left">Trang chủ / {{provinceName}} / {{disctrictName}}</span>
     <div class="area-right">
-      <span class="mr-2">Mã tin đăng : {{tradeData.id}}</span>
-      <span class="mx-2"><i class="fas fa-eye icon"></i> {{tradeData.viewCount}}</span>
+      <span class="mr-2">Mã tin đăng : {{tradeData?.id}}</span>
+      <span class="mx-2"><i class="fas fa-eye icon"></i> {{tradeData?.viewCount}}</span>
       <span class="mx-2">
         Chia sẻ : <i class="fab fa-facebook icon icon-facebook"></i>
       </span>
@@ -20,19 +20,19 @@
           <owl-carousel
             #owlElement
             [options]="carouselOptions"
-            [items]="tradeData.realImages"
+            [items]="tradeData?.realImages"
             [carouselClasses]="['owl-theme', 'sliding']"
             class="carousel-container"
-            *ngIf="tradeData.realImages"
+            *ngIf="tradeData?.realImages"
           >
             <div
               class="carousel-wrapper"
-              *ngFor="let image of tradeData.realImages; let i = index"
+              *ngFor="let image of tradeData?.realImages; let i = index"
             >
               <div class="slide-item">
-                <img class="w-100 h-100" src="{{image.imageLink}}" alt="{{image.description}}"/>
+                <img class="w-100 h-100" src="{{image?.imageLink}}" alt="{{image?.description}}"/>
                 <div class="slide-caption">
-                  <span>{{image.description}}</span>
+                  <span>{{image?.description}}</span>
                 </div>
               </div>
               <div class="nav-button">
@@ -49,45 +49,50 @@
           <div class="re-desc block-info block-info-1">
             <div class="re-desc-line-1 div-title-rose">
               <h3 class="re-inline" itemprop="name">
-                  {{ tradeData.description}}
+                  {{ tradeData?.description}}
               </h3>
             </div>
             <div class="re-desc-line-2">
               <div class=" re-inline re-price">
                 <div class="div-price price-left">
-                  <span class="span-price">{{ tradeData.cost | thousandSuffix : 1}}</span>
-                  <span class="span-acreage">{{ tradeData.details.square}}m<sup>2 </sup></span>
+                  <span class="span-price">{{ tradeData?.cost | thousandSuffix : 1}}</span>
+                  <span class="span-acreage">{{ tradeData?.details?.square}}m<sup>2 </sup></span>
                   <p class="re-inline p-district">
                     <a
-                      href="/mua/ban-nha-rieng-quan-12?src=detail_district_list"
+                      [routerLink]="['../../','tim-kiem']" [queryParams] = "{tinh:79,quan:districtId}"
                       ><span>{{disctrictName}}</span></a
                     >
                     <a
-                      href="/mua/ban-nha-rieng-quan-12-phuong-tan-chanh-hiep?src=detail_ward_list"
+                    [routerLink]="['../../','tim-kiem']" [queryParams] = "{tinh:79,quan:districtId}"
                       ><span>{{wardName}}</span></a
                     >
                   </p>
                 </div>
               </div>
               <div class="re-customer price-right">
-                  {{ tradeData.viewCount}} lượt đi xem
+                  {{ tradeData?.viewCount}} lượt đi xem
               </div>
             </div>
+          </div>
+          <div class="re-user block-info block-info-2 11">
+            <h4>Thông tin liên hệ:</h4>
+            <p> {{ tradeData?.user?.name}}</p>
+            <a [href]="'mailto:'+tradeData?.user?.email+'?subject='+tradeData?.description"> {{ tradeData?.user?.email}}</a>
           </div>
           <div class="re-detail block-info block-info-2 11">
             <h4>Thông tin bất động sản:</h4>
             <ul class="re-elements">
-              <li class="elements length">Chiều dài: {{ tradeData.details.length}}m</li>
-              <li class="elements width">Chiều rộng: {{ tradeData.details.width}}m</li>
-              <li class="elements direction">Hướng: {{ tradeData.details.direction}}</li>
-              <li class="elements alley">{{ tradeData.details.utilities}}</li>
+              <li class="elements length">Chiều dài: {{ tradeData?.details?.length}}m</li>
+              <li class="elements width">Chiều rộng: {{ tradeData?.details?.width}}m</li>
+              <li class="elements direction">Hướng: {{ tradeData?.details?.direction}}</li>
+              <li class="elements alley">{{ tradeData?.details?.utilities}}</li>
               <li class="elements floors">
-                Tầng: {{ tradeData.details.floors}}
+                Tầng: {{ tradeData?.details?.floors}}
               </li>
-              <li class="elements ledger">Giấy tờ: {{ tradeData.details.legalDocuments}}</li>
-              <li class="elements bedroom">Phòng ngủ: {{ tradeData.details.bedrooms}}</li>
-              <li class="elements bathroom">Phòng tắm: {{ tradeData.details.bedrooms}}</li>
-              <li class="elements others">{{ tradeData.details.others}}</li>
+              <li class="elements ledger">Giấy tờ: {{ tradeData?.details?.legalDocuments}}</li>
+              <li class="elements bedroom">Phòng ngủ: {{ tradeData?.details?.bedrooms}}</li>
+              <li class="elements bathroom">Phòng tắm: {{ tradeData?.details?.bedrooms}}</li>
+              <li class="elements others">{{ tradeData?.details?.others}}</li>
             </ul>
           </div>
           <div class="re-detail block-info block-info-5 11">
@@ -99,17 +104,17 @@
           <div class="re-read-more lock-info block-info-6">
             <h4 class="h2-title">Chi tiết tin đăng:</h4>
             <ul class="re-elements">
-                <li class="elements length">Chiều dài: {{ tradeData.details.length}}m</li>
-                <li class="elements width">Chiều rộng: {{ tradeData.details.width}}m</li>
-                <li class="elements direction">Hướng: {{ tradeData.details.direction}}</li>
-                <li class="elements alley">{{ tradeData.details.utilities}}</li>
+                <li class="elements length">Chiều dài: {{ tradeData?.details?.length}}m</li>
+                <li class="elements width">Chiều rộng: {{ tradeData?.details?.width}}m</li>
+                <li class="elements direction">Hướng: {{ tradeData?.details?.direction}}</li>
+                <li class="elements alley">{{ tradeData?.details?.utilities}}</li>
                 <li class="elements floors">
-                  Tầng: {{ tradeData.details.floors}}
+                  Tầng: {{ tradeData?.details?.floors}}
                 </li>
-                <li class="elements ledger">Giấy tờ: {{ tradeData.details.legalDocuments}}</li>
-                <li class="elements bedroom">Phòng ngủ: {{ tradeData.details.bedrooms}}</li>
-                <li class="elements bathroom">Phòng tắm: {{ tradeData.details.bedrooms}}</li>
-                <li class="elements others">{{ tradeData.details.others}}</li>
+                <li class="elements ledger">Giấy tờ: {{ tradeData?.details?.legalDocuments}}</li>
+                <li class="elements bedroom">Phòng ngủ: {{ tradeData?.details?.bedrooms}}</li>
+                <li class="elements bathroom">Phòng tắm: {{ tradeData?.details?.bedrooms}}</li>
+                <li class="elements others">{{ tradeData?.details?.others}}</li>
               </ul>
           </div>
         </mat-card>
@@ -118,40 +123,62 @@
       <div class="col-md-4 col-lg-4 content-right pl-3">
         <mat-card class="request-infor">
           <h5 class="text-center">Yêu cầu thông tin</h5>
-          <form>
-            <mat-form-field appearance="outline">
+          <form [formGroup]="requestInfo" (ngSubmit)="onSubmitRequest()">
+            <mat-form-field >
               <mat-label>Họ và Tên</mat-label>
               <mat-icon matPrefix>perm_identity</mat-icon>
-              <input matInput placeholder="Nguyễn Văn A" required name="name" />
+              <input matInput placeholder="Nguyễn Văn A" required name="name" formControlName="name"/>
             </mat-form-field>
-            <mat-form-field appearance="outline">
+            <mat-form-field >
               <mat-label>Số điện thoại</mat-label>
               <mat-icon matPrefix>phone</mat-icon>
-              <input matInput placeholder="09xxxxxxxx" required name="phone" />
+              <input matInput placeholder="09xxxxxxxx" required name="phone" formControlName="phone"/>
             </mat-form-field>
-            <mat-form-field appearance="outline">
+            <mat-form-field >
               <mat-label>Email</mat-label>
               <mat-icon matPrefix>mail_outline</mat-icon>
-              <input matInput placeholder="email@example.com" name="emails" />
+              <input matInput placeholder="email@example.com" required formControlName="email" [ngModel]="tradeData?.user?.email" readonly>
             </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>Thời gian</mat-label>
-              <input
+            <mat-form-field >
+              <mat-label>Thời gian bắt đầu</mat-label>
+              <!-- <input
                 matInput
-                [matDatepicker]="picker"
+                [matDatepicker]="dateStart"
                 placeholder="dd/MM/yyyy"
                 name="date"
+                formControlName="dateStart"
+                required
               />
               <mat-datepicker-toggle
                 matPrefix
-                [for]="picker"
+                [for]="dateStart"
               ></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
+              <mat-datepicker #dateStart></mat-datepicker> -->
+              <input matInput [owlDateTimeTrigger]="dateStart" [owlDateTime]="dateStart"  formControlName="dateStart">
+              <owl-date-time #dateStart [hourTime]=" '24'"></owl-date-time>
             </mat-form-field>
-            <mat-form-field appearance="outline">
+            <mat-form-field >
+              <mat-label>Thời gian kết thúc</mat-label>
+              <!-- <input
+                matInput
+                [matDatepicker]="dateEnd"
+                placeholder="dd/MM/yyyy"
+                name="date"
+                formControlName="dateEnd"
+                required
+              />
+              <mat-datepicker-toggle
+                matPrefix
+                [for]="dateEnd"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #dateEnd></mat-datepicker> -->
+              <input matInput [owlDateTimeTrigger]="dateEnd" [owlDateTime]="dateEnd" formControlName="dateEnd">
+              <owl-date-time #dateEnd [hourTime]="'24'"></owl-date-time>
+            </mat-form-field>
+            <mat-form-field >
               <mat-label>Mã chương trình</mat-label>
               <mat-icon matPrefix>sentiment_very_satisfied</mat-icon>
-              <input matInput placeholder="ABC123456" name="programCode" />
+              <input matInput placeholder="ABC123456" name="programCode" formControlName="programCode"/>
             </mat-form-field>
             <div class="footer-form d-flex justify-content-around flex-wrap">
               <button
@@ -163,9 +190,10 @@
                 Đặt lịch xem
               </button>
               <button
-                type="submit"
+                type="button"
                 mat-raised-button
                 class="btn-rounded btn-save text-reack"
+                *ngIf="false"
               >
                 <span><i class="far fa-heart"></i></span>
                 Lưu bản tin
@@ -179,14 +207,14 @@
   <app-favorite></app-favorite>
   <div class="viewed-section" *ngIf="recentData">
     <app-section-header [catTitle]="'Đã xem gần đây'" class="p-0"></app-section-header>
-    <app-carousel   [dataRecentRE] = "recentData" isRecentRE="isRecentRE"></app-carousel>
+    <app-carousel   [dataItems] = "recentData" isRecentRE="isRecentRE"></app-carousel>
   </div>
   <div class="viewed-section" *ngIf="reSamePlace">
     <app-section-header [catTitle]="'Cùng địa điểm'" class="p-0"></app-section-header>
-    <app-carousel   [dataRecentRE] = "reSamePlace" isRecentRE="isRecentRE"></app-carousel>
+    <app-carousel   [dataItems] = "reSamePlace" isRecentRE="isRecentRE"></app-carousel>
   </div>
   <div class="viewed-section" *ngIf="reSameClass">
     <app-section-header [catTitle]="'Cùng loại'" class="p-0"></app-section-header>
-    <app-carousel   [dataRecentRE] = "reSameClass" isRecentRE="isRecentRE"></app-carousel>
+    <app-carousel   [dataItems] = "reSameClass" isRecentRE="isRecentRE"></app-carousel>
   </div>
 </div>

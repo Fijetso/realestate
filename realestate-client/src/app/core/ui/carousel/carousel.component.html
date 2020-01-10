@@ -1,27 +1,25 @@
 <!-- Appraised -->
 <owl-carousel
   [options]="carouselOptions"
-  [items]="dataAppraised"
+  [items]="dataItems"
   [carouselClasses]="['owl-theme', 'sliding']"
-  *ngIf="isAppraised"
 >
-  <div class="carousel-wrapper" *ngFor="let dataItem of dataAppraised; let i = index">
-        <app-realestate-item [dataItem] ="dataItem" [isAppraised]="isAppraised"></app-realestate-item>
+  <div class="carousel-wrapper" *ngFor="let dataItem of dataItems; let i = index">
+        <app-realestate-item [dataItem] ="dataItem"></app-realestate-item>
   </div>
 </owl-carousel>
 <!-- Hot RE -->
-<owl-carousel
+<!-- <owl-carousel
   [options]="carouselOptions"
-  [items]="dataHotRE"
+  [items]="dataItems"
   [carouselClasses]="['owl-theme', 'sliding']"
-  *ngIf="isHotRE"
 >
-  <div class="carousel-wrapper" *ngFor="let dataItem of dataHotRE; let i = index">
+  <div class="carousel-wrapper" *ngFor="let dataItem of dataItems; let i = index">
         <app-realestate-item [dataItem] ="dataItem" [isHotRE]="isHotRE"></app-realestate-item>
   </div>
-</owl-carousel>
+</owl-carousel> -->
 <!-- FavRealEstate -->
-<owl-carousel
+<!-- <owl-carousel
   [options]="carouselOptions"
   [items]="dataFavorite"
   [carouselClasses]="['owl-theme', 'sliding']"
@@ -30,7 +28,7 @@
   <div class="carousel-wrapper" *ngFor="let dataItem of dataFavorite; let i = index">
         <app-realestate-item [dataItem] ="dataItem" [isFavRE]="isFavRE"></app-realestate-item>
   </div>
-</owl-carousel>
+</owl-carousel> -->
 <!-- Trading area -->
 <owl-carousel
   [options]="carouselOptions"
@@ -42,7 +40,7 @@
         <app-hot-place-item  [place] ="place"></app-hot-place-item>
   </div>
 </owl-carousel>
-<owl-carousel
+<!-- <owl-carousel
   [options]="carouselOptions"
   [items]="dataRecentRE"
   [carouselClasses]="['owl-theme', 'sliding']"
@@ -51,4 +49,4 @@
   <div class="carousel-wrapper" *ngFor="let dataItem of dataRecentRE; let i = index">
         <app-realestate-item  [dataItem] ="dataItem"></app-realestate-item>
   </div>
-</owl-carousel>
+</owl-carousel> -->

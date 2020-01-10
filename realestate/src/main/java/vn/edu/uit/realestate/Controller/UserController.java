@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import vn.edu.uit.realestate.Model.Request;
-import vn.edu.uit.realestate.Model.Trade;
-import vn.edu.uit.realestate.Model.User;
+import vn.edu.uit.realestate.Graph.Repository.GraphUserRepository;
+import vn.edu.uit.realestate.Relational.Model.Request;
+import vn.edu.uit.realestate.Relational.Model.Trade;
+import vn.edu.uit.realestate.Relational.Model.User;
 import vn.edu.uit.realestate.Service.EntityService.UserService;
 
 @RestController
@@ -25,36 +26,49 @@ public class UserController {
 	private UserService userService;
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping("/admin/hello")
+	@GetMapping("/secured/admin")
 	public String helloAdmin() {
 		return "Hello admin";
 	}
-	@PreAuthorize("hasRole('ROLE_USER')")
-	@GetMapping("/user/hello")
+
+	@PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN') OR hasRole('ROLE_MANAGER')")
+	@GetMapping("/secured/user")
 	public String helloUser() {
 		return "Hello user";
 	}
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping("/users")
-	public ResponseEntity<MappingJacksonValue> getAll() {
-		MappingJacksonValue users = userService.findAll();
-		return new ResponseEntity<>(users, HttpStatus.OK);
+
+	@PreAuthorize("hasRole('ROLE_MANAGER') OR hasRole('ROLE_ADMIN')")
+	@GetMapping("/secured/manager")
+	public String helloManager() {
+		return "Hello manager";
 	}
 
-	@GetMapping("/users/{id}")
-	public ResponseEntity<MappingJacksonValue> getById(@PathVariable long id) {
-		MappingJacksonValue foundUser = userService.findById(id);
-		return new ResponseEntity<>(foundUser, HttpStatus.OK);
-	}
+
+
+	@Autowired
+	private GraphUserRepository graphUserRepository;
+
+
+//	@GetMapping("/graph/saveusers")
+//	public ResponseEntity<GraphUser> saveByGraph() {
+//		GraphUser saveUser = new GraphUser();
+//		saveUser.setName("Nguyễn Thị Ngọc Duyên");
+//		saveUser.setGender(false);
+//		/// Xài chung id user relational và graph
+//		GraphUser result = graphUserRepository.save(saveUser);
+//		return new ResponseEntity<>(result, HttpStatus.OK);
+//	}
+
+
 
 	@PostMapping("/users")
-	public ResponseEntity<?> post(@Valid @RequestBody User user){
+	public ResponseEntity<?> post(@Valid @RequestBody User user) {
 		userService.save(user);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 	@GetMapping("/users/{userId}/trades")
-	public ResponseEntity<MappingJacksonValue> getAllTradesByUserId(@PathVariable long userId){
+	public ResponseEntity<MappingJacksonValue> getAllTradesByUserId(@PathVariable long userId) {
 		MappingJacksonValue tradeList = userService.findAllTradeByUserId(userId);
 		return new ResponseEntity<>(tradeList, HttpStatus.OK);
 	}
@@ -63,13 +77,14 @@ public class UserController {
 	public ResponseEntity<?> postTradeByUserId(@PathVariable long userId, @Valid @RequestBody Trade trade)
 			throws Exception {
 		userService.postTradeToUser(userId, trade);
-		return new ResponseEntity<>( HttpStatus.CREATED);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
+
 	@PostMapping("users/{userId}/requests")
 	public ResponseEntity<?> postRequestByUserId(@PathVariable long userId, @Valid @RequestBody Request request)
 			throws Exception {
 		userService.postRequestToUser(userId, request);
-		return new ResponseEntity<>( HttpStatus.CREATED);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 	@DeleteMapping("/users/{id}")

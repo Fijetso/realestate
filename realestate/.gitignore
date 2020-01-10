@@ -4,6 +4,8 @@ HELP.md
 /target/
 !.mvn/wrapper/maven-wrapper.jar
 
+### Images ###
+*.jpg,*.png
 ### STS ###
 .apt_generated
 .classpath

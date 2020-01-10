@@ -27,11 +27,7 @@ export class HotPlaceItemComponent implements OnInit, OnDestroy {
   ngOnInit() {}
 
   getTradeByDistrict(districtId: any) {
-    this.api.getTradeFromDistrict(districtId).subscribe(tradeList => {
-      this.tradeFromDistrict = tradeList;
-      // this.toastr.success('Lấy dữ liệu thành công');
-      // console.log(this.tradeFromDistrict);
-    });
+    this.router.navigate(['/tim-kiem'], {queryParams: {tinh: 79, quan: districtId}});
   }
   onSelect(place: any) {
     this.api.getTradeFromDistrict(place.id).subscribe(tradeList => {

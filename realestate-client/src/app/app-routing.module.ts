@@ -1,3 +1,4 @@
+import { AddReComponent } from './core/ui/create-post/add-re/add-re.component';
 import { UserComponent } from './components/user/user.component';
 import { FavoriteComponent } from './components/favorite/favorite.component';
 import { LoginComponent } from './core/ui/login/login.component';
@@ -8,71 +9,108 @@ import { RealestateItemComponent } from './core/ui/item-module/realestate-item/r
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { MapModuleComponent } from './core/ui/map-module/map-module.component';
 import { RealEstateDetailComponent } from './components/real-estate-detail/real-estate-detail.component';
-import { RegisterComponent } from './core/ui/register/register.component';
 import { CreatePostComponent } from './core/ui/create-post/create-post.component';
 import { UserDetailComponent } from './core/ui/user-detail/user-detail.component';
-import { SearchPageComponent } from './core/ui/search-page/search-page.component';
-import { UserManagerComponent } from './components/user-manager/user-manager.component';
-
+import { ContactComponent } from './core/ui/contact/contact.component';
+import { FengShuiComponent } from './core/ui/feng-shui/feng-shui.component';
 const routes: Routes = [
   {
     path: 'trang-chu',
     component: RealestateListComponent,
-    data: { title: 'Tiêu đề trang chủ' }
+    data: {
+      title: 'Trang chủ',
+      breadcrumb: 'Trang chủ'
+    }
   },
   {
     path: 'mua/:slug',
     component: RealEstateDetailComponent,
-    data: { title: 'Chi tiết bất động sản' }
+    data: {
+      title: 'Chi tiết bất động sản',
+      breadcrumb: 'Chi tiết bất động sản'
+    }
   },
   {
-    path: 'ban-do',
+    path: 'tim-kiem',
     component: MapModuleComponent,
-    data: { title: 'Trang bản đồ' }
+    data: {
+      title: 'Tìm kiếm chi tiết các bất dộng sản',
+      breadcrumb: 'Tìm kiếm chi tiết các bất dộng sản'
+    }
   },
   {
     path: 'dang-nhap',
     component: LoginComponent,
-    data: { title: 'Trang đăng nhập' }
+    data: {
+      title: 'Trang đăng nhập',
+      breadcrumb: 'Trang đăng nhập'
+    }
   },
   {
     path: 'yeu-thich',
     component: FavoriteComponent,
-    data: { title: 'Trang bất động sản yêu thích' }
-  },
-  {
-    path: 'dang-ky',
-    component: RegisterComponent,
-    data: { title: 'Trang đăng ký' }
+    data: {
+      title: 'Trang bất động sản yêu thích',
+      breadcrumb: 'Trang bất động sản yêu thích',
+    }
   },
   {
     path: 'nguoi-dung',
     component: UserComponent,
-    data: { title: 'Trang người dùng' }
+    data: {
+      title: 'Trang người dùng',
+      breadcrumb: 'Trang người dùng'
+    }
   },
   {
-    path: 'dang-tin',
+    path: 'tam',
     component: CreatePostComponent,
-    data: { title: 'Trang bài đăng' }
+    data: {
+      title: 'Trang bài đăng',
+      breadcrumb: 'Trang bài đăng'
+    }
   },
   {
     path: 'nguoi-dung/:id',
     component: UserDetailComponent,
-    data: { title: 'Chi tiết người dùng' }
+    data: {
+      title: 'Chi tiết người dùng',
+      breadcrumb: 'Chi tiết người dùng'
+    }
   },
   {
-    path: 'tim-kiem',
-    component: SearchPageComponent,
-    data: { title: 'Tìm kiếm BĐS' }
+    path: 'dang-tin',
+    component: AddReComponent,
+    data: {
+      title: 'Tạo bài đăng bất động sản',
+      breadcrumb: 'Tạo bài đăng bất động sản',
+    }
+  },
+  {
+    path: 'lien-he',
+    component: ContactComponent,
+    data: { title: 'Thông tin liên hệ',
+    breadcrumb: 'Thông tin liên hệ'
+    }
+  },
+  {
+    path: 'tim-kiem/nha-phong-thuy',
+    component: FengShuiComponent,
+    data: { title: 'Tìm nhà theo phong thuỷ',
+    breadcrumb: 'Tìm nhà theo phong thuỷ'
+    }
   },
   {
     path: 'tai-khoan',
-    component: UserManagerComponent,
-    data: { title: 'Quản lý tài khoản' }
+    loadChildren: () => import('./core/ui/account/account.module').then(acc => acc.AccountModule)
   },
-  { path: '',
-    redirectTo: '/trang-chu',
-    pathMatch: 'full'
+  {
+    path: 'tin-tuc',
+    loadChildren: () => import('./core/ui/news-module/news-module.module').then(news => news.NewsModuleModule)
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('./core/ui/admin/admin.module').then(admin => admin.AdminModule)
   },
   {
     path: '**',
@@ -89,7 +127,7 @@ const routes: Routes = [
   })],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
 export const routingComponents = [
   RealestateListComponent,
   RealestateItemComponent

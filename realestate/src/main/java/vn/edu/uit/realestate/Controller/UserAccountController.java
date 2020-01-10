@@ -3,6 +3,7 @@ package vn.edu.uit.realestate.Controller;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,14 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import vn.edu.uit.realestate.Common.Common;
 import vn.edu.uit.realestate.Common.SpecificString;
-import vn.edu.uit.realestate.DataAccess.ConfirmationTokenRepository;
-import vn.edu.uit.realestate.DataAccess.RoleRepository;
-import vn.edu.uit.realestate.DataAccess.UserRepository;
 import vn.edu.uit.realestate.ExceptionHandler.ExistContentException;
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
-import vn.edu.uit.realestate.Model.Role;
-import vn.edu.uit.realestate.Model.User;
-import vn.edu.uit.realestate.Model.Security.ConfirmationToken;
+import vn.edu.uit.realestate.Relational.Model.Role;
+import vn.edu.uit.realestate.Relational.Model.User;
+import vn.edu.uit.realestate.Relational.Model.Security.ConfirmationToken;
+import vn.edu.uit.realestate.Relational.Repository.ConfirmationTokenRepository;
+import vn.edu.uit.realestate.Relational.Repository.RoleRepository;
+import vn.edu.uit.realestate.Relational.Repository.UserRepository;
 import vn.edu.uit.realestate.Service.EmailSenderService;
 
 @RestController
@@ -37,7 +38,7 @@ public class UserAccountController {
 	private ConfirmationTokenRepository confirmationTokenRepository;
 	@Autowired
 	private EmailSenderService emailSenderService;
-	
+
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ResponseEntity<?> registerUser(@RequestBody User user) {
 		if (userRepository.findByEmail(user.getEmail()).isPresent()) {
@@ -95,6 +96,7 @@ public class UserAccountController {
 		emailSenderService.sendEmail(mailMessage);
 		confirmationTokenRepository.save(confirmationToken);
 		return new ResponseEntity<>(SpecificString.check_email_to_confirm_changing_password, HttpStatus.OK);
+		/// nói T chuyển hướng thành dạng post có chứa password mới
 	}
 
 	@RequestMapping(value = "/reset-password/verify", method = RequestMethod.POST)
@@ -110,5 +112,15 @@ public class UserAccountController {
 		} else {
 			return new ResponseEntity<>(SpecificString.invalid_or_broken_link, HttpStatus.BAD_REQUEST);
 		}
+	}
+	
+	@RequestMapping(value = "/logout/success", method = RequestMethod.GET)
+	public ResponseEntity<String> successfulLogout() {
+		return new ResponseEntity<>("Log out successfully", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public ResponseEntity<?> successfulLogin(@RequestParam("token")String token) {
+		return new ResponseEntity<>(token, HttpStatus.OK);
 	}
 }

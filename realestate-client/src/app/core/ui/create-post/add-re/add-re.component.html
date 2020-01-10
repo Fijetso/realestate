@@ -1,0 +1,140 @@
+<form class="container">
+    <h3>Thêm mới bất động sản</h3>
+    <form [formGroup]="realEstate" (ngSubmit)="save($event)">
+        <mat-form-field>
+            <input matInput placeholder="Mô tả" formControlName="description">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Giá" formControlName="cost">
+        </mat-form-field>
+        <div formGroupName="user">
+            <mat-form-field>
+                <input matInput placeholder="Họ và tên" formControlName="name">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Email" formControlName="email">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Số điện thoại" formControlName="phone">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Mật khẩu" formControlName="password" type="password">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput [matDatepicker]="dob" placeholder="Ngày sinh" formControlName="dob">
+                <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+                <mat-datepicker #dob [startAt]="startDate"></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Giới tính</mat-label>
+                <mat-select formControlName="gender">
+                    <mat-option [value]=true>Nam</mat-option>
+                    <mat-option [value]=false>Nữ</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Loại người dùng</mat-label>
+                <mat-select formControlName="userKind">
+                <mat-option *ngFor="let userKind of userKinds; let i=index" [value]="userKind.id">{{userKind.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <mat-form-field>
+            <mat-label>Loại giao dịch</mat-label>
+            <mat-select formControlName="tradeKind">
+                <mat-option *ngFor="let tradeKind of tradeKinds; let i=index" [value]="tradeKind.id">{{tradeKind.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Loại bất động sản</mat-label>
+            <mat-select formControlName="realEstateKind">
+                <mat-option *ngFor="let realEstateKind of reKinds; let i=index" [value]="realEstateKind.id">
+                    {{realEstateKind.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div formGroupName="address">
+            <mat-form-field>
+                <mat-label>Tỉnh</mat-label>
+                <mat-select  formControlName="cityOrProvince">
+                    <mat-option [value]=79>Tp Hồ Chí Minh</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-select placeholder="Quận /Huyện" formControlName="district" (selectionChange)="onChangeDistrict()">
+                    <mat-option *ngFor="let district of districtList" [value]="district.id">
+                        {{district.nameWithType}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-select placeholder="Xã Phường /Huyện" formControlName="ward">
+                    <mat-option *ngFor="let ward of wardList; let i=index" [value]="ward.id">
+                        {{ward.nameWithType}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Chi tiết" formControlName="detail">
+            </mat-form-field>
+        </div>
+        <div formGroupName="details">
+
+            <mat-form-field>
+                <input matInput placeholder="Chiều dài" formControlName="length" type="number">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Chiều rộng" formControlName="width" type="number">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Diện tích" formControlName="square" type="number">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Hướng</mat-label>
+                <mat-select formControlName="direction">
+                    <mat-option [value]=1>Đông</mat-option>
+                    <mat-option [value]=2>Tây</mat-option>
+                    <mat-option [value]=3>Nam</mat-option>
+                    <mat-option [value]=4>Bắc</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Số tầng" formControlName="floors">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Sổ hồng riêng" formControlName="legalDocuments">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Số phòng tắm" formControlName="bathrooms" type="number">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Số phòng ngủ" formControlName="bedrooms" type="number">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Tiện ích" formControlName="utilities">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Thông tin khác" formControlName="others">
+            </mat-form-field>
+        </div>
+        <div formGroupName="coordinate">
+            <mat-form-field>
+                <input matInput placeholder="Vĩ độ" formControlName="latitude" type="number">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Kinh độ" formControlName="longitude" type="number">
+            </mat-form-field>
+        </div>
+        <div>
+            <button mat-button (click)="onSelectFile()" type="button">Chọn ảnh</button>
+            <mat-form-field>
+                <input matInput placeholder="Mô tả hình ảnh" formControlName="realImages">
+            </mat-form-field>
+            <img [src]="imgURL" [style.height.px]="height" *ngIf="imgURL">
+            <input #file type="file" accept='image/*' (change)="preview($event)" class="hidden" />
+        </div>
+        <button mat-raised-button type="submit">Lưu lại</button>
+    </form>
+</form>

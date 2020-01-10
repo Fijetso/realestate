@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
-import vn.edu.uit.realestate.DataAccess.AddressRepository;
-import vn.edu.uit.realestate.Model.Address;
-import vn.edu.uit.realestate.Model.AddressTree.District;
-import vn.edu.uit.realestate.Model.AddressTree.Province;
-import vn.edu.uit.realestate.Model.AddressTree.Ward;
+import vn.edu.uit.realestate.Relational.Model.Address;
+import vn.edu.uit.realestate.Relational.Model.AddressTree.District;
+import vn.edu.uit.realestate.Relational.Model.AddressTree.Province;
+import vn.edu.uit.realestate.Relational.Model.AddressTree.Ward;
+import vn.edu.uit.realestate.Relational.Repository.AddressRepository;
 import vn.edu.uit.realestate.Service.AddressTreeService;
 import vn.edu.uit.realestate.Service.EntityService.AddressService;
 

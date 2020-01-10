@@ -22,6 +22,10 @@
         <mat-icon class="icon" aria-hidden="false" aria-label="Attack money icon">attach_money</mat-icon>
         <span>Bán</span>
       </mat-toolbar-row>
+      <mat-toolbar-row class="h-3em" routerLink="tim-kiem/nha-phong-thuy" routerLinkActive="active">
+        <mat-icon class="icon" aria-hidden="false" aria-label="Attack money icon">attach_money</mat-icon>
+        <span>Nhà theo phong thuỷ</span>
+      </mat-toolbar-row>
       <mat-toolbar-row class="h-3em" routerLink="dang-ky-hop-tac" routerLinkActive="active">
         <mat-icon class="icon icon-work" aria-hidden="false" aria-label="Work icon">work_outline</mat-icon>
         <span>Hợp tác môi giới</span>
@@ -82,21 +86,13 @@
         <a routerLink="dang-tin" routerLinkActive="active" mat-flat-button class="btn btn-sale curve px-4 align-self-center" color="accent">Đăng BĐS</a>
         <a *ngIf="!loginInfor; else logedIn" routerLinkActive="active" (click)="openInfoModal()">
             <span class="align-items-center ustify-content-center align-self-center icon icon-lg icon-account"
-            matTooltip="Thông tin tài khoản"><i class="icon far fa-user-circle text-white"></i></span>
+            matTooltip="Thông tin tài khoản">
+            <i class="icon far fa-user-circle text-white" *ngIf="!isLoggedIn"></i>
+            <img src="{{avatar}}" alt=""  onError="this.src='../../../../assets/images/login.png'" *ngIf="isLoggedIn" style="width:1.5em; border-radius:50%">
+          </span>
         </a>
-        <ng-template #logedIn>
-          <img [matMenuTriggerFor]="menu" src="{{loginInfor.photoURL}}" alt="{{loginInfor.displayName}}" onError="this.src='../../../../assets/images/login.png'">
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item color="primary" [routerLink]="['/tai-khoan']" routerLinkActive="router-link-active" >Thông tin tài khoản</button>
-            <button mat-menu-item color="primary" [routerLink]="['/tai-khoan']" routerLinkActive="router-link-active" >Tin đăng của tôi</button>
-            <button mat-menu-item color="primary" [routerLink]="['/tai-khoan']" routerLinkActive="router-link-active" >Bộ sưu tập</button>
-            <button mat-menu-item color="primary" [routerLink]="['/tai-khoan']" routerLinkActive="router-link-active" >Đổi mật khẩu</button>
-            <button mat-menu-item color="primary" (click)="logOut()">Đăng xuất</button>
-          </mat-menu>
-        </ng-template>
-        
-        <a routerLink="yeu-thich" routerLinkActive="active">
-          <span matBadge="{{badgeCount}}" matBadgeColor="accent" class="align-items-center ustify-content-center align-self-center icon icon-lg icon-favorite"
+        <a routerLink="tai-khoan" routerLinkActive="active">
+          <span class="align-items-center ustify-content-center align-self-center icon icon-lg icon-favorite"
           matTooltip="Danh sách yêu thích"><i class="icon far fa-heart"></i></span>
         </a>
       </div>
@@ -105,6 +101,8 @@
     <div class="content">
       <router-outlet></router-outlet>
       <app-footer></app-footer>
+      <script src="https://js.api.here.com/v3/3.0/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
+        <script src="https://js.api.here.com/v3/3.0/mapsjs-service.js" type="text/javascript" charset="utf-8"></script>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

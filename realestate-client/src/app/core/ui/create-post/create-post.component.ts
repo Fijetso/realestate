@@ -1,9 +1,38 @@
-import { ToastrService } from 'ngx-toastr';
+import { GraphQueryService } from './../../../services/graphql/graph-query.service';
+import { RealEstate } from './../../../model/real-estate/real-estate';
 import { ApiService } from './../../../services/api/api.service';
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { State } from '../home-page/marketting/marketting.component';
-import { Router } from '@angular/router';
+import { FormBuilder } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+
+
+const categoryList = [
+  {
+    id: 1,
+    name: '360 Bất động sản'
+  },
+  {
+    id: 2,
+    name: 'Tin thị trường'
+  },
+  {
+    id: 3,
+    name: 'Truyền thông'
+  },
+  {
+    id: 4,
+    name: 'Phong thuỷ'
+  },
+  {
+    id: 5,
+    name: 'Kiến trúc'
+  },
+  {
+    id: 6,
+    name: 'Kinh nghiệm'
+  }
+
+];
 
 @Component({
   selector: 'app-create-post',
@@ -11,102 +40,44 @@ import { Router } from '@angular/router';
   styleUrls: ['./create-post.component.scss']
 })
 export class CreatePostComponent implements OnInit {
-  post: any;
-  selectedFile: File = null;
-  formPost: any;
-  imageUrl = '../../../../assets/images/default.png';
-  fileToUpload: File = null;
-  reKinds: string[] = ['Căn hộ/ Chung cư', 'Nhà riêng', 'Đất nền'];
-  province: any = null;
-  districtList: any = null;
-  wardList: any = null;
-  constructor(private api: ApiService, private toastr: ToastrService, private router: Router) {
-    this.post = {
-      name: '',
-      email: '',
-      reKind: 'Căn hộ/ Chung cư',
-      dob: '',
-      address: {
-        province: 0,
-        district: 0,
-        ward: 0
-      },
-      price: null,
-      currency: 'VND',
-      reTradeKind: 'Bán',
-      phone: '',
-      houseAddress: '',
-      housePhone: '',
-      houseImages: '',
-      bluePrints: ''
-    };
-   }
+  reList: RealEstate[];
+  public editorValue = '';
+  editNews: any;
+  startDate = new Date();
+  categoryList: any;
+  constructor(private api: ApiService, private graphql: GraphQueryService, private fb: FormBuilder, private toastr: ToastrService) {
+    this.categoryList = categoryList;
+    this.editNews = this.fb.group({
+      title: 'Tiêu đề',
+      author: 'Danh Thanh',
+      composeDate: new Date(),
+      category: 1,
+      editorValue: 'Nội dung bài viết'
+    });
+  }
 
   ngOnInit() {
-    this.getProvince(79);
   }
-  getProvince(provinceId: number) {
-    this.api.getProvincesById(provinceId).subscribe(province => {
-      this.province = province;
+  onSubmit() {
+    console.log(this.editNews.value);
+    this.saveNews();
+  }
+  saveNews() {
+    const title = this.editNews.get('title').value;
+    const composeDate = this.editNews.get('composeDate').value.toLocaleString();
+    const content = this.editNews.get('editorValue').value;
+    const categoryId = this.editNews.get('category').value;
+    const author = this.editNews.get('author').value;
+
+    console.log(this.editNews.get('composeDate').value.toLocaleString());
+    this.graphql.saveNews(title, composeDate, content, categoryId, author).subscribe(res => {
+      console.log(res);
+      this.toastr.success(res.data.saveNews.title, 'Tạo bài đăng thành công');
+      return res && res.data;
+    }, error => {
+      this.toastr.error(error, 'Tạo bài đăng thất bại');
+      console.error(error);
+      return error;
     });
-  }
-
-  getDistrictFromProvince(provinceId: number) {
-    this.api.getDistrictFromProvinceId(provinceId).subscribe(districtList => {
-      this.districtList = districtList;
-    });
-  }
-  getWardFromDisctrictId(provinceId: number, districtId: number) {
-    this.api.getWardFromDistrictId(provinceId, districtId).subscribe(wardList => {
-      this.wardList = wardList;
-    });
-  }
-  onFileChange(event) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.formPost.get('bluePrints').setValue(file);
-    }
-  }
-
-
-  private prepareSave(): any {
-    const input = new FormData();
-    input.append('avatar', this.formPost.get('bluePrints').value);
-    return input;
-  }
-  onUploadFile() {
-     const formModel = this.prepareSave();
-     console.log(formModel);
-  }
-  onSubmit(formValue) {
-    // Do something awesome
-    console.log(formValue);
-    this.post = formValue;
-    console.log( this.post);
-    this.toastr.success('Thêm bất động sản thành công', 'Thêm bất động sản');
-    this.router.navigate(['/']);
-    // throw Error('something go wrong');
-  }
-
-  handleFileInput(file: FileList) {
-    this.fileToUpload = file.item(0);
-
-    // Show image preview
-    const reader = new FileReader();
-    reader.onload = (event: any) => {
-      this.imageUrl = event.target.result;
-    };
-    reader.readAsDataURL(this.fileToUpload);
-  }
-
-  OnSubmit(Caption, Image) {
-   this.api.postFile(Caption.value, this.fileToUpload).subscribe(
-     data => {
-       console.log(data);
-       Caption.value = null;
-       Image.value = null;
-       this.imageUrl = this.imageUrl;
-     }
-   );
   }
 }

@@ -1,0 +1,78 @@
+<div class="map-wrapper row">
+    <div class="left-content col-md-7 col-sm" *ngIf="!isFullMap">
+        <form [formGroup]='searchDetail' (ngSubmit)="onSubmitSearch()">
+            <div class="search-section row">
+                <mat-form-field>
+                    <mat-select placeholder="Mục đích sử dụng" formControlName="tradeKind">
+                        <mat-option *ngFor="let tradeKind of tradeKinds" [value]="tradeKind.id">
+                            {{tradeKind.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="Nhập từ khoá tìm kiếm" formControlName="query" (keyup)="onKey($event)">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-select placeholder="Loại bất động sản" formControlName="reKind"
+                        (selectionChange)="onChangeREKind()">
+                        <mat-option *ngFor="let reKind of reKinds" [value]="reKind.id">
+                            {{reKind.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-select placeholder="Quận /Huyện" formControlName="district"
+                        (selectionChange)="onChangeDistrict()">
+                        <mat-option *ngFor="let district of districtList | sort" [value]="district.id">
+                            {{district.nameWithType}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-select placeholder="Xã Phường /Huyện" formControlName="ward">
+                        <mat-option *ngFor="let ward of wardList |sort; let i=index" [value]="ward.id">
+                            {{ward.nameWithType}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="sortby-section row">
+                <div class="sort-left col-md-6 col-sm">
+                    <div class="title">Mua bán nhà riêng quận {{districtInfo?.pathWithType}}</div>
+                    <div class="result-count" *ngIf="reList">Có
+                        {{(reList | search:[query, newREKind])?.length > 0?(reList | search:[query,newREKind])?.length : 0}}
+                        kết quả với từ khoá
+                        <span class="font-italic font-weight-bold"> {{query}}</span>
+                    </div>
+                </div>
+                <div class="sort-right col-md-6 col-sm">
+
+                </div>
+            </div>
+           <div class="row">
+                <div class="re-container col-md-6 col-sm"
+                    *ngFor="let item of reList | search:[query, newREKind]; let i = index">
+                    <app-realestate-item [dataItem]="item"></app-realestate-item>
+                </div>
+           </div>
+            <button mat-raised-button type="submit">Tìm kiếm</button>
+        </form>
+    </div>
+    <div class="map-container col-md-5 col-sm" *ngIf="!isFullMap">
+        <div class="map-frame">
+            <div id="map"></div>
+        </div>
+    </div>
+    <div class="map-container col-md col-sm" *ngIf="isFullMap">
+        <button mat-icon-button aria-label="Bản đồ và bất động sản" routerLinkActive="mat-primary"
+            [routerLink]="['/tim-kiem']">
+            <mat-icon>view_module</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" aria-label="Bản đồ toàn màn hình" (click)="mapFullScreen($event)">
+            <mat-icon>map</mat-icon>
+        </button>
+        <div class="map-frame">
+            <div id="map"></div>
+        </div>
+    </div>
+</div>

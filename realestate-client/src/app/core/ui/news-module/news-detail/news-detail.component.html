@@ -1,0 +1,19 @@
+<div class="news-detail">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-sm">
+                <div>
+                    <div class="newsItem">
+                        <div class="category">{{newsData?.category?.name?.toUpperCase()}}</div>
+                        <h3 class="newsTitle">{{newsData?.title}}</h3>
+                        <p class="newsComposeDate font-italic">{{newsData?.composeDate}}</p>
+                        <div [innerHTML]="newsData?.content"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm">
+
+            </div>
+        </div>
+    </div>
+</div>

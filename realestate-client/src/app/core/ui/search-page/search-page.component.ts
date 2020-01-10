@@ -18,31 +18,8 @@ export class SearchPageComponent implements OnInit {
   // ckeConfig: any;
   // mycontent: string;
   // log = '';
-  @ViewChild('myckeditor') ckeditor: any;
-  zoom = 8;
-
-  // initial center position for the map
-  lat = 10.779118395736335;
-  lng = 106.69120259693682;
-
-  markers: marker[] = [
-  {
-    lat: 10.773858,
-    lng: 106.815982,
-    label: 'A',
-    draggable: true
-  },
-  {
-    lat: 10.738558,
-    lng: 106.215982,
-    label: 'B',
-    draggable: false
-  },
-  {
-    lat: 10.723858,
-    lng: 106.895982,
-    label: 'C',
-    draggable: true
+  constructor(private api: ApiService, private route: ActivatedRoute) {
+    // this.mycontent = `<p>My html content</p>`;
   }
   ];
   ngOnInit() {

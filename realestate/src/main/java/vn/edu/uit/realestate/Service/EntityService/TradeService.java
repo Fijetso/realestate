@@ -1,5 +1,6 @@
 package vn.edu.uit.realestate.Service.EntityService;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -13,33 +14,25 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import vn.edu.uit.realestate.ExceptionHandler.ExistContentException;
+import vn.edu.uit.realestate.ExceptionHandler.IllegalArgumentException;
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
-import vn.edu.uit.realestate.DataAccess.AddressRepository;
-import vn.edu.uit.realestate.DataAccess.BluePrintRepository;
-import vn.edu.uit.realestate.DataAccess.BookingRepository;
-import vn.edu.uit.realestate.DataAccess.DetailsRepository;
-import vn.edu.uit.realestate.DataAccess.RealEstateKindRepository;
-import vn.edu.uit.realestate.DataAccess.RealImageRepository;
-import vn.edu.uit.realestate.DataAccess.TradeKindRepository;
-import vn.edu.uit.realestate.DataAccess.TradeRepository;
-import vn.edu.uit.realestate.DataAccess.UserRepository;
-import vn.edu.uit.realestate.DataAccess.AddressTree.WardRepository;
-import vn.edu.uit.realestate.Model.Address;
-import vn.edu.uit.realestate.Model.BluePrint;
-import vn.edu.uit.realestate.Model.Booking;
-import vn.edu.uit.realestate.Model.Details;
-import vn.edu.uit.realestate.Model.RealEstateKind;
-import vn.edu.uit.realestate.Model.RealImage;
-import vn.edu.uit.realestate.Model.Trade;
-import vn.edu.uit.realestate.Model.TradeKind;
-import vn.edu.uit.realestate.Model.User;
-import vn.edu.uit.realestate.Model.AddressTree.Ward;
+import vn.edu.uit.realestate.Graph.Repository.GraphTradeRepository;
+import vn.edu.uit.realestate.Relational.Model.BluePrint;
+import vn.edu.uit.realestate.Relational.Model.Booking;
+import vn.edu.uit.realestate.Relational.Model.RealImage;
+import vn.edu.uit.realestate.Relational.Model.Trade;
+import vn.edu.uit.realestate.Relational.Model.Enum.TradeStatus;
+import vn.edu.uit.realestate.Relational.Repository.AddressRepository;
+import vn.edu.uit.realestate.Relational.Repository.BluePrintRepository;
+import vn.edu.uit.realestate.Relational.Repository.BookingRepository;
+import vn.edu.uit.realestate.Relational.Repository.DetailsRepository;
+import vn.edu.uit.realestate.Relational.Repository.RealImageRepository;
+import vn.edu.uit.realestate.Relational.Repository.TradeRepository;
 import vn.edu.uit.realestate.Service.IEntityService;
+import vn.edu.uit.realestate.Service.ModelMapperService;
 
 @Service
 public class TradeService implements IEntityService {
-	@Autowired
-	private TradeRepository tradeRepository;
 	@Autowired
 	private RealImageRepository realImageRepository;
 	@Autowired
@@ -50,6 +43,12 @@ public class TradeService implements IEntityService {
 	private AddressRepository addressRepository;
 	@Autowired
 	private DetailsRepository detailsRepository;
+	@Autowired
+	private TradeRepository tradeRepository;
+	@Autowired
+	private GraphTradeRepository graphTradeRepository;
+	@Autowired
+	private ModelMapperService modelMapper;
 
 	@Override
 	public MappingJacksonValue findAll() {
@@ -59,30 +58,14 @@ public class TradeService implements IEntityService {
 		}
 		SimpleBeanPropertyFilter userFilter = SimpleBeanPropertyFilter.serializeAllExcept("trades", "password",
 				"requests", "favoriteTrades", "roles");
-		SimpleBeanPropertyFilter addressAndDetailFilter = SimpleBeanPropertyFilter.serializeAllExcept("trade");
+		SimpleBeanPropertyFilter filterExceptTrade = SimpleBeanPropertyFilter.serializeAllExcept("trade");
 		SimpleBeanPropertyFilter filterTrade = SimpleBeanPropertyFilter.serializeAllExcept("favoriteTrades");
 		FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", userFilter)
-				.addFilter("AddressFilter", addressAndDetailFilter).addFilter("DetailsFilter", addressAndDetailFilter)
+				.addFilter("AddressFilter", filterExceptTrade).addFilter("DetailsFilter", filterExceptTrade)
 				.addFilter("TradeFilter", filterTrade);
 		MappingJacksonValue mapping = new MappingJacksonValue(trades);
 		mapping.setFilters(filters);
 		return mapping;
-	}
-
-	public List<Trade> findAllGraphQL(final int count) {
-		List<Trade> trades = tradeRepository.findAll().stream().limit(count).collect(Collectors.toList());
-		if (trades.isEmpty() == true) {
-			throw new NotFoundException("Cannot find any Trade");
-		}
-		return trades;
-	}
-
-	public Optional<Trade> findByIdGraphQL(Long id) {
-		Optional<Trade> foundTrade = tradeRepository.findById(id);
-		if (foundTrade.isPresent() == false) {
-			throw new NotFoundException("Cannot find any Trade with id=" + id);
-		}
-		return foundTrade;
 	}
 
 	@Override
@@ -92,10 +75,10 @@ public class TradeService implements IEntityService {
 			throw new NotFoundException("Cannot find any Trade with id=" + id);
 		}
 		SimpleBeanPropertyFilter userFilter = SimpleBeanPropertyFilter.serializeAllExcept("trades", "password");
-		SimpleBeanPropertyFilter addressAndDetailFilter = SimpleBeanPropertyFilter.serializeAllExcept("trade");
-		SimpleBeanPropertyFilter filterTrade = SimpleBeanPropertyFilter.serializeAll();
+		SimpleBeanPropertyFilter filterExceptTrade = SimpleBeanPropertyFilter.serializeAllExcept("trade");
+		SimpleBeanPropertyFilter filterTrade = SimpleBeanPropertyFilter.serializeAllExcept("favoriteTrades");
 		FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", userFilter)
-				.addFilter("AddressFilter", addressAndDetailFilter).addFilter("DetailsFilter", addressAndDetailFilter)
+				.addFilter("AddressFilter", filterExceptTrade).addFilter("DetailsFilter", filterExceptTrade)
 				.addFilter("TradeFilter", filterTrade);
 		MappingJacksonValue mapping = new MappingJacksonValue(foundTrade);
 		mapping.setFilters(filters);
@@ -131,6 +114,48 @@ public class TradeService implements IEntityService {
 		tradeRepository.deleteById(id);
 	}
 
+	public MappingJacksonValue updateTradeStatus(Long id, String newStatus) {
+		Optional<Trade> trade = tradeRepository.findById(id);
+		if (trade.isPresent() == false) {
+			throw new NotFoundException("Cannot find any Trade with id=" + id);
+		}
+		Trade foundTrade = trade.get();
+		try {
+			TradeStatus newTradeStatus = TradeStatus.valueOf(newStatus.toUpperCase());
+			foundTrade.setTradeStatus(newTradeStatus);
+		} catch (Exception e) {
+			throw new IllegalArgumentException("Cannot find any Trade Status like " + newStatus);
+		}
+		graphTradeRepository.save(modelMapper.convertTrade(foundTrade));
+		foundTrade = tradeRepository.save(foundTrade);
+
+		SimpleBeanPropertyFilter userFilter = SimpleBeanPropertyFilter.serializeAllExcept("trades", "password");
+		SimpleBeanPropertyFilter filterExceptTrade = SimpleBeanPropertyFilter.serializeAllExcept("trade");
+		SimpleBeanPropertyFilter filterTrade = SimpleBeanPropertyFilter.serializeAllExcept("favoriteTrades");
+		FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", userFilter)
+				.addFilter("AddressFilter", filterExceptTrade).addFilter("DetailsFilter", filterExceptTrade)
+				.addFilter("TradeFilter", filterTrade);
+		MappingJacksonValue mapping = new MappingJacksonValue(foundTrade);
+		mapping.setFilters(filters);
+		return mapping;
+	}
+
+	public List<Trade> findAllGraphQL(final int count) {
+		List<Trade> trades = tradeRepository.findAll().stream().limit(count).collect(Collectors.toList());
+		if (trades.isEmpty() == true) {
+			throw new NotFoundException("Cannot find any Trade");
+		}
+		return trades;
+	}
+
+	public Optional<Trade> findByIdGraphQL(Long id) {
+		Optional<Trade> foundTrade = tradeRepository.findById(id);
+		if (foundTrade.isPresent() == false) {
+			throw new NotFoundException("Cannot find any Trade with id=" + id);
+		}
+		return foundTrade;
+	}
+
 	public void postBookingByTradeId(Long tradeId, Booking booking) {
 		Optional<Trade> foundTrade = tradeRepository.findById(tradeId);
 		if (foundTrade.isPresent() == false) {
@@ -147,37 +172,5 @@ public class TradeService implements IEntityService {
 		}
 		tradeRepository.increaseViewCountById(tradeId);
 		return foundTrade.get().getViewCount() + 1;
-	}
-
-	@Autowired
-	UserRepository userRepository;
-	@Autowired
-	RealEstateKindRepository realEstateKindRepository;
-	@Autowired
-	TradeKindRepository tradeKindRepository;
-	@Autowired
-	WardRepository wardRepository;
-
-	public Trade saveTradeGraphQL(final String description, final Long cost, final Long userId, final Long realEstateKindId,
-			final Long tradeKindId, final String detailAddress, final Long wardId, final Long length, final Long width,
-			final Long square, final String direction, final String floors, final String legalDocuments,
-			final int bathrooms, final int bedrooms, final String utilities, final String others) {
-		Optional<User> user = userRepository.findById(userId);
-		user.orElseThrow(() -> new NotFoundException("Cannot find any User Id=" + userId));
-
-		Optional<RealEstateKind> realEstateKind = realEstateKindRepository.findById(realEstateKindId);
-		user.orElseThrow(() -> new NotFoundException("Cannot find any Real Estate Kind Id=" + realEstateKindId));
-
-		Optional<TradeKind> tradeKind = tradeKindRepository.findById(tradeKindId);
-		user.orElseThrow(() -> new NotFoundException("Cannot find any Trade Kind Id=" + tradeKindId));
-
-		Optional<Ward> ward = wardRepository.findById(wardId);
-		user.orElseThrow(() -> new NotFoundException("Cannot find any Ward Id=" + wardId));
-		Address address = new Address(detailAddress, ward.get().getId(), ward.get().getDistrict().getId(),
-				ward.get().getDistrict().getProvince().getId());
-		Details details = new Details(length, width, square, direction, floors, legalDocuments, bathrooms, bedrooms,
-				utilities, others);
-		Trade trade = new Trade(description, cost, user.get(), realEstateKind.get(), tradeKind.get(), address, details);
-		return tradeRepository.save(trade);
 	}
 }

@@ -1,0 +1,31 @@
+.map-wrapper {
+  .map-container {
+    max-width: 100%;
+    height: 100vh;
+
+    mgl-map {
+      height: 100%;
+      width: 100%;
+    }
+
+    .map-frame {
+      height: 100%;
+      width: 100%;
+
+      #map-box {
+        height: 99%;
+        z-index: 10;
+      }
+    }
+  }
+}
+
+mat-radio-group {
+  padding: 8px;
+  background: #fff;
+}
+.desc {
+  color: #FD784F;
+  font-size: 1.5em;
+  font-weight: bold;
+}

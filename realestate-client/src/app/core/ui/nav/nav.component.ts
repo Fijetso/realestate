@@ -1,6 +1,5 @@
-import { Router } from '@angular/router';
-import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
-import { Component, Input } from '@angular/core';
+import { AuthService, SocialUser } from 'angularx-social-login';
+import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -22,15 +21,16 @@ export class NavComponent {
       map(result => result.matches)
     );
     isLoading = true;
+  user: SocialUser;
+  avatar: string;
+  isLoggedIn: boolean;
   // constructor(private breakpointObserver: BreakpointObserver) {}
   constructor(
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private breakpointObserver: BreakpointObserver,
     private modalService: ModalService,
-    // private location: Location,
-    private auth: AuthenticationService,
-    private router : Router
+    private authService: AuthService
   ) {
     this.matIconRegistry.addSvgIcon(
       'apple-badge',
@@ -40,7 +40,11 @@ export class NavComponent {
       'google-badge',
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/images/google-badge.svg')
     );
-    // alert(this.loginInfor);
+    this.authService.authState.subscribe(user => {
+      this.user = user;
+      this.isLoggedIn = (user != null);
+      this.avatar = user ? user.photoUrl : '';
+    });
   }
   openInfoModal() {
     this.modalService.openInfoModal();

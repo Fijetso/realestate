@@ -1,11 +1,32 @@
 type Query {
 	trades(count: Int):[Trade]!
+	#suggestTrades(count: Int): [Trade]!
 }
 
 type Mutation {
-	saveTrade(description: String!,cost: Long!, userId: Long!, realEstateKindId: Long!, tradeKindId: Long!,
-			detailAddress: String, wardId: Long!, length: Long, width: Long, square: Long, direction: String,
-			floors: String, legalDocuments: String, bathrooms: Int, bedrooms: Int, utilities: String, others: String): Trade!
+	login(email: String!, password: String!): String
+	
+	loginBySocial(name: String!, email: String!, authProvider: String!, phone: String, birthdate: String, gender: Boolean, job: String,
+			userKindId: Long, imageLink: String): User
+	
+	register(name: String!, email: String!, password: String!, phone: String, birthdate: String, gender: Boolean, job: String,
+			userKindId: Long, imageLink: String): User
+	
+	saveTrade(tradeId: Long, description: String, cost: Long, userId: Long, realEstateKindId: Long, tradeKindId: Long,
+			detailAddress: String, wardId: Long, length: Float, width: Float, square: Float, direction: String,
+			floors: String, legalDocuments: String, bathrooms: Int, bedrooms: Int, utilities: String, 
+			others: String, longitude: Float, latitude: Float, realImages: [String], bluePrints: [String]): Trade
+			
+	updateUser(userId: Long!, name: String, email: String, phone: String, birthdate: String, gender: Boolean,
+			job: String, userKindId: Long): User
+			
+	saveNews(newsId: Long, title: String, content: String, categoryId: Long, composeDate: String, author: String): News
+	
+	saveCategory(categoryId: Long, name: String!): Category
+	
+	saveBooking(name: String, phone: String!, email: String!, timeStart: String, timeEnd: String, tradeId: Long!): Booking
+	
+	saveHistory(userId: Long!, district:Long, price: Int, square: Float): String
 }
 
 type Trade {
@@ -13,11 +34,13 @@ type Trade {
 	description: String,
 	cost: Long,
 	user: User,
+	tradeStatus: String,
 	realEstateKind: RealEstateKind,
 	tradeKind: TradeKind,
 	address: String,
 	details: Details,
-	realImages: [RealImage]
+	coordinate: Coordinate,
+	realImages: [RealImage],
 	bluePrints: [BluePrint]
 #	bookings: [Booking]
 }
@@ -31,7 +54,8 @@ type User {
 	gender: Boolean,
 	active: Boolean,
 	trades: [Trade],
-	roles: [Role]
+	roles: [Role],
+	job: String
 }
 	
 type RealEstateKind {
@@ -72,8 +96,37 @@ type BluePrint {
 	description: String
 }
 
+type Coordinate {
+	id: ID!,
+	longitude : Float,
+	latitude: Float
+}
+
+type News {
+	id: ID!,
+	title: String,
+	content: String,
+	composeDate: String,
+	category: Category,
+	author: String
+}
+
+type Category {
+	id: ID!,
+	name: String
+}
+
 type Role {
-id: ID!,
-name: String,
-users: [User]
+	id: ID!,
+	name: String
+}
+
+type Booking {
+	id: ID,
+	name: String,
+	phone: String,
+	email: String,
+	timeStart: String,
+	timeEnd: String,
+	trade: Trade
 }

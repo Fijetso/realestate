@@ -1,6 +1,6 @@
 <div class="container">
   <div
-    class="login-wrapper d-flex justify-content-center align-items-center flex-column"
+    class="login-wrapper d-flex justify-content-center align-items-center flex-column" *ngIf="true"
   >
     <h4 class="title-name">Đăng nhập thành viên</h4>
     <form #loginForm="ngForm" (ngSubmit)="onSubmitLogin(loginForm.value)" novalidate>
@@ -49,15 +49,5 @@
       </button>
       </div>
     </form>
-    <!-- <div *ngIf="isLogedIn"  b4-a class="alert alert-success" role="alert"><strong>Đăng nhập thành công</strong></div>
-    <div *ngIf="loginError"  b4-a class="alert alert-danger" role="alert"><strong>Đăng nhập thất bại</strong></div> -->
-    <!-- <pre>{{ loginForm.value | json }}</pre> -->
-    <div class="display-data" *ngIf="false">
-      <div class="uid">{{data?.uid}}</div>
-      <img src={{data?.photoURL}} alt={{data?.uid}}/>
-      <div class="email">{{data?.email}}</div>
-      <div class="display-name">{{data?.displayName}}</div>
-      <pre>{{data |json}}</pre>
-    </div>
   </div>
 </div>

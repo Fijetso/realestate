@@ -1,7 +1,7 @@
 <div class="mt-10 container user-container">
   <h5>Danh sách người dùng</h5>
-  <input type="text"[(ngModel)]="searchTerm" id="search" class="form-control my-2" >
-  <div class="user-list row">
+  <input type="text"[(ngModel)]="searchTerm" id="search" class="form-control my-2" *ngIf="false">
+  <div class="user-list row" *ngIf="false">
     <div *ngFor="let userItem of users | filter: searchTerm" class="col-md-4 col-lg-4 col-sm-4" (click)="goToUserDetail(userItem.id)">
       <mat-card class="user-card ">
         <mat-card-header>
@@ -49,7 +49,7 @@
     </mat-card>
   </div>
 
-  <div class="user-form my-2">
+  <div class="user-form my-2" *ngIf="false">
     <h5>Thêm mới người dùng</h5>
     <form
       #formUser="ngForm"
