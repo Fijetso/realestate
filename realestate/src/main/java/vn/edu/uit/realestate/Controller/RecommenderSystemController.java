@@ -14,25 +14,25 @@ import org.springframework.web.bind.annotation.RestController;
 import vn.edu.uit.realestate.Graph.Model.GraphTrade;
 import vn.edu.uit.realestate.Graph.Repository.GraphTradeRepository;
 import vn.edu.uit.realestate.Relational.Model.ModelMapper.SuggestModel;
-import vn.edu.uit.realestate.Service.EntityService.TradeService;
+import vn.edu.uit.realestate.Service.EntityService.RecommenderService;
 
 @RestController
 public class RecommenderSystemController {
 	@Autowired
 	private GraphTradeRepository graphTradeRepository;
 	@Autowired
-	private TradeService tradeService;
+	private RecommenderService recommenderService;
 
 	@PostMapping("trades/recommend")
 	public ResponseEntity<List<GraphTrade>> recommendTradesWithContentBased(@RequestBody SuggestModel suggestModel) {
-		List<GraphTrade> foundTrade = tradeService.recommendTradesWithContentBased(suggestModel);
+		List<GraphTrade> foundTrade = recommenderService.recommendTradesWithContentBased(suggestModel);
 		return new ResponseEntity<>(foundTrade, HttpStatus.OK);
 	}
 
 	@GetMapping("trades/recommend/fengshui")
 	public ResponseEntity<List<GraphTrade>> recommendTradesWithFengshui(
 			@RequestParam(value = "birthdate") String birthdate, @RequestParam(value = "isFemale") boolean isFemale) {
-		List<GraphTrade> foundTrade = tradeService.recommendTradesByUserAge(birthdate, isFemale);
+		List<GraphTrade> foundTrade = recommenderService.recommendTradesByUserAge(birthdate, isFemale);
 		return new ResponseEntity<>(foundTrade, HttpStatus.OK);
 	}
 

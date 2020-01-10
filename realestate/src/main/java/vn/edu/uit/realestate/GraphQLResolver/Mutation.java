@@ -23,6 +23,8 @@ public class Mutation implements GraphQLMutationResolver {
 	GraphQLCategoryService categoryService;
 	@Autowired
 	GraphQLBookingService bookingService;
+	@Autowired
+	GraphQLHistoryService historyService;
 
 	public String login(final String email, final String password) {
 		return userService.login(email, password);
@@ -39,7 +41,7 @@ public class Mutation implements GraphQLMutationResolver {
 		return userService.register(name, email, password, phone, birthdate, gender, job, userKindId, imageLink);
 	}
 	
-	public User updateUser(final Long userId, final String name, final String email, final String phone, final String birthdate,
+	public User updateUser(final long userId, final String name, final String email, final String phone, final String birthdate,
 			final Boolean gender, final String job, final Long userKindId) {
 		return userService.updateUserGraphQL(userId, name, email, phone, birthdate, gender, job, userKindId);
 	}
@@ -65,5 +67,9 @@ public class Mutation implements GraphQLMutationResolver {
 	
 	public Booking saveBooking(final String name, final String phone, final String email, final String timeStart, final String timeEnd, final Long tradeId) {
 		return bookingService.saveBooking(name, phone, email, timeStart, timeEnd, tradeId);
+	}
+	
+	public String saveHistory(final Long userId, final Long district, final int price, final Float square) {
+		return historyService.saveHistory(userId, district, price, square);
 	}
 }

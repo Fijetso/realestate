@@ -1,10 +1,6 @@
 package vn.edu.uit.realestate.Service.EntityService;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,19 +13,15 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
-import vn.edu.uit.realestate.Common.Common;
-import vn.edu.uit.realestate.ExceptionHandler.BadRequestException;
 import vn.edu.uit.realestate.ExceptionHandler.ExistContentException;
 import vn.edu.uit.realestate.ExceptionHandler.IllegalArgumentException;
 import vn.edu.uit.realestate.ExceptionHandler.NotFoundException;
-import vn.edu.uit.realestate.Graph.Model.GraphTrade;
 import vn.edu.uit.realestate.Graph.Repository.GraphTradeRepository;
 import vn.edu.uit.realestate.Relational.Model.BluePrint;
 import vn.edu.uit.realestate.Relational.Model.Booking;
 import vn.edu.uit.realestate.Relational.Model.RealImage;
 import vn.edu.uit.realestate.Relational.Model.Trade;
 import vn.edu.uit.realestate.Relational.Model.Enum.TradeStatus;
-import vn.edu.uit.realestate.Relational.Model.ModelMapper.SuggestModel;
 import vn.edu.uit.realestate.Relational.Repository.AddressRepository;
 import vn.edu.uit.realestate.Relational.Repository.BluePrintRepository;
 import vn.edu.uit.realestate.Relational.Repository.BookingRepository;
@@ -120,139 +112,6 @@ public class TradeService implements IEntityService {
 			bluePrintRepository.deleteAll(tradeBluePrints);
 		}
 		tradeRepository.deleteById(id);
-	}
-
-	private Float mostFrequentMetterSquare(List<Float> array) {
-		if (array == null) {
-			return null;
-		}
-		// Sort the array
-		Collections.sort(array);
-
-		// find the max frequency using linear
-		// traversal
-		int max_count = 1;
-		Float res = array.get(0);
-		int curr_count = 1;
-
-		for (int i = 1; i < array.size(); i++) {
-			if (array.get(i).equals(array.get(i - 1))) {
-				curr_count++;
-			} else {
-				if (curr_count > max_count) {
-					max_count = curr_count;
-					res = array.get(i - 1);
-				}
-				curr_count = 1;
-			}
-		}
-
-		// If last element is most frequent
-		if (curr_count > max_count) {
-			max_count = curr_count;
-			res = array.get(array.size() - 1);
-		}
-		return res;
-	}
-
-	private Integer mostFrequentPriceBillion(List<Integer> array) {
-		if (array == null) {
-			return null;
-		}
-		// Sort the array
-		Collections.sort(array);
-
-		// find the max frequency using linear
-		// traversal
-		int max_count = 1;
-		Integer res = array.get(0);
-		int curr_count = 1;
-
-		for (int i = 1; i < array.size(); i++) {
-			if (array.get(i).equals(array.get(i - 1))) {
-				curr_count++;
-			} else {
-				if (curr_count > max_count) {
-					max_count = curr_count;
-					res = array.get(i - 1);
-				}
-				curr_count = 1;
-			}
-		}
-
-		// If last element is most frequent
-		if (curr_count > max_count) {
-			max_count = curr_count;
-			res = array.get(array.size() - 1);
-		}
-		return res;
-	}
-
-	public List<GraphTrade> recommendTradesWithContentBased(SuggestModel suggestModel) {
-		Integer priceBillion = mostFrequentPriceBillion(suggestModel.getPriceList());
-		Float metterSquare = mostFrequentMetterSquare(suggestModel.getSquareList());
-		return graphTradeRepository.recommendTrades(suggestModel.getUserJob(), suggestModel.getDistrictIdList(),
-				priceBillion, metterSquare);
-	}
-
-	public List<GraphTrade> recommendTradesByUserAge(String birthdate, Boolean isFemale) {
-		if (birthdate == null) {
-			throw new BadRequestException("We cannot recommend trade without birthdate. Please add your birthdate");
-		}
-		int birthYear;
-		try {
-			DateFormat dateFormat = new SimpleDateFormat(Common.Constains.LOCAL_DATE_FORMAT);
-			Date parsedBirthdate = dateFormat.parse(birthdate);
-			birthYear = parsedBirthdate.getYear() + 1900;
-		} catch (ParseException e) {
-			throw new IllegalArgumentException(
-					"Something went wrong with 'birthdate' variable. Be sure the date format is "
-							+ Common.Constains.LOCAL_DATE_FORMAT);
-		}
-		int birthYearSum;
-		do {
-			birthYearSum =0;
-			while (birthYear >= 1) {
-				birthYearSum += birthYear % 10;
-				birthYear /= 10;
-			}
-			birthYear = birthYearSum;
-		} while (birthYearSum / 10 >= 1);
-		birthYearSum = 11 - birthYearSum;
-		if (isFemale) {
-			birthYearSum = 15 - birthYearSum;
-		}
-		birthYear = birthYearSum;
-		do {
-			birthYearSum =0;
-			while (birthYear >= 1) {
-				birthYearSum += birthYear % 10;
-				birthYear /= 10;
-			}
-			birthYear = birthYearSum;
-		} while (birthYearSum / 10 >= 1);
-		switch (birthYearSum) {
-		case 1:
-			return graphTradeRepository.recommendTradesByUserAge2(".*ắc");
-		case 2:
-			return graphTradeRepository.recommendTradesByUserAge(".*ây.*am");
-		case 3:
-			return graphTradeRepository.recommendTradesByUserAge(".*ông");
-		case 4:
-			return graphTradeRepository.recommendTradesByUserAge(".*ông.*am");
-		case 5:
-			return graphTradeRepository.recommendTradesByUserAge(".*");
-		case 6:
-			return graphTradeRepository.recommendTradesByUserAge(".*ây.*ắc");
-		case 7:
-			return graphTradeRepository.recommendTradesByUserAge(".*ây");
-		case 8:
-			return graphTradeRepository.recommendTradesByUserAge(".*ông.*ắc");
-		case 9:
-			return graphTradeRepository.recommendTradesByUserAge2(".*am");
-		default:
-		}
-		return null;
 	}
 
 	public MappingJacksonValue updateTradeStatus(Long id, String newStatus) {
