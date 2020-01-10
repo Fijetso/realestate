@@ -1,5 +1,10 @@
-import { environment } from './../../../environments/environment';
-import { RegisterMutationResponse, REGISTER_MUTATION, SAVENEWS_MUTATION, SaveNewsMutationResponse } from './../../model/generated/graphql';
+import { RegisterMutationResponse,
+  REGISTER_MUTATION,
+  SAVENEWS_MUTATION,
+  SaveNewsMutationResponse,
+  SaveBookingMutationResponse,
+  SAVEBOOKING_MUTATION
+} from './../../model/generated/graphql';
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular-link-http';
@@ -114,6 +119,20 @@ export class GraphQueryService {
         content,
         categoryId,
         author
+      }
+    });
+  }
+
+  saveBooking(name, phone, email, timeStart, timeEnd, tradeId): any {
+    return this.apollo.mutate<SaveBookingMutationResponse>({
+      mutation: SAVEBOOKING_MUTATION,
+      variables: {
+        name,
+        phone,
+        email,
+        timeStart,
+        timeEnd,
+        tradeId
       }
     });
   }

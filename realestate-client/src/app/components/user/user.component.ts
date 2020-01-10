@@ -3,9 +3,6 @@ import { CommonService } from './../../services/common/common.service';
 import { ApiService } from './../../services/api/api.service';
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/model/user/user';
-import { UserKind } from 'src/app/model/user-kind/user-kind';
-import { Observable } from 'rxjs';
-import { State } from 'src/app/core/ui/home-page/marketting/marketting.component';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({

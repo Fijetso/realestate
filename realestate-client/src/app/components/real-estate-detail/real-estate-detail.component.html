@@ -59,11 +59,11 @@
                   <span class="span-acreage">{{ tradeData?.details?.square}}m<sup>2 </sup></span>
                   <p class="re-inline p-district">
                     <a
-                      href="/mua/ban-nha-rieng-quan-12?src=detail_district_list"
+                      [routerLink]="['../../','tim-kiem']" [queryParams] = "{tinh:79,quan:districtId}"
                       ><span>{{disctrictName}}</span></a
                     >
                     <a
-                      href="/mua/ban-nha-rieng-quan-12-phuong-tan-chanh-hiep?src=detail_ward_list"
+                    [routerLink]="['../../','tim-kiem']" [queryParams] = "{tinh:79,quan:districtId}"
                       ><span>{{wardName}}</span></a
                     >
                   </p>
@@ -73,6 +73,11 @@
                   {{ tradeData?.viewCount}} lượt đi xem
               </div>
             </div>
+          </div>
+          <div class="re-user block-info block-info-2 11">
+            <h4>Thông tin liên hệ:</h4>
+            <p> {{ tradeData?.user?.name}}</p>
+            <a [href]="'mailto:'+tradeData?.user?.email+'?subject='+tradeData?.description"> {{ tradeData?.user?.email}}</a>
           </div>
           <div class="re-detail block-info block-info-2 11">
             <h4>Thông tin bất động sản:</h4>
@@ -119,37 +124,58 @@
         <mat-card class="request-infor">
           <h5 class="text-center">Yêu cầu thông tin</h5>
           <form [formGroup]="requestInfo" (ngSubmit)="onSubmitRequest()">
-            <mat-form-field appearance="outline">
+            <mat-form-field >
               <mat-label>Họ và Tên</mat-label>
               <mat-icon matPrefix>perm_identity</mat-icon>
               <input matInput placeholder="Nguyễn Văn A" required name="name" formControlName="name"/>
             </mat-form-field>
-            <mat-form-field appearance="outline">
+            <mat-form-field >
               <mat-label>Số điện thoại</mat-label>
               <mat-icon matPrefix>phone</mat-icon>
               <input matInput placeholder="09xxxxxxxx" required name="phone" formControlName="phone"/>
             </mat-form-field>
-            <mat-form-field appearance="outline">
+            <mat-form-field >
               <mat-label>Email</mat-label>
               <mat-icon matPrefix>mail_outline</mat-icon>
-              <input matInput placeholder="email@example.com" name="emails"  formControlName="email"/>
+              <input matInput placeholder="email@example.com" required formControlName="email" [ngModel]="tradeData?.user?.email" readonly>
             </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>Thời gian</mat-label>
-              <input
+            <mat-form-field >
+              <mat-label>Thời gian bắt đầu</mat-label>
+              <!-- <input
                 matInput
-                [matDatepicker]="picker"
+                [matDatepicker]="dateStart"
                 placeholder="dd/MM/yyyy"
                 name="date"
-                formControlName="date"
+                formControlName="dateStart"
+                required
               />
               <mat-datepicker-toggle
                 matPrefix
-                [for]="picker"
+                [for]="dateStart"
               ></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
+              <mat-datepicker #dateStart></mat-datepicker> -->
+              <input matInput [owlDateTimeTrigger]="dateStart" [owlDateTime]="dateStart"  formControlName="dateStart">
+              <owl-date-time #dateStart [hourTime]=" '24'"></owl-date-time>
             </mat-form-field>
-            <mat-form-field appearance="outline">
+            <mat-form-field >
+              <mat-label>Thời gian kết thúc</mat-label>
+              <!-- <input
+                matInput
+                [matDatepicker]="dateEnd"
+                placeholder="dd/MM/yyyy"
+                name="date"
+                formControlName="dateEnd"
+                required
+              />
+              <mat-datepicker-toggle
+                matPrefix
+                [for]="dateEnd"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #dateEnd></mat-datepicker> -->
+              <input matInput [owlDateTimeTrigger]="dateEnd" [owlDateTime]="dateEnd" formControlName="dateEnd">
+              <owl-date-time #dateEnd [hourTime]="'24'"></owl-date-time>
+            </mat-form-field>
+            <mat-form-field >
               <mat-label>Mã chương trình</mat-label>
               <mat-icon matPrefix>sentiment_very_satisfied</mat-icon>
               <input matInput placeholder="ABC123456" name="programCode" formControlName="programCode"/>
@@ -164,9 +190,10 @@
                 Đặt lịch xem
               </button>
               <button
-                type="submit"
+                type="button"
                 mat-raised-button
                 class="btn-rounded btn-save text-reack"
+                *ngIf="false"
               >
                 <span><i class="far fa-heart"></i></span>
                 Lưu bản tin
@@ -180,14 +207,14 @@
   <app-favorite></app-favorite>
   <div class="viewed-section" *ngIf="recentData">
     <app-section-header [catTitle]="'Đã xem gần đây'" class="p-0"></app-section-header>
-    <app-carousel   [dataRecentRE] = "recentData" isRecentRE="isRecentRE"></app-carousel>
+    <app-carousel   [dataItems] = "recentData" isRecentRE="isRecentRE"></app-carousel>
   </div>
   <div class="viewed-section" *ngIf="reSamePlace">
     <app-section-header [catTitle]="'Cùng địa điểm'" class="p-0"></app-section-header>
-    <app-carousel   [dataRecentRE] = "reSamePlace" isRecentRE="isRecentRE"></app-carousel>
+    <app-carousel   [dataItems] = "reSamePlace" isRecentRE="isRecentRE"></app-carousel>
   </div>
   <div class="viewed-section" *ngIf="reSameClass">
     <app-section-header [catTitle]="'Cùng loại'" class="p-0"></app-section-header>
-    <app-carousel   [dataRecentRE] = "reSameClass" isRecentRE="isRecentRE"></app-carousel>
+    <app-carousel   [dataItems] = "reSameClass" isRecentRE="isRecentRE"></app-carousel>
   </div>
 </div>

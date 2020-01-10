@@ -9,7 +9,7 @@ import { filter, map } from 'rxjs/operators';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit {
-  constructor(private __titleService: Title, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private titleService: Title, private router: Router, private activatedRoute: ActivatedRoute) {
   }
   title = 'Real Estate Client';
   ngOnInit(): void {
@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
       }
       window.scrollTo(0, 0);
     });
-    const appTitle = this.__titleService.getTitle();
+    const appTitle = this.titleService.getTitle();
     this.router
       .events.pipe(
         filter(event => event instanceof NavigationEnd),
@@ -28,13 +28,13 @@ export class AppComponent implements OnInit {
           while (child.firstChild) {
             child = child.firstChild;
           }
-          if (child.snapshot.data['title']) {
-            return child.snapshot.data['title'];
+          if (child.snapshot.data.title) {
+            return child.snapshot.data.title;
           }
           return appTitle;
         })
       ).subscribe((ttl: string) => {
-        this.__titleService.setTitle(ttl);
+        this.titleService.setTitle(ttl);
       });
   }
 }

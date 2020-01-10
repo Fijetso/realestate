@@ -2,6 +2,7 @@ import { GetDistrictNameFromIdPipe } from './../../../../ultility/pipe/get-distr
 import { ApiService } from './../../../../services/api/api.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { DataService } from './../../../../services/data/data.service';
 
 @Component({
   selector: 'app-realestate-item',
@@ -11,7 +12,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class RealestateItemComponent implements OnInit {
   realImages: any;
   mailText: string;
-  constructor(private router: Router, private api: ApiService, private route: ActivatedRoute) {
+  constructor(private router: Router, private api: ApiService, private route: ActivatedRoute, private data: DataService) {
     this.getDistrictFromProvinceId();
   }
   dataLoaded = false;
@@ -21,7 +22,6 @@ export class RealestateItemComponent implements OnInit {
   selectedItem: null;
   offset = 100;
   ngOnInit() {
-    console.log(this.dataItem);
   }
   getDistrictFromProvinceId() {
    this.api.getDistrictFromProvinceId(79).subscribe(res => {
@@ -35,8 +35,8 @@ export class RealestateItemComponent implements OnInit {
   onSelect(slug: any) {
     this.router.navigate(['mua', slug]);
   }
-  mailTo(email) {
-    this.mailText = 'mailto:' + email;
-    window.location.href = this.mailText;
+
+  addToFavList(dataItem) {
+    this.data.addFavList(dataItem);
   }
 }

@@ -1,18 +1,7 @@
 import { ApiService } from './../../../../services/api/api.service';
-import { Component, OnInit, ViewChild, Output, EventEmitter  } from '@angular/core';
-import { FormControl, FormBuilder } from '@angular/forms';
-import { Observable, Subject, merge } from 'rxjs';
-import {
-  startWith,
-  map,
-  debounceTime,
-  distinctUntilChanged,
-  filter
-} from 'rxjs/operators';
-
-export interface State {
-  name: string;
-}
+import { Component, OnInit, Output, EventEmitter  } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-marketting',
   templateUrl: './marketting.component.html',
@@ -23,13 +12,13 @@ export class MarkettingComponent implements OnInit {
   stateNameKey: string;
   @Output()
   receiveREKind: EventEmitter <string> = new EventEmitter <string>();
-  constructor(private api: ApiService, private fb: FormBuilder) {
-
+  searchForm: any;
+  districtList: any;
+  constructor(private api: ApiService, private fb: FormBuilder, private router: Router) {
+    this.searchForm = this.fb.group({
+      district: 760
+    });
   }
-
-  myControl = new FormControl();
-  states: any;
-
   ngOnInit() {
     this.reKindValue = 'mua';
     this.getDistrictList();
@@ -42,7 +31,16 @@ export class MarkettingComponent implements OnInit {
   }
   getDistrictList() {
     this.api.getDistrictFromProvinceId(79).subscribe(districtList => {
-      this.states = districtList;
+      this.districtList = districtList;
     });
+  }
+
+  getTradeByDistrict(districtId: any) {
+    this.router.navigate(['/tim-kiem'], {queryParams: {tinh: 79, quan: districtId}});
+  }
+  onChangeDistrict() {
+    const district = this.searchForm.get('district').value;
+    console.log(district);
+    this.getTradeByDistrict(district);
   }
 }

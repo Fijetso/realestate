@@ -41,7 +41,11 @@ import {
   MatAutocompleteModule,
   MatButtonToggleModule,
   MatFormFieldModule,
-  MatChipsModule
+  MatChipsModule,
+  MatExpansionModule,
+  MatSliderModule,
+  MatCheckboxModule,
+  MatProgressBarModule
 } from '@angular/material';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import 'hammerjs';
@@ -61,7 +65,7 @@ import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-logi
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {CKEditorModule} from 'ngx-ckeditor';
 import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
-
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 import { RealEstateWrapperComponent } from './components/real-estate/real-estate-wrapper/real-estate-wrapper.component';
 import { AlertComponent } from './core/modal/alert/alert.component';
@@ -107,6 +111,8 @@ import { NewsModuleModule } from './core/ui/news-module/news-module.module';
 import { SearchPipe } from './ultility/pipe/search.pipe';
 import { SortPipe } from './ultility/pipe/sort.pipe';
 import { DisplayMapComponent } from './core/ui/map-box/display-map/display-map.component';
+import { FengShuiComponent } from './core/ui/feng-shui/feng-shui.component';
+import { RecommendTradeComponent } from './core/ui/recommend-trade/recommend-trade.component';
 
 const config = new AuthServiceConfig([
   {
@@ -172,7 +178,9 @@ export function provideConfig() {
     ContactComponent,
     SearchPipe,
     SortPipe,
-    DisplayMapComponent
+    DisplayMapComponent,
+    FengShuiComponent,
+    RecommendTradeComponent
   ],
   imports: [
     OwlModule,
@@ -201,7 +209,6 @@ export function provideConfig() {
     MatRadioModule,
     MatSlideToggleModule,
     MatAutocompleteModule,
-    MatProgressSpinnerModule,
     MatTabsModule,
     MatCardModule,
     MatButtonToggleModule,
@@ -227,7 +234,13 @@ export function provideConfig() {
     NgxMapboxGLModule.withConfig({
       accessToken: environment.mapbox.accessToken,
       geocoderAccessToken: environment.mapbox.geocoderAccessToken
-    })
+    }),
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
+    MatExpansionModule,
+    MatSliderModule,
+    MatCheckboxModule,
+    MatProgressBarModule,
   ],
   providers: [
     AuthenticationService,

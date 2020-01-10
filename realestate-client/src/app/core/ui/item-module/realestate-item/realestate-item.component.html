@@ -1,12 +1,12 @@
 <section *ngIf="dataLoaded; else skeleton">
-  <mat-card class="real-estate-card-item md-card align-content-around" (click)="onSelect(dataItem?.id)"
+  <mat-card class="real-estate-card-item md-card align-content-around"
     [style.background]="'#edeff4'" *ngIf="dataItem!==null">
     <div class="img-hover-zoom">
       <!-- <img class="md-image card-img-top" [lazyLoad]="{{dataItem.realImages[0].imageLink}}" alt="picsum" [defaultImage]="defaultPic" [offset]=100> -->
       <img *ngIf="dataItem?.realImages" class="card-img-top" src="{{dataItem?.realImages[0].imageLink}}" alt=""
         onError="this.src='../../../../../assets/images/default.png'">
-      <mat-icon class="icon icon-like" matTooltip="Thêm vào danh sách yêu thích">favorite_border</mat-icon>
-      <button class="btn-sm btn-checked" type="button" *ngIf="isAppraised">Đã thẩm định</button>
+      <mat-icon class="icon icon-like" matTooltip="Thêm vào danh sách yêu thích" (click)="addToFavList(dataItem)">favorite_border</mat-icon>
+      <button class="btn-sm btn-checked" type="button">Đã thẩm định</button>
     </div>
     <div class="md-card-body mt-2">
       <div class="price-address d-flex flex-row justify-content-between">
@@ -21,14 +21,13 @@
       </div>
       <div class="user-post" style="line-height: normal; font-size: small;">
         <p class="font-italic">{{dataItem?.user?.name}} </p>
-        <p class="font-italic">{{dataItem?.user?.email}}</p>
+        <a class="font-italic" [href]="'mailto:'+dataItem?.user?.email+'?subject='+dataItem?.description">{{dataItem?.user?.email}}</a>
       </div>
       <div class="rs-desc">
-        <p [matTooltip]="dataItem.description">{{dataItem?.description}}</p>
+        <p [matTooltip]="dataItem?.description">{{dataItem?.description}}</p>
       </div>
       <div class="rs-follow-count my-1">
-        <button mat-raised-button class="mat-button btn-block btn-bg-faded-blue">Có {{dataItem?.viewCount}} lượt quan
-          tâm</button>
+        <button mat-raised-button class="mat-button btn-block btn-bg-faded-blue"  (click)="onSelect(dataItem?.id)">Chi tiết</button>
       </div>
     </div>
     <div class="md-card-footer d-flex justify-content-between">
@@ -37,7 +36,7 @@
       <span class="rs-bath-room"><i class="fas fa-bath primary"
           matTooltip="Số lượng phòng tắm"></i>{{dataItem?.details?.bathrooms}}</span>
       <span class="rs-location-direct"><i class="fas fa-location-arrow primary"
-          matTooltip="Hướng"></i>{{dataItem?.details?.direction}}</span>
+          matTooltip="Hướng"></i>{{dataItem?.details?.direction}}</span> 
     </div>
   </mat-card>
 </section>

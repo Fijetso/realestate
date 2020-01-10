@@ -5,6 +5,10 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { OwlCarousel } from 'ngx-owl-carousel';
 import { FormBuilder } from '@angular/forms';
+import { GraphQueryService } from '../../services/graphql/graph-query.service';
+import { ToastrService } from 'ngx-toastr';
+import * as moment from 'moment';
+import { AuthService, SocialUser } from 'angularx-social-login';
 
 @Component({
   selector: 'app-real-estate-detail',
@@ -23,16 +27,23 @@ export class RealEstateDetailComponent implements OnInit {
   reSamePlace = null;
   reSameClass = null;
   requestInfo: any;
+  user = JSON.parse(localStorage.getItem('loginInfo'));
+  districtId: any;
+  email: any;
   constructor(
     private route: ActivatedRoute,
     private api: ApiService,
     private common: CommonService,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private graphql: GraphQueryService,
+    private toastr: ToastrService,
+  ) {
     this.requestInfo = this.fb.group({
-      name: 'Danh Thanh',
-      phone: '0975922740',
+      name: this.user ? this.user.name : '',
+      phone: '',
       email: '',
-      date: new Date(),
+      dateStart: new Date(),
+      dateEnd: new Date(),
       programCode: ''
     });
   }
@@ -71,7 +82,21 @@ export class RealEstateDetailComponent implements OnInit {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.slug = params.get('slug');
       if (this.slug) {
-        this.getTradeById(this.slug);
+        this.getTradeById(this.slug).subscribe(trade => {
+          this.tradeData = trade;
+          console.log(this.tradeData);
+          if (!this.viewedList.find(item => item.id === this.slug)) {
+            this.viewedList.push(trade);
+            localStorage.setItem('viewedList', JSON.stringify(this.viewedList));
+            this.recentData = JSON.parse(localStorage.getItem('viewedList'));
+          }
+          this.districtId = this.tradeData.address.district;
+          this.getProvinceName(this.tradeData.address.cityOrProvince);
+          this.getDistrictName(this.tradeData.address.cityOrProvince, this.tradeData.address.district);
+          this.getWardName(this.tradeData.address.cityOrProvince, this.tradeData.address.district, this.tradeData.address.ward);
+          this.getRealEstateSamePlace(this.tradeData.address.district);
+          this.getAllRealEstateSameClass(this.tradeData.details.square);
+        });
       }
     });
     this.recentData = JSON.parse(localStorage.getItem('viewedList'));
@@ -85,19 +110,7 @@ export class RealEstateDetailComponent implements OnInit {
   }
 
   getTradeById(tradeId: number) {
-    this.api.getTradeById(tradeId).subscribe(trade => {
-      this.tradeData = trade;
-      if (!this.viewedList.find(item => item.id === tradeId)) {
-        this.viewedList.push(trade);
-        localStorage.setItem('viewedList', JSON.stringify(this.viewedList));
-        this.recentData = JSON.parse(localStorage.getItem('viewedList'));
-      }
-      this.getProvinceName(this.tradeData.address.cityOrProvince);
-      this.getDistrictName(this.tradeData.address.cityOrProvince, this.tradeData.address.district);
-      this.getWardName(this.tradeData.address.cityOrProvince, this.tradeData.address.district, this.tradeData.address.ward);
-      this.getRealEstateSamePlace(this.tradeData.address.district);
-      this.getAllRealEstateSameClass(this.tradeData.details.square);
-    });
+    return this.api.getTradeById(tradeId);
   }
   getDistrictName(provinceId: number, districtId: number) {
     this.api.getDistrictNameById(provinceId, districtId).subscribe(district => {
@@ -142,5 +155,20 @@ export class RealEstateDetailComponent implements OnInit {
 
   onSubmitRequest() {
     console.log(this.requestInfo.value);
+    const name = this.requestInfo.get('name').value;
+    const phone = this.requestInfo.get('phone').value;
+    const email = this.requestInfo.get('email').value;
+    const timeStart = moment(new Date(this.requestInfo.get('dateStart').value)).format('DD/MM/YYYY HH:mm:ss').toString();
+    const timeEnd = moment(new Date(this.requestInfo.get('dateEnd').value)).format('DD/MM/YYYY HH:mm:ss').toString();
+    const tradeId = +this.slug;
+    this.graphql.saveBooking(name, phone, email, timeStart, timeEnd, tradeId).subscribe(res => {
+      console.log(res.data.saveBooking);
+      this.toastr.success('Thông tin đã được gửi đến người đăng', 'Đặt lịch thành công');
+      return res && res.data;
+    }, error => {
+      this.toastr.error(error, 'Đặt lịch thất bại');
+      console.error(error);
+      return error;
+    });
   }
 }

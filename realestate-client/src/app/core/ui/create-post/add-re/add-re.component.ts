@@ -177,7 +177,7 @@ export class AddReComponent implements OnInit, AfterViewInit {
     this.getAllWardFromDistrict(79, district);
   }
 
-  getUserKinds(){
+  getUserKinds() {
     this.api.getAllUserKind().subscribe(userKinds => {
       this.userKinds = userKinds as UserKind[];
     });

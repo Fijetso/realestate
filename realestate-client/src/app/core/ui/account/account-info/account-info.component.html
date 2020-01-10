@@ -53,18 +53,18 @@
             </div>
 
             <div *ngIf="isShowPost">
-                <h4>Tin đăng của tôi ({{listPost.length}})</h4>
+                <h4>Tin đăng của tôi ({{listPost.length > 0 ?listPost.length : 0 }})</h4>
                 <hr>
                 <div class="list-post">
                     <div class="post-item" *ngFor="let item of listPost; let i=index">
                         <div class="news-card p-2">
                             <div class="row">
                                 <div class="col-md-3 col-sm">
-                                    <img [src]="item.imgPath" alt="" style="max-width: 100%;">
+                                    <img [src]="item?.realImages[0]?.imageLink" alt="" style="max-width: 100%;">
                                 </div>
                                 <div class="col-md-9 col-sm">
-                                    <h5 class="title">{{item.title}}</h5>
-                                    <div class="content">{{item.content}}</div>
+                                    <h5 class="title">{{item?.description}}</h5>
+                                    <div class="content">{{item?.description}}</div>
                                 </div>
                             </div>
                         </div>
@@ -73,18 +73,18 @@
             </div>
 
             <div *ngIf="isShowCollections">
-                <h4>Bộ sưu tập</h4>
+                <h4>Bộ sưu tập ({{collections.length > 0 ?collections.length : 0 }})</h4>
                 <hr>
                 <div class="collections">
                     <div class="post-item" *ngFor="let collection of collections; let i=index">
                         <div class="news-card p-2">
-                            <div class="row">
+                              <div class="row reItem" (click)="onSelect(collection?.id)">
                                 <div class="col-md-3 col-sm">
-                                    <img [src]="collection.imgPath" alt="" style="max-width: 100%;">
+                                    <img [src]="collection.realImages[0]?.imageLink" alt="" style="max-width: 100%;">
                                 </div>
                                 <div class="col-md-9 col-sm">
-                                    <h5 class="title">{{collection.title}}</h5>
-                                    <div class="content">{{collection.content}}</div>
+                                    <h5 class="title">{{collection.description}}</h5>
+                                    <div class="content">{{collection.description}}</div>
                                 </div>
                             </div>
                         </div>

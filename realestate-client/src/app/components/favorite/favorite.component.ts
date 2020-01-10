@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class FavoriteComponent implements OnInit {
 
   constructor(private api: ApiService) {}
-  favCatTitle = 'Yêu thích';
+  favCatTitle = 'Tương tự bạn đã xem';
   viewmoreText = 'Xem thêm';
   iconName = 'fas fa-angle-right';
   dataFavorite = null;
