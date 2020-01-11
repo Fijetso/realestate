@@ -63,7 +63,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'tam',
+    path: 'tin-tuc/tao-moi-tin-tuc',
     component: CreatePostComponent,
     data: {
       title: 'Trang bài đăng',
