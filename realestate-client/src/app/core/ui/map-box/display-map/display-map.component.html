@@ -44,7 +44,7 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div class="more-condition">
+            <div class="more-condition" *ngIf="false">
                 <mat-accordion>
                     <mat-expansion-panel>
                         <mat-expansion-panel-header>
@@ -217,10 +217,10 @@
                         <mat-radio-button value="streets">Đường phố </mat-radio-button>
                         <!-- <mat-radio-button value="light">Nền sáng </mat-radio-button>
                         <mat-radio-button value="dark">Nền tối </mat-radio-button> -->
-                        <mat-radio-button value="satellite">Vệ tinh </mat-radio-button>
+                        <!-- <mat-radio-button value="satellite">Vệ tinh </mat-radio-button> -->
                     </mat-radio-group>
                 </mgl-control>
-                <mgl-control mglGeocoder [searchInput]="'Hồ Chí Minh'"></mgl-control>
+                <!-- <mgl-control mglGeocoder [searchInput]="'Hồ Chí Minh'"></mgl-control> -->
                 <mgl-control mglFullscreen position="bottom-right"></mgl-control>
                 <mgl-control mglScale></mgl-control>
                 <mgl-control mglNavigation position="top-right"></mgl-control>
@@ -235,12 +235,12 @@
                             }" (mouseEnter)="cursorStyle = 'pointer'" (mouseLeave)="cursorStyle = ''"
                     (click)="onClick($event)">
                 </mgl-layer>
-                <mgl-popup *ngIf="selectedLngLat" [lngLat]="selectedLngLat">
+                <!-- <mgl-popup *ngIf="selectedLngLat" [lngLat]="selectedLngLat">
                     <p class="text-center font-weight-bold" [innerHTML]="selectedElement?.Ten"></p>
                     <img src="assets/images/default.png" alt="Mặc định">
-                </mgl-popup>
+                </mgl-popup> -->
                 <!-- render marker -->
-                <mgl-marker #myMarker *ngFor="let item of reList; let i=index"
+                <mgl-marker #myMarker *ngFor="let item of reList | search:[query, newREKind]; let i=index"
                     [lngLat]=[item?.coordinate?.longitude,item?.coordinate?.latitude]>
                     <div [ngStyle]="{
                                 'background-image': 'url(https://www.mapbox.com/mapbox-gl-js/assets/washington-monument.jpg)',
@@ -251,6 +251,10 @@
                                 cursor: 'pointer'
                                 }">
                     </div>
+                    <mgl-popup [lngLat]=[item?.coordinate?.longitude,item?.coordinate?.latitude]>
+                        <p class="text-center font-weight-bold" [innerHTML]="item?.description"></p>
+                        <img [src]="item?.realImages[0].imageLink" alt="Mặc định">
+                    </mgl-popup>
                 </mgl-marker>
             </mgl-map>
         </div>

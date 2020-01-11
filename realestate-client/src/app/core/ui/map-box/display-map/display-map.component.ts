@@ -221,6 +221,10 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
     this.selectedElement = evt.features[0].properties;
   }
 
+  selected(evt: MapLayerMouseEvent){
+    this.selectedLngLat = evt.lngLat;
+    this.selectedElement = evt.features[0].properties;
+  }
   handleChange(name) {
     if (name === 'priceOption') {
       this.priceOption = this.searchDetail.get(name).value;
