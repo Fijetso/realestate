@@ -255,4 +255,8 @@ export class ApiService {
   getAllJob() {
     return this.http.get<any>(this.baseURL + 'jobs');
   }
+
+  getNewsByCategory(categoryId) {
+    return this.http.get<any>(this.baseURL + 'categories/' + categoryId + '/news');
+  }
 }

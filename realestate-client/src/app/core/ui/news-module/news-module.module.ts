@@ -5,17 +5,19 @@ import { NewsModuleRoutingModule } from './news-module-routing.module';
 import { NewsListComponent } from './news-list/news-list.component';
 import { NewsDetailComponent } from './news-detail/news-detail.component';
 import { NewsItemComponent } from './news-item/news-item.component';
-import { MatCardModule, MatButtonModule } from '@angular/material';
+import { MatCardModule, MatButtonModule, MatDividerModule } from '@angular/material';
+import { FilterNewsPipe } from '../../../ultility/pipe/filter-news/filter-news.pipe';
 
 
 @NgModule({
-  declarations: [NewsListComponent, NewsDetailComponent, NewsItemComponent],
+  declarations: [NewsListComponent, NewsDetailComponent, NewsItemComponent, FilterNewsPipe],
   imports: [
     CommonModule,
     NewsModuleRoutingModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDividerModule
   ],
-  exports: [NewsListComponent, NewsDetailComponent, NewsItemComponent],
+  exports: [NewsListComponent, NewsDetailComponent, NewsItemComponent, FilterNewsPipe],
 })
 export class NewsModuleModule { }
