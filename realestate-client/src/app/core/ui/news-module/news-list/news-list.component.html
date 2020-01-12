@@ -7,23 +7,23 @@
             </h4>
             <div class="row">
                 <div class="col-md-6 col-sm main-news">
-                   <div *ngFor="let item of newsList | filterNews :2  ;let i=index">
-                    <div class="news-item" *ngIf="i===0">
+                    <div *ngFor="let item of newsList | filterNews :2  ;let i=index">
+                        <div class="news-item" *ngIf="i===0">
                             <div class="p-2 newsCard">
                                 <mat-card>
                                     <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="">
                                     <mat-card-content>
-                                    <h5 class="cart-news-title">{{item?.title}}</h5>
-                                    <div class="font-italic">Ngày tạo: {{item?.composeDate}}</div>
-                                    <div [innerHTML] ="item?.content"></div>
+                                        <h5 class="cart-news-title">{{item?.title}}</h5>
+                                        <div class="font-italic">Ngày tạo: {{item?.composeDate}}</div>
+                                        <div [innerHTML]="item?.content" class="content"></div>
                                     </mat-card-content>
                                     <mat-card-actions>
-                                       <button mat-raised-button  (click)="goToDetail(item?.id)">Chi tiết</button>
+                                        <button mat-raised-button (click)="goToDetail(item?.id)">Chi tiết</button>
                                     </mat-card-actions>
                                 </mat-card>
                             </div>
                         </div>
-                   </div>
+                    </div>
                 </div>
                 <div class="col-md-6 col-sm list-news-container">
                     <div *ngFor="let item of newsList | filterNews :2  ;let i=index">
@@ -31,10 +31,10 @@
                             <div class="p-2 newsCard">
                                 <mat-card>
                                     <mat-card-content>
-                                    <h5 class="cart-news-title">{{item?.title}}</h5>
+                                        <h5 class="cart-news-title">{{item?.title}}</h5>
                                     </mat-card-content>
                                     <mat-card-actions>
-                                       <button mat-raised-button  (click)="goToDetail(item?.id)">Chi tiết</button>
+                                        <button mat-raised-button (click)="goToDetail(item?.id)">Chi tiết</button>
                                     </mat-card-actions>
                                 </mat-card>
                             </div>
@@ -50,24 +50,42 @@
                         </span>
                         <div class="line"></div>
                     </h4>
-                    <!-- <div class="news-item">HEAD NEWS</div> -->
-                    <div class="news-item" *ngFor="let item of newsList | filterNews :1; let i=index">
-                        <div class="p-2 newsCard">
-                            <mat-card>
-                                <mat-card-content>
-                                    <div class="cart-news-title">{{item?.title}}</div>
-                                    <div class="font-italic">Ngày tạo: {{item?.composeDate}}</div>
-                                    <div class="font-italic">Tác giả: {{item?.author}}</div>
-                                    <div class="font-italic">Danh mục:
-                                        {{item?.category?.name?item?.category?.name:'Chưa phân loại'}}</div>
-                                </mat-card-content>
-                                <mat-card-actions>
-                                    <button mat-raised-button (click)="goToDetail(item?.id)">Chi tiết</button>
-                                </mat-card-actions>
-                            </mat-card>
+                    <!-- 360   360 BẤT ĐỘNG SẢN-->
+                    <div *ngFor="let item of newsList | filterNews :1  ;let i=index">
+                        <!-- Headnews -->
+                        <div class="news-item" *ngIf="i===0">
+                            <div class="p-2 newsCard">
+                                <mat-card>
+                                    <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="">
+                                    <mat-card-content>
+                                        <h5 class="cart-news-title">{{item?.title}}</h5>
+                                        <div class="font-italic">Ngày tạo: {{item?.composeDate}}</div>
+                                        <div [innerHTML]="item?.content" class="content"></div>
+                                    </mat-card-content>
+                                    <mat-card-actions>
+                                        <button mat-raised-button (click)="goToDetail(item?.id)">Chi tiết</button>
+                                    </mat-card-actions>
+                                </mat-card>
+                            </div>
+                        </div>
+                        <!-- another news -->
+                        <div class="news-item" *ngIf="i > 0">
+                            <div class="p-2 newsCard">
+                                <mat-card>
+                                    <mat-card-content>
+                                        <h5 class="cart-news-title">{{item?.title}}</h5>
+                                        <div class="font-italic">Ngày tạo: {{item?.composeDate}}</div>
+                                    </mat-card-content>
+                                    <mat-card-actions>
+                                        <button mat-raised-button (click)="goToDetail(item?.id)">Chi tiết</button>
+                                    </mat-card-actions>
+                                </mat-card>
+                            </div>
                         </div>
                     </div>
+
                 </div>
+
                 <div class="col-md-6 col-sm list-news-container">
                     <h4>
                         <span>
@@ -75,40 +93,56 @@
                         </span>
                         <div class="line"></div>
                     </h4>
-                    <div class="news-item" >HEAD NEWS</div>
-                    <div class="news-item" *ngFor="let item of newsList | filterNews :2; let i=index">
-                        <div class="p-2 newsCard">
-                            <mat-card>
-                                <mat-card-content>
-                                    <div class="cart-news-title">{{item?.title}}</div>
-                                    <div class="font-italic">Ngày tạo: {{item?.composeDate}}</div>
-                                    <div class="font-italic">Tác giả: {{item?.author}}</div>
-                                    <div class="font-italic">Danh mục:
-                                        {{item?.category?.name?item?.category?.name:'Chưa phân loại'}}</div>
-                                </mat-card-content>
-                                <mat-card-actions>
-                                    <button mat-raised-button (click)="goToDetail(item?.id)">Chi tiết</button>
-                                </mat-card-actions>
-                            </mat-card>
+                    <div *ngFor="let item of newsList | filterNews :2  ;let i=index">
+                        <!-- Headnews -->
+                        <div class="news-item" *ngIf="i===0">
+                            <div class="p-2 newsCard">
+                                <mat-card>
+                                    <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="">
+                                    <mat-card-content>
+                                        <h5 class="cart-news-title">{{item?.title}}</h5>
+                                        <div class="font-italic">Ngày tạo: {{item?.composeDate}}</div>
+                                        <div [innerHTML]="item?.content" class="content"></div>
+                                    </mat-card-content>
+                                    <mat-card-actions>
+                                        <button mat-raised-button (click)="goToDetail(item?.id)">Chi tiết</button>
+                                    </mat-card-actions>
+                                </mat-card>
+                            </div>
+                        </div>
+                        <!-- another news -->
+                        <div class="news-item" *ngIf="i > 0">
+                            <div class="p-2 newsCard">
+                                <mat-card>
+                                    <mat-card-content>
+                                        <h5 class="cart-news-title">{{item?.title}}</h5>
+                                        <div class="font-italic">Ngày tạo: {{item?.composeDate}}</div>
+                                    </mat-card-content>
+                                    <mat-card-actions>
+                                        <button mat-raised-button (click)="goToDetail(item?.id)">Chi tiết</button>
+                                    </mat-card-actions>
+                                </mat-card>
+                            </div>
                         </div>
                     </div>
+                    <!-- End -->
                 </div>
             </div>
         </div>
-        <div class="col-md-4 col-sm">
-            <div class="advertiments">
+
+        <section class="advertiments col-md-4 col-sm">
+            <div class="advertiments-wrapper">
                 <span>QUẢNG CÁO</span>
                 <div class="line"></div>
             </div>
-        </div>
+        </section>
     </div>
 
-    <div class="social">
+    <section class="social">
         <h4 class="social-title text-center"><span>TRUYỀN THÔNG</span></h4>
         <div class="row">
-
         </div>
-    </div>
+    </section>
 
     <section class="second-news">
         <div class="row">
@@ -117,15 +151,31 @@
                     <span>PHONG THUỶ</span>
                     <mat-divider></mat-divider>
                 </div>
-                <div>
-                    <div class="news-item" *ngFor="let item of newsList | filterNews :4; let i=index">
+                <!-- start -->
+                <div *ngFor="let item of newsList | filterNews :4  ;let i=index">
+                    <!-- Headnews -->
+                    <div class="news-item" *ngIf="i===0">
+                        <div class="p-2 newsCard">
+                            <mat-card>
+                                <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="">
+                                <mat-card-content>
+                                    <h5 class="cart-news-title">{{item?.title}}</h5>
+                                    <div class="font-italic">Ngày tạo: {{item?.composeDate}}</div>
+                                    <div [innerHTML]="item?.content" class="content"></div>
+                                </mat-card-content>
+                                <mat-card-actions>
+                                    <button mat-raised-button (click)="goToDetail(item?.id)">Chi tiết</button>
+                                </mat-card-actions>
+                            </mat-card>
+                        </div>
+                    </div>
+                    <!-- another news -->
+                    <div class="news-item" *ngIf="i > 0">
                         <div class="p-2 newsCard">
                             <mat-card>
                                 <mat-card-content>
-                                    <div class="cart-news-title">{{item?.title}}</div>
-                                    <!-- <div class="font-italic">Ngày tạo: {{item?.composeDate}}</div>
-                            <div class="font-italic">Tác giả: {{item?.author}}</div>
-                            <div class="font-italic">Danh mục: {{item?.category?.name?item?.category?.name:'Chưa phân loại'}}</div> -->
+                                    <h5 class="cart-news-title">{{item?.title}}</h5>
+                                    <div class="font-italic">Ngày tạo: {{item?.composeDate}}</div>
                                 </mat-card-content>
                                 <mat-card-actions>
                                     <button mat-raised-button (click)="goToDetail(item?.id)">Chi tiết</button>
@@ -134,21 +184,38 @@
                         </div>
                     </div>
                 </div>
+                <!-- end -->
             </div>
             <div class="col-md-4 col-sm">
                 <div class="fengshui">
                     <span>KIẾN TRÚC</span>
-                <mat-divider></mat-divider>
+                    <mat-divider></mat-divider>
                 </div>
-                <div>
-                    <div class="news-item" *ngFor="let item of newsList | filterNews :4; let i=index">
+                 <!-- start -->
+                 <div *ngFor="let item of newsList | filterNews :5  ;let i=index">
+                    <!-- Headnews -->
+                    <div class="news-item" *ngIf="i===0">
+                        <div class="p-2 newsCard">
+                            <mat-card>
+                                <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="">
+                                <mat-card-content>
+                                    <h5 class="cart-news-title">{{item?.title}}</h5>
+                                    <div class="font-italic">Ngày tạo: {{item?.composeDate}}</div>
+                                    <div [innerHTML]="item?.content" class="content"></div>
+                                </mat-card-content>
+                                <mat-card-actions>
+                                    <button mat-raised-button (click)="goToDetail(item?.id)">Chi tiết</button>
+                                </mat-card-actions>
+                            </mat-card>
+                        </div>
+                    </div>
+                    <!-- another news -->
+                    <div class="news-item" *ngIf="i > 0">
                         <div class="p-2 newsCard">
                             <mat-card>
                                 <mat-card-content>
-                                    <div class="cart-news-title">{{item?.title}}</div>
-                                    <!-- <div class="font-italic">Ngày tạo: {{item?.composeDate}}</div>
-                            <div class="font-italic">Tác giả: {{item?.author}}</div>
-                            <div class="font-italic">Danh mục: {{item?.category?.name?item?.category?.name:'Chưa phân loại'}}</div> -->
+                                    <h5 class="cart-news-title">{{item?.title}}</h5>
+                                    <div class="font-italic">Ngày tạo: {{item?.composeDate}}</div>
                                 </mat-card-content>
                                 <mat-card-actions>
                                     <button mat-raised-button (click)="goToDetail(item?.id)">Chi tiết</button>
@@ -157,21 +224,22 @@
                         </div>
                     </div>
                 </div>
+                <!-- end -->
             </div>
             <div class="col-md-4 col-sm">
                 <div class="fengshui">
                     <span>XEM NHIỀU</span>
                     <mat-divider></mat-divider>
                 </div>
-                <div>
-                    <div class="news-item" *ngFor="let item of newsList | filterNews :4; let i=index">
+                 <!-- start -->
+                 <div *ngFor="let item of newsList  ;let i=index">
+                    <!-- another news -->
+                    <div class="news-item" *ngIf="i > 0">
                         <div class="p-2 newsCard">
                             <mat-card>
                                 <mat-card-content>
-                                    <div class="cart-news-title">{{item?.title}}</div>
-                                    <!-- <div class="font-italic">Ngày tạo: {{item?.composeDate}}</div>
-                            <div class="font-italic">Tác giả: {{item?.author}}</div>
-                            <div class="font-italic">Danh mục: {{item?.category?.name?item?.category?.name:'Chưa phân loại'}}</div> -->
+                                    <h5 class="cart-news-title">{{item?.title}}</h5>
+                                    <div class="font-italic">Ngày tạo: {{item?.composeDate}}</div>
                                 </mat-card-content>
                                 <mat-card-actions>
                                     <button mat-raised-button (click)="goToDetail(item?.id)">Chi tiết</button>
@@ -180,6 +248,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- end -->
             </div>
         </div>
     </section>
