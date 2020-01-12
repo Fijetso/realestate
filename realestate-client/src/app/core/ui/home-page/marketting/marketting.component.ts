@@ -2,33 +2,35 @@ import { ApiService } from './../../../../services/api/api.service';
 import { Component, OnInit, Output, EventEmitter  } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { nonAccentVietnamese } from './../../../../ultility/functions/remove-sign';
 @Component({
   selector: 'app-marketting',
   templateUrl: './marketting.component.html',
   styleUrls: ['./marketting.component.scss']
 })
 export class MarkettingComponent implements OnInit {
-  reKindValue: string;
+
   stateNameKey: string;
-  @Output()
-  receiveREKind: EventEmitter <string> = new EventEmitter <string>();
   searchForm: any;
   districtList: any;
+  tradeKinds: any;
+  tradeKindSelected: string;
   constructor(private api: ApiService, private fb: FormBuilder, private router: Router) {
     this.searchForm = this.fb.group({
-      district: 760
+      district: null
     });
+    this.tradeKindSelected  = 'Mua';
   }
   ngOnInit() {
-    this.reKindValue = 'mua';
     this.getDistrictList();
-    this.receiveREKind.emit(this.reKindValue);
+    this.getTradeKinds();
+  }
+  getTradeKinds() {
+    this.api.getTradeKind().subscribe(tradeKinds => {
+      this.tradeKinds = tradeKinds;
+    });
   }
 
-  public onValChange(val: string) {
-    this.reKindValue = val;
-    this.receiveREKind.emit(this.reKindValue);
-  }
   getDistrictList() {
     this.api.getDistrictFromProvinceId(79).subscribe(districtList => {
       this.districtList = districtList;
@@ -36,7 +38,7 @@ export class MarkettingComponent implements OnInit {
   }
 
   getTradeByDistrict(districtId: any) {
-    this.router.navigate(['/tim-kiem'], {queryParams: {tinh: 79, quan: districtId}});
+    this.router.navigate([nonAccentVietnamese(this.tradeKindSelected)], {queryParams: {tinh: 79, quan: districtId}});
   }
   onChangeDistrict() {
     const district = this.searchForm.get('district').value;

@@ -23,7 +23,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'mua/:slug',
+    path: 'chi-tiet/:slug',
     component: RealEstateDetailComponent,
     data: {
       title: 'Chi tiết bất động sản',
@@ -31,7 +31,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'tim-kiem',
+    path: ':tradeKind',
     component: MapModuleComponent,
     data: {
       title: 'Tìm kiếm chi tiết các bất dộng sản',
