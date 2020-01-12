@@ -139,6 +139,8 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
     this.changeStyle(this.layerId);
     console.log(this.priceOption);
     this.isLoading = true;
+    const lastRoute = this.route.snapshot.paramMap.get('slug');
+    console.log(lastRoute);
   }
 
   changeStyle(layerId: string) {

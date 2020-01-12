@@ -240,23 +240,25 @@
                     <img src="assets/images/default.png" alt="Mặc định">
                 </mgl-popup> -->
                 <!-- render marker -->
+            <div *ngIf="reList">
                 <mgl-marker #myMarker *ngFor="let item of reList | search:[query, newREKind]; let i=index"
-                    [lngLat]=[item?.coordinate?.longitude,item?.coordinate?.latitude]>
-                    <div [ngStyle]="{
-                                'background-image': 'url(https://www.mapbox.com/mapbox-gl-js/assets/washington-monument.jpg)',
-                                'background-size': 'cover',
-                                width: '30px',
-                                height: '30px',
-                                'border-radius': '50%',
-                                cursor: 'pointer'
-                                }">
-                    </div>
-                    <mgl-popup [lngLat]=[item?.coordinate?.longitude,item?.coordinate?.latitude] style="cursor: pointer;">
-                        <p class="text-center font-weight-bold" [innerHTML]="item?.description"></p>
-                        <img [src]="item?.realImages[0].imageLink" alt="Mặc định">
-                        <button mat-raised-button  (click)="goToDetail(item.id)">Chi tiết</button>
-                    </mgl-popup>
-                </mgl-marker>
+                [lngLat]=[item?.coordinate?.longitude,item?.coordinate?.latitude]>
+                <div [ngStyle]="{
+                            'background-image': 'url(https://www.mapbox.com/mapbox-gl-js/assets/washington-monument.jpg)',
+                            'background-size': 'cover',
+                            width: '30px',
+                            height: '30px',
+                            'border-radius': '50%',
+                            cursor: 'pointer'
+                            }">
+                </div>
+                <mgl-popup [lngLat]=[item?.coordinate?.longitude,item?.coordinate?.latitude] style="cursor: pointer;">
+                    <p class="text-center font-weight-bold" [innerHTML]="item?.description"></p>
+                    <img [src]="item?.realImages[0].imageLink" alt="Mặc định">
+                    <button mat-raised-button  (click)="goToDetail(item.id)">Chi tiết</button>
+                </mgl-popup>
+            </mgl-marker>
+            </div>
             </mgl-map>
         </div>
     </div>
