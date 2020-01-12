@@ -9,7 +9,6 @@ import { MatCardModule, MatButtonModule, MatDividerModule } from '@angular/mater
 import { FilterNewsPipe } from '../../../ultility/pipe/filter-news/filter-news.pipe';
 import { SafeHtmlPipe } from '../../../ultility/pipe/safe-html/safe-html.pipe';
 
-
 @NgModule({
   declarations: [NewsListComponent,
     NewsDetailComponent,

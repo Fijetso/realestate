@@ -7,13 +7,13 @@
             </h4>
             <div class="row">
                 <div class="col-md-6 col-sm main-news">
-                    <div *ngFor="let item of newsList | filterNews :2  ;let i=index">
+                    <div *ngFor="let item of newsList  ;let i=index">
                         <div class="news-item" *ngIf="i===0">
                             <div class="p-2 newsCard">
                                 <mat-card>
                                     <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="">
                                     <mat-card-content>
-                                        <h5 class="cart-news-title">{{item?.title}}</h5>
+                                        <div class="cart-news-title">{{item?.title}}</div>
                                         <div class="font-italic">Ngày tạo: {{item?.composeDate}}</div>
                                         <div [innerHTML]="item?.content" class="content"></div>
                                     </mat-card-content>
@@ -26,12 +26,12 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-sm list-news-container">
-                    <div *ngFor="let item of newsList | filterNews :2  ;let i=index">
-                        <div class="news-item" *ngIf="i>0">
+                    <div *ngFor="let item of newsList ;let i=index">
+                        <div class="news-item" *ngIf="i>0 && i <5">
                             <div class="p-2 newsCard">
                                 <mat-card>
                                     <mat-card-content>
-                                        <h5 class="cart-news-title">{{item?.title}}</h5>
+                                        <div class="cart-news-title">{{item?.title}}</div>
                                     </mat-card-content>
                                     <mat-card-actions>
                                         <button mat-raised-button (click)="goToDetail(item?.id)">Chi tiết</button>
@@ -58,7 +58,7 @@
                                 <mat-card>
                                     <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="">
                                     <mat-card-content>
-                                        <h5 class="cart-news-title">{{item?.title}}</h5>
+                                        <div class="cart-news-title">{{item?.title}}</div>
                                         <div class="font-italic">Ngày tạo: {{item?.composeDate}}</div>
                                         <div [innerHTML]="item?.content" class="content"></div>
                                     </mat-card-content>
@@ -73,7 +73,7 @@
                             <div class="p-2 newsCard">
                                 <mat-card>
                                     <mat-card-content>
-                                        <h5 class="cart-news-title">{{item?.title}}</h5>
+                                        <div class="cart-news-title">{{item?.title}}</div>
                                         <div class="font-italic">Ngày tạo: {{item?.composeDate}}</div>
                                     </mat-card-content>
                                     <mat-card-actions>
@@ -100,7 +100,7 @@
                                 <mat-card>
                                     <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="">
                                     <mat-card-content>
-                                        <h5 class="cart-news-title">{{item?.title}}</h5>
+                                        <div class="cart-news-title">{{item?.title}}</div>
                                         <div class="font-italic">Ngày tạo: {{item?.composeDate}}</div>
                                         <div [innerHTML]="item?.content" class="content"></div>
                                     </mat-card-content>
@@ -115,7 +115,7 @@
                             <div class="p-2 newsCard">
                                 <mat-card>
                                     <mat-card-content>
-                                        <h5 class="cart-news-title">{{item?.title}}</h5>
+                                        <div class="cart-news-title">{{item?.title}}</div>
                                         <div class="font-italic">Ngày tạo: {{item?.composeDate}}</div>
                                     </mat-card-content>
                                     <mat-card-actions>
@@ -140,17 +140,18 @@
 
     <section class="social">
         <h4 class="social-title text-center"><span>TRUYỀN THÔNG</span></h4>
-        <div class="row">
+        <div class="carousel">
+
         </div>
     </section>
 
     <section class="second-news">
         <div class="row">
             <div class="col-md-4 col-sm">
-                <div class="fengshui">
+                <h4 class="fengshui">
                     <span>PHONG THUỶ</span>
-                    <mat-divider></mat-divider>
-                </div>
+                    <div class="line"></div>
+                </h4>
                 <!-- start -->
                 <div *ngFor="let item of newsList | filterNews :4  ;let i=index">
                     <!-- Headnews -->
@@ -159,7 +160,7 @@
                             <mat-card>
                                 <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="">
                                 <mat-card-content>
-                                    <h5 class="cart-news-title">{{item?.title}}</h5>
+                                    <div class="cart-news-title">{{item?.title}}</div>
                                     <div class="font-italic">Ngày tạo: {{item?.composeDate}}</div>
                                     <div [innerHTML]="item?.content" class="content"></div>
                                 </mat-card-content>
@@ -174,7 +175,7 @@
                         <div class="p-2 newsCard">
                             <mat-card>
                                 <mat-card-content>
-                                    <h5 class="cart-news-title">{{item?.title}}</h5>
+                                    <div class="cart-news-title">{{item?.title}}</div>
                                     <div class="font-italic">Ngày tạo: {{item?.composeDate}}</div>
                                 </mat-card-content>
                                 <mat-card-actions>
@@ -187,19 +188,19 @@
                 <!-- end -->
             </div>
             <div class="col-md-4 col-sm">
-                <div class="fengshui">
+                <h4 class="fengshui">
                     <span>KIẾN TRÚC</span>
-                    <mat-divider></mat-divider>
-                </div>
-                 <!-- start -->
-                 <div *ngFor="let item of newsList | filterNews :5  ;let i=index">
+                    <div class="line"></div>
+                </h4>
+                <!-- start -->
+                <div *ngFor="let item of newsList | filterNews :5  ;let i=index">
                     <!-- Headnews -->
                     <div class="news-item" *ngIf="i===0">
                         <div class="p-2 newsCard">
                             <mat-card>
                                 <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="">
                                 <mat-card-content>
-                                    <h5 class="cart-news-title">{{item?.title}}</h5>
+                                    <div class="cart-news-title">{{item?.title}}</div>
                                     <div class="font-italic">Ngày tạo: {{item?.composeDate}}</div>
                                     <div [innerHTML]="item?.content" class="content"></div>
                                 </mat-card-content>
@@ -214,7 +215,7 @@
                         <div class="p-2 newsCard">
                             <mat-card>
                                 <mat-card-content>
-                                    <h5 class="cart-news-title">{{item?.title}}</h5>
+                                    <div class="cart-news-title">{{item?.title}}</div>
                                     <div class="font-italic">Ngày tạo: {{item?.composeDate}}</div>
                                 </mat-card-content>
                                 <mat-card-actions>
@@ -227,18 +228,18 @@
                 <!-- end -->
             </div>
             <div class="col-md-4 col-sm">
-                <div class="fengshui">
+                <h4 class="view-most">
                     <span>XEM NHIỀU</span>
-                    <mat-divider></mat-divider>
-                </div>
-                 <!-- start -->
-                 <div *ngFor="let item of newsList  ;let i=index">
+                    <div class="line"></div>
+                </h4>
+                <!-- start -->
+                <div *ngFor="let item of newsList  ;let i=index">
                     <!-- another news -->
-                    <div class="news-item" *ngIf="i > 0">
+                    <div class="news-item" *ngIf="i < 4">
                         <div class="p-2 newsCard">
                             <mat-card>
                                 <mat-card-content>
-                                    <h5 class="cart-news-title">{{item?.title}}</h5>
+                                    <div class="cart-news-title">{{item?.title}}</div>
                                     <div class="font-italic">Ngày tạo: {{item?.composeDate}}</div>
                                 </mat-card-content>
                                 <mat-card-actions>
