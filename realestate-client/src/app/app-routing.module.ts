@@ -31,14 +31,6 @@ const routes: Routes = [
     }
   },
   {
-    path: ':tradeKind',
-    component: MapModuleComponent,
-    data: {
-      title: 'Tìm kiếm chi tiết các bất dộng sản',
-      breadcrumb: 'Tìm kiếm chi tiết các bất dộng sản'
-    }
-  },
-  {
     path: 'dang-nhap',
     component: LoginComponent,
     data: {
@@ -111,6 +103,14 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: () => import('./core/ui/admin/admin.module').then(admin => admin.AdminModule)
+  },
+  {
+    path: 'tim-kiem/:tradeKind',
+    component: MapModuleComponent,
+    data: {
+      title: 'Tìm kiếm chi tiết các bất dộng sản',
+      breadcrumb: 'Tìm kiếm chi tiết các bất dộng sản'
+    }
   },
   {
     path: '**',

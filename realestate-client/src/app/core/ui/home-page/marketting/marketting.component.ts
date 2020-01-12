@@ -38,7 +38,7 @@ export class MarkettingComponent implements OnInit {
   }
 
   getTradeByDistrict(districtId: any) {
-    this.router.navigate([nonAccentVietnamese(this.tradeKindSelected)], {queryParams: {tinh: 79, quan: districtId}});
+    this.router.navigate(['tim-kiem/' + nonAccentVietnamese(this.tradeKindSelected)], {queryParams: {tinh: 79, quan: districtId}});
   }
   onChangeDistrict() {
     const district = this.searchForm.get('district').value;
