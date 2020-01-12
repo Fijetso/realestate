@@ -2,7 +2,7 @@ import { ApiService } from 'src/app/services/api/api.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, AfterViewInit, Input, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MarkerService } from '../../../../services/map/marker.service';
 import { LngLat, MapMouseEvent, MapLayerMouseEvent } from 'mapbox-gl';
 import { GeoJsonProperties } from 'geojson';
@@ -95,7 +95,8 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
               private api: ApiService,
               private fb: FormBuilder,
               private route: ActivatedRoute,
-              private changeDetectorRef: ChangeDetectorRef
+              private changeDetectorRef: ChangeDetectorRef,
+              private router : Router
               ) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(pos => {
@@ -232,5 +233,9 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
     if (name === 'squareOption') {
       this.squareOption = this.searchDetail.get(name).value;
     }
+  }
+
+  goToDetail(tradeId) {
+    this.router.navigate(['chi-tiet/' + tradeId]);
   }
 }

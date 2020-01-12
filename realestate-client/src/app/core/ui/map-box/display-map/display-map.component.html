@@ -251,9 +251,10 @@
                                 cursor: 'pointer'
                                 }">
                     </div>
-                    <mgl-popup [lngLat]=[item?.coordinate?.longitude,item?.coordinate?.latitude]>
+                    <mgl-popup [lngLat]=[item?.coordinate?.longitude,item?.coordinate?.latitude] style="cursor: pointer;">
                         <p class="text-center font-weight-bold" [innerHTML]="item?.description"></p>
                         <img [src]="item?.realImages[0].imageLink" alt="Mặc định">
+                        <button mat-raised-button  (click)="goToDetail(item.id)">Chi tiết</button>
                     </mgl-popup>
                 </mgl-marker>
             </mgl-map>
