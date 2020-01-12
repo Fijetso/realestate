@@ -8,14 +8,16 @@
       </mat-button-toggle>
     </mat-button-toggle-group>
     <form class="searchForm" [formGroup]="searchForm">
-       <mat-select placeholder="Chọn Quận Huyện" formControlName="district" name="item" (selectionChange)="onChangeDistrict()">
-        <mat-option [value]=null>
-         Chọn Quận/ Huyện của bạn
-        </mat-option> 
-        <mat-option *ngFor="let district of districtList" [value]="district.id">
-           {{district.nameWithType}}
-         </mat-option>
-       </mat-select>
+       <mat-form-field>
+        <mat-select placeholder="Chọn Quận Huyện" formControlName="district" name="item" (selectionChange)="onChangeDistrict()">
+          <mat-option [value]=null>
+           Chọn Quận/ Huyện của bạn
+          </mat-option> 
+          <mat-option *ngFor="let district of districtList" [value]="district.id">
+             {{district.nameWithType}}
+           </mat-option>
+         </mat-select>
+       </mat-form-field>
       </form>
   </div>
 </div>
