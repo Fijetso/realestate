@@ -10,7 +10,7 @@ export class DataService {
 
   private isLoggedIn = new BehaviorSubject(true);
   currentLogin = this.isLoggedIn.asObservable();
-  private user = new BehaviorSubject(null);
+  private user = new BehaviorSubject(localStorage.getItem('loginInfo')) ;
   currentUser = this.user.asObservable();
   private favList: BehaviorSubject<any[]> = new BehaviorSubject(localStorage.getItem('favS') ?
   JSON.parse(localStorage.getItem('favS')) :

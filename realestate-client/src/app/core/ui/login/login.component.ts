@@ -54,6 +54,7 @@ export class LoginComponent implements OnInit {
       this.isLogedIn = this.loggedIn =  (user != null);
       if (this.loggedIn) {
         localStorage.setItem('loginInfo', JSON.stringify(user));
+        this.data.changeCurrentUser(user);
       }
     });
     this.isLogedIn  = this.loggedIn = JSON.parse(localStorage.getItem('loginInfo')) != null;
@@ -69,6 +70,7 @@ export class LoginComponent implements OnInit {
         this.toastr.success('Đăng nhập bằng email thành công', 'Đăng nhập');
         this.isLogedIn = true;
         localStorage.setItem('loginInfo', JSON.stringify(res));
+        this.data.changeCurrentUser(res);
       });
     } else {
       this.toastr.error('Đăng nhập bằng email thất bại', 'Đăng nhập');
@@ -119,6 +121,7 @@ export class LoginComponent implements OnInit {
         // tslint:disable-next-line: no-console
         console.log('logout successful', res), localStorage.clear();
         this.isLogedIn = false;
+        this.data.changeCurrentUser(null);
       },
       error => {
         console.error(error);
@@ -129,6 +132,7 @@ export class LoginComponent implements OnInit {
         this.toastr.success('Đăng xuất thành công', 'Đăng xuất');
         localStorage.clear();
         this.cookie.deleteAll();
+        this.data.changeCurrentUser(null);
       }
     );
     // this.myAuthService

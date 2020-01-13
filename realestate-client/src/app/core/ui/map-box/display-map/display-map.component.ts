@@ -4,8 +4,9 @@ import { Component, AfterViewInit, Input, OnInit, ChangeDetectorRef } from '@ang
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MarkerService } from '../../../../services/map/marker.service';
-import { LngLat, MapMouseEvent, MapLayerMouseEvent } from 'mapbox-gl';
+import { LngLat, MapLayerMouseEvent } from 'mapbox-gl';
 import { GeoJsonProperties } from 'geojson';
+import { DataService } from './../../../../services/data/data.service';
 
 @Component({
   selector: 'app-display-map',
@@ -46,58 +47,48 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
   max = 10;
   min = 0;
   showTicks = true;
-  step = 0.5;
+  step = 1;
   thumbLabel = true;
   vertical = false;
   prices = [
-    {value: 0 , label:  '0 tỷ '},
-    {value: 0.5 , label:  '0.5 tỷ '},
+    {value: 0 , label:  '0 đồng '},
     {value: 1 , label:  '1 tỷ '},
-    {value: 1.5 , label:  '1.5 tỷ '},
     {value: 2 , label:  '3 tỷ '},
-    {value: 2.5 , label:  '2.5 tỷ '},
     {value: 3 , label:  '3 tỷ '},
-    {value: 3.5 , label:  '3.5 tỷ '},
     {value: 4 , label:  '4 tỷ '},
-    {value: 4.5 , label:  '4.5 tỷ '},
     {value: 5 , label:  '5 tỷ '},
-    {value: 5.5 , label:  '5.5 tỷ '},
     {value: 6 , label:  '6 tỷ '},
-    {value:  6.5, label:  '6.5 tỷ'},
     {value: 7 , label:  '7 tỷ '},
-    {value: 7.5 , label:  '7.5 tỷ '},
     {value: 8 , label:  '8 tỷ '},
-    {value: 8.5 , label:  '8.5 tỷ '},
     {value: 9 , label:  '9 tỷ '},
-    {value: 9.5 , label:  '9.5 tỷ '},
     {value: 10 , label:  '10 tỷ '}
   ];
 
   squares = [
-    {value: 100 , label:  '100 m2'},
-    {value: 200 , label:  '200 m2'},
-    {value: 300 , label:  '300 m2'},
-    {value: 400, label:  '400 m2'},
-    {value: 500 , label:  '500 m2'},
-    {value: 600, label:  '600 m2'},
-    {value: 700, label:  '700 m2'},
-    {value: 800, label:  '800 m2'},
-    {value: 900, label:  '900 m2'},
-    {value: 1000, label:  '1000 m2'},
+    {value: 0 , label:  'Dưới 30 m2'},
+    {value: 1 , label:  '31 m2-40 m2'},
+    {value: 2 , label:  '41 m2- 50 m2'},
+    {value: 3, label:  '51 m2 -60 m2'},
+    {value: 4 , label:  '61 m2-70 m2'},
+    {value: 5, label:  '71 m2-80 m2'},
+    {value: 6, label:  '81 m2-90 m2'},
+    {value: 7, label:  '91 m2- 100 m2'},
+    {value: 8, label:  'Trên 100 m2'},
   ];
   priceOption: any = 0 ;
   positionOption: any;
   bedroomValue = 0;
   squareOption: any;
   isLoading;
-  tradeKindSlug: string;
-  constructor(private markerService: MarkerService,
-              private http: HttpClient,
-              private api: ApiService,
+  tradeKindSlug: any;
+  district: any;
+  historyData: { userId: any; district: any; price: any; square: any; };
+  user: any;
+  constructor(private api: ApiService,
               private fb: FormBuilder,
               private route: ActivatedRoute,
-              private changeDetectorRef: ChangeDetectorRef,
-              private router : Router
+              private router: Router,
+              private data: DataService
               ) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(pos => {
@@ -110,6 +101,7 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
     this.getREKind();
     this.quan = this.route.snapshot.queryParamMap.get('quan');
     this.tinh = this.route.snapshot.queryParamMap.get('tinh');
+    this.tradeKindSlug = this.route.snapshot.paramMap.get('tradeKind').localeCompare('mua') ? 0 : 1;
     this.api.getTradeFromDistrict(this.quan).subscribe(res => {
       this.reList = res;
       console.log(res);
@@ -125,22 +117,24 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
       district: +this.quan,
       ward: '',
       priceOption: 0,
-      price: 0,
+      price: 3,
       squareOption: 0,
-      square: 100,
+      square: 3,
       position: 0,
       bedroom: 0,
       bathroom: 0,
       floors: 0,
     });
     this.isLoading = true;
+    this.data.currentUser.subscribe(user => {
+      this.user = user;
+    });
   }
   ngOnInit(): void {
     this.isFullMap = false;
     this.changeStyle(this.layerId);
     console.log(this.priceOption);
     this.isLoading = true;
-    this.tradeKindSlug = this.route.snapshot.paramMap.get('tradeKind');
   }
 
   changeStyle(layerId: string) {
@@ -150,7 +144,7 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
   ngAfterViewInit(): void {
   }
 
-  mapFullScreen(event) {
+  mapFullScreen() {
     this.isFullMap = !this.isFullMap;
   }
 
@@ -179,19 +173,25 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
 
   onChangeDistrict() {
     this.isLoading = true;
-    const district = this.searchDetail.get('district').value;
-    this.getAllWardFromDistrict(this.tinh, district);
+    this.district = this.searchDetail.get('district').value;
+    this.getAllWardFromDistrict(this.tinh, this.district);
     this.reList = [];
-    this.api.getTradeFromDistrict(district).subscribe(res => {
+    this.api.getTradeFromDistrict(this.district).subscribe(res => {
       this.reList = res;
       // console.log(res);
       this.isLoading = false;
     });
-    this.getDistrictName(this.tinh, district);
+    this.getDistrictName(this.tinh, this.district);
   }
 
   onSubmitSearch() {
-    console.log(this.searchDetail.value);
+    this.historyData = {
+      userId: JSON.parse(this.user).id,
+      district: this.searchDetail.get('district').value,
+      price: this.searchDetail.get('price').value,
+      square: this.searchDetail.get('square').value
+    };
+    console.log(this.historyData);
   }
 
   onKey($event) {
@@ -224,7 +224,7 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
     this.selectedElement = evt.features[0].properties;
   }
 
-  selected(evt: MapLayerMouseEvent){
+  selected(evt: MapLayerMouseEvent) {
     this.selectedLngLat = evt.lngLat;
     this.selectedElement = evt.features[0].properties;
   }

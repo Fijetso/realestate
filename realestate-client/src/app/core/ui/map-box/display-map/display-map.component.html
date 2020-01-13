@@ -3,6 +3,7 @@
 <div class="map-wrapper row">
     <div class="left-content col-md-7 col-sm" *ngIf="!isFullMap">
     <div>{{tradeKindSlug | json }}</div>
+    <div>{{historyData | json}}</div>
         <form [formGroup]='searchDetail' class="container-fluid" (ngSubmit)="onSubmitSearch()">
             <div class="search-section row mx-2 px-2">
                 <mat-form-field>
@@ -45,7 +46,7 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div class="more-condition" *ngIf="false">
+            <div class="more-condition">
                 <mat-accordion>
                     <mat-expansion-panel>
                         <mat-expansion-panel-header>
@@ -93,10 +94,10 @@
                                                 <mat-radio-button [value]=1>Nhập</mat-radio-button>
                                             </mat-radio-group>
                                             <div *ngIf="squareOption===0">
-                                                <span>100 m <sup>2</sup></span>
-                                                <mat-slider [max]=1000 [min]=100 [step]=100
+                                                <span>0 m <sup>2</sup></span>
+                                                <mat-slider [max]=150 [min]=0 [step]=10
                                                     [thumbLabel]="thumbLabel" formControlName="square"></mat-slider>
-                                                <span>1000 m <sup>2</sup></span>
+                                                <span>150 m <sup>2</sup></span>
                                             </div>
                                             <mat-select *ngIf="squareOption===1" placeholder="Diện tích"
                                                 formControlName="square" name="square">
@@ -188,6 +189,14 @@
             </div>
             <div class="sortby-section row">
                 <div class="sort-left col-md-6 col-sm">
+                  
+                </div>
+                <div class="sort-right col-md-6 col-sm">
+                </div>
+            </div>
+            <button mat-raised-button type="submit">Tìm kiếm</button>
+            <div class="row">
+                <div class="col-md-6 col-sm">
                     <div class="title">Mua bán nhà riêng quận {{districtInfo?.pathWithType}}</div>
                     <div class="result-count" *ngIf="reList">Có
                         {{(reList | search:[query, newREKind])?.length > 0?(reList | search:[query,newREKind])?.length : 0}}
@@ -195,7 +204,7 @@
                         <span class="font-italic font-weight-bold"> {{query}}</span>
                     </div>
                 </div>
-                <div class="sort-right col-md-6 col-sm">
+                <div class="col-md-6 col-sm">
                 </div>
             </div>
             <div class="re-list" *ngIf="reList">
@@ -203,7 +212,6 @@
                     <app-realestate-item [dataItem]="item" class="col-md-6 col-sm"></app-realestate-item>
                 </div>
             </div>
-            <button mat-raised-button type="submit">Tìm kiếm</button>
         </form>
     </div>
     <div class="map-container col-md-5 col-sm" *ngIf="!isFullMap">
