@@ -45,15 +45,14 @@ export class AccountInfoComponent implements OnInit {
      this.username = info ? info.name : null;
      this.provider = info ? info.provider : null;
      this.email = info ? info.email : null;
-     this.gender = 'true' ;
      this.startDate = new Date(1997, 10, 19);
      this.userInfo = this.fb.group({
       username: [info ? info.name : null , Validators.required],
       dob: [ this.startDate, Validators.required],
       email: [info ? info.email : null, Validators.required],
-      gender: true,
-      job: info ? info.job : null,
-      phone: ['']
+      gender: [info.gender ? info.gender : true],
+      job: info ? info.job.name : null,
+      phone: [info ? info.phone : null]
      });
   }
   ngOnInit() {
@@ -73,7 +72,7 @@ export class AccountInfoComponent implements OnInit {
 
   changeAvatar() {
   const element: HTMLElement = document.querySelector('input[type="file"]') as HTMLElement;
-  element.click();
+  // element.click();
 }
 
   onShowAccount() {
@@ -121,8 +120,8 @@ export class AccountInfoComponent implements OnInit {
       console.error(error);
     });
   }
-  updateUser(userId, job,phone , gender) {
-    return this.graphql.updateUser(userId, job, phone ,gender);
+  updateUser(userId, job, phone , gender) {
+    return this.graphql.updateUser( userId, job, phone, gender);
   }
 
   onSelect(slug: any) {

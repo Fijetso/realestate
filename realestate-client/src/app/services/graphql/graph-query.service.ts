@@ -8,7 +8,9 @@ import {
   SaveTradeMutationRespone,
   SAVETRADE_MUTATION,
   UpdateUserMutationResponse,
-  UPDATEUSER_MUTATION
+  UPDATEUSER_MUTATION,
+  SaveHistoryMutationResponse,
+  SAVEHISTORY_MUTATION
 } from './../../model/generated/graphql';
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
@@ -159,7 +161,7 @@ export class GraphQueryService {
     });
   }
 
-  updateUser(userId, job, phone ,gender): any {
+  updateUser(userId, job, phone , gender): any {
     return this.apollo.mutate<UpdateUserMutationResponse>({
       mutation: UPDATEUSER_MUTATION,
       variables: {
@@ -167,6 +169,15 @@ export class GraphQueryService {
         job,
         phone,
         gender
+      }
+    });
+  }
+
+  saveHistory(userId, district, price, square) {
+    return this.apollo.mutate<SaveHistoryMutationResponse>({
+      mutation: SAVEHISTORY_MUTATION,
+      variables: {
+        userId, district, price, square
       }
     });
   }

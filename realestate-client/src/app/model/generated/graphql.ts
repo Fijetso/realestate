@@ -138,3 +138,13 @@ export interface UpdateUserMutationResponse {
   updateUser: any;
 }
 
+export const SAVEHISTORY_MUTATION = gql`mutation saveHistory($userId: Long!,$district:Long,$price:Int,$square:Float){
+  saveHistory(userId:$userId,district:$district,price:$price,square:$square)
+}
+`;
+export interface SaveHistoryMutationResponse {
+  saveHistory: any;
+}
+
+
+
