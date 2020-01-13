@@ -3,6 +3,7 @@ import { Component, OnInit, Output, EventEmitter  } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { nonAccentVietnamese } from './../../../../ultility/functions/remove-sign';
+import { DataService } from './../../../../services/data/data.service';
 @Component({
   selector: 'app-marketting',
   templateUrl: './marketting.component.html',
@@ -15,7 +16,7 @@ export class MarkettingComponent implements OnInit {
   districtList: any;
   tradeKinds: any;
   tradeKindSelected: string;
-  constructor(private api: ApiService, private fb: FormBuilder, private router: Router) {
+  constructor(private api: ApiService, private fb: FormBuilder, private router: Router, private data: DataService) {
     this.searchForm = this.fb.group({
       district: null
     });
@@ -44,5 +45,8 @@ export class MarkettingComponent implements OnInit {
     const district = this.searchForm.get('district').value;
     console.log(district);
     this.getTradeByDistrict(district);
+  }
+  changeTradeKind(val) {
+    this.data.changeTradeKindSelected(val);
   }
 }

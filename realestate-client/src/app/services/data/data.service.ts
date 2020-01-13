@@ -12,11 +12,14 @@ export class DataService {
   currentLogin = this.isLoggedIn.asObservable();
   private user = new BehaviorSubject(null);
   currentUser = this.user.asObservable();
-
   private favList: BehaviorSubject<any[]> = new BehaviorSubject(localStorage.getItem('favS') ?
   JSON.parse(localStorage.getItem('favS')) :
    []);
   currentFavList = this.favList.asObservable();
+
+  private tradeKindSelected = new BehaviorSubject('Mua');
+  currentTradeKindSelected = this.tradeKindSelected.asObservable();
+
   constructor(private toasrt: ToastrService) {
   }
 
@@ -39,5 +42,9 @@ export class DataService {
   }
   deleteFavList() {
     this.favList = null;
+  }
+
+  changeTradeKindSelected(newValTradeKind) {
+    this.tradeKindSelected.next(newValTradeKind);
   }
 }

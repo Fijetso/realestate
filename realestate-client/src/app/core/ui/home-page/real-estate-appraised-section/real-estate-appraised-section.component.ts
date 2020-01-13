@@ -1,5 +1,5 @@
 import { ApiService } from './../../../../services/api/api.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-real-estate-appraised-section',
@@ -10,6 +10,8 @@ export class RealEstateAppraisedSectionComponent implements OnInit {
 
   dataAppraised: any = null;
   appraised = true;
+  @Input()
+  tradeKindSelected: any;
   constructor(private api: ApiService) { }
   ngOnInit() {
     this.getAllRealEstate();

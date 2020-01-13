@@ -38,3 +38,7 @@
 ::ng-deep .mat-select-content{
   color:white
 }
+
+::ng-deep .mat-form-field-type-mat-select .mat-form-field-label, .mat-select-value {
+  color:white;
+}

@@ -3,7 +3,7 @@
     <div class="title-marketting">
       <h2>Tìm Kiếm Mua - Thuê Nhà Tại Real Estate</h2>
     </div>
-    <mat-button-toggle-group #group="matButtonToggleGroup" [(ngModel)]="tradeKindSelected">
+    <mat-button-toggle-group #group="matButtonToggleGroup" [(ngModel)]="tradeKindSelected" (change)="changeTradeKind(tradeKindSelected)">
        <mat-button-toggle  *ngFor="let tradeKind of tradeKinds; let i=index" [value]="tradeKind.name">{{tradeKind.name}} 
       </mat-button-toggle>
     </mat-button-toggle-group>
