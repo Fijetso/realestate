@@ -1,3 +1,18 @@
-<p>
-  buy-on-demand-section works!
-</p>
+<section>
+  <mat-card>
+    <mat-card-header class="d-flex justify-content-center">
+      <mat-card-title>Mua nhà theo nhu cầu</mat-card-title>
+      <mat-card-subtitle>Lựa chọn khả năng mua nhà của bạn</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="option d-flex justify-content-center">
+          <mat-button-toggle-group #group="matButtonToggleGroup" [(ngModel)]="demandOption">
+            <mat-button-toggle [value]=1>10 - 15 triệu /tháng</mat-button-toggle>
+            <mat-button-toggle [value]=2>15 - 20 triệu /tháng</mat-button-toggle>
+            <mat-button-toggle [value]=3>>=20 triệu /tháng</mat-button-toggle>
+         </mat-button-toggle-group>
+      </div>
+      <app-carousel [dataItems]="buyOnDemandData | ondemandPipe: demandOption"></app-carousel>
+    </mat-card-content>
+  </mat-card>
+</section>
