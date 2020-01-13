@@ -90,6 +90,7 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
   bedroomValue = 0;
   squareOption: any;
   isLoading;
+  tradeKindSlug: string;
   constructor(private markerService: MarkerService,
               private http: HttpClient,
               private api: ApiService,
@@ -139,8 +140,7 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
     this.changeStyle(this.layerId);
     console.log(this.priceOption);
     this.isLoading = true;
-    const lastRoute = this.route.snapshot.paramMap.get('slug');
-    console.log(lastRoute);
+    this.tradeKindSlug = this.route.snapshot.paramMap.get('tradeKind');
   }
 
   changeStyle(layerId: string) {

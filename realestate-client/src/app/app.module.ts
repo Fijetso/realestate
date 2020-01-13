@@ -114,6 +114,7 @@ import { DisplayMapComponent } from './core/ui/map-box/display-map/display-map.c
 import { FengShuiComponent } from './core/ui/feng-shui/feng-shui.component';
 import { RecommendTradeComponent } from './core/ui/recommend-trade/recommend-trade.component';
 import { OndemandPipe } from './ultility/pipe/ondemand/ondemand.pipe';
+import { StandardizedSlugPipe } from './ultility/pipe/standardized-slug/standardized-slug.pipe';
 
 const config = new AuthServiceConfig([
   {
@@ -182,7 +183,8 @@ export function provideConfig() {
     DisplayMapComponent,
     FengShuiComponent,
     RecommendTradeComponent,
-    OndemandPipe
+    OndemandPipe,
+    StandardizedSlugPipe
   ],
   imports: [
     OwlModule,
