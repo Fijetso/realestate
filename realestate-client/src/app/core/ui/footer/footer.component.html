@@ -578,20 +578,20 @@
             <div class="col-sm-12 re-info">
               <h4>Sản phẩm trên Real Estate</h4>
               <ul class="ul-footer">
-                <li><a routerLink="/mua/ban-nha-rieng-tphcm">Nhà riêng</a></li>
+                <li><a routerLink="tim-kiem/mua/nha-rieng">Nhà riêng</a></li>
                 <li>
-                  <a routerLink="/mua/ban-can-ho-chung-cu-tphcm">Căn hộ/ Chung cư</a>
+                  <a routerLink="tim-kiem/mua/can-ho-chung-cu-tphcm">Căn hộ/ Chung cư</a>
                 </li>
-                <li><a routerLink="/mua/ban-dat-nen-tphcm">Đất nền</a></li>
+                <li><a routerLink="tim-kiem/mua/ban-dat-nen-tphcm">Đất nền</a></li>
               </ul>
             </div>
             <div class="col-sm-12 re-system">
               <h4>Hệ thống Real Estate</h4>
               <ul class="ul-footer">
-                <li><a routerLink="/mua/ban-nha-rieng-tphcm">Mua nhà</a></li>
-                <li><a routerLink="/ban">Bán nhà</a></li>
-                <li><a routerLink="/thue">Thuê nhà</a></li>
-                <li><a routerLink="/moi-gioi">Cộng đồng môi giới Real Estate </a></li>
+                <li><a routerLink="tim-kiem/mua/ban-nha-rieng-tphcm">Mua nhà</a></li>
+                <li><a routerLink="">Bán nhà</a></li>
+                <li><a routerLink="tim-kiem/thue">Thuê nhà</a></li>
+                <li><a routerLink="" *ngIf="false">Cộng đồng môi giới Real Estate </a></li>
               </ul>
             </div>
           </div>
@@ -600,40 +600,36 @@
           <div class="row">
             <div class="col-sm-12 re-info">
               <h4>Dịch vụ của Real Estate</h4>
-              <ul class="ul-footer">
+              <ul class="ul-footer" *ngIf="false">
                 <li><a routerLink="/dang-tin">Đăng tin miễn phí</a></li>
                 <li>
                   <a
                     routerLink="/dich-vu/thong-tin-quy-hoach"
-                    onclick="return App.Feature.gotoService('thong-tin-quy-hoach');"
-                    >Thông tin quy hoạch</a
+                    *ngIf="false" >Thông tin quy hoạch</a
                   >
                 </li>
                 <li>
                   <a
                     routerLink="/dich-vu/tham-dinh-gia-bat-dong-san"
-                    onclick="return App.Feature.gotoService('tham-dinh-gia-bat-dong-san');"
-                    >Thẩm định giá bất động sản</a
+                    *ngIf="false">Thẩm định giá bất động sản</a
                   >
                 </li>
                 <li>
                   <a
                     routerLink="/dich-vu/phap-ly-bat-dong-san"
-                    onclick="return App.Feature.gotoService('phap-ly-bat-dong-san');"
-                    >Pháp lý bất động sản</a
+                    *ngIf="false">Pháp lý bất động sản</a
                   >
                 </li>
                 <li>
                   <a
                     routerLink="/dich-vu/thu-tuc-va-ho-so-vay-mua-nha"
-                    onclick="return App.Feature.gotoService('thu-tuc-va-ho-so-vay-mua-nha');"
-                    >Thủ tục và hồ sơ vay mua nhà</a
+                    *ngIf="false">Thủ tục và hồ sơ vay mua nhà</a
                   >
                 </li>
                 <li>
                   <a
                     routerLink="/dich-vu/dam-bao-thanh-toan-ngan-hang"
-                    onclick="return App.Feature.gotoService('dam-bao-thanh-toan-ngan-hang');"
+                    *ngIf="false"
                     >Đảm bảo thanh toán qua Ngân hàng</a
                   >
                 </li>
