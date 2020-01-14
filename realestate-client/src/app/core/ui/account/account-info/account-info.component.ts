@@ -28,6 +28,7 @@ export class AccountInfoComponent implements OnInit {
   listPost: any;
   collections: any;
   jobs: any;
+  info: any;
   constructor(private fb: FormBuilder,
               private data: DataService,
               private api: ApiService,
@@ -35,21 +36,20 @@ export class AccountInfoComponent implements OnInit {
               private graphql: GraphQueryService,
               private toastr: ToastrService
               ) {
-     const info = JSON.parse(localStorage.getItem('loginInfo'));
-     console.log(info);
+     this.data.changeCurrentUser(user => {this.info = user ; });
      this.getAllJob();
-     this.avatar = info ? info.photoUrl : '../../../../../assets/images/login.png';
-     this.username = info ? info.name : null;
-     this.provider = info ? info.provider : null;
-     this.email = info ? info.email : null;
+     this.avatar = this.info ? this.info.photoUrl : '../../../../../assets/images/login.png';
+     this.username = this.info ? this.info.name : null;
+     this.provider = this.info ? this.info.provider : null;
+     this.email = this.info ? this.info.email : null;
      this.startDate = new Date(1997, 10, 19);
      this.userInfo = this.fb.group({
-      username: [info ? info.name : null , Validators.required],
+      username: [this.info ? this.info.name : null , Validators.required],
       dob: [ this.startDate, Validators.required],
-      email: [info ? info.email : null, Validators.required],
-      gender: [info ? info.gender : true],
-      job: info ? info.job.name : null,
-      phone: [info ? info.phone : null]
+      email: [this.info ? this.info.email : null, Validators.required],
+      gender: [this.info ? this.info.gender : true],
+      job: this.info ? this.info.job.name : null,
+      phone: [this.info ? this.info.phone : null]
      });
   }
   ngOnInit() {

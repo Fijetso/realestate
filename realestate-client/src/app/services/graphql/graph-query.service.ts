@@ -55,6 +55,7 @@ export class GraphQueryService {
         return token;
       }
     }, error => {
+      console.error(error);
       return error;
     });
   }

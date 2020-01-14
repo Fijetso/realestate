@@ -48,18 +48,18 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.data.currentLogin.subscribe(isLogedIn => {
       this.isLogedIn = isLogedIn;
-      console.log(this.isLogedIn);
     });
   }
   onLogIn(email: string, password: string) {
     this.graphql.login(email, password);
     const token = localStorage.getItem('token');
+    console.log(token);
     if (token) {
-      this.graphql.getLoginInfo(JSON.parse(token)).subscribe(loginInfo => {
+      this.graphql.getLoginInfo(token).subscribe(loginInfo => {
       this.data.changeCurrentUser(loginInfo);
       localStorage.setItem('loginInfo', JSON.stringify(loginInfo));
       localStorage.setItem('isLogedIn', 'true');
-      this.data.changeLoginState(loginInfo != null);
+      this.data.changeLoginState(true);
       this.toastr.success('Đăng nhập thành công', 'Đăng nhập');
       });
     } else {
@@ -111,8 +111,8 @@ export class LoginComponent implements OnInit {
       res => {
         localStorage.clear();
         this.data.changeCurrentUser(null);
-        localStorage.setItem('loginInfo',null);
-        localStorage.setItem('isLogedIn', 'false');
+        localStorage.removeItem('loginInfo');
+        localStorage.removeItem('isLogedIn');
         this.data.changeLoginState(false);
       },
       error => {
