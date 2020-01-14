@@ -56,11 +56,11 @@ export class LoginComponent implements OnInit {
     console.log(token);
     if (token) {
       this.graphql.getLoginInfo(token).subscribe(loginInfo => {
-      this.data.changeCurrentUser(loginInfo);
       localStorage.setItem('loginInfo', JSON.stringify(loginInfo));
       localStorage.setItem('isLogedIn', 'true');
       this.data.changeLoginState(true);
       this.toastr.success('Đăng nhập thành công', 'Đăng nhập');
+      this.data.changeCurrentUser(loginInfo);
       });
     } else {
       this.toastr.error('Đăng nhập thất bại', 'Đăng nhập');
@@ -104,19 +104,19 @@ export class LoginComponent implements OnInit {
     });
   }
   onLogOut() {
-    localStorage.setItem('loginInfo', null);
     this.data = null;
     this.isLogedIn = false;
     this.graphql.logout().subscribe(
       res => {
         localStorage.clear();
-        this.data.changeCurrentUser(null);
         localStorage.removeItem('loginInfo');
         localStorage.removeItem('isLogedIn');
         this.data.changeLoginState(false);
+        this.toastr.success('Đăng xuất thành công', 'Đăng xuất');
       },
       error => {
         console.error(error);
+        this.toastr.error('Đăng xuất thất bại', 'Đăng xuất');
       }
     );
     this.authService.signOut().then(

@@ -36,7 +36,7 @@ export class AccountInfoComponent implements OnInit {
               private graphql: GraphQueryService,
               private toastr: ToastrService
               ) {
-     this.data.changeCurrentUser(user => {this.info = user ; });
+     this.data.currentUser.subscribe(user => {this.info = user ; });
      this.getAllJob();
      this.avatar = this.info ? this.info.photoUrl : '../../../../../assets/images/login.png';
      this.username = this.info ? this.info.name : null;
