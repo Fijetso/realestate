@@ -1,22 +1,29 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { RealEstate } from './../../model/real-estate/real-estate';
+import { ToastrService } from 'ngx-toastr';
+import { ApiService } from './../api/api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
-  private isLoggedIn = new BehaviorSubject(true);
+  private isLoggedIn = new BehaviorSubject(localStorage.getItem('isLogedIn') ? JSON.parse(localStorage.getItem('isLogedIn')) : false);
   currentLogin = this.isLoggedIn.asObservable();
-  private user = new BehaviorSubject(null);
+  private user = new BehaviorSubject(localStorage.getItem('loginInfo') ? JSON.parse(localStorage.getItem('loginInfo')) : []) ;
   currentUser = this.user.asObservable();
-
   private favList: BehaviorSubject<any[]> = new BehaviorSubject(localStorage.getItem('favS') ?
   JSON.parse(localStorage.getItem('favS')) :
    []);
   currentFavList = this.favList.asObservable();
-  constructor() {
+
+  private tradeKindSelected = new BehaviorSubject(1);
+  currentTradeKindSelected = this.tradeKindSelected.asObservable();
+
+  private tradeRecommend = new BehaviorSubject([]);
+  currentTradeRecommend = this.tradeRecommend.asObservable();
+  constructor(private toasrt: ToastrService, private api: ApiService) {
   }
 
   changeLoginState(loginState: boolean) {
@@ -28,6 +35,7 @@ export class DataService {
   }
   addFavList(favItem: RealEstate) {
     const currentValue = this.favList.value;
+    this.toasrt.success('Đã thêm vào danh sách yêu thích', 'Thêm vào danh sách yêu thích');
     const updatedValue  = [...currentValue, favItem];
     this.favList.next(updatedValue);
     this.currentFavList.subscribe(newValue => {
@@ -37,5 +45,13 @@ export class DataService {
   }
   deleteFavList() {
     this.favList = null;
+  }
+
+  changeTradeKindSelected(newValTradeKind) {
+    this.tradeKindSelected.next(newValTradeKind);
+  }
+
+  changeRecommend(val) {
+    this.tradeRecommend.next(val);
   }
 }

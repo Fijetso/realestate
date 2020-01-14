@@ -5,7 +5,9 @@
                 <input class="w-100" type="file" class="hidden avatar-chooser" id="avatar-chooser"
                     (change)="onFileChanged($event)">
                 <img [src]="avatar" alt="avatar" class="avatar" class="tab-head" (click)="changeAvatar()"
-                    style="width: 5em; height: 5em;max-width : 100%; border-radius: 50%;">
+                    style="width: 5em; height: 5em;max-width : 100%; border-radius: 50%;"
+                    onError="this.src='../../../../../assets/images/login.png'"
+                    >
                 <p class="username">{{username}}</p> <span>Tài khoản {{provider}}</span>
                 <p>{{email}}</p>
             </div>
@@ -34,16 +36,21 @@
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Giới tính</mat-label>
-                        <mat-select [value]="gender" formControlName="gender" #gender>
-                            <mat-option value="true">Nam</mat-option>
-                            <mat-option value="false">Nữ</mat-option>
+                        <mat-select formControlName="gender" #gender>
+                            <mat-option [value]=false>Nam</mat-option>
+                            <mat-option [value]=true>Nữ</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field>
                         <input matInput placeholder="Email" type="email" formControlName="email" #email>
                     </mat-form-field>
                     <mat-form-field>
-                        <input matInput placeholder="Nghề nghiệp" formControlName="job" #job>
+                        <mat-label>Nghề nghiệp</mat-label>
+                        <mat-select placeholder="Nghề nghiệp" formControlName="job" >
+                            <mat-option *ngFor="let job of jobs" [value]="job?.name">
+                                {{job?.name}}
+                            </mat-option>
+                        </mat-select>
                     </mat-form-field>
                     <mat-form-field>
                         <input matInput placeholder="Số điện thoại" formControlName="phone" #phone>

@@ -2,6 +2,9 @@ import { CommonService } from './../../services/common/common.service';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ModalService } from 'src/app/services/modal.service';
 import { MarkettingComponent } from 'src/app/core/ui/home-page/marketting/marketting.component';
+import { DataService } from './../../services/data/data.service';
+import { getDistance, orderByDistance } from 'geolib';
+import { ApiService } from 'src/app/services/api/api.service';
 @Component({
   selector: 'app-realestate-list',
   templateUrl: './realestate-list.component.html',
@@ -11,12 +14,26 @@ export class RealestateListComponent implements OnInit, AfterViewInit {
 
   outPutSlug: string;
   inputSlug: any;
-  constructor(private modalService: ModalService, private common: CommonService) {
-
+  tradeKindSelected: any;
+  favList: any[];
+  position: any;
+  distance: number;
+  locationArray: any[];
+  nearTrade: any;
+  constructor(private modalService: ModalService, private common: CommonService, private data: DataService,private api: ApiService) {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const longitude = position.coords.longitude;
+        const latitude = position.coords.latitude;
+        this.position = {latitude, longitude};
+      });
+    } else {
+      alert('Vui lòng cho phép truy cập vi trí');
+    }
   }
   isLoading = true;
   reKind = '';
-  @ViewChild(MarkettingComponent,{static: false}) marketting: MarkettingComponent;
+  @ViewChild(MarkettingComponent, { static: false }) marketting: MarkettingComponent;
   openInfoModal() {
     this.modalService.openInfoModal();
   }
@@ -29,6 +46,12 @@ export class RealestateListComponent implements OnInit, AfterViewInit {
     console.log(this.inputSlug, this.outPutSlug);
   }
   ngOnInit() {
+    this.data.currentTradeKindSelected.subscribe(tradeKind => {
+      this.tradeKindSelected = tradeKind;
+    });
+    this.data.currentFavList.subscribe(favList => {
+      this.favList = favList;
+    });
   }
   ngAfterViewInit(): void {
     // console.log(this.marketting.reKindValue);
@@ -36,5 +59,9 @@ export class RealestateListComponent implements OnInit, AfterViewInit {
   receiveREKind($event) {
     this.reKind = $event;
     console.log(this.reKind);
+  }
+
+  getTradeNearUser(userLocation, locationArray) {
+    return orderByDistance(userLocation, locationArray);
   }
 }

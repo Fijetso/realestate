@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
   selector: 'app-buy-on-demand-section',
@@ -6,10 +7,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./buy-on-demand-section.component.scss']
 })
 export class BuyOnDemandSectionComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
+  buyOnDemandData: any;
+  demandOption: any;
+  @Input()
+  tradeKindSelected: any;
+  constructor(private api: ApiService) {
+    this.demandOption = 3;
   }
 
+  ngOnInit() {
+    this.getData();
+  }
+  getData() {
+    this.api.getAllRealEstate().subscribe(data => {
+     this.buyOnDemandData = data;
+    });
+  }
+
+
+  openOndemandPopUp(){
+    
+  }
 }

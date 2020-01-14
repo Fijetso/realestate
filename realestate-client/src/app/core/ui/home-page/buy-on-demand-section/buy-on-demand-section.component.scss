@@ -1,0 +1,11 @@
+@import "../../../../../my-theme.scss";
+button {
+    margin: 2em;
+}
+mat-button-toggle-group{
+    color: $text-light;
+}
+.mat-button-toggle-checked {
+    background-color: $primary;
+    color: $text-light !important;
+}

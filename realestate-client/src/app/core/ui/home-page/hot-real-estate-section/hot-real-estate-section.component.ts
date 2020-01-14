@@ -1,5 +1,5 @@
 import { ApiService } from './../../../../services/api/api.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-hot-real-estate-section',
@@ -9,8 +9,9 @@ import { Component, OnInit } from '@angular/core';
 export class HotRealEstateSectionComponent implements OnInit {
   dataHotRE: any = null;
   isHotRE = true;
+  @Input()
+  title: any;
   constructor(private api: ApiService) { }
-
   ngOnInit() {
     this.getHotRE();
   }

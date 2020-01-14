@@ -3,27 +3,21 @@
     <div class="title-marketting">
       <h2>Tìm Kiếm Mua - Thuê Nhà Tại Real Estate</h2>
     </div>
-    <mat-button-toggle-group
-      #reKindGroup="matButtonToggleGroup"
-      (change)="onValChange(reKindGroup.value)"
-      [value]="reKindValue"
-    >
-      <mat-button-toggle value="mua" active>
-        <mat-icon class="text-white">check</mat-icon>
-        Mua
-      </mat-button-toggle>
-      <mat-button-toggle value="thue">
-        <mat-icon class="text-white">check</mat-icon>
-        Thuê
+    <mat-button-toggle-group #group="matButtonToggleGroup" [(ngModel)]="tradeKindSelected" (change)="changeTradeKind(tradeKindSelected)">
+       <mat-button-toggle  *ngFor="let tradeKind of tradeKinds; let i=index" [value]="tradeKind.id">{{tradeKind.name}} 
       </mat-button-toggle>
     </mat-button-toggle-group>
-    <div class="example-selected-value">Đã chọn: {{ reKindGroup.value }}</div>
     <form class="searchForm" [formGroup]="searchForm">
-       <mat-select placeholder="Chọn Quận Huyện" formControlName="district" name="item" (selectionChange)="onChangeDistrict()">
-         <mat-option *ngFor="let district of districtList" [value]="district.id">
-           {{district.nameWithType}}
-         </mat-option>
-       </mat-select>
+       <mat-form-field>
+        <mat-select placeholder="Chọn Quận Huyện" formControlName="district" name="item" (selectionChange)="onChangeDistrict()">
+          <mat-option [value]=null>
+           Chọn Quận/ Huyện của bạn
+          </mat-option> 
+          <mat-option *ngFor="let district of districtList" [value]="district.id">
+             {{district.nameWithType}}
+           </mat-option>
+         </mat-select>
+       </mat-form-field>
       </form>
   </div>
 </div>

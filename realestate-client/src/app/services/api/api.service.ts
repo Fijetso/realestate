@@ -249,6 +249,19 @@ export class ApiService {
       squareList,
       priceList
     };
-    return this.http.post<any>(this.baseURL + '/trades/recommend', dataRaw);
+    return this.http.post<any>(this.baseURL + 'trades/recommend', dataRaw);
+  }
+
+  getAllJob() {
+    return this.http.get<any>(this.baseURL + 'jobs');
+  }
+
+  getNewsByCategory(categoryId) {
+    return this.http.get<any>(this.baseURL + 'categories/' + categoryId + '/news');
+  }
+
+  getTradeRecommendByUser(userId) {
+    const dataRaw = {userId};
+    return this.http.post<any>(this.baseURL + 'trades/recommend', dataRaw);
   }
 }
