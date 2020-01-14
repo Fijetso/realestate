@@ -7,6 +7,7 @@ import { MarkerService } from '../../../../services/map/marker.service';
 import { LngLat, MapLayerMouseEvent } from 'mapbox-gl';
 import { GeoJsonProperties } from 'geojson';
 import { DataService } from './../../../../services/data/data.service';
+import { GraphQueryService } from './../../../../services/graphql/graph-query.service';
 
 @Component({
   selector: 'app-display-map',
@@ -51,9 +52,9 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
   thumbLabel = true;
   vertical = false;
   prices = [
-    {value: 0 , label:  '0 đồng '},
+    {value: 0.5 , label:  '500 triệu '},
     {value: 1 , label:  '1 tỷ '},
-    {value: 2 , label:  '3 tỷ '},
+    {value: 2 , label:  '2 tỷ '},
     {value: 3 , label:  '3 tỷ '},
     {value: 4 , label:  '4 tỷ '},
     {value: 5 , label:  '5 tỷ '},
@@ -65,15 +66,15 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
   ];
 
   squares = [
-    {value: 0 , label:  'Dưới 30 m2'},
-    {value: 1 , label:  '31 m2-40 m2'},
-    {value: 2 , label:  '41 m2- 50 m2'},
-    {value: 3, label:  '51 m2 -60 m2'},
-    {value: 4 , label:  '61 m2-70 m2'},
-    {value: 5, label:  '71 m2-80 m2'},
-    {value: 6, label:  '81 m2-90 m2'},
-    {value: 7, label:  '91 m2- 100 m2'},
-    {value: 8, label:  'Trên 100 m2'},
+    {value: 20 , label:  'Dưới 30 m2'},
+    {value: 35 , label:  '31 m2-40 m2'},
+    {value: 45 , label:  '41 m2- 50 m2'},
+    {value: 55, label:  '51 m2 -60 m2'},
+    {value: 65 , label:  '61 m2-70 m2'},
+    {value: 75, label:  '71 m2-80 m2'},
+    {value: 85, label:  '81 m2-90 m2'},
+    {value: 95, label:  '91 m2- 100 m2'},
+    {value: 105, label:  'Trên 100 m2'},
   ];
   priceOption: any = 0 ;
   positionOption: any;
@@ -88,7 +89,8 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
               private fb: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
-              private data: DataService
+              private data: DataService,
+              private graphql: GraphQueryService
               ) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(pos => {
@@ -104,7 +106,6 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
     this.tradeKindSlug = this.route.snapshot.paramMap.get('tradeKind').localeCompare('mua') ? 0 : 1;
     this.api.getTradeFromDistrict(this.quan).subscribe(res => {
       this.reList = res;
-      console.log(res);
     });
     this.getDistrictName(this.tinh , this.quan);
     this.getAllDistrict(this.tinh);
@@ -119,7 +120,7 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
       priceOption: 0,
       price: 3,
       squareOption: 0,
-      square: 3,
+      square: 55,
       position: 0,
       bedroom: 0,
       bathroom: 0,
@@ -133,7 +134,6 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
   ngOnInit(): void {
     this.isFullMap = false;
     this.changeStyle(this.layerId);
-    console.log(this.priceOption);
     this.isLoading = true;
   }
 
@@ -186,12 +186,20 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
 
   onSubmitSearch() {
     this.historyData = {
-      userId: JSON.parse(this.user).id,
+      userId: this.user.id,
       district: this.searchDetail.get('district').value,
       price: this.searchDetail.get('price').value,
       square: this.searchDetail.get('square').value
     };
     console.log(this.historyData);
+    // this.graphql.saveHistory(
+    //   this.historyData.userId,
+    //   this.historyData.district,
+    //   this.historyData.price,
+    //   this.historyData.square)
+    // .subscribe(res => {
+    //   console.log(res.data.saveHistory);
+    // }, error => console.error(error));
   }
 
   onKey($event) {

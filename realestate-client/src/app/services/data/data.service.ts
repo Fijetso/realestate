@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { RealEstate } from './../../model/real-estate/real-estate';
 import { ToastrService } from 'ngx-toastr';
+import { ApiService } from './../api/api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class DataService {
 
   private isLoggedIn = new BehaviorSubject(true);
   currentLogin = this.isLoggedIn.asObservable();
-  private user = new BehaviorSubject(localStorage.getItem('loginInfo')) ;
+  private user = new BehaviorSubject(localStorage.getItem('loginInfo') ? JSON.parse(localStorage.getItem('loginInfo')) : []) ;
   currentUser = this.user.asObservable();
   private favList: BehaviorSubject<any[]> = new BehaviorSubject(localStorage.getItem('favS') ?
   JSON.parse(localStorage.getItem('favS')) :
@@ -20,7 +21,9 @@ export class DataService {
   private tradeKindSelected = new BehaviorSubject('Mua');
   currentTradeKindSelected = this.tradeKindSelected.asObservable();
 
-  constructor(private toasrt: ToastrService) {
+  private tradeRecommend = new BehaviorSubject([]);
+  currentTradeRecommend = this.tradeRecommend.asObservable();
+  constructor(private toasrt: ToastrService, private api: ApiService) {
   }
 
   changeLoginState(loginState: boolean) {
@@ -46,5 +49,9 @@ export class DataService {
 
   changeTradeKindSelected(newValTradeKind) {
     this.tradeKindSelected.next(newValTradeKind);
+  }
+
+  changeRecommend(val) {
+    this.tradeRecommend.next(val);
   }
 }

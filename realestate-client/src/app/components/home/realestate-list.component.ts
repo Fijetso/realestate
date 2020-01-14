@@ -13,6 +13,7 @@ export class RealestateListComponent implements OnInit, AfterViewInit {
   outPutSlug: string;
   inputSlug: any;
   tradeKindSelected: any;
+  favList: any[];
   constructor(private modalService: ModalService, private common: CommonService, private data: DataService) {
   }
   isLoading = true;
@@ -33,6 +34,9 @@ export class RealestateListComponent implements OnInit, AfterViewInit {
     this.data.currentTradeKindSelected.subscribe(tradeKind => {
       this.tradeKindSelected = tradeKind;
     });
+    this.data.currentFavList.subscribe(favList => {
+      this.favList = favList;
+    })
   }
   ngAfterViewInit(): void {
     // console.log(this.marketting.reKindValue);

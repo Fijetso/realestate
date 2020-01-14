@@ -94,10 +94,10 @@
                                                 <mat-radio-button [value]=1>Nhập</mat-radio-button>
                                             </mat-radio-group>
                                             <div *ngIf="squareOption===0">
-                                                <span>0 m <sup>2</sup></span>
-                                                <mat-slider [max]=150 [min]=0 [step]=10
+                                                <span>20 m <sup>2</sup></span>
+                                                <mat-slider [max]=120 [min]=20 [step]=10
                                                     [thumbLabel]="thumbLabel" formControlName="square"></mat-slider>
-                                                <span>150 m <sup>2</sup></span>
+                                                <span>120 m <sup>2</sup></span>
                                             </div>
                                             <mat-select *ngIf="squareOption===1" placeholder="Diện tích"
                                                 formControlName="square" name="square">
@@ -110,7 +110,7 @@
                                 </mat-card-content>
                             </mat-card>
                             <br>
-                            <mat-card>
+                            <mat-card *ngIf="false">
                                 <mat-card-content>
                                     <mat-label>
                                         Vị trí:
@@ -122,7 +122,7 @@
                                 </mat-card-content>
                             </mat-card>
                             <br>
-                            <mat-card>
+                            <mat-card *ngIf="false">
                                 <mat-card-content>
                                     <section class="row">
                                         <div class="col-md-4">
@@ -168,7 +168,7 @@
                                 </mat-card-content>
                             </mat-card>
                             <br>
-                            <mat-card>
+                            <mat-card *ngIf="false">
                                 <mat-card-content>
                                     <mat-label>
                                         Hướng:

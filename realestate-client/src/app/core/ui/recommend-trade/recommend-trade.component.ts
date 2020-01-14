@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from './../../../services/api/api.service';
+import { DataService } from './../../../services/data/data.service';
 
 @Component({
   selector: 'app-recommend-trade',
@@ -8,18 +9,28 @@ import { ApiService } from './../../../services/api/api.service';
 })
 export class RecommendTradeComponent implements OnInit {
   tradeRecommendList: any;
+  user: any;
 
-  constructor(private api: ApiService) {
-    this.getTradeRecommend('Kinh doanh', [760, 774], [50, 75, 50, 100, 50, 50], [1, 2, 3, 3, 3]).subscribe(res => {
-      this.tradeRecommendList = res;
-      console.log(this.tradeRecommendList);
+  constructor(private api: ApiService, private data: DataService) {
+    this.data.currentUser.subscribe(user => {
+      this.user = user;
+      if (this.user) {
+        this.getTradeRecommendByUser(this.user.id);
+      }
     });
    }
 
   ngOnInit() {
   }
 
-  getTradeRecommend(job, districtIdList, squareList, priceList) {
+  getTradeRecommendAnonymous(job, districtIdList, squareList, priceList) {
     return this.api.getTradeRecommend(job, districtIdList, squareList, priceList);
+  }
+
+  getTradeRecommendByUser(userId) {
+    return this.api.getTradeRecommendByUser(userId).subscribe(res => {
+      this.tradeRecommendList = res;
+      console.log(this.tradeRecommendList);
+    });
   }
 }

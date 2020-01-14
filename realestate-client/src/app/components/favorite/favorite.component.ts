@@ -1,5 +1,6 @@
 import { ApiService } from './../../services/api/api.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { DataService } from '../../services/data/data.service';
 @Component({
   selector: 'app-favorite',
   templateUrl: './favorite.component.html',
@@ -7,18 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FavoriteComponent implements OnInit {
 
-  constructor(private api: ApiService) {}
-  favCatTitle = 'Tương tự bạn đã xem';
+  constructor(private api: ApiService, private data: DataService) {}
+  favCatTitle = 'Bạn đã thích';
   viewmoreText = 'Xem thêm';
   iconName = 'fas fa-angle-right';
-  dataFavorite = null;
-  isFavRE = true;
+  @Input()
+  favList: any;
   ngOnInit() {
-    this.getFavTrade();
-  }
-  getFavTrade() {
-    this.api.getFavRealEstate().subscribe(favList => {
-        this.dataFavorite = favList;
-    });
   }
 }
