@@ -92,7 +92,6 @@ export class LoginComponent implements OnInit {
       this.isLogedIn = true;
       const loginFacebook = localStorage.getItem('loginInfo');
       this.cookie.set('loginInfo', loginFacebook);
-
       const cookieResult = this.cookie.get('loginInfo');
       console.log(JSON.parse(cookieResult));
       this.toastr.success(
