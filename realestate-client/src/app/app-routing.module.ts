@@ -23,19 +23,11 @@ const routes: Routes = [
     }
   },
   {
-    path: 'mua/:slug',
+    path: 'chi-tiet/:slug',
     component: RealEstateDetailComponent,
     data: {
       title: 'Chi tiết bất động sản',
       breadcrumb: 'Chi tiết bất động sản'
-    }
-  },
-  {
-    path: 'tim-kiem',
-    component: MapModuleComponent,
-    data: {
-      title: 'Tìm kiếm chi tiết các bất dộng sản',
-      breadcrumb: 'Tìm kiếm chi tiết các bất dộng sản'
     }
   },
   {
@@ -63,7 +55,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'tam',
+    path: 'tin-tuc/tao-moi-tin-tuc',
     component: CreatePostComponent,
     data: {
       title: 'Trang bài đăng',
@@ -111,6 +103,14 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: () => import('./core/ui/admin/admin.module').then(admin => admin.AdminModule)
+  },
+  {
+    path: 'tim-kiem',
+    component: MapModuleComponent,
+    data: {
+      title: 'Tìm kiếm chi tiết các bất dộng sản',
+      breadcrumb: 'Tìm kiếm chi tiết các bất dộng sản'
+    }
   },
   {
     path: '**',

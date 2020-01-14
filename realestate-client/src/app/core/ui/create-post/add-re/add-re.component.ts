@@ -5,6 +5,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { ApiService } from 'src/app/services/api/api.service';
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { GraphQueryService } from './../../../../services/graphql/graph-query.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-re',
@@ -33,7 +35,13 @@ export class AddReComponent implements OnInit, AfterViewInit {
   districtList: any;
   wardList: any;
 
-  constructor(private api: ApiService, private fb: FormBuilder, private router: Router) {
+  constructor(
+    private api: ApiService,
+    private fb: FormBuilder,
+    private router: Router,
+    private graphql: GraphQueryService,
+    private toastr: ToastrService
+  ) {
     this.api.getAllUserKind().subscribe(res => {
       // console.log(res);
       this.userKinds = res as UserKind[];
@@ -48,7 +56,7 @@ export class AddReComponent implements OnInit, AfterViewInit {
     this.getREKind();
     this.getTradeKinds();
     this.getAllDistrict(79);
-    this.getAllWardFromDistrict(79 , 774);
+    this.getAllWardFromDistrict(79, 774);
     this.getUserKinds();
     this.userInfo = JSON.parse(localStorage.getItem('loginInfo'));
     this.startDate = new Date(1997, 10, 19);
@@ -59,13 +67,13 @@ export class AddReComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.height = 500;
     this.realEstate = this.fb.group({
-      description: 'Amet tempor duis eiusmod laboris laboris mollit exercitation dolor ut consequat.',
-      cost: 900000000,
+      description: 'Mô tả về bất động sản của bạn',
+      cost: 2000000000,
       user: this.fb.group({
         id: this.userInfo ? this.userInfo.id : null,
         name: this.userInfo ? this.userInfo.name : null,
         email: this.userInfo ? this.userInfo.email : null,
-        phone: '0975922740',
+        phone: '',
         password: '',
         dob: new Date(1997, 10, 19),
         gender: true,
@@ -74,7 +82,7 @@ export class AddReComponent implements OnInit, AfterViewInit {
       tradeKind: 1,
       realEstateKind: 1,
       address: this.fb.group({
-        detail: 'Số nhà 94',
+        detail: '',
         ward: 27313,
         district: 774,
         cityOrProvince: 79
@@ -83,7 +91,7 @@ export class AddReComponent implements OnInit, AfterViewInit {
         length: 9,
         width: 4,
         square: 37,
-        direction: 2,
+        direction: 'Đông',
         floors: '1 trệt + 1 lầu',
         legalDocuments: 'Sổ hồng riêng',
         bathrooms: 1,
@@ -92,10 +100,13 @@ export class AddReComponent implements OnInit, AfterViewInit {
         others: 'Bán nhà riêng quận 5, đang cho thuê 6tr/tháng sổ hồng chính chủ'
       }),
       coordinate: this.fb.group({
-        longitude: 106.681,
-        latitude: 10.7614
+        longitude: 106.6762428,
+        latitude: 10.756833
       }),
-      realImages: 'Mô tả hình ảnh',
+      realImages: this.fb.group({
+        description: 'Mô tả hình ảnh',
+        imageLink: ''
+      }),
       bluePrints: null,
       booking: null
     });
@@ -106,18 +117,55 @@ export class AddReComponent implements OnInit, AfterViewInit {
 
   // Save to create post
   save($event) {
-    // if (this.selectedFile) {
-    //   const desc = this.realEstate.get('realImages').value;
-    //   this.api.uploadImages(this.selectedFile, desc).subscribe(res => {
-    //     this.realImageLink = res;
-    //     this.realEstate.get('realImages').setValue(this.realImageLink);
-    //     // tslint:disable-next-line: no-console
-    //     console.log(this.realImageLink);
-    //     // tslint:disable-next-line: no-console
-    //     console.log(this.realEstate.value);
-    //   });
-    // }
-    console.log(this.realEstate.value);
+    if (this.selectedFile) {
+      const desc = this.realEstate.get('realImages.description').value;
+      this.api.uploadImages(this.selectedFile, desc).subscribe(res => {
+        this.realImageLink = res;
+        this.realEstate.get('realImages.imageLink').setValue(this.realImageLink.imageLink);
+        console.log(this.realEstate.value);
+
+        const description = this.realEstate.get('description').value;
+        const cost = this.realEstate.get('cost').value;
+        const userId = this.userInfo.id;
+        const realEstateKindId = this.realEstate.get('realEstateKind').value;
+        const tradeKindId = this.realEstate.get('tradeKind').value;
+        const detailAddress = this.realEstate.get('address.detail').value;
+        const wardId = this.realEstate.get('address.ward').value;
+        const width = this.realEstate.get('details.width').value;
+        const square = this.realEstate.get('details.square').value;
+        const direction = this.realEstate.get('details.direction').value;
+        const floors = this.realEstate.get('details.floors').value;
+        const legalDocuments = this.realEstate.get('details.legalDocuments').value;
+        const bathrooms = this.realEstate.get('details.bathrooms').value;
+        const bedrooms = this.realEstate.get('details.bedrooms').value;
+        const utilities = this.realEstate.get('details.utilities').value;
+        const others = this.realEstate.get('details.others').value;
+        const longitude = this.realEstate.get('coordinate.longitude').value;
+        const latitude = this.realEstate.get('coordinate.latitude').value;
+        const realImages = new Array (this.realEstate.get('realImages.imageLink').value);
+
+        this.saveTrade(description, cost, userId, realEstateKindId,
+          tradeKindId, detailAddress, wardId, length, width, square,
+          direction, floors, legalDocuments, bathrooms, bedrooms,
+          utilities, others, longitude, latitude, realImages);
+      });
+    }
+  }
+  saveTrade(description, cost, userId, realEstateKindId,
+            tradeKindId, detailAddress, wardId, length, width, square,
+            direction, floors, legalDocuments, bathrooms, bedrooms,
+            utilities, others, longitude, latitude, realImages) {
+    this.graphql.saveTrade(description, cost, userId, realEstateKindId, tradeKindId,
+      detailAddress, wardId, length, width, square, direction,
+      floors, legalDocuments, bathrooms, bedrooms, utilities,
+      others, longitude, latitude, realImages)
+      .subscribe(res => {
+        this.toastr.success('Mã bài đăng' + res.data.saveTrade.id, 'Đăng tin thành công');
+        console.log(res);
+      }, error => {
+        this.toastr.error(error, 'Đăng tin thất bại');
+        console.error(error);
+      });
   }
 
   onChangeGender($event) {
@@ -167,7 +215,7 @@ export class AddReComponent implements OnInit, AfterViewInit {
 
   getAllWardFromDistrict(provinceId, districtId) {
     this.api.getWardFromDistrictId(provinceId, districtId).subscribe(wardList => {
-      console.log(wardList);
+      // console.log(wardList);
       this.wardList = wardList;
     });
   }

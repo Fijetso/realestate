@@ -19,7 +19,7 @@ export class MapModuleComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       this.provinceId = params.tinh;
       this.reId = params.quan;
-      console.log(this.provinceId, this.reId);
+      // console.log(this.provinceId, this.reId);
     });
   }
 }

@@ -14,23 +14,23 @@
         <mat-icon class="icon" aria-hidden="false" aria-label="Home icon">home_outline</mat-icon>
         <span>Trang chủ</span>
       </mat-toolbar-row>
-      <mat-toolbar-row class="h-3em" routerLink="mua-bds" routerLinkActive="active">
-        <mat-icon class="icon" aria-hidden="false" aria-label="Buy icon">search</mat-icon>
+      <mat-toolbar-row class="h-3em" [routerLink]="['tim-kiem']" [queryParams] = "{tinh: 79, quan:760,maloaigd:1}" routerLinkActive="active">
+        <mat-icon class="icon" aria-hidden="false" aria-label="Buy icon">shopping_cart</mat-icon>
         <span>Mua</span>
       </mat-toolbar-row>
-      <mat-toolbar-row class="h-3em" routerLink="ban-bds" routerLinkActive="active">
+      <mat-toolbar-row class="h-3em" [routerLink]="['tim-kiem']" [queryParams] = "{tinh: 79, quan:760,maloaigd:2}" routerLinkActive="active">
         <mat-icon class="icon" aria-hidden="false" aria-label="Attack money icon">attach_money</mat-icon>
-        <span>Bán</span>
+        <span>Thuê</span>
       </mat-toolbar-row>
       <mat-toolbar-row class="h-3em" routerLink="tim-kiem/nha-phong-thuy" routerLinkActive="active">
-        <mat-icon class="icon" aria-hidden="false" aria-label="Attack money icon">attach_money</mat-icon>
+        <mat-icon class="icon" aria-hidden="false" aria-label="explore icon">explore</mat-icon>
         <span>Nhà theo phong thuỷ</span>
       </mat-toolbar-row>
-      <mat-toolbar-row class="h-3em" routerLink="dang-ky-hop-tac" routerLinkActive="active">
+      <mat-toolbar-row class="h-3em" routerLink="dang-ky-hop-tac" routerLinkActive="active" *ngIf="false">
         <mat-icon class="icon icon-work" aria-hidden="false" aria-label="Work icon">work_outline</mat-icon>
         <span>Hợp tác môi giới</span>
       </mat-toolbar-row>
-      <mat-toolbar-row class="h-3em" routerLink="dich-vu" routerLinkActive="active">
+      <mat-toolbar-row class="h-3em" routerLink="dich-vu" routerLinkActive="active" *ngIf="false">
         <mat-icon class="icon icon-sync" aria-hidden="false" aria-label="Sync icon">sync</mat-icon>
         <span>Dịch vụ</span>
       </mat-toolbar-row>
@@ -38,11 +38,11 @@
         <mat-icon class="icon icon-subject" aria-hidden="false" aria-label="Example user verified icon">subject</mat-icon>
         <span>Tin tức</span>
       </mat-toolbar-row>
-      <mat-toolbar-row class="h-3em" routerLink="lien-he" routerLinkActive="active">
+      <mat-toolbar-row class="h-3em" routerLink="lien-he" routerLinkActive="active" *ngIf="false">
         <mat-icon class="icon" aria-hidden="false" aria-label="Contact us icon">chat_bubble_outline</mat-icon>
         <span>Liên hệ</span>
       </mat-toolbar-row>
-      <mat-toolbar-row class="h-3em" routerLink="ve-chung-toi" routerLinkActive="active">
+      <mat-toolbar-row class="h-3em" routerLink="ve-chung-toi" routerLinkActive="active"  *ngIf="false">
         <mat-icon class="icon icon-about" aria-hidden="false" aria-label="About us icon">group_work</mat-icon>
         <span>Về chúng tôi</span>
       </mat-toolbar-row>
@@ -60,8 +60,8 @@
         <div class="app-list d-flex flex-column">
           <!-- <a mat-stroked-button target="_blank" id="get-app play-store" href="https://play.google.com/store/apps/details?id=com.android.chrome" class="my-1"> <i class="fab fa-google-play"></i> Google store</a>
           <a mat-stroked-button target="_blank"  id="get-app app-store" href="https://itunes.apple.com/us/app/google-chrome/id535886823?mt=8" class="my-1"> <i class="fab fa-apple"></i> App store</a> -->
-          <a target="_blank" class="get-app play-store w-100" href="https://play.google.com/store/apps/details?id=com.android.chrome" class="my-1 "><mat-icon svgIcon="google-badge" class="w-100"></mat-icon></a>
-          <a target="_blank"  class="get-app app-store w-100" href="https://itunes.apple.com/us/app/google-chrome/id535886823?mt=8" class="my-1"><mat-icon svgIcon="apple-badge" class="w-100"></mat-icon></a>
+          <p target="_blank" class="get-app play-store w-100" class="my-1 "><mat-icon svgIcon="google-badge" class="w-100"></mat-icon></p>
+          <p target="_blank"  class="get-app app-store w-100" class="my-1"><mat-icon svgIcon="apple-badge" class="w-100"></mat-icon></p>
         </div>
       </div>
     </mat-nav-list>
@@ -87,8 +87,8 @@
         <a *ngIf="!loginInfor; else logedIn" routerLinkActive="active" (click)="openInfoModal()">
             <span class="align-items-center ustify-content-center align-self-center icon icon-lg icon-account"
             matTooltip="Thông tin tài khoản">
-            <i class="icon far fa-user-circle text-white" *ngIf="!isLoggedIn"></i>
-            <img src="{{avatar}}" alt=""  onError="this.src='../../../../assets/images/login.png'" *ngIf="isLoggedIn" style="width:1.5em; border-radius:50%">
+            <i class="icon far fa-user-circle text-white"></i>
+            <!-- <img src="{{avatar}}" alt=""  onError="this.src='../../../../assets/images/login.png'" *ngIf="isLoggedIn" style="width:1.5em; border-radius:50%"> -->
           </span>
         </a>
         <a routerLink="tai-khoan" routerLinkActive="active">

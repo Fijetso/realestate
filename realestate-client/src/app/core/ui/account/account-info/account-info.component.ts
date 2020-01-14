@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from './../../../../services/data/data.service';
 import { ApiService } from 'src/app/services/api/api.service';
 import { Router } from '@angular/router';
+import { GraphQueryService } from './../../../../services/graphql/graph-query.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-account-info',
@@ -23,27 +25,31 @@ export class AccountInfoComponent implements OnInit {
   gender: string;
   startDate: Date;
   userInfo: any;
-  // listPost: { id: number; title: string; content: string; imgPath: string; }[];
-  // collections: { id: number; title: string; content: string; imgPath: string; }[];
-
   listPost: any;
   collections: any;
-  constructor(private fb: FormBuilder, private data: DataService,private api : ApiService, private router : Router) {
-     const info = JSON.parse(localStorage.getItem('loginInfo'));
-     console.log(info);
-     this.avatar = info ? info.photoUrl : '../../../../../assets/images/login.png';
-     this.username = info ? info.name : null;
-     this.provider = info ? info.provider : null;
-     this.email = info ? info.email : null;
-     this.gender = 'true' ;
+  jobs: any;
+  info: any;
+  constructor(private fb: FormBuilder,
+              private data: DataService,
+              private api: ApiService,
+              private router: Router,
+              private graphql: GraphQueryService,
+              private toastr: ToastrService
+              ) {
+     this.data.currentUser.subscribe(user => {this.info = user ; });
+     this.getAllJob();
+     this.avatar = this.info ? this.info.photoUrl : '../../../../../assets/images/login.png';
+     this.username = this.info ? this.info.name : null;
+     this.provider = this.info ? this.info.provider : null;
+     this.email = this.info ? this.info.email : null;
      this.startDate = new Date(1997, 10, 19);
      this.userInfo = this.fb.group({
-      username: [info ? info.name : null , Validators.required],
+      username: [this.info ? this.info.name : null , Validators.required],
       dob: [ this.startDate, Validators.required],
-      email: [info ? info.email : null, Validators.required],
-      gender: ['true'],
-      job: ['Software Enginier'],
-      phone: ['0975922740']
+      email: [this.info ? this.info.email : null, Validators.required],
+      gender: [this.info ? this.info.gender : true],
+      job: this.info ? this.info.job.name : null,
+      phone: [this.info ? this.info.phone : null]
      });
   }
   ngOnInit() {
@@ -52,8 +58,9 @@ export class AccountInfoComponent implements OnInit {
     });
     this.api.getAllRealEstate().subscribe(reList => {
       const info = JSON.parse(localStorage.getItem('loginInfo'));
+      console.log(info);
       if (info) {
-        this.listPost = reList.filter(src => src.user.email.indexOf(info.email) > -1);
+        this.listPost = [];
       } else {
         this.listPost = [];
       }
@@ -62,7 +69,7 @@ export class AccountInfoComponent implements OnInit {
 
   changeAvatar() {
   const element: HTMLElement = document.querySelector('input[type="file"]') as HTMLElement;
-  element.click();
+  // element.click();
 }
 
   onShowAccount() {
@@ -96,11 +103,29 @@ export class AccountInfoComponent implements OnInit {
   }
 
   onSubmitUserInfo() {
-    // tslint:disable-next-line: no-console
-    console.log(this.userInfo.value);
+    const user = JSON.parse(localStorage.getItem('loginInfo'));
+    const job = this.userInfo.get('job').value;
+    const phone = this.userInfo.get('phone').value;
+    const gender = this.userInfo.get('gender').value;
+    this.updateUser(user.id, job, phone , gender).subscribe( res => {
+      console.log(res);
+      this.toastr.success('Cập nhật thông tin thành công', 'Cập nhật người dùng');
+    }, error => {
+      console.error(error);
+    });
+  }
+  updateUser(userId, job, phone , gender) {
+    return this.graphql.updateUser( userId, job, phone, gender);
   }
 
   onSelect(slug: any) {
-    this.router.navigate(['mua', slug]);
+    this.router.navigate(['chi-tiet', slug]);
   }
+
+  getAllJob() {
+    this.api.getAllJob().subscribe(
+      jobs => this.jobs = jobs
+    );
+  }
+
 }

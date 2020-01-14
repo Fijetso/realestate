@@ -9,6 +9,7 @@ import { GraphQueryService } from '../../services/graphql/graph-query.service';
 import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
 import { AuthService, SocialUser } from 'angularx-social-login';
+import { DataService } from './../../services/data/data.service';
 
 @Component({
   selector: 'app-real-estate-detail',
@@ -30,6 +31,7 @@ export class RealEstateDetailComponent implements OnInit {
   user = JSON.parse(localStorage.getItem('loginInfo'));
   districtId: any;
   email: any;
+  favList: any;
   constructor(
     private route: ActivatedRoute,
     private api: ApiService,
@@ -37,6 +39,7 @@ export class RealEstateDetailComponent implements OnInit {
     private fb: FormBuilder,
     private graphql: GraphQueryService,
     private toastr: ToastrService,
+    private data: DataService
   ) {
     this.requestInfo = this.fb.group({
       name: this.user ? this.user.name : '',
@@ -79,6 +82,9 @@ export class RealEstateDetailComponent implements OnInit {
   };
 
   ngOnInit() {
+    this.data.currentFavList.subscribe(favList => {
+      this.favList = favList;
+    });
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.slug = params.get('slug');
       if (this.slug) {

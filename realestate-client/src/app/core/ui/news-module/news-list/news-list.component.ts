@@ -10,17 +10,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class NewsListComponent implements OnInit {
   numbers: number[];
   newsList: any;
+  newsList360: any;
 
-  constructor( private api: ApiService,private route: ActivatedRoute, private router: Router) {
+  constructor( private api: ApiService, private route: ActivatedRoute, private router: Router) {
     this.numbers = Array(5).fill(0).map((x, i ) => i);
     this.api.getAllNews().subscribe(newsList => {
       this.newsList = newsList;
-    })
+    });
   }
 
   ngOnInit() {
   }
-  goToDetail(newsId){
+  goToDetail(newsId) {
     this.router.navigate(['tin-tuc/chi-tiet/' + newsId]);
   }
 }

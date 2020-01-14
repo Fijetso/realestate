@@ -8,22 +8,26 @@ export class SearchPipe implements PipeTransform {
 
   transform(value: any, ...args: any[]): any {
     // console.log(args);
-    if (args[0][0] === undefined) {
-      return value.filter(elem => {
-        if ( elem !== null && elem !== undefined) {
-          return elem.realEstateKind.id === args[0][1];
-        }
-      });
+    if (value != null) {
+      if (args[0][0] === undefined) {
+        return value.filter(elem => {
+          if ( elem !== null && elem !== undefined) {
+            return elem.realEstateKind.id === args[0][1];
+          }
+        });
+      } else {
+        return value.filter( elem => {
+          if (elem != null) {
+            console.log(args);
+            const result = nonAccentVietnamese(elem.description).indexOf(nonAccentVietnamese(args[0][0])) > -1
+            && elem.realEstateKind.id === args[0][1];
+            console.log(result);
+            return result;
+          }
+        });
+      }
     } else {
-      return value.filter( elem => {
-        if (elem != null) {
-          console.log(args);
-          const result = nonAccentVietnamese(elem.description).indexOf(nonAccentVietnamese(args[0][0])) > -1
-          && elem.realEstateKind.id === args[0][1];
-          console.log(result);
-          return result;
-        }
-      });
+      return value;
     }
   }
 

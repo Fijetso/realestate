@@ -36,7 +36,7 @@ export class RealestateItemComponent implements OnInit {
     this.router.navigate(['/' + url]);
   }
   onSelect(slug: any) {
-    this.router.navigate(['mua', slug]);
+    this.router.navigate(['chi-tiet', slug]);
   }
 
   addToFavList(dataItem) {
