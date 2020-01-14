@@ -50,7 +50,7 @@ export class AccountInfoComponent implements OnInit {
       username: [info ? info.name : null , Validators.required],
       dob: [ this.startDate, Validators.required],
       email: [info ? info.email : null, Validators.required],
-      gender: [info.gender ? info.gender : true],
+      gender: [info ? info.gender : true],
       job: info ? info.job.name : null,
       phone: [info ? info.phone : null]
      });

@@ -4,7 +4,7 @@
   <div>{{tradeKindSelected | json}}</div>
   <app-real-estate-appraised-section [tradeKindSelected] ="tradeKindSelected"></app-real-estate-appraised-section>
   <app-recommend-trade [tradeKindSelected] ="tradeKindSelected"></app-recommend-trade>
-  <app-hot-real-estate-section [tradeKindSelected] ="tradeKindSelected"></app-hot-real-estate-section>
+  <app-hot-real-estate-section [tradeKindSelected] ="tradeKindSelected" [title]="'Bất động sản gần bạn'"></app-hot-real-estate-section>
   <app-favorite [tradeKindSelected] ="tradeKindSelected" [favList]="favList"></app-favorite>
   <app-buy-on-demand-section [tradeKindSelected] ="tradeKindSelected"></app-buy-on-demand-section>
   <app-trading-area-section [tradeKindSelected] ="tradeKindSelected"></app-trading-area-section>
