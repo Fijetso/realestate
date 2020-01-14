@@ -85,6 +85,9 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
   district: any;
   historyData: { userId: any; district: any; price: any; square: any; };
   user: any;
+  maloaigd: string;
+  loaigd: string;
+  tradeKind: any;
   constructor(private api: ApiService,
               private fb: FormBuilder,
               private route: ActivatedRoute,
@@ -103,7 +106,9 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
     this.getREKind();
     this.quan = this.route.snapshot.queryParamMap.get('quan');
     this.tinh = this.route.snapshot.queryParamMap.get('tinh');
-    this.tradeKindSlug = this.route.snapshot.paramMap.get('tradeKind').localeCompare('mua') ? 0 : 1;
+    this.maloaigd = this.route.snapshot.queryParamMap.get('maloaigd');
+    this.loaigd = this.route.snapshot.queryParamMap.get('loaigd');
+    // this.tradeKindSlug = this.route.snapshot.paramMap.get('tradeKind').localeCompare('mua') ? 0 : 1;
     this.api.getTradeFromDistrict(this.quan).subscribe(res => {
       this.reList = res;
     });
@@ -112,7 +117,7 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
     this.getAllWardFromDistrict(this.tinh , this.quan);
     this.newREKind = 1;
     this.searchDetail = this.fb.group({
-      tradeKind: 1,
+      tradeKind: +this.maloaigd,
       query: '',
       reKind: 1,
       district: +this.quan,
@@ -130,6 +135,7 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
     this.data.currentUser.subscribe(user => {
       this.user = user;
     });
+    this.tradeKind = this.searchDetail.get('tradeKind').value;
   }
   ngOnInit(): void {
     this.isFullMap = false;
@@ -247,5 +253,9 @@ export class DisplayMapComponent implements AfterViewInit, OnInit {
 
   goToDetail(tradeId) {
     this.router.navigate(['chi-tiet/' + tradeId]);
+  }
+
+  onChangeTradeKind(){
+    this.tradeKind = this.searchDetail.get('tradeKind').value;
   }
 }

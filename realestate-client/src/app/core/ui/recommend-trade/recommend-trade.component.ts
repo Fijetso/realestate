@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ApiService } from './../../../services/api/api.service';
 import { DataService } from './../../../services/data/data.service';
 
@@ -10,7 +10,8 @@ import { DataService } from './../../../services/data/data.service';
 export class RecommendTradeComponent implements OnInit {
   tradeRecommendList: any;
   user: any;
-
+  @Input()
+  tradeKindSelected: any;
   constructor(private api: ApiService, private data: DataService) {
     this.data.currentUser.subscribe(user => {
       this.user = user;

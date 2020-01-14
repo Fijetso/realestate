@@ -105,7 +105,7 @@ const routes: Routes = [
     loadChildren: () => import('./core/ui/admin/admin.module').then(admin => admin.AdminModule)
   },
   {
-    path: 'tim-kiem/:tradeKind',
+    path: 'tim-kiem',
     component: MapModuleComponent,
     data: {
       title: 'Tìm kiếm chi tiết các bất dộng sản',

@@ -15,12 +15,12 @@ export class MarkettingComponent implements OnInit {
   searchForm: any;
   districtList: any;
   tradeKinds: any;
-  tradeKindSelected: string;
+  tradeKindSelected: any;
   constructor(private api: ApiService, private fb: FormBuilder, private router: Router, private data: DataService) {
     this.searchForm = this.fb.group({
       district: null
     });
-    this.tradeKindSelected  = 'Mua';
+    this.tradeKindSelected  = 1;
   }
   ngOnInit() {
     this.getDistrictList();
@@ -39,7 +39,12 @@ export class MarkettingComponent implements OnInit {
   }
 
   getTradeByDistrict(districtId: any) {
-    this.router.navigate(['tim-kiem/' + nonAccentVietnamese(this.tradeKindSelected)], {queryParams: {tinh: 79, quan: districtId}});
+    this.router.navigate(['tim-kiem'], {queryParams:
+    {
+      tinh: 79,
+      quan: districtId,
+      maloaigd: this.tradeKindSelected
+    }});
   }
   onChangeDistrict() {
     const district = this.searchForm.get('district').value;

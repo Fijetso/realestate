@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit {
       this.data.changeCurrentUser(loginInfo);
       });
     } else {
-      this.toastr.error('Đăng nhập thất bại', 'Đăng nhập');
+      // this.toastr.error('Đăng nhập thất bại', 'Đăng nhập');
     }
   }
   loginWithGoogle() {
@@ -79,9 +79,7 @@ export class LoginComponent implements OnInit {
           JSON.parse(cookieResult).name,
           'Đăng nhập thành công'
         );
-      // this.data.changeCurrentUser(user);
-    }).catch(reason => {
-      this.toastr.error(reason, 'Đăng nhập thất bại');
+      this.data.changeCurrentUser(user);
     });
   }
 
@@ -116,7 +114,7 @@ export class LoginComponent implements OnInit {
       },
       error => {
         console.error(error);
-        this.toastr.error('Đăng xuất thất bại', 'Đăng xuất');
+        // this.toastr.error('Đăng xuất thất bại', 'Đăng xuất');
       }
     );
     this.authService.signOut().then(

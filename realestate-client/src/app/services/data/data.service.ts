@@ -18,7 +18,7 @@ export class DataService {
    []);
   currentFavList = this.favList.asObservable();
 
-  private tradeKindSelected = new BehaviorSubject('Mua');
+  private tradeKindSelected = new BehaviorSubject(1);
   currentTradeKindSelected = this.tradeKindSelected.asObservable();
 
   private tradeRecommend = new BehaviorSubject([]);

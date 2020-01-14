@@ -5,7 +5,7 @@
         <form [formGroup]='searchDetail' class="container-fluid" (ngSubmit)="onSubmitSearch()">
             <div class="search-section row mx-2 px-2">
                 <mat-form-field>
-                    <mat-select placeholder="Mục đích sử dụng" formControlName="tradeKind">
+                    <mat-select placeholder="Mục đích sử dụng" formControlName="tradeKind" (selectionChange) = "onChangeTradeKind()">
                         <mat-option *ngFor="let tradeKind of tradeKinds" [value]="tradeKind.id">
                             {{tradeKind.name}}
                         </mat-option>
@@ -197,7 +197,7 @@
                 <div class="col-md-6 col-sm">
                     <div class="title">Mua bán nhà riêng quận {{districtInfo?.pathWithType}}</div>
                     <div class="result-count" *ngIf="reList">Có
-                        {{(reList | search:[query, newREKind])?.length > 0?(reList | search:[query,newREKind])?.length : 0}}
+                        {{(reList | search:[query, newREKind] | tradekindPipe : tradeKind)?.length > 0?(reList | search:[query,newREKind] | tradekindPipe : tradeKind)?.length : 0}}
                         kết quả với từ khoá
                         <span class="font-italic font-weight-bold"> {{query}}</span>
                     </div>
@@ -206,7 +206,7 @@
                 </div>
             </div>
             <div class="re-list" *ngIf="reList">
-                <div class="re-container row" *ngFor="let item of reList | search:[query, newREKind]; let i = index">
+                <div class="re-container row" *ngFor="let item of reList | search:[query, newREKind] | tradekindPipe : tradeKind; let i = index">
                     <app-realestate-item [dataItem]="item" class="col-md-6 col-sm"></app-realestate-item>
                 </div>
             </div>
@@ -233,7 +233,7 @@
                     (click)="onClick($event)">
                 </mgl-layer> -->
             <div *ngIf="reList">
-                <mgl-marker #myMarker *ngFor="let item of reList | search:[query, newREKind]; let i=index"
+                <mgl-marker #myMarker *ngFor="let item of reList | search:[query, newREKind] | tradekindPipe : tradeKind; let i=index"
                 [lngLat]=[item?.coordinate?.longitude,item?.coordinate?.latitude]>
                 <div [ngStyle]="{
                             'background-image': 'url(https://www.mapbox.com/mapbox-gl-js/assets/washington-monument.jpg)',

@@ -14,7 +14,7 @@ export class HotPlaceItemComponent implements OnInit, OnDestroy {
   @Input() place: any;
   src = null;
   tradeFromDistrict: any;
-  reKindSelected: string;
+  reKindSelected: any;
   ngOnDestroy(): void {
     this.api.setData(this.tradeFromDistrict);
   }
@@ -28,7 +28,11 @@ export class HotPlaceItemComponent implements OnInit, OnDestroy {
   }
 
   getTradeByDistrict(districtId: any) {
-    this.router.navigate(['/tim-kiem/' + nonAccentVietnamese(this.reKindSelected)], {queryParams: {tinh: 79, quan: districtId}});
+    this.router.navigate(['/tim-kiem'], {queryParams: {
+      tinh: 79,
+      quan: districtId,
+      maloaigd: this.reKindSelected
+    }});
   }
   onSelect(districtId: any) {
     this.getTradeByDistrict(districtId);

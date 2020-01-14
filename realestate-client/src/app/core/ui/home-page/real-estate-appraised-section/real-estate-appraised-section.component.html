@@ -1,4 +1,4 @@
 <div class="re-appraised-section">
   <app-section-header catTitle="Bất động đã được thẩm định"></app-section-header>
-  <app-carousel [dataItems]="dataAppraised" [isAppraised]="appraised"></app-carousel>
+  <app-carousel [dataItems]="dataAppraised | tradekindPipe : tradeKindSelected" [isAppraised]="appraised"></app-carousel>
 </div>

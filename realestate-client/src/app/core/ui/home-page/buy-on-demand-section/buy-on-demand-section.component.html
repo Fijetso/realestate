@@ -12,7 +12,7 @@
             <mat-button-toggle [value]=3>>=20 triệu /tháng</mat-button-toggle>
          </mat-button-toggle-group>
       </div>
-      <app-carousel [dataItems]="buyOnDemandData | ondemandPipe: demandOption"></app-carousel>
+      <app-carousel [dataItems]="buyOnDemandData | ondemandPipe: demandOption | tradekindPipe : tradeKindSelected"></app-carousel>
     </mat-card-content>
   </mat-card>
 </section>
