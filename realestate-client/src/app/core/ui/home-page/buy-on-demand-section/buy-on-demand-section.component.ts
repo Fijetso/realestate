@@ -11,13 +11,13 @@ export class BuyOnDemandSectionComponent implements OnInit {
   demandOption: any;
 
   constructor(private api: ApiService) {
-    this.demandOption = 1;
+    this.demandOption = 3;
   }
 
   ngOnInit() {
-    this.getData(1);
+    this.getData();
   }
-  getData(option: any) {
+  getData() {
     this.api.getAllRealEstate().subscribe(data => {
      this.buyOnDemandData = data;
     });
