@@ -23,8 +23,6 @@ export class LoginComponent implements OnInit {
   user: User;
   login: any;
   allTrade: any[];
-  private socialUser: SocialUser;
-  private loggedIn: boolean;
   constructor(
     private myAuthService: AuthenticationService,
     private graphql: GraphQueryService,
@@ -48,47 +46,40 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.authState.subscribe(user => {
-      this.socialUser = user;
-      // console.log(this.socialUser);
-      this.isLogedIn = this.loggedIn =  (user != null);
-      if (this.loggedIn) {
-        localStorage.setItem('loginInfo', JSON.stringify(user));
-        this.data.changeCurrentUser(user);
-      }
+    this.data.currentLogin.subscribe(isLogedIn => {
+      this.isLogedIn = isLogedIn;
+      console.log(this.isLogedIn);
     });
-    this.isLogedIn  = this.loggedIn = JSON.parse(localStorage.getItem('loginInfo')) != null;
   }
   onLogIn(email: string, password: string) {
-    this.login = this.graphql.login(email, password);
-    const token = localStorage.getItem('login');
+    this.graphql.login(email, password);
+    const token = localStorage.getItem('token');
     if (token) {
-      // console.log('getToken', token);
-      this.graphql.getLoginInfo(token).subscribe(res => {
-        this.data = res;
-        // console.log('login infor',res);
-        this.toastr.success('Đăng nhập bằng email thành công', 'Đăng nhập');
-        this.isLogedIn = true;
-        localStorage.setItem('loginInfo', JSON.stringify(res));
-        this.data.changeCurrentUser(res);
+      this.graphql.getLoginInfo(JSON.parse(token)).subscribe(loginInfo => {
+      this.data.changeCurrentUser(loginInfo);
+      localStorage.setItem('loginInfo', JSON.stringify(loginInfo));
+      localStorage.setItem('isLogedIn', 'true');
+      this.data.changeLoginState(loginInfo != null);
+      this.toastr.success('Đăng nhập thành công', 'Đăng nhập');
       });
     } else {
-      this.toastr.error('Đăng nhập bằng email thất bại', 'Đăng nhập');
+      this.toastr.error('Đăng nhập thất bại', 'Đăng nhập');
     }
   }
   loginWithGoogle() {
     this.myAuthService.loginWithGoogle().then(user => {
-
       console.log(user);
       localStorage.setItem('loginInfo', JSON.stringify(user));
       this.isLogedIn = true;
       const loginGoogle = localStorage.getItem('loginInfo');
       this.cookie.set('loginInfo', loginGoogle);
       const cookieResult = this.cookie.get('loginInfo');
-      console.log(JSON.parse(cookieResult)); this.toastr.success(
+      console.log(JSON.parse(cookieResult));
+      this.toastr.success(
           JSON.parse(cookieResult).name,
           'Đăng nhập thành công'
         );
+      // this.data.changeCurrentUser(user);
     }).catch(reason => {
       this.toastr.error(reason, 'Đăng nhập thất bại');
     });
@@ -108,8 +99,9 @@ export class LoginComponent implements OnInit {
         JSON.parse(cookieResult).name,
         'Đăng nhập bằng Facebook thành công'
       );
+      // this.data.changeCurrentUser(user);
     }).catch(reason => {
-      this.toastr.error(reason, 'Đăng nhập thất bại');
+      console.log(reason);
     });
   }
   onLogOut() {
@@ -118,10 +110,11 @@ export class LoginComponent implements OnInit {
     this.isLogedIn = false;
     this.graphql.logout().subscribe(
       res => {
-        // tslint:disable-next-line: no-console
-        console.log('logout successful', res), localStorage.clear();
-        this.isLogedIn = false;
-        this.data.changeCurrentUser([]);
+        localStorage.clear();
+        this.data.changeCurrentUser(null);
+        localStorage.setItem('loginInfo',null);
+        localStorage.setItem('isLogedIn', 'false');
+        this.data.changeLoginState(false);
       },
       error => {
         console.error(error);
@@ -131,19 +124,8 @@ export class LoginComponent implements OnInit {
       res => {
         this.toastr.success('Đăng xuất thành công', 'Đăng xuất');
         localStorage.clear();
-        this.cookie.deleteAll();
-        this.data.changeCurrentUser([]);
       }
     );
-    // this.myAuthService
-    //   .logOut()
-    //   .then(res => {
-    //     localStorage.clear();
-    //     this.cookie.deleteAll();
-    //   })
-    //   .catch(err => {
-    //     console.error(err);
-    //   });
   }
   onSubmitLogin(formValue) {
     this.onLogIn(formValue.email, formValue.password);

@@ -25,9 +25,6 @@ export class AccountInfoComponent implements OnInit {
   gender: string;
   startDate: Date;
   userInfo: any;
-  // listPost: { id: number; title: string; content: string; imgPath: string; }[];
-  // collections: { id: number; title: string; content: string; imgPath: string; }[];
-
   listPost: any;
   collections: any;
   jobs: any;
@@ -51,7 +48,7 @@ export class AccountInfoComponent implements OnInit {
       dob: [ this.startDate, Validators.required],
       email: [info ? info.email : null, Validators.required],
       gender: [info ? info.gender : true],
-      job: null,
+      job: info ? info.job.name : null,
       phone: [info ? info.phone : null]
      });
   }
@@ -106,9 +103,7 @@ export class AccountInfoComponent implements OnInit {
   }
 
   onSubmitUserInfo() {
-    // tslint:disable-next-line: no-console
     const user = JSON.parse(localStorage.getItem('loginInfo'));
-    // console.log(this.userInfo.value, user, this.userInfo.get('job').value);
     const job = this.userInfo.get('job').value;
     const phone = this.userInfo.get('phone').value;
     const gender = this.userInfo.get('gender').value;
@@ -116,7 +111,6 @@ export class AccountInfoComponent implements OnInit {
       console.log(res);
       this.toastr.success('Cập nhật thông tin thành công', 'Cập nhật người dùng');
     }, error => {
-      this.toastr.error('Cập nhật thông tin thất bại', 'Cập nhật người dùng');
       console.error(error);
     });
   }

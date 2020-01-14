@@ -9,7 +9,7 @@ import { ApiService } from './../api/api.service';
 })
 export class DataService {
 
-  private isLoggedIn = new BehaviorSubject(true);
+  private isLoggedIn = new BehaviorSubject(localStorage.getItem('isLoggedIn') ? JSON.parse(localStorage.getItem('isLoggedIn')) :false);
   currentLogin = this.isLoggedIn.asObservable();
   private user = new BehaviorSubject(localStorage.getItem('loginInfo') ? JSON.parse(localStorage.getItem('loginInfo')) : []) ;
   currentUser = this.user.asObservable();

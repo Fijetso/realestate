@@ -18,12 +18,19 @@ import { HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { LOGIN_MUTATION, LoginMutationResponse, GET_ALL_TRADE_QUERY, GetAllTradeResponse, UPDATE_TRADE, UpdateTradeResponse } from 'src/app/model/generated/graphql';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { DataService } from './../data/data.service';
+import { CookieService } from 'ngx-cookie-service';
+
 @Injectable({
   providedIn: 'root'
 })
 export class GraphQueryService {
   headers: any;
-  constructor(private apollo: Apollo, private httpLink: HttpLink, private http: HttpClient) {
+  constructor(private apollo: Apollo,
+              private httpLink: HttpLink,
+              private http: HttpClient,
+              private data: DataService,
+              private cookie: CookieService) {
     this.apollo.create({
       link: this.httpLink.create({ uri: 'http://localhost:8081/graphql' }),
       cache: new InMemoryCache()
@@ -40,42 +47,28 @@ export class GraphQueryService {
         password: passwordInput
       }
     }).subscribe(response => {
-      const data = response.data.login;
-      if (data) {
-        // console.log('SET-TOKEN', data);
-        localStorage.setItem('login', data);
-        return response && data;
+      const token = response.data.login;
+      if (token) {
+        localStorage.setItem('token', token);
+        this.cookie.set('token', token);
+        console.log(token);
+        return token;
       }
     }, error => {
-      // console.error('Login failed', error);
       return error;
     });
   }
   // get infor login
   getLoginInfo(loginToken: any) {
-    // console.log('GET-TOKEN', loginToken);
     const reqHearder = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + loginToken
       }),
     };
-    // console.log(reqHearder);
     const result = this.http.get<any>('http://localhost:8081/secured/user/me', reqHearder);
     return result;
   }
-
-  // Get All Trade
-  // getAllTrade(): any {
-  //   this.apollo.watchQuery<GetAllTradeResponse>({
-  //     query: GET_ALL_TRADE_QUERY
-  //   }).valueChanges.subscribe((response) => {
-  //     // console.log(response && response.data);
-  //     return response && response.data;
-  //   }, error => {
-  //     console.error('Get all trade grapql ' + error);
-  //   });
-  // }
 
   // Update Trade
   updateTrade(id, cost): any {
