@@ -1,4 +1,5 @@
-import { Router } from '@angular/router';
+import { CommonService } from './../../../../services/common/common.service';
+import { Router, NavigationExtras } from '@angular/router';
 import { Component, OnInit, Input, OnDestroy, Injectable } from '@angular/core';
 import { ApiService } from 'src/app/services/api/api.service';
 import { ToastrService } from 'ngx-toastr';
@@ -34,10 +35,23 @@ export class HotPlaceItemComponent implements OnInit, OnDestroy {
       maloaigd: this.reKindSelected
     }});
   }
-  onSelect(districtId: any) {
-    this.getTradeByDistrict(districtId);
-    this.api.setData(this.tradeFromDistrict);
-    this.router.navigate(['tim-kiem'], districtId);
+  onSelect(place: any) {
+    this.api.getTradeFromDistrict(place.id).subscribe(tradeList => {
+      this.tradeFromDistrict = tradeList;
+      this.api.setData(this.tradeFromDistrict);
+      // this.toastr.warning('Chức năng chưa hoàn thiện');
+      const navExtras: NavigationExtras = {
+        queryParams: {
+          quan: this.common.changeToSlug(place.nameWithType),
+          gia: this.common.changeToSlug('Giá thấp nhất'),
+          loai: this.common.changeToSlug('Nhà ở chung cư')
+        },
+        state: { data:  tradeList, title: place.nameWithType}
+      };
+      this.router.navigate(['tim-kiem'], navExtras);
+    });
+
+    // this.router.navigate(['tim-kiem'], {state: { data:  JSON.stringify(this.tradeFromDistrict)}});
   }
   updateUrl() {
     this.src = '../../../../../assets/images/default.png';

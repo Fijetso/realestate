@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ModalService } from 'src/app/services/modal.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-nav',
@@ -13,7 +14,8 @@ import { ModalService } from 'src/app/services/modal.service';
   styleUrls: ['./nav.component.scss']
 })
 export class NavComponent {
-
+  loginInfor = JSON.parse(localStorage.getItem('userInfor'));
+  @Input() badgeCount = 5;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches)
@@ -46,5 +48,10 @@ export class NavComponent {
   }
   openInfoModal() {
     this.modalService.openInfoModal();
+  }
+  logOut() {
+    this.auth.logOut();
+    this.loginInfor = JSON.parse(localStorage.getItem('userInfor'));
+    location.reload();
   }
 }

@@ -15,7 +15,7 @@ import { ContactComponent } from './core/ui/contact/contact.component';
 import { FengShuiComponent } from './core/ui/feng-shui/feng-shui.component';
 const routes: Routes = [
   {
-    path: '',
+    path: 'trang-chu',
     component: RealestateListComponent,
     data: {
       title: 'Trang chủ',
@@ -120,7 +120,11 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    anchorScrolling: 'enabled',
+    scrollPositionRestoration: 'enabled',
+    useHash: false
+  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

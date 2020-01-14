@@ -1,6 +1,7 @@
+import { ToastrService } from 'ngx-toastr';
 import { GetDistrictNameFromIdPipe } from './../../../../ultility/pipe/get-district-name-from-id.pipe';
 import { ApiService } from './../../../../services/api/api.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from './../../../../services/data/data.service';
 
@@ -18,9 +19,11 @@ export class RealestateItemComponent implements OnInit {
   dataLoaded = false;
   @Input() dataItem: any;
   @Input() isAppraised: boolean;
+  @Output() public childEvent = new EventEmitter();
   districtList: any;
   selectedItem: null;
   offset = 100;
+  loginInfo = JSON.parse(localStorage.getItem('userInfor'));
   ngOnInit() {
   }
   getDistrictFromProvinceId() {

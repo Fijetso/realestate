@@ -2,7 +2,7 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 @import "~@fortawesome/fontawesome-free/scss/regular";
 @import "~@fortawesome/fontawesome-free/scss/solid";
 @import "~@fortawesome/fontawesome-free/scss/brands";
-
+@import "../../../../../my-theme.scss";
 #top-bar-left a {
   position: fixed;
   left: 0;
@@ -147,7 +147,7 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 #request {
   right: 0;
   top: 50vh;
-  background-color: #f17423;
+  background-color: $accent;
   border-radius: 5px 0 0 5px;
 }
 #advisory {

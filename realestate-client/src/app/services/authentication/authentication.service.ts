@@ -15,6 +15,15 @@ export class AuthenticationService {
     return user !== null;
   }
   user: Observable<User>;
+  updateProfile(profile: any): any {
+    this.afAuth.auth.currentUser.updateProfile({
+      displayName: profile.displayName,
+      photoURL: profile.photoURL
+    }).then(success => {
+      alert(JSON.stringify(profile) );
+      return true;
+    }).catch(error => false);
+  }
   async getUserLogin() {
     return await JSON.parse(localStorage.getItem('loginInfo'));
   }

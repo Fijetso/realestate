@@ -8,7 +8,7 @@
       <mat-icon class="icon icon-like" matTooltip="Thêm vào danh sách yêu thích" (click)="addToFavList(dataItem)">favorite_border</mat-icon>
       <button class="btn-sm btn-checked" type="button" *ngIf="isAppraised">Đã thẩm định</button>
     </div>
-    <div class="md-card-body mt-2">
+    <div class="md-card-body mt-2" (click)="onSelect(dataItem.id)">
       <div class="price-address d-flex flex-row justify-content-between">
         <div class="text-left font-weight-bold">
           <span class="rs-price">{{dataItem?.cost | thousandSuffix: 1}}</span>

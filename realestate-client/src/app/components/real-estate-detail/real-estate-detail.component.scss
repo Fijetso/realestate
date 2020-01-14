@@ -61,6 +61,12 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
         }
       }
     }
+    .fixed-offset{
+      position: fixed;
+      top:3.5rem;
+      right: 10px;
+      z-index:66;
+    }
     .content-right {
       .request-infor {
         h5 {
@@ -120,4 +126,7 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
       width: 100% !important;
     }
   }
+}
+mat-form-field-wrapper {
+  padding-bottom: 0 !important;
 }

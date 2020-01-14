@@ -23,14 +23,14 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             let errorMessage = '';
             if (error.error instanceof ErrorEvent) {
               // client-side error
-              errorMessage = `Error: ${error.error.message}`;
+              errorMessage = `Lỗi: ${error.error.message}`;
             } else {
               // server-side error
-              errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+              errorMessage = `Lỗi server mã: ${error.status} \r\nNội dung: ${error.message}`;
             }
             // this.toastr.error(errorMessage);
             return throwError(errorMessage);
           })
         );
-    }
+    } 
    }

@@ -13,28 +13,24 @@ export class CommonService {
   notifyUserDataChanged() {
     this.userObservable.next();
   }
-  changeToSlug = (title) => {
+  changeToSlug = (str) => {
    try {
-    let slug = '';
+    // let slug = '';
     // Change to lower case
-    if (title) {
-      const titleLower = title.toLowerCase();
-      // Letter "e"
-      slug = titleLower.replace(/e|é|è|ẽ|ẻ|ẹ|ê|ế|ề|ễ|ể|ệ/gi, 'e');
-      // Letter "a"
-      slug = slug.replace(/a|á|à|ã|ả|ạ|ă|ắ|ằ|ẵ|ẳ|ặ|â|ấ|ầ|ẫ|ẩ|ậ/gi, 'a');
-      // Letter "o"
-      slug = slug.replace(/o|ó|ò|õ|ỏ|ọ|ô|ố|ồ|ỗ|ổ|ộ|ơ|ớ|ờ|ỡ|ở|ợ/gi, 'o');
-      // Letter "u"
-      slug = slug.replace(/u|ú|ù|ũ|ủ|ụ|ư|ứ|ừ|ữ|ử|ự/gi, 'u');
-      // Letter "d"
-      slug = slug.replace(/đ/gi, 'd');
-      // Trim the last whitespace
-      slug = slug.replace(/\s*$/g, '');
-      // Change whitespace to "-"
-      slug = slug.replace(/\s+/g, '-');
+    if (str) {
+      str = str.toLowerCase();
+      str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, 'a');
+      str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, 'e');
+      str = str.replace(/ì|í|ị|ỉ|ĩ/g, 'i');
+      str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, 'o');
+      str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, 'u');
+      str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, 'y');
+      str = str.replace(/đ/g, 'd');
+      str = str.replace(/\W+/g, ' ');
+      str = str.replace(/\s/g, '-');
+      return str;
     }
-    return slug;
+    // return slug;
    } catch (error) {
      console.error('common', error);
    }

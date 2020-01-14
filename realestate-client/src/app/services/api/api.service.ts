@@ -9,9 +9,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { TradeKind } from '../../model/trade-kind/trade-kind';
 import { RealEstateKind } from '../../model/real-estate-kind/real-estate-kind';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ApiService {
   rootURL = environment.api.rootURL;
   baseURL = this.rootURL + '/api/';
@@ -169,7 +167,7 @@ export class ApiService {
     this.data = data;
   }
   getData() {
-    return this.data;
+    return this.dataStorage;
   }
 
   getAllRE() {
