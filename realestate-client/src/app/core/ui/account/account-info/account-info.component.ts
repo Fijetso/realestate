@@ -119,7 +119,7 @@ export class AccountInfoComponent implements OnInit {
   }
 
   onSelect(slug: any) {
-    this.router.navigate(['mua', slug]);
+    this.router.navigate(['chi-tiet', slug]);
   }
 
   getAllJob() {

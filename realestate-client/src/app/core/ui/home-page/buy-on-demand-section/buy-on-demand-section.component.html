@@ -9,7 +9,7 @@
           <mat-button-toggle-group #group="matButtonToggleGroup" [(ngModel)]="demandOption">
             <mat-button-toggle [value]=1>10 - 15 triệu /tháng</mat-button-toggle>
             <mat-button-toggle [value]=2>15 - 20 triệu /tháng</mat-button-toggle>
-            <mat-button-toggle [value]=3>>=20 triệu /tháng</mat-button-toggle>
+            <mat-button-toggle [value]=3> >=20 triệu /tháng</mat-button-toggle>
          </mat-button-toggle-group>
       </div>
       <app-carousel [dataItems]="buyOnDemandData | ondemandPipe: demandOption | tradekindPipe : tradeKindSelected"></app-carousel>

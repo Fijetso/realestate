@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class TradekindPipe implements PipeTransform {
 
   transform(value: any, ...args: any[]): any {
-    if (args) {
+    if (args && value ) {
       return value.filter(trade => {
         return trade.tradeKind.id === (args[0]);
       });
