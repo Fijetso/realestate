@@ -51,7 +51,7 @@ export class AccountInfoComponent implements OnInit {
       dob: [ this.startDate, Validators.required],
       email: [info ? info.email : null, Validators.required],
       gender: [info ? info.gender : true],
-      job: info ? info.job.name : null,
+      job: null,
       phone: [info ? info.phone : null]
      });
   }

@@ -2,8 +2,6 @@
 </mat-progress-bar>
 <div class="map-wrapper row">
     <div class="left-content col-md-7 col-sm" *ngIf="!isFullMap">
-    <div>{{tradeKindSlug | json }}</div>
-    <div>{{historyData | json}}</div>
         <form [formGroup]='searchDetail' class="container-fluid" (ngSubmit)="onSubmitSearch()">
             <div class="search-section row mx-2 px-2">
                 <mat-form-field>
@@ -225,7 +223,7 @@
                 <mgl-control mglNavigation position="top-right"></mgl-control>
 
                 <!-- geojson -->
-                <mgl-layer id="states-layer" type="fill" [source]="{
+                <!-- <mgl-layer id="states-layer" type="fill" [source]="{
                                 'type': 'geojson',
                                 'data': 'assets/map/vietnam-district.geojson'
                             }" [paint]="{
@@ -233,7 +231,7 @@
                             'fill-outline-color': 'rgba(200, 100, 240, 1)'
                             }" (mouseEnter)="cursorStyle = 'pointer'" (mouseLeave)="cursorStyle = ''"
                     (click)="onClick($event)">
-                </mgl-layer>
+                </mgl-layer> -->
             <div *ngIf="reList">
                 <mgl-marker #myMarker *ngFor="let item of reList | search:[query, newREKind]; let i=index"
                 [lngLat]=[item?.coordinate?.longitude,item?.coordinate?.latitude]>
@@ -247,8 +245,10 @@
                             }">
                 </div>
                 <mgl-popup [lngLat]=[item?.coordinate?.longitude,item?.coordinate?.latitude] style="cursor: pointer;">
-                    <p class="text-center font-weight-bold" [innerHTML]="item?.description"></p>
+                    <p class="text-center font-weight-bold">{{item?.description}}</p>
                     <img [src]="item?.realImages[0].imageLink" alt="Mặc định">
+                    <div class="prices">Giá : {{item?.cost.toLocaleString('vi-VI')}}</div>
+                    <div class="square">Diện tích : {{item?.details?.square}} m<sup>2</sup></div>
                     <button mat-raised-button  (click)="goToDetail(item.id)">Chi tiết</button>
                 </mgl-popup>
             </mgl-marker>

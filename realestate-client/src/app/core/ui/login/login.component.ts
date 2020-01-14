@@ -121,7 +121,7 @@ export class LoginComponent implements OnInit {
         // tslint:disable-next-line: no-console
         console.log('logout successful', res), localStorage.clear();
         this.isLogedIn = false;
-        this.data.changeCurrentUser(null);
+        this.data.changeCurrentUser([]);
       },
       error => {
         console.error(error);
@@ -132,7 +132,7 @@ export class LoginComponent implements OnInit {
         this.toastr.success('Đăng xuất thành công', 'Đăng xuất');
         localStorage.clear();
         this.cookie.deleteAll();
-        this.data.changeCurrentUser(null);
+        this.data.changeCurrentUser([]);
       }
     );
     // this.myAuthService
