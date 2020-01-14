@@ -204,7 +204,7 @@
       </div>
     </div>
   </div>
-  <app-favorite></app-favorite>
+  <app-favorite [favList]="favList" *ngIf="favList.length>0"></app-favorite>
   <div class="viewed-section" *ngIf="recentData">
     <app-section-header [catTitle]="'Đã xem gần đây'" class="p-0"></app-section-header>
     <app-carousel   [dataItems] = "recentData" isRecentRE="isRecentRE"></app-carousel>
