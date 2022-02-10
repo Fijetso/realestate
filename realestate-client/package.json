@@ -65,7 +65,7 @@
     "ngx-mat-select-search": "^2.1.0",
     "ngx-owl-carousel": "^2.0.7",
     "ngx-toastr": "^10.0.4",
-    "node-sass": "^4.13.0",
+    "node-sass": "^7.0.0",
     "owl.carousel": "^2.3.4",
     "popper.js": "^1.15.0",
     "roboto-fontface": "^0.10.0",
